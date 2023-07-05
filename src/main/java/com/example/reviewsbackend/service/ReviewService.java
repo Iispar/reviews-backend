@@ -1,5 +1,7 @@
 package com.example.reviewsbackend.service;
 
-public interface ReviewService {
+import com.example.reviewsbackend.model.Review;
 
+public interface ReviewService {
+	public Review saveReview(Review review);
 }

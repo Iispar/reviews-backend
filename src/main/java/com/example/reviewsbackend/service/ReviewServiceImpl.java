@@ -8,6 +8,7 @@ import com.example.reviewsbackend.repository.ReviewRepository;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
+
 	@Autowired
 	private ReviewRepository reviewRepository;
 	

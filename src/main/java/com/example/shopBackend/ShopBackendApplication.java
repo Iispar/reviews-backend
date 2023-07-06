@@ -1,13 +1,13 @@
-package com.example.reviewsbackend;
+package com.example.shopBackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReviewsbackendApplication {
+public class ShopBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReviewsbackendApplication.class, args);
+		SpringApplication.run(ShopBackendApplication.class, args);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.example.reviewsbackend.model;
+package com.example.shopBackend.review;
 
 import java.sql.Date;
 

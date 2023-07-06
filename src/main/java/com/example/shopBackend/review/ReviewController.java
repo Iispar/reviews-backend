@@ -7,14 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/api/review")
 public class ReviewController {
 
-	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	public ReviewController(ReviewService reviewService) {
+		this.reviewService = reviewService;
+	}
 	
 	@PostMapping("/add")
 	public String add(@RequestBody Review review) {
@@ -22,8 +27,13 @@ public class ReviewController {
 		return "Succesfully added review";
 	}
 	
-	@GetMapping("/getAll")
-	public List<Review> getAllReviews() {
-		return reviewService.getAllReviews();
+	@GetMapping("/get")
+	public List<Review> getAllReviews(@RequestParam("userId") int id) {
+		List<Review> reviews = reviewService.getReviewsForUser(id);
+		if (reviews.isEmpty()) {
+			throw new IllegalStateException(
+					"found no reviews with user id");
+		}
+		return reviews;
 	}
 }

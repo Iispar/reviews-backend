@@ -9,13 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity(name="Review")
 @Table(name="review", schema="reviews_schema")
 public class Review {
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	@Id
-	@Column(name = "review_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "review_id", nullable = false, updatable = false, unique = true)
 	private int id;
 	
 	@Column(name = "review_date", nullable = false)
@@ -29,7 +29,26 @@ public class Review {
 	@Column(name = "review_dislikes", nullable = true)
 	private String dislikes;
 	
+	@Column(name = "user_id", nullable = false)
+	private int user;
+	@Column(name = "rating_id", nullable = false)
+	private int rating;
+	@Column(name = "item_id", nullable = false)
+	private int item;
 	
+	public Review(Date date, String body, String title, String likes, String dislikes, int user, int rating, int item) {
+		this.date = date;
+		this.body = body;
+		this.title = title;
+		this.likes = likes;
+		this.dislikes = dislikes;
+		this.user = user;
+		this.rating = rating;
+		this.item = item;
+	}
+	
+	public Review(){}
+
 	public int getId() {
 		return id;
 	}

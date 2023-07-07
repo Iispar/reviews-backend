@@ -29,11 +29,11 @@ public class Review {
 	@Column(name = "review_dislikes", nullable = true)
 	private String dislikes;
 	
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "review_user", nullable = false)
 	private int user;
-	@Column(name = "rating_id", nullable = false)
+	@Column(name = "review_rating", nullable = false)
 	private int rating;
-	@Column(name = "item_id", nullable = false)
+	@Column(name = "review_item", nullable = false)
 	private int item;
 	
 	public Review(Date date, String body, String title, String likes, String dislikes, int user, int rating, int item) {
@@ -48,6 +48,30 @@ public class Review {
 	}
 	
 	public Review(){}
+	
+	public int getUser() {
+		return user;
+	}
+
+	public void setUser(int user) {
+		this.user = user;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public int getItem() {
+		return item;
+	}
+
+	public void setItem(int item) {
+		this.item = item;
+	}
 
 	public int getId() {
 		return id;

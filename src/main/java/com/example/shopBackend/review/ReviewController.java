@@ -3,6 +3,7 @@ package com.example.shopBackend.review;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,5 +36,11 @@ public class ReviewController {
 					"found no reviews with user id");
 		}
 		return reviews;
+	}
+	
+	@DeleteMapping("/del")
+	public String deleteReview(@RequestParam("reviewId") int id) {
+		if (reviewService.deleteReview(id)) return "Deleted succesfully";
+		return "Deletion failed";
 	}
 }

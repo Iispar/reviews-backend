@@ -22,4 +22,9 @@ public class ReviewService {
 	public List<Review> getReviewsForUser(int id) {
 		return reviewRepository.findAllUserId(id);
 	}
+	
+	public Boolean deleteReview(int id) {
+		reviewRepository.deleteById(id);
+		return true;
+	}
 }

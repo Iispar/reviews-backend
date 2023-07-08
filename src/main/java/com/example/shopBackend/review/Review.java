@@ -9,6 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * The Review entity in the backend.
+ * @author iiro
+ *
+ */
 @Entity(name="Review")
 @Table(name="review", schema="reviews_schema")
 public class Review {

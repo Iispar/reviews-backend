@@ -36,17 +36,20 @@ public class ReviewController {
 	}
 	
 	/**
-	 * API GET call to /api/review/get?userId=(input) will return the reviews for that user.
-	 * This will be used in the latest on the home page.
-	 * @param id
-	 * @return
+	 * API GET call to /api/review/get?userId=(input)&page=(input)&sort=(input)
+	 * will return the reviews for that user. This will be used in the latest on the home page
+	 * for the latest reviews. This also sorts the reviews from latest.
+	 * @param {int} id
+	 * 		  The user id that searches for reviews.
+	 * @param {int} page
+	 * 		  The page you want reviews from
+	 * @return latest reviews for userId from index (from) to index (to).
 	 */
 	@GetMapping("/get")
 	public List<Review> getReviewsForUser(
 			@RequestParam("userId") int id,
-			@RequestParam("from") int from,
-			@RequestParam("to") int to) {
-		List<Review> reviews = reviewService.getReviewsForUser(id, from, to);
+			@RequestParam("page") int page) {
+		List<Review> reviews = reviewService.getReviewsForUser(id, page);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with user id");
@@ -55,22 +58,28 @@ public class ReviewController {
 	}
 
 	/**
-	 * API GET call to /api/review/get/search?title=(input)&userId=(input) will return the
-	 * reviews that match the inputted title search. This will be used in the items
+	 * API GET call to /api/review/get/search?title=(input)&itemId=(input)&sort=(input)&page=(input)
+	 * will return the reviews that match the inputted title search. This will be used in the items
 	 * reviews component as search.
 	 * @param {String} title
 	 * 	      Title that was searched.
 	 * @param {int} id
 	 * 		  the id of the item the reviews correspond to.
+	 * @param {String} sort
+	 * 		  The sort used for search
+	 * @param {int} page
+	 * 		  The page you want results of.
 	 * @return reviews that match the title and id of search
 	 */
 	@GetMapping("/get/search")
-	public List<Review> getReviewsWithTitleForUser(
+	public List<Review> getReviewsWithTitleForItem(
 			@RequestParam("title") String title,
-			@RequestParam("itemId") int id) {
+			@RequestParam("itemId") int id,
+			@RequestParam("sort") String sort,
+			@RequestParam("page") int page){
 		
 		// if sort different call...
-		List<Review> reviews = reviewService.getReviewsWithTitleForUser(title, id);
+		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, id, sort, page);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with item id and name");
@@ -82,7 +91,7 @@ public class ReviewController {
 	 * API DELETE call to /api/review/del?reviewId=(input) will delete the review that
 	 * corresponds with the inputted reviewId.
 	 * @param {int} id
-	 * 	      Id of the review we wish to delete.
+	 * 	      Id of the review you wish to delete.
 	 * @return true id successful, false Otherwise.
 	 */
 	@DeleteMapping("/del")

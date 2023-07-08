@@ -19,8 +19,8 @@ public class ReviewService {
 		return reviewRepository.findAll();
 	}
 	
-	public List<Review> getReviewsForUser(int id) {
-		return reviewRepository.findAllUserId(id);
+	public List<Review> getReviewsForUser(int id, int from, int to) {
+		return reviewRepository.findAllUserId(id, from, to);
 	}
 	
 	public Boolean deleteReview(int id) {

@@ -27,4 +27,9 @@ public class ReviewService {
 		reviewRepository.deleteById(id);
 		return true;
 	}
+	
+	public List<Review> getReviewsWithTitleForUser(String title, int id) {
+		String formatted = String.format("%%%s%%", title).replace("_", "%");
+		return reviewRepository.findAllByTitleForUser(formatted, id);
+	}
 }

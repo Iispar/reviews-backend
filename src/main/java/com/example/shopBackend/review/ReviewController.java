@@ -29,7 +29,8 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/get")
-	public List<Review> getAllReviews(@RequestParam("userId") int id) {
+	public List<Review> getReviewsForUser(
+			@RequestParam("userId") int id) {
 		List<Review> reviews = reviewService.getReviewsForUser(id);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
@@ -38,9 +39,23 @@ public class ReviewController {
 		return reviews;
 	}
 	
+	@GetMapping("/get/search")
+	public List<Review> getReviewsWithTitleForUser(
+			@RequestParam("title") String title,
+			@RequestParam("itemId") int id) {
+		
+		// if sort different call...
+		List<Review> reviews = reviewService.getReviewsWithTitleForUser(title, id);
+		if (reviews.isEmpty()) {
+			throw new IllegalStateException(
+					"found no reviews with item id and name");
+		}
+		return reviews;
+	}
+	
 	@DeleteMapping("/del")
 	public String deleteReview(@RequestParam("reviewId") int id) {
-		if (reviewService.deleteReview(id)) return "Deleted succesfully";
+		if (Boolean.TRUE.equals(reviewService.deleteReview(id))) return "Deleted succesfully";
 		return "Deletion failed";
 	}
 }

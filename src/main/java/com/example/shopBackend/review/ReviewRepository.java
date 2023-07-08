@@ -12,9 +12,11 @@ import org.springframework.stereotype.Repository;
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Integer>, JpaRepository<Review, Integer> {
 	
 	/**
-	 * Query to find all reviews for user from index to index.
+	 * Query to find all reviews for users for page.
 	 * @param {int} id
 	 * 		  The user id that searched.
+	 * @param {Pageable} pageable
+	 * 		  The pageable object that selects page.
 	 * @return the items that matched the query
 	 */
 	@Query(value = "SELECT * FROM Review r WHERE r.review_item IN"
@@ -22,11 +24,13 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Review> findAllUserId(int id, Pageable pageable);
 	
 	/**
-	 * Query to find all reviews with searched title for a item.
+	 * Query to find all reviews with searched title for a item returns selected page and sort in pageable.
 	 * @param {String} title
 	 * 		  The searched title.
 	 * @param {int} id
 	 * 	 	  The item id that is searched with.
+	 * @param {Pageable} pageable
+	 * 		  The pageable object that selects page and sort.
 	 * @return the items that matched the query
 	 */
 	@Query(value = "SELECT * FROM Review r WHERE r.review_title LIKE ?1 AND r.review_item = ?2", nativeQuery = true)

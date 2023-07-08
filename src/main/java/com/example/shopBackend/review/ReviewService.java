@@ -25,7 +25,7 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Finds all reviews for user from index to index from the database. And returns them.
+	 * Finds all reviews for users items for page from the database. And returns them.
 	 * @param {int} id
 	 * 		  The id of the user you want reviews for.
 	 * @param {int} page

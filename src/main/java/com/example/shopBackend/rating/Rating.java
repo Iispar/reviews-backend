@@ -1,6 +1,7 @@
 package com.example.shopBackend.rating;
 
 import com.example.shopBackend.review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +31,8 @@ public class Rating {
 	@Column(name = "rating_item", nullable = true)
 	private int item;
 	
-
+	// @JsonIgnore stops reviews from returning the review entity twice (duplicate from the rating.review object)
+	@JsonIgnore
 	@OneToOne(mappedBy="rating")
 	private Review review;
 	

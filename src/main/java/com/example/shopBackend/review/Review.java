@@ -4,7 +4,8 @@ import java.sql.Date;
 
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.rating.Rating;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,7 +47,7 @@ public class Review {
 	private int user;
 
 	// reference to rating entity.
-	@JsonBackReference
+	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "review_rating", referencedColumnName = "rating_id")
 	private Rating rating;

@@ -2,11 +2,19 @@ package com.example.shopBackend.review;
 
 import java.sql.Date;
 
+import com.example.shopBackend.item.Item;
+import com.example.shopBackend.rating.Rating;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -36,12 +44,19 @@ public class Review {
 	
 	@Column(name = "review_user", nullable = false)
 	private int user;
-	@Column(name = "review_rating", nullable = false)
-	private int rating;
-	@Column(name = "review_item", nullable = false)
-	private int item;
+
+	// reference to rating entity.
+	@JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "review_rating", referencedColumnName = "rating_id")
+	private Rating rating;
+
+	// reference to item entity.
+    @ManyToOne
+	@JoinColumn(name = "review_item", referencedColumnName = "item_id")
+	private Item item;
 	
-	public Review(Date date, String body, String title, String likes, String dislikes, int user, int rating, int item) {
+	public Review(Date date, String body, String title, String likes, String dislikes, int user, Rating rating, Item item) {
 		this.date = date;
 		this.body = body;
 		this.title = title;
@@ -62,19 +77,19 @@ public class Review {
 		this.user = user;
 	}
 
-	public int getRating() {
+	public Rating getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
 
-	public int getItem() {
+	public Item getItem() {
 		return item;
 	}
 
-	public void setItem(int item) {
+	public void setItem(Item item) {
 		this.item = item;
 	}
 

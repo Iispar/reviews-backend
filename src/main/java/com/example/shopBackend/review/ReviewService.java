@@ -59,7 +59,7 @@ public class ReviewService {
 	 * 		  The sort used for search
 	 * @param {int} page
 	 * 		  The page you want to receive
-	 * @return
+	 * @return reviews that match query.
 	 */
 	public List<Review> getReviewsWithTitleForItem(String title, int id, String sort, int page) {
 		String formattedTitle = String.format("%%%s%%", title).replace("_", "%");

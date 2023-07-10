@@ -18,18 +18,18 @@ public class Customer extends User {
 	@Column(name = "user_custom", nullable = false)
 	private String custom;
 
-	public Customer(int id, String name, String username, String password, String email, String company) {
+	public Customer(int id, String name, String username, String password, String email, String custom) {
 		super(id, name, username, password, email);
-		this.custom = company;
+		this.custom = custom;
 	}	
 	
 	public Customer() {}
 
-	public String getCompany() {
+	public String getCustom() {
 		return custom;
 	}
 
-	public void setCompany(String company) {
-		this.custom = company;
-	};
+	public void setCustom(String custom) {
+		this.custom = custom;
+	}
 }

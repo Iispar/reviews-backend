@@ -49,7 +49,7 @@ public class Review {
 	@JoinColumn(name = "review_user", referencedColumnName = "user_id", nullable = false)
 	private Customer user;
 
-	// reference to rating entity - bidirectional.
+	// reference to rating entity - unidirectional.
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "review_rating", referencedColumnName = "rating_id", nullable = false)
@@ -70,9 +70,57 @@ public class Review {
 		this.rating = rating;
 		this.item = item;
 	}
-	
+
 	public Review(){}
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getLikes() {
+		return likes;
+	}
+
+	public void setLikes(String likes) {
+		this.likes = likes;
+	}
+
+	public String getDislikes() {
+		return dislikes;
+	}
+
+	public void setDislikes(String dislikes) {
+		this.dislikes = dislikes;
+	}
+
 	public Customer getUser() {
 		return user;
 	}
@@ -96,43 +144,4 @@ public class Review {
 	public void setItem(Item item) {
 		this.item = item;
 	}
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	public String getBody() {
-		return body;
-	}
-	public void setBody(String body) {
-		this.body = body;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getLikes() {
-		return likes;
-	}
-	public void setLikes(String likes) {
-		this.likes = likes;
-	}
-	public String getDislikes() {
-		return dislikes;
-	}
-	public void setDislikes(String dislikes) {
-		this.dislikes = dislikes;
-	}
-	
-	
 }

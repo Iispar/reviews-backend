@@ -21,7 +21,7 @@ public class Seller extends User {
 	public Seller(int id, String name, String username, String password, String email, String company) {
 		super(id, name, username, password, email);
 		this.company = company;
-	}	
+	}
 	
 	public Seller() {}
 

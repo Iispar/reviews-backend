@@ -31,7 +31,6 @@ public class ReviewController {
 	 */
 	@PostMapping("/add")
 	public Boolean add(@RequestBody Review review) {
-		System.out.println(review);
 		reviewService.saveReview(review);
 		return true;
 	}

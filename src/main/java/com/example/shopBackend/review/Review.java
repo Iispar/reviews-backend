@@ -2,6 +2,7 @@ package com.example.shopBackend.review;
 
 import java.sql.Date;
 
+import com.example.shopBackend.Customer.Customer;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.rating.Rating;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -43,21 +44,23 @@ public class Review {
 	@Column(name = "review_dislikes", nullable = true)
 	private String dislikes;
 	
-	@Column(name = "review_user", nullable = false)
-	private int user;
+	// reference to customer entity - unidirectional.
+    @ManyToOne
+	@JoinColumn(name = "review_user", referencedColumnName = "user_id", nullable = false)
+	private Customer user;
 
-	// reference to rating entity.
+	// reference to rating entity - bidirectional.
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "review_rating", referencedColumnName = "rating_id")
+	@JoinColumn(name = "review_rating", referencedColumnName = "rating_id", nullable = false)
 	private Rating rating;
 
-	// reference to item entity.
+	// reference to item entity - unidirectional.
     @ManyToOne
-	@JoinColumn(name = "review_item", referencedColumnName = "item_id")
+	@JoinColumn(name = "review_item", referencedColumnName = "item_id", nullable = false)
 	private Item item;
 	
-	public Review(Date date, String body, String title, String likes, String dislikes, int user, Rating rating, Item item) {
+	public Review(Date date, String body, String title, String likes, String dislikes, Customer user, Rating rating, Item item) {
 		this.date = date;
 		this.body = body;
 		this.title = title;
@@ -70,11 +73,11 @@ public class Review {
 	
 	public Review(){}
 	
-	public int getUser() {
+	public Customer getUser() {
 		return user;
 	}
 
-	public void setUser(int user) {
+	public void setUser(Customer user) {
 		this.user = user;
 	}
 

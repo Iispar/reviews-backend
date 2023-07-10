@@ -1,4 +1,4 @@
-package com.example.shopBackend.Customer;
+package com.example.shopBackend.customer;
 
 import com.example.shopBackend.user.User;
 
@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 /**
- * The User entity in the backend.
+ * The Customer entity in the backend.
  * @author iiro
  *
  */

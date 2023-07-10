@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 /**
- * The User entity in the backend.
+ * The User class. Is the parent class for Customer and Seller.
  * @author iiro
  *
  */

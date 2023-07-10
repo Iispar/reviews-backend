@@ -2,7 +2,7 @@ package com.example.shopBackend.review;
 
 import java.sql.Date;
 
-import com.example.shopBackend.Customer.Customer;
+import com.example.shopBackend.customer.Customer;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.rating.Rating;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;

@@ -67,6 +67,15 @@ public class ReviewService {
 		return reviewRepository.findAllByTitleForItem(formattedTitle, id, pageRequest);
 	}
 	
+	/**
+	 * Finds the count of reviews and their average rating and returns them
+	 * Different query depending on the wanted grouping.
+	 * @param {int} id
+	 * 	      Id of the user you wish to get results for.
+	 * @param {string} time
+	 * 		  Either month or week, the selection for grouping of results.
+	 * @return count of reviews and their avg rating grouped by parameter.
+	 */
 	public List<Object> getChartForUser(String time, int id) {
 		List<Object> res = null;
 		if (time .equals("month")) {

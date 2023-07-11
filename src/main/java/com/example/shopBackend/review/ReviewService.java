@@ -66,4 +66,14 @@ public class ReviewService {
 		Pageable pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		return reviewRepository.findAllByTitleForItem(formattedTitle, id, pageRequest);
 	}
+	
+	public List<Object> getChartForUser(String time, int id) {
+		List<Object> res = null;
+		if (time .equals("month")) {
+			res =  reviewRepository.findChartForUserByMonth(id);
+		} else if (time.equals("week")) {
+			res =  reviewRepository.findChartForUserByWeek(id);
+		}
+		return res;
+	}
 }

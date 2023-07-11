@@ -36,5 +36,18 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 */
 	@Query(value = "SELECT * FROM Review r WHERE r.review_title LIKE ?1 AND r.review_item = ?2", nativeQuery = true)
 	List<Review> findAllByTitleForItem(String title, int id, Pageable pageable);
+	
+
+	@Query(value = ""
+			+ "SELECT COUNT(review_rating), AVG(review_rating) FROM Review r WHERE r.review_item IN"
+			+ "(SELECT item_id FROM Item i WHERE i.item_user = ?1)"
+			+ "GROUP BY MONTH(review_date)", nativeQuery = true)
+	List<Object> findChartForUserByMonth(int id);
+	
+	@Query(value = ""
+			+ "SELECT COUNT(review_rating), AVG(review_rating) FROM Review r WHERE r.review_item IN"
+			+ "(SELECT item_id FROM Item i WHERE i.item_user = ?1)"
+			+ "GROUP BY WEEK(review_date)", nativeQuery = true)
+	List<Object> findChartForUserByWeek(int id);
 }
 

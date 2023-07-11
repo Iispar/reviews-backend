@@ -89,6 +89,14 @@ public class ReviewController {
 		return reviews;
 	}
 	
+	@GetMapping("/get/chart")
+	public List<Object> getChartForUser(
+			@RequestParam("userId") int id,
+			@RequestParam("time") String time) {
+	List<Object> values = reviewService.getChartForUser(time, id);
+	return values;
+	}
+
 	/**
 	 * API DELETE call to /api/review/del?reviewId=(input) will delete the review that
 	 * corresponds with the inputted reviewId.

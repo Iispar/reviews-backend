@@ -4,11 +4,7 @@ import java.sql.Date;
 
 import com.example.shopBackend.customer.Customer;
 import com.example.shopBackend.item.Item;
-import com.example.shopBackend.rating.Rating;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -49,18 +44,15 @@ public class Review {
 	@JoinColumn(name = "review_user", referencedColumnName = "user_id", nullable = false)
 	private Customer user;
 
-	// reference to rating entity - unidirectional.
-	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-    @OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "review_rating", referencedColumnName = "rating_id", nullable = false)
-	private Rating rating;
+	@Column(name = "review_rating", nullable = false)
+	private int rating;
 
 	// reference to item entity - unidirectional.
     @ManyToOne
 	@JoinColumn(name = "review_item", referencedColumnName = "item_id", nullable = false)
 	private Item item;
 	
-	public Review(Date date, String body, String title, String likes, String dislikes, Customer user, Rating rating, Item item) {
+	public Review(Date date, String body, String title, String likes, String dislikes, Customer user, int rating, Item item) {
 		this.date = date;
 		this.body = body;
 		this.title = title;
@@ -129,11 +121,11 @@ public class Review {
 		this.user = user;
 	}
 
-	public Rating getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(Rating rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 

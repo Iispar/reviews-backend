@@ -76,8 +76,8 @@ public class ReviewService {
 	 * 		  Either month or week, the selection for grouping of results.
 	 * @return count of reviews and their avg rating grouped by parameter.
 	 */
-	public List<Object> getChartForUser(String time, int id) {
-		List<Object> res = null;
+	public List<Chart> getChartForUser(String time, int id) {
+		List<Chart> res = null;
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForUserByMonth(id);
 		} else if (time.equals("week")) {
@@ -95,8 +95,8 @@ public class ReviewService {
 	 * 		  Either month or week, the selection for grouping of results.
 	 * @return count of reviews and their avg rating grouped by parameter.
 	 */
-	public List<Object> getChartForItem(String time, int id) {
-		List<Object> res = null;
+	public List<Chart> getChartForItem(String time, int id) {
+		List<Chart> res = null;
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForItemByMonth(id);
 		} else if (time.equals("week")) {

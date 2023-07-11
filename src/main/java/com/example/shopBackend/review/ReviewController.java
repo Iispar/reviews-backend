@@ -99,7 +99,7 @@ public class ReviewController {
 	 * @return count of reviews and their avg rating grouped by parameter.
 	 */
 	@GetMapping("/get/chart/user")
-	public List<Object> getChartForUser(
+	public List<Chart> getChartForUser(
 			@RequestParam("userId") int id,
 			@RequestParam("time") String time) {
 	return reviewService.getChartForUser(time, id);
@@ -115,7 +115,7 @@ public class ReviewController {
 	 * @return count of reviews and their avg rating grouped by parameter.
 	 */
 	@GetMapping("/get/chart/item")
-	public List<Object> getChartForItem(
+	public List<Chart> getChartForItem(
 			@RequestParam("itemId") int id,
 			@RequestParam("time") String time) {
 	return reviewService.getChartForItem(time, id);

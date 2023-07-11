@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The controller for the review table
+ * @author iiro
+ *
+ */
 @RestController
 @RequestMapping("/api/review")
 public class ReviewController {

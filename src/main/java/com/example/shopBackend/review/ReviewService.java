@@ -8,6 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+/**
+ * Services for the review entity
+ * @author iiro
+ *
+ */
 @Service
 public class ReviewService {
 	

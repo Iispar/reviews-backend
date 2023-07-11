@@ -98,12 +98,27 @@ public class ReviewController {
 	 * 		  Either month or week, the selection for grouping of results.
 	 * @return count of reviews and their avg rating grouped by parameter.
 	 */
-	@GetMapping("/get/chart")
+	@GetMapping("/get/chart/user")
 	public List<Object> getChartForUser(
 			@RequestParam("userId") int id,
 			@RequestParam("time") String time) {
-	List<Object> res = reviewService.getChartForUser(time, id);
-	return res;
+	return reviewService.getChartForUser(time, id);
+	}
+	
+	/**
+	 * API GET call to /api/review/get/chart?itemId=(input)&time=(input) will return the
+	 * corresponding data for the chart component.
+	 * @param {int} id
+	 * 	      Id of the item you wish to get results for.
+	 * @param {string} time
+	 * 		  Either month or week, the selection for grouping of results.
+	 * @return count of reviews and their avg rating grouped by parameter.
+	 */
+	@GetMapping("/get/chart/item")
+	public List<Object> getChartForItem(
+			@RequestParam("itemId") int id,
+			@RequestParam("time") String time) {
+	return reviewService.getChartForItem(time, id);
 	}
 
 	/**

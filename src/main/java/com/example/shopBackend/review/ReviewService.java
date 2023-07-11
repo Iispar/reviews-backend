@@ -68,7 +68,7 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Finds the count of reviews and their average rating and returns them
+	 * Finds the count of reviews and their average rating by user id and returns them
 	 * Different query depending on the wanted grouping.
 	 * @param {int} id
 	 * 	      Id of the user you wish to get results for.
@@ -82,6 +82,25 @@ public class ReviewService {
 			res =  reviewRepository.findChartForUserByMonth(id);
 		} else if (time.equals("week")) {
 			res =  reviewRepository.findChartForUserByWeek(id);
+		}
+		return res;
+	}
+	
+	/**
+	 * Finds the count of reviews and their average rating by item id and returns them
+	 * Different query depending on the wanted grouping.
+	 * @param {int} id
+	 * 	      Id of the item you wish to get results for.
+	 * @param {string} time
+	 * 		  Either month or week, the selection for grouping of results.
+	 * @return count of reviews and their avg rating grouped by parameter.
+	 */
+	public List<Object> getChartForItem(String time, int id) {
+		List<Object> res = null;
+		if (time .equals("month")) {
+			res =  reviewRepository.findChartForItemByMonth(id);
+		} else if (time.equals("week")) {
+			res =  reviewRepository.findChartForItemByWeek(id);
 		}
 		return res;
 	}

@@ -62,5 +62,25 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 			+ "(SELECT item_id FROM Item i WHERE i.item_user = ?1)"
 			+ "GROUP BY WEEK(review_date)", nativeQuery = true)
 	List<Object> findChartForUserByWeek(int id);
+	
+	/**
+	 * Query first all the reviews that match the item id.
+	 * Count the result, calc average of the rating attr and group results by month.
+	 * @param {int} id
+	 * 	      Id of the item you wish to get results for.
+	 * @return count of reviews and their avg rating grouped by month.
+	 */
+	@Query(value = "SELECT COUNT(review_rating), AVG(review_rating) FROM Review r WHERE r.review_item = ?1 GROUP BY MONTH(review_date)", nativeQuery = true)
+	List<Object> findChartForItemByMonth(int id);
+	
+	/**
+	 * Query first all the reviews that match the item id.
+	 * Count the result, calc average of the rating attr and group results by week.
+	 * @param {int} id
+	 * 	      Id of the item you wish to get results for.
+	 * @return count of reviews and their avg rating grouped by week.
+	 */
+	@Query(value = "SELECT COUNT(review_rating), AVG(review_rating) FROM Review r WHERE r.review_item = ?1 GROUP BY WEEK(review_date)", nativeQuery = true)
+	List<Object> findChartForItemByWeek(int id);
 }
 

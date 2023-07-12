@@ -35,8 +35,9 @@ public class ReviewController {
 	 * @return True if successful. False otherwise
 	 */
 	@PostMapping("/add")
-	public Boolean add(@RequestBody Review review) {
-		reviewService.saveReview(review);
+	public Boolean add(@RequestBody List<Review> review) {
+		reviewService.saveAllReviews(review);
+		// TODO: rate reviews
 		// TODO: calc new average for item
 		// TODO: calc new topwords
 		return true;

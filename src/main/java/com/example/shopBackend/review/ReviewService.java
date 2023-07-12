@@ -25,8 +25,8 @@ public class ReviewService {
 	 * 		  The review to be added to the database.
 	 * @return
 	 */
-	public Review saveReview(Review review) {
-		return reviewRepository.save(review);
+	public List<Review> saveAllReviews(List<Review> review) {
+		return reviewRepository.saveAll(review);
 	}
 	
 	/**
@@ -43,9 +43,9 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Deletes a review with the corresponding review_id.
+	 * Deletes a item with the corresponding item_id.
 	 * @param {int} id
-	 * 		  The id of the review to be deleted.
+	 * 		  The id of the item to be deleted.
 	 * @return true if successful, false otherwise.
 	 */
 	public Boolean deleteReview(int id) {

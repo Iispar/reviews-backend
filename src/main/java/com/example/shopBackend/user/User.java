@@ -36,7 +36,7 @@ public class User {
 	@Column(name = "user_email", nullable = false)
 	private String email;
 	
-	// reference to item entity - unidirectional.
+	// reference to role entity - unidirectional.
     @ManyToOne
 	@JoinColumn(name = "user_role", referencedColumnName = "role_id", nullable = false)
 	private Role role;

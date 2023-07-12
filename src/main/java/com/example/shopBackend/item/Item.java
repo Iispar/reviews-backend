@@ -1,7 +1,7 @@
 package com.example.shopBackend.item;
 
 import com.example.shopBackend.category.Category;
-import com.example.shopBackend.seller.Seller;
+import com.example.shopBackend.user.User;
 import com.example.shopBackend.words.Words;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -36,7 +36,7 @@ public class Item {
 	// reference to seller entity - unidirectional.
     @ManyToOne
 	@JoinColumn(name = "item_user", referencedColumnName = "user_id", nullable = false)
-	private Seller user;
+	private User user;
 	
 	@Column(name = "item_rating", nullable = false)
 	private String rating;
@@ -52,7 +52,7 @@ public class Item {
 	@JoinColumn(name = "item_words", referencedColumnName = "words_id", nullable = false)
 	private Words words;
 	
-	public Item(int id, String title, Seller user, String rating, Category category, Words words) {
+	public Item(int id, String title, User user, String rating, Category category, Words words) {
 		this.id = id;
 		this.title = title;
 		this.user = user;
@@ -87,11 +87,11 @@ public class Item {
 		this.title = title;
 	}
 
-	public Seller getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Seller user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

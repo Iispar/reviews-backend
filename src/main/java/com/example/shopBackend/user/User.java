@@ -1,17 +1,23 @@
 package com.example.shopBackend.user;
 
+import com.example.shopBackend.role.Role;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
- * The User class. Is the parent class for Customer and Seller.
+ * The User entity
  * @author iiro
  *
  */
-@MappedSuperclass
+@Entity(name="User")
+@Table(name="user", schema="reviews_schema")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -29,13 +35,19 @@ public class User {
 	
 	@Column(name = "user_email", nullable = false)
 	private String email;
+	
+	// reference to item entity - unidirectional.
+    @ManyToOne
+	@JoinColumn(name = "user_role", referencedColumnName = "role_id", nullable = false)
+	private Role role;
 
-	public User(int id, String name, String username, String password, String email) {
+	public User(int id, String name, String username, String password, String email, Role role) {
 		this.id = id;
 		this.name = name;
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.role = role;
 	}
 	
 	public User() {};
@@ -79,4 +91,14 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	
 }

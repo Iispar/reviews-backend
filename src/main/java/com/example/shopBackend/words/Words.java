@@ -32,58 +32,33 @@ public class Words {
 	@Column(name = "words_negative", nullable = true, updatable = true, unique = false)
 	private List<String> negative;
 	
-	// reference to item entity - bidirectional.
-	// @JsonIgnore stops reviews from returning the review entity twice (duplicate from the rating.review object)
-	@JsonIgnore
-	@OneToOne(mappedBy="words")
-	private Item item;
-	
-	public Words(int id, List<String> positive, List<String> negative, Item item) {
+	public Words(int id, List<String> positive, List<String> negative) {
 		this.id = id;
 		this.positive = positive;
 		this.negative = negative;
-		this.item = item;
 	};
 	
 	public Words() {}
-	
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
 
 	public int getId() {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public List<String> getPositive() {
 		return positive;
 	}
 
-
-
 	public void setPositive(List<String> positive) {
 		this.positive = positive;
 	}
 
-
-
 	public List<String> getNegative() {
 		return negative;
 	}
-
-
 
 	public void setNegative(List<String> negative) {
 		this.negative = negative;

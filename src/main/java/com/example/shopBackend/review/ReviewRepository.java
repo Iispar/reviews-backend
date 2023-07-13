@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.shopBackend.item.Item;
+
 /**
  * Repo for the review table.
  * @author iiro
@@ -15,6 +17,15 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Integer>, JpaRepository<Review, Integer> {
+	
+	/**
+	 * Override findById to return only on Review.
+	 * @param {int} id
+	 * 		  id to be used for query
+	 * @return one Review review.
+	 */
+	@Query(value = "SELECT * FROM Review r WHERE r.review_id = ?1", nativeQuery = true)
+	Review findById(int id);
 	
 	/**
 	 * Query to find all reviews for users for page.

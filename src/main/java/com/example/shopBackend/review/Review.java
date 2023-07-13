@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,7 +51,7 @@ public class Review {
     @ManyToOne
 	@JoinColumn(name = "review_item", referencedColumnName = "item_id", nullable = false)
 	private Item item;
-	
+
 	public Review(Date date, String body, String title, String likes, String dislikes, User user, int rating, Item item) {
 		this.date = date;
 		this.body = body;

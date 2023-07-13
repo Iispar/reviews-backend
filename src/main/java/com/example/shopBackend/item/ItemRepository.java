@@ -17,6 +17,15 @@ import org.springframework.stereotype.Repository;
 public interface ItemRepository extends PagingAndSortingRepository<Item, Integer>, JpaRepository<Item, Integer> {
 	
 	/**
+	 * Override findById to return only one Item obejct
+	 * @param {int} id
+	 * 		  id to use for query.
+	 * @return Found Item.
+	 */
+	@Query(value = "SELECT * FROM Item i WHERE i.item_id = ?1", nativeQuery = true)
+	Item findById(int id);
+	
+	/**
 	 * Query to find all items for user for page.
 	 * @param {int} id
 	 * 		  The user id that searched.

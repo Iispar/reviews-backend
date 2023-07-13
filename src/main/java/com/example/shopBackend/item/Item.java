@@ -4,6 +4,7 @@ import com.example.shopBackend.category.Category;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.words.Words;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
@@ -47,7 +48,7 @@ public class Item {
 	@JoinColumn(name = "item_category", referencedColumnName = "category_id", nullable = false)
 	private Category category;
     
-	// reference to words entity - bidirectional.
+	// reference to words entity - unidirectional.
     @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "item_words", referencedColumnName = "words_id", nullable = false)
 	private Words words;

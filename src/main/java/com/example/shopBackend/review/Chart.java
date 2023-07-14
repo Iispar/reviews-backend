@@ -7,5 +7,5 @@ package com.example.shopBackend.review;
  */
 public interface Chart {
 	String getRating();    
-	String getCOunt();
+	String getCount();
 }

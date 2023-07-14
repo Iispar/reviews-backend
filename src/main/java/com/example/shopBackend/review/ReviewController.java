@@ -44,7 +44,7 @@ public class ReviewController {
 	}
 	
 	/**
-	 * API GET call to /api/review/get?userId=(input)&page=(input)&sort=(input)
+	 * API GET call to /api/review/get/user?userId=(input)&page=(input)&sort=(input)
 	 * will return the reviews for that user. This will be used in the latest on the home page
 	 * for the latest reviews. This also sorts the reviews from latest.
 	 * @param {int} id
@@ -53,11 +53,33 @@ public class ReviewController {
 	 * 		  The page you want reviews from
 	 * @return latest reviews for userId from index (from) to index (to).
 	 */
-	@GetMapping("/get")
+	@GetMapping("/get/user")
 	public List<Review> getReviewsForUser(
 			@RequestParam("userId") int id,
 			@RequestParam("page") int page) {
 		List<Review> reviews = reviewService.getReviewsForUser(id, page);
+		if (reviews.isEmpty()) {
+			throw new IllegalStateException(
+					"found no reviews with user id");
+		}
+		return reviews;
+	}
+	
+	/**
+	 * API GET call to /api/review/get/user?itemId=(input)&page=(input)&sort=(input)
+	 * will return the reviews for that item. This will be used in the latest on the home page
+	 * for the latest reviews. This also sorts the reviews from latest.
+	 * @param {int} id
+	 * 		  The item id that searches for reviews.
+	 * @param {int} page
+	 * 		  The page you want reviews from
+	 * @return latest reviews for userId from index (from) to index (to).
+	 */
+	@GetMapping("/get/item")
+	public List<Review> getReviewsForItem(
+			@RequestParam("itemId") int id,
+			@RequestParam("page") int page) {
+		List<Review> reviews = reviewService.getReviewsForItem(id, page);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with user id");

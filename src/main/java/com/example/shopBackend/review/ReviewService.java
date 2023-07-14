@@ -43,6 +43,19 @@ public class ReviewService {
 	}
 	
 	/**
+	 * Finds all reviews for item page from the database. And returns them.
+	 * @param {int} id
+	 * 		  The id of the item you want reviews for.
+	 * @param {int} page
+	 * 		  The page you want to receive
+	 * @return reviews that match query.
+	 */
+	public List<Review> getReviewsForItem(int id, int page) {
+		Pageable pageRequest = PageRequest.of(page, 4);
+		return reviewRepository.findAllUserId(id, pageRequest);
+	}
+	
+	/**
 	 * Deletes a item with the corresponding item_id.
 	 * @param {int} id
 	 * 		  The id of the item to be deleted.

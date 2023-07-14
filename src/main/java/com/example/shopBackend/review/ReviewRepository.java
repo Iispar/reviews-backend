@@ -40,6 +40,17 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Review> findAllUserId(int id, Pageable pageable);
 	
 	/**
+	 * Query to find all reviews for item for page.
+	 * @param {int} id
+	 * 		  The item id that searched.
+	 * @param {Pageable} pageable
+	 * 		  The pageable object that selects page.
+	 * @return the items that matched the query
+	 */
+	@Query(value = "SELECT * FROM Review r WHERE r.review_item = ?1", nativeQuery = true)
+	List<Review> findAllItemId(int id, Pageable pageable);
+	
+	/**
 	 * Query to find all reviews with searched title for a item returns selected page and sorted in what 
 	 * is described in the pageable object.
 	 * @param {String} title

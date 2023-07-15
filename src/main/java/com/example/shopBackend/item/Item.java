@@ -24,7 +24,7 @@ import jakarta.persistence.Table;
  *
  */
 @Entity(name="Item")
-@Table(name="item", schema="reviews_schema")
+@Table(name="items", schema="reviews_schema")
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class Item {
 	
 	// reference to seller entity - unidirectional.
     @ManyToOne
-	@JoinColumn(name = "item_user", referencedColumnName = "user_id", nullable = false)
+	@JoinColumn(name = "item_account", referencedColumnName = "account_id", nullable = false)
 	private User user;
 	
 	@Column(name = "item_rating", nullable = false)

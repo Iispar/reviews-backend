@@ -16,29 +16,29 @@ import jakarta.persistence.Table;
  * @author iiro
  *
  */
-@Entity(name="User")
-@Table(name="user", schema="reviews_schema")
+@Entity(name="Account")
+@Table(name="accounts", schema="reviews_schema")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	@Column(name = "user_id", nullable = false, updatable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "account_id", nullable = false, updatable = false, unique = true)
 	private int id;
 	
-	@Column(name = "user_name", nullable = false)
+	@Column(name = "account_name", nullable = false)
 	private String name;
 	
-	@Column(name = "user_username", nullable = false)
+	@Column(name = "account_username", nullable = false)
 	private String username;
 	
-	@Column(name = "user_password", nullable = false)
+	@Column(name = "account_password", nullable = false)
 	private String password;
 	
-	@Column(name = "user_email", nullable = false)
+	@Column(name = "account_email", nullable = false)
 	private String email;
 	
 	// reference to role entity - unidirectional.
     @ManyToOne
-	@JoinColumn(name = "user_role", referencedColumnName = "role_id", nullable = false)
+	@JoinColumn(name = "account_role", referencedColumnName = "role_id", nullable = false)
 	private Role role;
 
 	public User(int id, String name, String username, String password, String email, Role role) {

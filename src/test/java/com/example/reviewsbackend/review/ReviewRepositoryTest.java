@@ -10,11 +10,13 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.item.Item;
@@ -25,9 +27,11 @@ import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = ShopBackendApplication.class)
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-// @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+// @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+// @ExtendWith(SpringExtension.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ReviewRepositoryTest {
 	
 	@Autowired
@@ -232,7 +236,7 @@ class ReviewRepositoryTest {
 		User user = testUserRepository.findById(1);
 		Item item = testItemRepository.findById(1);
 		Review review = new Review(
-				Date.valueOf("2022-01-02"),
+				Date.valueOf("2022-01-04"),
 				"review body for test",
 				"hello item",
 				null,
@@ -254,7 +258,7 @@ class ReviewRepositoryTest {
 				);
 		
 		Review review3 = new Review(
-				Date.valueOf("2022-01-03"),
+				Date.valueOf("2022-01-05"),
 				"review 3 body for test",
 				"test item 3",
 				null,
@@ -270,8 +274,6 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForUserByWeek(user.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForUserByWeek(user.getId() + 1);
-        System.out.println(foundEntity);
-        System.out.println("_________________________________________");
         assertTrue(foundEntity.size() == 2);
         assertTrue(foundNoneEntity.size() == 0);
 	}
@@ -329,7 +331,7 @@ class ReviewRepositoryTest {
 		User user = testUserRepository.findById(1);
 		Item item = testItemRepository.findById(1);
 		Review review = new Review(
-				Date.valueOf("2022-01-02"),
+				Date.valueOf("2022-01-04"),
 				"review body for test",
 				"hello item",
 				null,
@@ -351,7 +353,7 @@ class ReviewRepositoryTest {
 				);
 		
 		Review review3 = new Review(
-				Date.valueOf("2022-01-03"),
+				Date.valueOf("2022-01-05"),
 				"review 3 body for test",
 				"test item 3",
 				null,

@@ -8,10 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity(name="Role")
-@Table(name="role", schema="reviews_schema")
+@Table(name="account_roles", schema="reviews_schema")
 public class Role {
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id", nullable = false, updatable = false, unique = true)
 	private int id;
 	

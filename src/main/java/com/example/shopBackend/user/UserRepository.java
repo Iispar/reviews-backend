@@ -19,6 +19,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 	 * 		  id to be used for query
 	 * @return one User user.
 	 */
-	@Query(value = "SELECT * FROM User u WHERE u.user_id = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM accounts u WHERE u.account_id = ?1", nativeQuery = true)
 	User findById(int id);
 }

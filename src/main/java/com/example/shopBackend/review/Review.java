@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
  *
  */
 @Entity(name="Review")
-@Table(name="review", schema="reviews_schema")
+@Table(name="reviews", schema="reviews_schema")
 public class Review {
 	
 	@Id
@@ -44,7 +44,7 @@ public class Review {
 	
 	// reference to customer entity - unidirectional.
     @ManyToOne
-	@JoinColumn(name = "review_user", referencedColumnName = "user_id", nullable = false)
+	@JoinColumn(name = "review_account", referencedColumnName = "account_id", nullable = false)
 	private User user;
 
 	// reference to item entity - unidirectional.

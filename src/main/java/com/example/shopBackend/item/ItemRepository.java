@@ -22,7 +22,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	 * 		  id to use for query.
 	 * @return Found Item.
 	 */
-	@Query(value = "SELECT * FROM Item i WHERE i.item_id = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM items i WHERE i.item_id = ?1", nativeQuery = true)
 	Item findById(int id);
 	
 	/**
@@ -33,7 +33,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	 * 		  The pageable object that selects page.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT * FROM Item i WHERE i.item_user = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM items i WHERE i.item_account = ?1", nativeQuery = true)
 	List<Item> findAllUserId(int id, Pageable pageable);
 
 }

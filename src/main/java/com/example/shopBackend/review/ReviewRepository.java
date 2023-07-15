@@ -24,7 +24,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * 		  id to be used for query
 	 * @return one Review review.
 	 */
-	@Query(value = "SELECT * FROM Review r WHERE r.review_id = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM reviews r WHERE r.review_id = ?1", nativeQuery = true)
 	Review findById(int id);
 	
 	/**
@@ -35,8 +35,8 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * 		  The pageable object that selects page.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT * FROM Review r WHERE r.review_item IN"
-			+ "(SELECT item_id FROM Item i WHERE i.item_user = ?1)", nativeQuery = true)
+	@Query(value = "SELECT * FROM reviews r WHERE r.review_item IN"
+			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)", nativeQuery = true)
 	List<Review> findAllUserId(int id, Pageable pageable);
 	
 	/**
@@ -47,7 +47,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * 		  The pageable object that selects page.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT * FROM Review r WHERE r.review_item = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
 	List<Review> findAllItemId(int id, Pageable pageable);
 	
 	/**
@@ -61,7 +61,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * 		  The pageable object that selects page and sort.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT * FROM Review r WHERE r.review_title LIKE ?1 AND r.review_item = ?2", nativeQuery = true)
+	@Query(value = "SELECT * FROM reviews r WHERE r.review_title LIKE ?1 AND r.review_item = ?2", nativeQuery = true)
 	List<Review> findAllByTitleForItem(String title, int id, Pageable pageable);
 	
 	/**
@@ -72,8 +72,8 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * @return count of reviews and their avg rating grouped by month.
 	 */
 	@Query(value = ""
-			+ "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM Review r WHERE r.review_item IN"
-			+ "(SELECT item_id FROM Item i WHERE i.item_user = ?1)"
+			+ "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
+			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)"
 			+ "GROUP BY MONTH(review_date)", nativeQuery = true)
 	List<Chart> findChartForUserByMonth(int id);
 	
@@ -85,8 +85,8 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * @return count of reviews and their avg rating grouped by week.
 	 */
 	@Query(value = ""
-			+ "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM Review r WHERE r.review_item IN"
-			+ "(SELECT item_id FROM Item i WHERE i.item_user = ?1)"
+			+ "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
+			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)"
 			+ "GROUP BY WEEK(review_date)", nativeQuery = true)
 	List<Chart> findChartForUserByWeek(int id);
 	
@@ -97,7 +97,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * 	      Id of the item you wish to get results for.
 	 * @return count of reviews and their avg rating grouped by month.
 	 */
-	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM Review r WHERE r.review_item = ?1 GROUP BY MONTH(review_date)", nativeQuery = true)
+	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item = ?1 GROUP BY MONTH(review_date)", nativeQuery = true)
 	List<Chart> findChartForItemByMonth(int id);
 	
 	/**
@@ -107,7 +107,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * 	      Id of the item you wish to get results for.
 	 * @return count of reviews and their avg rating grouped by week.
 	 */
-	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM Review r WHERE r.review_item = ?1 GROUP BY WEEK(review_date)", nativeQuery = true)
+	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item = ?1 GROUP BY WEEK(review_date)", nativeQuery = true)
 	List<Chart> findChartForItemByWeek(int id);
 }
 

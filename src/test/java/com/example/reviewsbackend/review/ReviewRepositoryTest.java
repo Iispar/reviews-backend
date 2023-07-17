@@ -49,6 +49,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewFindAllUserIdWorks() {
+		// change orelse?
 		User user = testUserRepository.findById(1).orElse(null);
 		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
@@ -86,6 +87,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindAllByItemIdWorks() {
+		// change orelse?
 		User user = testUserRepository.findById(1).orElse(null);
 		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
@@ -123,6 +125,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindAllByTitleWorks() {
+		// change orelse?
 		User user = testUserRepository.findById(1).orElse(null);
 		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
@@ -162,6 +165,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartMonthByUserIdWorks() {
+		// change orelse?
 		User user = testUserRepository.findById(1).orElse(null);
 		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
@@ -210,6 +214,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartWeekByUserIdWorks() {
+		// change orelse?
 		User user = testUserRepository.findById(1).orElse(null);
 		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
@@ -257,6 +262,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartMonthByItemIdWorks() {
+		// change orelse?
 		User user = testUserRepository.findById(1).orElse(null);
 		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
@@ -305,6 +311,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartWeekByItemIdWorks() {
+		// change orelse?
 		User user = testUserRepository.findById(1).orElse(null);
 		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(

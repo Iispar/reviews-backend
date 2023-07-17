@@ -8,6 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.shopBackend.user.UserRepository;
+
+import exception.BadRequestException;
+
 /**
  * Services for the review entity
  * @author iiro
@@ -19,8 +23,12 @@ public class ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 	
-	public ReviewService(ReviewRepository reviewRepository) {
+	@Autowired
+	private UserRepository userRepository;
+	
+	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository) {
 		this.reviewRepository = reviewRepository;
+		this.userRepository = userRepository;
 	}
 
 	/**
@@ -43,6 +51,11 @@ public class ReviewService {
 	 */
 	public List<Review> getReviewsForUser(int id, int page) {
 		Pageable pageRequest = PageRequest.of(page, 4);
+		if(userRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No users exists with this id");
+		}
+		// if no user with id return error?
 		return reviewRepository.findAllUserId(id, pageRequest);
 	}
 	

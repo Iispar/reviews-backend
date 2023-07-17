@@ -49,12 +49,11 @@ public class Item {
 	private Category category;
     
 	// reference to words entity - unidirectional.
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "item_words", referencedColumnName = "words_id", nullable = false)
 	private Words words;
 	
-	public Item(int id, String title, User user, String rating, Category category, Words words) {
-		this.id = id;
+	public Item(String title, User user, String rating, Category category, Words words) {
 		this.title = title;
 		this.user = user;
 		this.rating = rating;

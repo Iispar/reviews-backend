@@ -19,6 +19,10 @@ public class ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 	
+	public ReviewService(ReviewRepository reviewRepository) {
+		this.reviewRepository = reviewRepository;
+	}
+
 	/**
 	 * Saves a new review to the database.
 	 * @param {Review} review

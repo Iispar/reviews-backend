@@ -14,13 +14,5 @@ import com.example.shopBackend.user.User;
  */
 @Repository
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer>, JpaRepository<Category, Integer> {
-	
-	/**
-	 * Override findById to return only one Category.
-	 * @param {int} id
-	 * 		  id to be used for query
-	 * @return one Category category.
-	 */
-	@Query(value = "SELECT * FROM item_categories c WHERE c.category_id = ?1", nativeQuery = true)
-	Category findById(int id);
+
 }

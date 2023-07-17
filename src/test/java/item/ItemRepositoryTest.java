@@ -49,9 +49,10 @@ class ItemRepositoryTest {
 	
 	@Test
 	void findAllByUserIfWorks() {
-		User user = testUserRepository.findById(1);
-		Category category = testCategoryRepository.findById(1);
-		Words words = testWordsRepository.findById(2);
+		User user = testUserRepository.findById(1).orElse(null);
+		Category category = testCategoryRepository.findById(1).orElse(null);
+		Words words = testWordsRepository.findById(2).orElse(null);
+		
 		Item item = new Item(
 				"new item title",
 				user,

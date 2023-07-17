@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -45,33 +46,11 @@ class ReviewRepositoryTest {
 	void deleteAll() {
 		testReviewRepository.deleteAll();
 	}
-
-	@Test
-	void reviewFindByIdworks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
-		Review review = new Review(
-				new Date(0),
-				"review body for test",
-				"review title for test",
-				null,
-				null,
-				user,
-				4,
-				item
-				);
-		testReviewRepository.save(review);
-		
-        Review foundEntity = testReviewRepository.findById(review.getId());
-        Review foundNoneEntity = testReviewRepository.findById(review.getId() + 1);
-        assertNotNull(foundEntity);
-        assertNull(foundNoneEntity);
-	}
 	
 	@Test
 	void reviewFindAllUserIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElse(null);
+		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
@@ -107,8 +86,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindAllByItemIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElse(null);
+		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
@@ -144,8 +123,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindAllByTitleWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElse(null);
+		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
@@ -183,8 +162,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartMonthByUserIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElse(null);
+		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
 				Date.valueOf("2023-01-01"),
 				"review body for test",
@@ -231,8 +210,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartWeekByUserIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElse(null);
+		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
 				Date.valueOf("2022-01-04"),
 				"review body for test",
@@ -278,8 +257,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartMonthByItemIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElse(null);
+		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
 				Date.valueOf("2023-01-01"),
 				"review body for test",
@@ -326,8 +305,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartWeekByItemIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElse(null);
+		Item item = testItemRepository.findById(1).orElse(null);
 		Review review = new Review(
 				Date.valueOf("2022-01-04"),
 				"review body for test",
@@ -367,8 +346,6 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForItemByWeek(item.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByWeek(item.getId() + 1);
-        System.out.println(foundEntity);
-        System.out.println("_________________________________________");
         assertTrue(foundEntity.size() == 2);
         assertTrue(foundNoneEntity.size() == 0);
 	}

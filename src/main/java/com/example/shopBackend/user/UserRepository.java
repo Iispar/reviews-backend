@@ -12,13 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Integer>, JpaRepository<User, Integer> {
-	
-	/**
-	 * Override findById to return only one User.
-	 * @param {int} id
-	 * 		  id to be used for query
-	 * @return one User user.
-	 */
-	@Query(value = "SELECT * FROM accounts u WHERE u.account_id = ?1", nativeQuery = true)
-	User findById(int id);
+
 }

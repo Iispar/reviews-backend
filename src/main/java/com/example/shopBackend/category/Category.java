@@ -20,7 +20,7 @@ public class Category {
 	@Column(name = "category_id", nullable = false, updatable = false, unique = true)
 	private int id;
 	
-	@Column(name = "category_name", nullable = false, updatable = false, unique = true)
+	@Column(name = "category_name", nullable = false, updatable = false, unique = false)
 	private String category;
 	
 	

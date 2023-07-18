@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.shopBackend.user.User;
+
 /**
  * Repo for the item table
  * @author iiro
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ItemRepository extends PagingAndSortingRepository<Item, Integer>, JpaRepository<Item, Integer> {
+
 	
 	/**
 	 * Query to find all items for user for page.

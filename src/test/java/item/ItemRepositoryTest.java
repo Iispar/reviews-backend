@@ -8,10 +8,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.category.Category;
@@ -24,9 +28,8 @@ import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = ShopBackendApplication.class)
-// @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-// @ExtendWith(SpringExtension.class)
+@DataJpaTest()
+@ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ItemRepositoryTest {
 	
@@ -48,7 +51,7 @@ class ItemRepositoryTest {
 	}
 	
 	@Test
-	void findAllByUserIfWorks() {
+	void ItemfindAllByUserIfWorks() {
 		User user = testUserRepository.findById(1).orElse(null);
 		Category category = testCategoryRepository.findById(1).orElse(null);
 		Words words = testWordsRepository.findById(2).orElse(null);

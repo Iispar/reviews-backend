@@ -15,10 +15,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.review.ReviewRepository;
@@ -29,7 +31,8 @@ import com.example.shopBackend.user.UserRepository;
 import exception.BadRequestException;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = ShopBackendApplication.class)
+@DataJpaTest()
+@ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
 public class ReviewServiceTest {

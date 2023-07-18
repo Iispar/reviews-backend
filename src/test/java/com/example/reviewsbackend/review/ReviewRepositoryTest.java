@@ -1,21 +1,19 @@
 package com.example.reviewsbackend.review;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.item.Item;
@@ -27,9 +25,8 @@ import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = ShopBackendApplication.class)
-// @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-// @ExtendWith(SpringExtension.class)
+@DataJpaTest()
+@ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ReviewRepositoryTest {
 	
@@ -48,10 +45,9 @@ class ReviewRepositoryTest {
 	}
 	
 	@Test
-	void reviewFindAllUserIdWorks() {
-		// change orelse?
-		User user = testUserRepository.findById(1).orElse(null);
-		Item item = testItemRepository.findById(1).orElse(null);
+	void reviewFindAllUserIdWorks() throws Exception {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
@@ -87,9 +83,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindAllByItemIdWorks() {
-		// change orelse?
-		User user = testUserRepository.findById(1).orElse(null);
-		Item item = testItemRepository.findById(1).orElse(null);
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
@@ -125,9 +120,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindAllByTitleWorks() {
-		// change orelse?
-		User user = testUserRepository.findById(1).orElse(null);
-		Item item = testItemRepository.findById(1).orElse(null);
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
@@ -165,9 +159,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartMonthByUserIdWorks() {
-		// change orelse?
-		User user = testUserRepository.findById(1).orElse(null);
-		Item item = testItemRepository.findById(1).orElse(null);
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2023-01-01"),
 				"review body for test",
@@ -214,9 +207,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartWeekByUserIdWorks() {
-		// change orelse?
-		User user = testUserRepository.findById(1).orElse(null);
-		Item item = testItemRepository.findById(1).orElse(null);
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2022-01-04"),
 				"review body for test",
@@ -262,9 +254,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartMonthByItemIdWorks() {
-		// change orelse?
-		User user = testUserRepository.findById(1).orElse(null);
-		Item item = testItemRepository.findById(1).orElse(null);
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2023-01-01"),
 				"review body for test",
@@ -311,9 +302,8 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void reviewfindChartWeekByItemIdWorks() {
-		// change orelse?
-		User user = testUserRepository.findById(1).orElse(null);
-		Item item = testItemRepository.findById(1).orElse(null);
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2022-01-04"),
 				"review body for test",

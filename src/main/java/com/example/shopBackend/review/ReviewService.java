@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.user.UserRepository;
 
 import exception.BadRequestException;
@@ -26,9 +27,13 @@ public class ReviewService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository) {
+	@Autowired
+	private ItemRepository itemRepository;
+	
+	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository) {
 		this.reviewRepository = reviewRepository;
 		this.userRepository = userRepository;
+		this.itemRepository = itemRepository;
 	}
 
 	/**
@@ -69,7 +74,11 @@ public class ReviewService {
 	 */
 	public List<Review> getReviewsForItem(int id, int page) {
 		Pageable pageRequest = PageRequest.of(page, 4);
-		return reviewRepository.findAllUserId(id, pageRequest);
+		if(itemRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No items exists with this id");
+		}
+		return reviewRepository.findAllItemId(id, pageRequest);
 	}
 	
 	/**

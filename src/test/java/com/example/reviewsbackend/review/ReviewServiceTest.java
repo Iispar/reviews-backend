@@ -16,13 +16,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.item.Item;
+import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.review.ReviewService;
 import com.example.shopBackend.user.User;
@@ -43,17 +44,16 @@ public class ReviewServiceTest {
 	
 	@Mock
 	private UserRepository userRepository;
+	
+	@Mock
+	private ItemRepository itemRepository;
 
 	@InjectMocks
 	private ReviewService testReviewService;
 	
-	@BeforeEach
-	void SetVerify() {
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-	}
-	
 	@Test
 	void GetAllReviewsForUserWorks() {
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 
 		Pageable pageRequest = PageRequest.of(0, 4);
 		testReviewService.getReviewsForUser(1, 0);
@@ -63,6 +63,7 @@ public class ReviewServiceTest {
 	
 	@Test
 	void GetAllReviewsForUserThrowsErrorWithNegativePage() {
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 
 		testReviewService.getReviewsForUser(-1, 0);
 		
@@ -88,4 +89,44 @@ public class ReviewServiceTest {
 		
 		verify(reviewRepository, never()).findAllUserId(0, pageRequest);
 	}
+	
+	@Test
+	void GetAllReviewsForItemWorks() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+		testReviewService.getReviewsForItem(1, 0);
+		
+		verify(reviewRepository).findAllItemId(1, pageRequest);
+	}
+	
+	@Test
+	void GetAllReviewsForItemThrowsErrorWithNegativePage() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+		testReviewService.getReviewsForItem(-1, 0);
+		
+		assertThatThrownBy(() -> testReviewService.getReviewsForItem(0, -1))
+			.isInstanceOf(java.lang.IllegalArgumentException.class)
+			.hasMessageContaining("Page index must not be less than zero");
+		
+		Pageable pageRequest = PageRequest.of(0, 4);
+		
+		verify(reviewRepository, never()).findAllItemId(0, pageRequest);
+	}
+	
+	@Test
+	void GetAllReviewsForItemThrowsErrorWithNotMatchingUserId() {
+		given(itemRepository.findById(any())).willReturn(Optional.empty());
+		
+		assertThatThrownBy(() -> testReviewService.getReviewsForItem(1, 0))
+			.isInstanceOf(BadRequestException.class)
+			.hasMessageContaining("No items exists with this id");
+		
+		Pageable pageRequest = PageRequest.of(0, 4);
+		
+		verify(reviewRepository, never()).findAllItemId(0, pageRequest);
+	}
+	
+	
 }

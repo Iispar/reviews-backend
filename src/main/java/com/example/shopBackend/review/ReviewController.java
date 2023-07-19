@@ -78,8 +78,10 @@ public class ReviewController {
 	@GetMapping("/get/item")
 	public List<Review> getReviewsForItem(
 			@RequestParam("itemId") int id,
-			@RequestParam("page") int page) {
-		List<Review> reviews = reviewService.getReviewsForItem(id, page);
+			@RequestParam("page") int page,
+			@RequestParam("sort") String sort,
+			@RequestParam("sortDir") String sortDir) {
+		List<Review> reviews = reviewService.getReviewsForItem(id, page, sort, sortDir);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with user id");
@@ -106,10 +108,11 @@ public class ReviewController {
 			@RequestParam("title") String title,
 			@RequestParam("itemId") int id,
 			@RequestParam("sort") String sort,
+			@RequestParam("sortDir") String sortDir,
 			@RequestParam("page") int page){
 		
 		// if sort different call...
-		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, id, sort, page);
+		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, page, id, sort, sortDir);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with item id and name");

@@ -58,7 +58,7 @@ public class ReviewService {
 		Pageable pageRequest = PageRequest.of(page, 4);
 		if(userRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
-					"No users exists with this id");
+					"No users exists with id " + id);
 		}
 		// if no user with id return error?
 		return reviewRepository.findAllUserId(id, pageRequest);
@@ -72,12 +72,27 @@ public class ReviewService {
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
-	public List<Review> getReviewsForItem(int id, int page) {
-		Pageable pageRequest = PageRequest.of(page, 4);
+	public List<Review> getReviewsForItem(int id, int page, String sort, String sortDir) {
 		if(itemRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
-					"No items exists with this id");
+					"No items exists with id " + id);
 		}
+		
+		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
+			throw new BadRequestException(
+					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
+		}
+		
+		if (!(sort.equals("review_date") || sort.equals("review_likes") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+			throw new BadRequestException(
+					"sort " + sort + " is not a valid value for a sort in the entity.");
+		}
+		
+		Pageable pageRequest;
+		if (sortDir == "asc") pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+		
+		
 		return reviewRepository.findAllItemId(id, pageRequest);
 	}
 	
@@ -105,9 +120,28 @@ public class ReviewService {
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
-	public List<Review> getReviewsWithTitleForItem(String title, int id, String sort, int page) {
-		String formattedTitle = String.format("%%%s%%", title).replace("_", "%");
-		Pageable pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+	public List<Review> getReviewsWithTitleForItem(String title, int id, int page, String sort, String sortDir) {
+		if(itemRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No items exists with id " + id);
+		}
+		
+		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
+			throw new BadRequestException(
+					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
+		}
+		
+		if (!(sort.equals("review_date") || sort.equals("review_likes") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+			throw new BadRequestException(
+					"sort " + sort + " is not a valid value for a sort in the entity.");
+		}
+		
+		Pageable pageRequest;
+		if (sortDir == "asc") pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+		
+		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
+		
 		return reviewRepository.findAllByTitleForItem(formattedTitle, id, pageRequest);
 	}
 	
@@ -121,6 +155,17 @@ public class ReviewService {
 	 * @return count of reviews and their avg rating grouped by parameter.
 	 */
 	public List<Chart> getChartForUser(String time, int id) {
+		
+		if (!(time.equals("month") || time.equals("week"))) {
+			throw new BadRequestException(
+					"time " + time + " is not a valid value for a timespan . Either week or month");
+		}
+		
+		if(userRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No users exists with id " + id);
+		}
+
 		List<Chart> res = null;
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForUserByMonth(id);
@@ -140,6 +185,17 @@ public class ReviewService {
 	 * @return count of reviews and their avg rating grouped by parameter.
 	 */
 	public List<Chart> getChartForItem(String time, int id) {
+		
+		if (!(time.equals("month") || time.equals("week"))) {
+			throw new BadRequestException(
+					"time " + time + " is not a valid value for a timespan . Either week or month");
+		}
+		
+		if(itemRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No items exists with id " + id);
+		}
+		
 		List<Chart> res = null;
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForItemByMonth(id);

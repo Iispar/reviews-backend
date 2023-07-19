@@ -1,5 +1,6 @@
 package com.example.shopBackend.review;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,22 @@ public class ReviewService {
 	 * @return
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
+		for (int i = 0; i < review.size(); i += 1) {
+			if (review.get(i).getDislikes() < 0) {
+				throw new BadRequestException(
+						"review with negative dislikes not allowed");
+			}
+			
+			if (review.get(i).getLikes() < 0) {
+				throw new BadRequestException(
+						"review with negative likes not allowed");
+			}
+			
+			if (review.get(i).getRating() < 0 || review.get(i).getRating() > 5) {
+				throw new BadRequestException(
+						"review with invalid rating. Has to be between 0-5.");
+			}
+		}
 		return reviewRepository.saveAll(review);
 	}
 	
@@ -170,7 +187,7 @@ public class ReviewService {
 					"No users exists with id " + id);
 		}
 
-		List<Chart> res = null;
+		List<Chart> res = new ArrayList<Chart>();
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForUserByMonth(id);
 		} else if (time.equals("week")) {
@@ -200,7 +217,7 @@ public class ReviewService {
 					"No items exists with id " + id);
 		}
 		
-		List<Chart> res = null;
+		List<Chart> res = new ArrayList<Chart>();
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForItemByMonth(id);
 		} else if (time.equals("week")) {

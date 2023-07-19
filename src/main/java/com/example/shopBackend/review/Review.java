@@ -36,9 +36,9 @@ public class Review {
 	@Column(name = "review_title", nullable = false)
 	private String title;
 	@Column(name = "review_likes", nullable = true)
-	private String likes;
+	private int likes;
 	@Column(name = "review_dislikes", nullable = true)
-	private String dislikes;
+	private int dislikes;
 	@Column(name = "review_rating", nullable = false)
 	private int rating;
 	
@@ -52,7 +52,7 @@ public class Review {
 	@JoinColumn(name = "review_item", referencedColumnName = "item_id", nullable = false)
 	private Item item;
 
-	public Review(Date date, String body, String title, String likes, String dislikes, User user, int rating, Item item) {
+	public Review(Date date, String body, String title, int likes, int dislikes, User user, int rating, Item item) {
 		this.date = date;
 		this.body = body;
 		this.title = title;
@@ -97,19 +97,19 @@ public class Review {
 		this.title = title;
 	}
 
-	public String getLikes() {
+	public int getLikes() {
 		return likes;
 	}
 
-	public void setLikes(String likes) {
+	public void setLikes(int likes) {
 		this.likes = likes;
 	}
 
-	public String getDislikes() {
+	public int getDislikes() {
 		return dislikes;
 	}
 
-	public void setDislikes(String dislikes) {
+	public void setDislikes(int dislikes) {
 		this.dislikes = dislikes;
 	}
 

@@ -6,6 +6,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -302,4 +305,140 @@ public class ReviewServiceTest {
 		verify(reviewRepository, never()).deleteById(0);
 	}
 	
+	@Test
+	void addReviewWorks() {
+		List<Review> list = new ArrayList<Review>();
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				0,
+				0,
+				null,
+				0,
+				null
+				);
+		Review review2 = new Review(
+				new Date(1),
+				"title2",
+				"body2",
+				0,
+				0,
+				null,
+				0,
+				null
+				);
+		
+		list.add(review1);
+		list.add(review2);
+		
+		testReviewService.saveAllReviews(list);
+
+		verify(reviewRepository).saveAll(list);
+	}
+	
+	@Test
+	void addReviewThrowsErrorWithBadLikes() {
+		List<Review> list = new ArrayList<Review>();
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				-1,
+				0,
+				null,
+				0,
+				null
+				);
+		Review review2 = new Review(
+				new Date(1),
+				"title2",
+				"body2",
+				0,
+				0,
+				null,
+				0,
+				null
+				);
+		
+		list.add(review1);
+		list.add(review2);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+		.isInstanceOf(BadRequestException.class)
+		.hasMessageContaining("review with negative likes not allowed");
+
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+	
+	@Test
+	void addReviewThrowsErrorWithBadDislikes() {
+		List<Review> list = new ArrayList<Review>();
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				null,
+				0,
+				null
+				);
+		Review review2 = new Review(
+				new Date(1),
+				"title2",
+				"body2",
+				0,
+				-1,
+				null,
+				0,
+				null
+				);
+		
+		list.add(review1);
+		list.add(review2);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+		.isInstanceOf(BadRequestException.class)
+		.hasMessageContaining("review with negative dislikes not allowed");
+
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+	
+	@Test
+	void addReviewThrowsErrorWithBadRating() {
+		List<Review> list = new ArrayList<Review>();
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				null,
+				8,
+				null
+				);
+		Review review2 = new Review(
+				new Date(1),
+				"title2",
+				"body2",
+				0,
+				0,
+				null,
+				0,
+				null
+				);
+		
+		list.add(review1);
+		list.add(review2);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+		.isInstanceOf(BadRequestException.class)
+		.hasMessageContaining("review with invalid rating. Has to be between 0-5.");
+
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
 }

@@ -111,7 +111,6 @@ public class ReviewController {
 			@RequestParam("sortDir") String sortDir,
 			@RequestParam("page") int page){
 		
-		// if sort different call...
 		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, page, id, sort, sortDir);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(

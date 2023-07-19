@@ -47,6 +47,22 @@ public class ReviewService {
 	}
 	
 	/**
+	 * Deletes a item with the corresponding item_id.
+	 * @param {int} id
+	 * 		  The id of the item to be deleted.
+	 * @return true if successful, false otherwise.
+	 */
+	public Boolean deleteReview(int id) {
+		if(reviewRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No reviews exists with id " + id);
+		}
+
+		reviewRepository.deleteById(id);
+		return true;
+	}
+	
+	/**
 	 * Finds all reviews for users items for page from the database. And returns them.
 	 * @param {int} id
 	 * 		  The id of the user you want reviews for.
@@ -94,18 +110,6 @@ public class ReviewService {
 		
 		
 		return reviewRepository.findAllItemId(id, pageRequest);
-	}
-	
-	/**
-	 * Deletes a item with the corresponding item_id.
-	 * @param {int} id
-	 * 		  The id of the item to be deleted.
-	 * @return true if successful, false otherwise.
-	 */
-	public Boolean deleteReview(int id) {
-		reviewRepository.deleteById(id);
-		// false if fails?
-		return true;
 	}
 	
 	/**

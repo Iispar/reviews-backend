@@ -17,13 +17,14 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.data.domain.Sort;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.review.ReviewService;
 import com.example.shopBackend.user.User;
@@ -281,5 +282,24 @@ public class ReviewServiceTest {
 		verify(reviewRepository, never()).findChartForItemByWeek(0);
 	}
 	
+	@Test
+	void deleteReviewWorks() {
+		given(reviewRepository.findById(any())).willReturn(Optional.of(new Review()));
+		
+		testReviewService.deleteReview(0);
+
+		verify(reviewRepository).deleteById(0);
+	}
+	
+	@Test
+	void deleteReviewsThrowsErrorWithNoMatchingReview() {
+		given(reviewRepository.findById(any())).willReturn(Optional.empty());
+		
+		assertThatThrownBy(() ->  testReviewService.deleteReview(0))
+		.isInstanceOf(BadRequestException.class)
+		.hasMessageContaining("No reviews exists with id 0");
+
+		verify(reviewRepository, never()).deleteById(0);
+	}
 	
 }

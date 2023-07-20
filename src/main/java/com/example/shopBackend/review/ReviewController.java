@@ -1,15 +1,9 @@
 package com.example.shopBackend.review;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * The controller for the review table
@@ -37,9 +31,9 @@ public class ReviewController {
 	@PostMapping("/add")
 	public Boolean add(@RequestBody List<Review> review) {
 		reviewService.saveAllReviews(review);
-		// TODO: rate reviews
 		// TODO: calc new average for item
 		// TODO: calc new topwords
+		// UPDATE item values(itemId)
 		return true;
 	}
 	

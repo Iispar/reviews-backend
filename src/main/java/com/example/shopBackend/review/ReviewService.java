@@ -1,18 +1,16 @@
 package com.example.shopBackend.review;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.user.UserRepository;
+import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.shopBackend.item.ItemRepository;
-import com.example.shopBackend.user.UserRepository;
-
-import exception.BadRequestException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Services for the review entity
@@ -39,11 +37,13 @@ public class ReviewService {
 
 	/**
 	 * Saves a new review to the database.
-	 * @param {Review} review
+	 * @param {List<Review>} review
 	 * 		  The review to be added to the database.
 	 * @return
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
+		// TODO: rate reviews
+		// TODO: get entities from ids
 		for (int i = 0; i < review.size(); i += 1) {
 			if (review.get(i).getDislikes() < 0) {
 				throw new BadRequestException(

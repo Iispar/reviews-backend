@@ -1,16 +1,11 @@
 package com.example.shopBackend.review;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.item.Item;
+import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.user.User;
+import com.example.shopBackend.user.UserRepository;
+import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,20 +19,23 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.example.shopBackend.ShopBackendApplication;
-import com.example.shopBackend.item.Item;
-import com.example.shopBackend.item.ItemRepository;
-import com.example.shopBackend.user.User;
-import com.example.shopBackend.user.UserRepository;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import exception.BadRequestException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ActiveProfiles("test")
 @DataJpaTest()
 @ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class ReviewServiceTest {
+class ReviewServiceTest {
 
 	
 	@Mock

@@ -1,17 +1,9 @@
 package com.example.shopBackend.item;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.shopBackend.review.Review;
+import java.util.List;
 
 /**
  * The controller for calls to item table.
@@ -36,10 +28,10 @@ public class ItemController {
 	 * @return True if successful. False otherwise
 	 */
 	@PostMapping("/add")
-	public Boolean add(@RequestBody List<Item> review) {
+	public Boolean add(@RequestBody List<Item> item) {
 		// TODO: calc average for item
 		// TODO: calc topwords
-		itemService.saveReview(review);
+		itemService.saveItem(item);
 		return true;
 	}
 	
@@ -69,7 +61,7 @@ public class ItemController {
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteItem(@RequestParam("itemId") int id) {
-		if (Boolean.TRUE.equals(itemService.deleteReview(id))) return true;
+		if (Boolean.TRUE.equals(itemService.deleteItem(id))) return true;
 		return false;
 	}
 }

@@ -1,14 +1,12 @@
 package com.example.shopBackend.review;
 
-import java.util.List;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.shopBackend.item.Item;
+import java.util.List;
 
 /**
  * Repo for the review table.
@@ -17,7 +15,9 @@ import com.example.shopBackend.item.Item;
  */
 @Repository
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Integer>, JpaRepository<Review, Integer> {
-	
+
+	// TODO: updates
+
 	/**
 	 * Query to find all reviews for users for page.
 	 * @param {int} id

@@ -34,6 +34,11 @@ public class ItemService {
 	 * @return
 	 */
 	public List<Item> saveItem(List<Item> item) {
+
+		for (int i = 0; i < item.size(); i += 1) {
+			// TODO: calc and set rating
+
+		}
 		return itemRepository.saveAll(item);
 	}
 	/**

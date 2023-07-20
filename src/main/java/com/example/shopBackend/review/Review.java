@@ -1,19 +1,10 @@
 package com.example.shopBackend.review;
 
-import java.sql.Date;
-
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.sql.Date;
 
 /**
  * The Review entity in the backend.
@@ -39,7 +30,7 @@ public class Review {
 	private int likes;
 	@Column(name = "review_dislikes", nullable = true)
 	private int dislikes;
-	@Column(name = "review_rating", nullable = false)
+	@Column(name = "review_rating", nullable = true)
 	private int rating;
 	
 	// reference to customer entity - unidirectional.

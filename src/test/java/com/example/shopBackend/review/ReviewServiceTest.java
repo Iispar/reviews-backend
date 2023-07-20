@@ -1,10 +1,13 @@
 package com.example.shopBackend.review;
 
 import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.role.Role;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
+import com.example.shopBackend.words.Words;
 import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -323,16 +326,20 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewWorks() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 		List<Review> list = new ArrayList<Review>();
+		Item item = new Item("test title", null, "4", new Category(), new Words());
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				0,
 				0,
-				null,
+				user,
 				0,
-				null
+				item
 				);
 		Review review2 = new Review(
 				new Date(1),
@@ -340,9 +347,9 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				0,
-				null,
+				user,
 				0,
-				null
+				item
 				);
 		
 		list.add(review1);
@@ -356,15 +363,17 @@ class ReviewServiceTest {
 	@Test
 	void addReviewThrowsErrorWithBadLikes() {
 		List<Review> list = new ArrayList<Review>();
+		Item item = new Item("test title", null, "4", new Category(), new Words());
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				-1,
 				0,
-				null,
+				user,
 				0,
-				null
+				item
 				);
 		Review review2 = new Review(
 				new Date(1),
@@ -372,9 +381,9 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				0,
-				null,
+				user,
 				0,
-				null
+				item
 				);
 		
 		list.add(review1);
@@ -390,16 +399,20 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewThrowsErrorWithBadDislikes() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 		List<Review> list = new ArrayList<Review>();
+		Item item = new Item("test title", null, "4", new Category(), new Words());
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				null,
+				user,
 				0,
-				null
+				item
 				);
 		Review review2 = new Review(
 				new Date(1),
@@ -407,9 +420,9 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				-1,
-				null,
+				user,
 				0,
-				null
+				item
 				);
 		
 		list.add(review1);
@@ -426,33 +439,63 @@ class ReviewServiceTest {
 	@Test
 	void addReviewThrowsErrorWithBadRating() {
 		List<Review> list = new ArrayList<Review>();
+		Item item = new Item("test title", null, "4", new Category(), new Words());
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				null,
-				8,
-				null
+				user,
+				3,
+				item
 				);
+		
+		list.add(review1);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+		.isInstanceOf(BadRequestException.class)
+		.hasMessageContaining("item with id: 0 does not exist");
+
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+
+	@Test
+	void addReviewThrowsErrorWithBadUserId() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.empty());
+		List<Review> list = new ArrayList<Review>();
+		Item item = new Item("test title", null, "4", new Category(), new Words());
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				user,
+				2,
+				item
+		);
 		Review review2 = new Review(
 				new Date(1),
 				"title2",
 				"body2",
 				0,
 				0,
-				null,
+				user,
 				0,
-				null
-				);
-		
+				item
+		);
+
 		list.add(review1);
 		list.add(review2);
 
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
-		.isInstanceOf(BadRequestException.class)
-		.hasMessageContaining("review with invalid rating. Has to be between 0-5.");
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("user with id: 1 does not exist");
 
 
 		verify(reviewRepository, never()).saveAll(list);

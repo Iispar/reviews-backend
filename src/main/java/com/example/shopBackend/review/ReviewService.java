@@ -42,8 +42,13 @@ public class ReviewService {
 	 * @return
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
+
+		//TODO: updates
+
 		// TODO: rate reviews
-		// TODO: get entities from ids
+		// API CALL TO RATE REVIEWS
+		// LOOP AND SET ALL THE RATINGS
+
 		for (int i = 0; i < review.size(); i += 1) {
 			if (review.get(i).getDislikes() < 0) {
 				throw new BadRequestException(
@@ -59,8 +64,25 @@ public class ReviewService {
 				throw new BadRequestException(
 						"review with invalid rating. Has to be between 0-5.");
 			}
+			int itemId = review.get(i).getItem().getId();
+			int userId = review.get(i).getUser().getId();
+			if (itemRepository.findById(itemId).isEmpty()) {
+				throw new BadRequestException(
+						"item with id: " + itemId + " does not exist");
+			}
+
+			if (userRepository.findById(userId).isEmpty()) {
+				throw new BadRequestException(
+						"user with id: " + userId + " does not exist");
+			}
 		}
-		return reviewRepository.saveAll(review);
+
+		List<Review> res = reviewRepository.saveAll(review);
+
+		// TODO: update Item values ?
+		// itemService.update...
+
+		return res;
 	}
 	
 	/**

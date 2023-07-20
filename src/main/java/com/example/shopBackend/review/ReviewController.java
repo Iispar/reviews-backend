@@ -31,9 +31,7 @@ public class ReviewController {
 	@PostMapping("/add")
 	public Boolean add(@RequestBody List<Review> review) {
 		reviewService.saveAllReviews(review);
-		// TODO: calc new average for item
-		// TODO: calc new topwords
-		// UPDATE item values(itemId)
+		// TODO: update item call?
 		return true;
 	}
 	

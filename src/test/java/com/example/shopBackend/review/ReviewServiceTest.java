@@ -448,7 +448,7 @@ class ReviewServiceTest {
 				1,
 				0,
 				user,
-				3,
+				8,
 				item
 				);
 		
@@ -456,7 +456,7 @@ class ReviewServiceTest {
 
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 		.isInstanceOf(BadRequestException.class)
-		.hasMessageContaining("item with id: 0 does not exist");
+		.hasMessageContaining("review with invalid rating. Has to be between 0-5.");
 
 
 		verify(reviewRepository, never()).saveAll(list);
@@ -496,6 +496,45 @@ class ReviewServiceTest {
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("user with id: 1 does not exist");
+
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+
+	@Test
+	void addReviewThrowsErrorWithBaditemId() {
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(itemRepository.findById(any())).willReturn(Optional.empty());
+		List<Review> list = new ArrayList<Review>();
+		Item item = new Item("test title", null, "4", new Category(), new Words());
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				user,
+				2,
+				item
+		);
+		Review review2 = new Review(
+				new Date(1),
+				"title2",
+				"body2",
+				0,
+				0,
+				user,
+				0,
+				item
+		);
+
+		list.add(review1);
+		list.add(review2);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("item with id: 1 does not exist");
 
 
 		verify(reviewRepository, never()).saveAll(list);

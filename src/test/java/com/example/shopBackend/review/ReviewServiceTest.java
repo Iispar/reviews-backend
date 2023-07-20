@@ -1,4 +1,4 @@
-package com.example.reviewsbackend.review;
+package com.example.shopBackend.review;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,9 +27,6 @@ import org.springframework.test.context.ContextConfiguration;
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
-import com.example.shopBackend.review.Review;
-import com.example.shopBackend.review.ReviewRepository;
-import com.example.shopBackend.review.ReviewService;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
 
@@ -89,12 +86,22 @@ public class ReviewServiceTest {
 	}
 	
 	@Test
-	void GetAllReviewsForItemWorks() {
+	void GetAllReviewsForItemWorksWithAsc() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
 		Pageable pageRequest = PageRequest.of(0, 4, Sort.by("review_date").ascending());
 		testReviewService.getReviewsForItem(1, 0, "review_date", "asc");
 		
+		verify(reviewRepository).findAllItemId(1, pageRequest);
+	}
+
+	@Test
+	void GetAllReviewsForItemWorksWithDesc() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+		Pageable pageRequest = PageRequest.of(0, 4, Sort.by("review_date").descending());
+		testReviewService.getReviewsForItem(1, 0, "review_date", "desc");
+
 		verify(reviewRepository).findAllItemId(1, pageRequest);
 	}
 	
@@ -147,12 +154,23 @@ public class ReviewServiceTest {
 	}
 	
 	@Test
-	void getReviewsWithTitleForItemWorks() {
+	void getReviewsWithTitleForItemWorksWithAsc() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
 		testReviewService.getReviewsWithTitleForItem("test_title", 0, 1,"review_date", "asc");
 		
 		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").ascending());
+
+		verify(reviewRepository).findAllByTitleForItem("%test%title%", 0, pageRequest);
+	}
+
+	@Test
+	void getReviewsWithTitleForItemWorksWithDesc() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+		testReviewService.getReviewsWithTitleForItem("test_title", 0, 1,"review_date", "desc");
+
+		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").descending());
 
 		verify(reviewRepository).findAllByTitleForItem("%test%title%", 0, pageRequest);
 	}

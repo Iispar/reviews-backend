@@ -1,4 +1,4 @@
-package com.example.reviewsbackend.review;
+package com.example.shopBackend.review;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,9 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
-import com.example.shopBackend.review.Chart;
-import com.example.shopBackend.review.Review;
-import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
 

@@ -1,4 +1,4 @@
-package item;
+package com.example.shopBackend.item;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,19 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.category.CategoryRepository;
-import com.example.shopBackend.item.Item;
-import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
 import com.example.shopBackend.words.Words;

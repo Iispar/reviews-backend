@@ -24,15 +24,15 @@ public class ReviewController {
 	/**
 	 * API GET call to /api/review/add with content in the body that describes the added review.
 	 * Will add it to the database. Used in the frontend item page with add review.
+	 *
 	 * @param {Review} review
-	 * 	      The review to be added to the database
+	 *                 The review to be added to the database
 	 * @return True if successful. False otherwise
 	 */
 	@PostMapping("/add")
-	public Boolean add(@RequestBody List<Review> review) {
-		reviewService.saveAllReviews(review);
+	public List<Review> add(@RequestBody List<Review> review) {
+		return reviewService.saveAllReviews(review);
 		// TODO: update item call?
-		return true;
 	}
 	
 	/**

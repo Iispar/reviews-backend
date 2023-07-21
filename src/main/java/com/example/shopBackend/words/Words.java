@@ -1,17 +1,8 @@
 package com.example.shopBackend.words;
 
+import jakarta.persistence.*;
+
 import java.util.List;
-
-import com.example.shopBackend.item.Item;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 /**
  * The Words entity in the backend.
@@ -28,7 +19,7 @@ public class Words {
 	
 	@Column(name = "words_positive", nullable = true, updatable = true, unique = false)
 	private List<String> positive;
-	
+
 	@Column(name = "words_negative", nullable = true, updatable = true, unique = false)
 	private List<String> negative;
 	

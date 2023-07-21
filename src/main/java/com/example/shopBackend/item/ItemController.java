@@ -25,16 +25,14 @@ public class ItemController {
 	/**
 	 * API GET call to /api/item/add with content in the body that describes the added item.
 	 * Will add it to the database. Used in the frontend allItem page with add item.
+	 *
 	 * @param {Item} item
-	 * 	      The item to be added to the database
+	 *               The item to be added to the database
 	 * @return True if successful. False otherwise
 	 */
 	@PostMapping("/add")
-	public Boolean add(@RequestBody List<Item> item) {
-		// TODO: calc average for item
-		// TODO: calc topwords
-		itemService.saveItem(item);
-		return true;
+	public List<Item> add(@RequestBody List<Item> item) {
+		return itemService.saveItem(item);
 	}
 	
 	/**
@@ -65,5 +63,19 @@ public class ItemController {
 	public boolean deleteItem(@RequestParam("itemId") int id) {
 		if (Boolean.TRUE.equals(itemService.deleteItem(id))) return true;
 		return false;
+	}
+
+	/**
+	 * API PUT call to /api/item/update?itemId=(input) with an item in the body
+	 * will update the corresponding item with the id.
+	 * @param {int} id
+	 * 		  Id of the item to be updated.
+	 * @param {Item} item
+	 * 		  The item that has updated values.
+	 * @return Updated item
+	 */
+	@PutMapping("/update")
+	public Item updateItem(@RequestParam("itemId") int id, @RequestBody Item item) {
+		return itemService.updateItem(id, item);
 	}
 }

@@ -19,6 +19,8 @@ import java.util.List;
  */
 @Service
 public class ReviewService {
+
+	//TODO: updates
 	
 	@Autowired
 	private ReviewRepository reviewRepository;
@@ -42,8 +44,6 @@ public class ReviewService {
 	 * @return
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
-
-		//TODO: updates
 
 		// TODO: rate reviews
 		// API CALL TO RATE REVIEWS

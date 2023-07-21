@@ -32,7 +32,7 @@ public class ItemController {
 	 */
 	@PostMapping("/add")
 	public List<Item> add(@RequestBody List<Item> item) {
-		return itemService.saveItem(item);
+		return itemService.saveAllItems(item);
 	}
 	
 	/**

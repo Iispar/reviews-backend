@@ -1,9 +1,12 @@
 package com.example.shopBackend.item;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-
+import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.category.Category;
+import com.example.shopBackend.category.CategoryRepository;
+import com.example.shopBackend.user.User;
+import com.example.shopBackend.user.UserRepository;
+import com.example.shopBackend.words.Words;
+import com.example.shopBackend.words.WordsRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.example.shopBackend.ShopBackendApplication;
-import com.example.shopBackend.category.Category;
-import com.example.shopBackend.category.CategoryRepository;
-import com.example.shopBackend.user.User;
-import com.example.shopBackend.user.UserRepository;
-import com.example.shopBackend.words.Words;
-import com.example.shopBackend.words.WordsRepository;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @DataJpaTest()
@@ -54,9 +53,10 @@ class ItemRepositoryTest {
 		Item item = new Item(
 				"new item title",
 				user,
-				"4",
+				4,
 				category,
-				words
+				words,
+				"test desc"
 				);
 		testItemRepository.save(item);
 		

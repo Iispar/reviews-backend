@@ -19,8 +19,6 @@ import java.util.List;
  */
 @Service
 public class ReviewService {
-
-	//TODO: updates
 	
 	@Autowired
 	private ReviewRepository reviewRepository;

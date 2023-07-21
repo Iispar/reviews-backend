@@ -32,7 +32,7 @@ public class Item {
 	private User user;
 	
 	@Column(name = "item_rating", nullable = true)
-	private String rating;
+	private float rating;
 	
 	// reference to category entity - unidirectional.
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
@@ -45,7 +45,7 @@ public class Item {
 	@JoinColumn(name = "item_words", referencedColumnName = "words_id", nullable = true)
 	private Words words;
 	
-	public Item(String title, User user, String rating, Category category, Words words, String desc) {
+	public Item(String title, User user, float rating, Category category, Words words, String desc) {
 		this.title = title;
 		this.user = user;
 		this.rating = rating;
@@ -96,11 +96,11 @@ public class Item {
 		this.user = user;
 	}
 
-	public String getRating() {
+	public float getRating() {
 		return rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 

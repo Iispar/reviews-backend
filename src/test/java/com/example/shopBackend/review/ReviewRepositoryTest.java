@@ -1,10 +1,10 @@
 package com.example.shopBackend.review;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.sql.Date;
-import java.util.List;
-
+import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.item.Item;
+import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.user.User;
+import com.example.shopBackend.user.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.example.shopBackend.ShopBackendApplication;
-import com.example.shopBackend.item.Item;
-import com.example.shopBackend.item.ItemRepository;
-import com.example.shopBackend.user.User;
-import com.example.shopBackend.user.UserRepository;
+import java.sql.Date;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @DataJpaTest()

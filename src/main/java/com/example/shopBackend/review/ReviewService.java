@@ -113,7 +113,6 @@ public class ReviewService {
 			throw new BadRequestException(
 					"No users exists with id " + id);
 		}
-		// if no user with id return error?
 		return reviewRepository.findAllUserId(id, pageRequest);
 	}
 	

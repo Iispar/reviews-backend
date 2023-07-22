@@ -125,7 +125,22 @@ public class ItemService {
 		Item foundItem = itemRepository.findById(id).orElse(null);
 		if (foundItem == null) {
 			throw new BadRequestException(
-					"No items exists with id " + id);
+					"No items exists with id: " + id);
+		}
+
+		if (categoryRepository.findById(item.getCategory().getId()).isEmpty()) {
+			throw new BadRequestException(
+					"No categories exists with id: " + item.getCategory().getId());
+		}
+
+		if (item.getTitle().length() < 3 || item.getTitle().length() > 50) {
+			throw new BadRequestException(
+					"item with invalid title. Length has to be between 3 and 50 characters");
+		}
+
+		if (item.getDesc().length() > 300) {
+			throw new BadRequestException(
+					"item with invalid desc. Length has to be under 300 characters");
 		}
 
 		foundItem.setCategory(item.getCategory());

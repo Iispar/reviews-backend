@@ -520,7 +520,7 @@ class ReviewServiceTest {
 
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(BadRequestException.class)
-				.hasMessageContaining("user with id: 1 does not exist");
+				.hasMessageContaining("user with id: " + user.getId() + " does not exist");
 
 
 		verify(reviewRepository, never()).saveAll(list);
@@ -558,7 +558,7 @@ class ReviewServiceTest {
 
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(BadRequestException.class)
-				.hasMessageContaining("item with id: 0 does not exist");
+				.hasMessageContaining("item with id: " + item.getId() + " does not exist");
 
 
 		verify(reviewRepository, never()).saveAll(list);

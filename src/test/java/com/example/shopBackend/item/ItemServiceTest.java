@@ -337,7 +337,7 @@ class ItemServiceTest {
 
         assertThatThrownBy(() ->  testItemService.saveAllItems(list))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("category with id: 0 does not exist");
+                .hasMessageContaining("category with id: " + category.getId() + " does not exist");
 
         verify(itemRepository, never()).saveAll(list);
     }
@@ -372,13 +372,148 @@ class ItemServiceTest {
 
         assertThatThrownBy(() ->  testItemService.saveAllItems(list))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("user with id: 1 does not exist");
+                .hasMessageContaining("user with id: " + user.getId() + " does not exist");
 
         verify(itemRepository, never()).saveAll(list);
     }
 
     @Test
     void updateItemWorks() {
-        // TODO tests for update Item
+        given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        Item item = new Item(
+                "test title",
+                user,
+                0,
+                category,
+                null,
+                "test desc"
+        );
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+        testItemService.updateItem(item.getId(), item);
+
+        verify(itemRepository).save(item);
+    }
+
+    @Test
+    void updateItemThrowsErrorWithNoFoundItem() {
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        Item item = new Item(
+                "test title",
+                user,
+                0,
+                category,
+                null,
+                "test desc"
+        );
+
+        given(itemRepository.findById(any())).willReturn(Optional.empty());
+
+        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("No items exists with id: " + item.getId());
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemThrowsErrorWithTooLongTitle() {
+        given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        Item item = new Item(
+                "this title will be too long. this title will be too long. this title will be too long. this title will be too long.",
+                user,
+                0,
+                category,
+                null,
+                "test desc"
+        );
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemThrowsErrorWithTooShortTitle() {
+        given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        Item item = new Item(
+                "il",
+                user,
+                0,
+                category,
+                null,
+                "test desc"
+        );
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemThrowsErrorWithBadDesc() {
+        given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        Item item = new Item(
+                "test title",
+                user,
+                0,
+                category,
+                null,
+                "test desc that is too long. test desc that is too long.  test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. vtest desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. "
+        );
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("item with invalid desc. Length has to be under 300 characters");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemThrowsErrorWithNoCategory() {
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        Item item = new Item(
+                "test title",
+                user,
+                0,
+                category,
+                null,
+                "test desc"
+        );
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("No categories exists with id: " + item.getCategory().getId());
+
+        verify(itemRepository, never()).save(item);
     }
 }

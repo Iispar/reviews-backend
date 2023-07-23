@@ -1,12 +1,12 @@
 package com.example.shopBackend.user;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * The controller for the user table
@@ -32,7 +32,7 @@ public class UserController {
 	 */
 	@PostMapping("/add")
 	public Boolean add(@RequestBody List<User> user) {
-		userService.saveAllReviews(user);
+		userService.saveAllUsers(user);
 		// TODO: rate reviews
 		// TODO: calc new average for item
 		// TODO: calc new topwords

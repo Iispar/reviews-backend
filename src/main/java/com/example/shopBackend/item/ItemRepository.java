@@ -16,8 +16,6 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends PagingAndSortingRepository<Item, Integer>, JpaRepository<Item, Integer> {
 
-	// TODO: UPDATES
-
 	
 	/**
 	 * Query to find all items for user for page.

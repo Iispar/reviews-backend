@@ -16,8 +16,6 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Integer>, JpaRepository<Review, Integer> {
 
-	// TODO: updates
-
 	/**
 	 * Query to find all reviews for users for page.
 	 * @param {int} id

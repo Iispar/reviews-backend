@@ -14,8 +14,6 @@ import java.util.List;
 @RequestMapping("/api/item")
 public class ItemController {
 	private ItemService itemService;
-
-	// TODO: UPDATES
 	
 	@Autowired
 	public ItemController(ItemService itemService) {

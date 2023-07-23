@@ -46,4 +46,15 @@ public class UserController {
 	public User update(@RequestParam int userId, @RequestBody User user) {
 		return userService.updateUser(userId, user);
 	}
+
+	/**
+	 * API DELETE call to /api/user/del?userId=(input)
+	 * will delete the user with the corresponding id.
+	 * @return True if successful. False otherwise
+	 */
+	@DeleteMapping("/del")
+	public boolean deleteUser(@RequestParam("userId") int id) {
+		if (Boolean.TRUE.equals(userService.deleteUser(id))) return true;
+		return false;
+	}
 }

@@ -422,4 +422,24 @@ class UserServiceTest {
 
         verify(userRepository).save(user);
     }
+
+    @Test
+    void deleteUserWorks() {
+        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+
+        testUserService.deleteUser(0);
+
+        verify(userRepository).deleteById(0);
+    }
+
+    @Test
+    void deleteUserThrowsErrorWithNoMatchingUser() {
+        given(userRepository.findById(any())).willReturn(Optional.empty());
+
+        assertThatThrownBy(() ->  testUserService.deleteUser(0))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("No users exists with id 0");
+
+        verify(userRepository, never()).deleteById(0);
+    }
 }

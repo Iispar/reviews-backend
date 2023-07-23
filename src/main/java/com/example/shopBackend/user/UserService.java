@@ -90,4 +90,20 @@ public class UserService {
 
 		return userRepository.save(foundUser);
 	}
+
+	/**
+	 * deletes an user from the database.
+	 * @param {id} id
+	 * 		  The id of the user to be deleted from the database.
+	 * @return
+	 */
+	public Boolean deleteUser(int id){
+		if(userRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No users exists with id " + id);
+		}
+
+		userRepository.deleteById(id);
+		return true;
+	}
 }

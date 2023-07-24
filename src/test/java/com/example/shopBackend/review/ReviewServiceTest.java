@@ -332,8 +332,8 @@ class ReviewServiceTest {
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
-				"title1",
 				"body1",
+				"title",
 				0,
 				0,
 				user,
@@ -342,8 +342,8 @@ class ReviewServiceTest {
 				);
 		Review review2 = new Review(
 				new Date(1),
-				"title2",
-				"body2",
+				"body1",
+				"title1",
 				0,
 				0,
 				user,

@@ -32,7 +32,6 @@ public class ReviewController {
 	@PostMapping("/add")
 	public List<Review> add(@RequestBody List<Review> review) {
 		return reviewService.saveAllReviews(review);
-		// TODO: update item call?
 	}
 	
 	/**

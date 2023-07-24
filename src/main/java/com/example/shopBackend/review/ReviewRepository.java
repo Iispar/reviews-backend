@@ -98,5 +98,15 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 */
 	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item = ?1 GROUP BY WEEK(review_date)", nativeQuery = true)
 	List<Chart> findChartForItemByWeek(int id);
+
+	/**
+	 * Querys all the reviews that match the item id and returns all the
+	 * review bodys.
+	 * @param {int} id
+	 * 	      Id of the item you wish to get results for.
+	 * @return body of the all reviews that match the item id.
+	 */
+	@Query(value = "SELECT review_body FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
+	List<String> findAllBodysWithItemId(int id);
 }
 

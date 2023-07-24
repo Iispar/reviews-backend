@@ -42,12 +42,22 @@ public class ReviewService {
 	 * @return
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
+		List<String> reviewBodys = reviewRepository.findAllBodysWithItemId(review.get(0).getItem().getId());
 
+		for (int i = 0; i < review.size(); i += 1) {
+			reviewBodys.add(review.get(i).getBody());
+		}
+
+		ReviewUtil.rateReviews(reviewBodys);
 		// TODO: rate reviews
 		// API CALL TO RATE REVIEWS
 		// LOOP AND SET ALL THE RATINGS
-
+		int defaultId = review.get(0).getItem().getId();
 		for (int i = 0; i < review.size(); i += 1) {
+			if (review.get(i).getId() != defaultId) {
+				throw new BadRequestException(
+						"all reviews don't have the same id");
+			}
 			if (review.get(i).getDislikes() < 0) {
 				throw new BadRequestException(
 						"review with negative dislikes not allowed");

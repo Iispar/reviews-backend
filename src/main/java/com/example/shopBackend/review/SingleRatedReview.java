@@ -2,20 +2,20 @@ package com.example.shopBackend.review;
 
 public class SingleRatedReview {
     private String review;
-    private String star;
+    private int star;
 
-    public SingleRatedReview(String review, String star) {
+    public SingleRatedReview(String review, int star) {
         this.review = review;
         this.star = star;
     }
 
     public SingleRatedReview() {};
 
-    public String getStar() {
+    public int getStar() {
         return star;
     }
 
-    public void setStar(String star) {
+    public void setStar(int star) {
         this.star = star;
     }
 

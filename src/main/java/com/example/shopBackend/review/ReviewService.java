@@ -48,12 +48,12 @@ public class ReviewService {
 			reviewBodys.add(review.get(i).getBody());
 		}
 
-		ReviewUtil.rateReviews(reviewBodys);
-		// TODO: rate reviews
-		// API CALL TO RATE REVIEWS
-		// LOOP AND SET ALL THE RATINGS
+		RatedReviews ratedReviews = ReviewUtil.rateReviews(reviewBodys);
 		int defaultId = review.get(0).getItem().getId();
 		for (int i = 0; i < review.size(); i += 1) {
+
+			// sets the new calculated rating.
+			review.get(i).setRating(ratedReviews.getReviews().get(i).getStar());
 			if (review.get(i).getId() != defaultId) {
 				throw new BadRequestException(
 						"all reviews don't have the same id");
@@ -87,8 +87,9 @@ public class ReviewService {
 
 		List<Review> res = reviewRepository.saveAll(review);
 
-		// TODO: update Item values ?
+		// TODO: update Item values !
 		// itemService.update...
+		// update item rating !!!!
 
 		return res;
 	}

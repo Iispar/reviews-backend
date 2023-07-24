@@ -14,13 +14,13 @@ public class ReviewUtil {
 
         WebClient client = WebClient.create("http://127.0.0.1:8000");
 
-        String ratedReviews = client.post()
+        RatedReviews ratedReviews = client.post()
                 .uri("/rate")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(jsonReviews)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(RatedReviews.class)
                 .block();
-        System.out.println(ratedReviews);
+        System.out.println(ratedReviews.getReviews().get(0).getReview());
     }
 }

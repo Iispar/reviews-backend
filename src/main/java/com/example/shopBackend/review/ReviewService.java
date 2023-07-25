@@ -47,6 +47,12 @@ public class ReviewService {
 	 * @return
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
+
+		if (review.isEmpty()) {
+			throw new BadRequestException(
+					"review input cannot be empty");
+		}
+
 		int itemId = review.get(0).getItem().getId();
 
 		if (itemRepository.findById(itemId).isEmpty()) {
@@ -61,11 +67,8 @@ public class ReviewService {
 		}
 
 		RatedReviews ratedReviews;
-		try {
-			ratedReviews = ReviewUtil.rateReviews(reviewBodys);
-		} catch(Exception e) {
-			throw new RuntimeException("review rating failed");
-		}
+
+		ratedReviews = ReviewUtil.rateReviews(reviewBodys);
 
 		for (int i = 0; i < review.size(); i += 1) {
 

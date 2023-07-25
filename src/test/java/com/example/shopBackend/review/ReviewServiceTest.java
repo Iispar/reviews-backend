@@ -31,8 +31,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @DataJpaTest()
@@ -556,6 +555,17 @@ class ReviewServiceTest {
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("all reviews don't have the same id");
 
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+
+	@Test
+	void addReviewThrowsErrorWhenInputEmpty() {
+		List<Review> list = new ArrayList<Review>();
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("review input cannot be empty");
 
 		verify(reviewRepository, never()).saveAll(list);
 	}

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ReviewUtil {
     public static RatedReviews rateReviews(List<String> reviews) {
+
         JSONObject jsonReviews = new JSONObject();
         jsonReviews.put("reviews", reviews);
 

@@ -44,8 +44,11 @@ public class Item {
     @OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "item_words", referencedColumnName = "words_id", nullable = true)
 	private Words words;
-	
-	public Item(String title, User user, float rating, Category category, Words words, String desc) {
+
+	public Item() {};
+
+	public Item(int id, String title, User user, float rating, Category category, Words words, String desc) {
+		this.id = id;
 		this.title = title;
 		this.user = user;
 		this.rating = rating;
@@ -54,9 +57,7 @@ public class Item {
 		this.desc = desc;
 	}
 
-	public Item() {};
-
-	public String getDesc() {
+    public String getDesc() {
 		return desc;
 	}
 

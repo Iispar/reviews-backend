@@ -51,6 +51,7 @@ class ItemRepositoryTest {
 		Words words = testWordsRepository.findById(2).orElse(null);
 		
 		Item item = new Item(
+				1,
 				"new item title",
 				user,
 				4,

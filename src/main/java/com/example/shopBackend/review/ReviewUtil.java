@@ -11,7 +11,6 @@ public class ReviewUtil {
         JSONObject jsonReviews = new JSONObject();
         jsonReviews.put("reviews", reviews);
 
-
         WebClient client = WebClient.create("http://127.0.0.1:8000");
 
         return client.post()

@@ -48,23 +48,34 @@ public class ReviewService {
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
 		int itemId = review.get(0).getItem().getId();
+
+		if (itemRepository.findById(itemId).isEmpty()) {
+			throw new BadRequestException(
+					"item with id: " + itemId + " does not exist");
+		}
+
 		List<String> reviewBodys = reviewRepository.findAllBodysWithItemId(itemId);
 
 		for (int i = 0; i < review.size(); i += 1) {
 			reviewBodys.add(review.get(i).getBody());
 		}
 
-		RatedReviews ratedReviews = ReviewUtil.rateReviews(reviewBodys);
+		RatedReviews ratedReviews;
+		try {
+			ratedReviews = ReviewUtil.rateReviews(reviewBodys);
+		} catch(Exception e) {
+			throw new RuntimeException("review rating failed");
+		}
 
 		for (int i = 0; i < review.size(); i += 1) {
 
 			// sets the new calculated rating.
 			review.get(i).setRating(ratedReviews.getReviews().get(i).getStar());
-
-			if (review.get(i).getId() != itemId) {
+			if (review.get(i).getItem().getId() != itemId) {
 				throw new BadRequestException(
 						"all reviews don't have the same id");
 			}
+
 			if (review.get(i).getDislikes() < 0) {
 				throw new BadRequestException(
 						"review with negative dislikes not allowed");
@@ -74,17 +85,8 @@ public class ReviewService {
 				throw new BadRequestException(
 						"review with negative likes not allowed");
 			}
-			
-			if (review.get(i).getRating() < 0 || review.get(i).getRating() > 5) {
-				throw new BadRequestException(
-						"review with invalid rating. Has to be between 0-5.");
-			}
-			int CurrItemId = review.get(i).getItem().getId();
+
 			int userId = review.get(i).getUser().getId();
-			if (itemRepository.findById(CurrItemId).isEmpty()) {
-				throw new BadRequestException(
-						"item with id: " + CurrItemId + " does not exist");
-			}
 
 			if (userRepository.findById(userId).isEmpty()) {
 				throw new BadRequestException(

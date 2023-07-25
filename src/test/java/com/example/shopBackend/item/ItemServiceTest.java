@@ -120,6 +120,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -129,6 +130,7 @@ class ItemServiceTest {
 
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -152,6 +154,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "test title",
                 user,
                 -2,
@@ -161,6 +164,7 @@ class ItemServiceTest {
 
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -186,6 +190,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "test title",
                 user,
                 10,
@@ -195,6 +200,7 @@ class ItemServiceTest {
 
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -220,6 +226,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "this title will be way too long to be allowed as the value. this title will be way too long to be allowed as the value.",
                 user,
                 0,
@@ -229,6 +236,7 @@ class ItemServiceTest {
 
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -254,6 +262,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "th",
                 user,
                 0,
@@ -263,6 +272,7 @@ class ItemServiceTest {
 
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -288,6 +298,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -297,6 +308,7 @@ class ItemServiceTest {
 
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -323,6 +335,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -331,6 +344,7 @@ class ItemServiceTest {
                 "test desc"
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -358,6 +372,7 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -366,6 +381,7 @@ class ItemServiceTest {
                 "test desc"
         );
         Item item2 = new Item(
+                2,
                 "test title 2",
                 user,
                 0,
@@ -393,6 +409,7 @@ class ItemServiceTest {
         Category category = new Category("test category");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -413,6 +430,7 @@ class ItemServiceTest {
         Category category = new Category("test category");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -437,6 +455,7 @@ class ItemServiceTest {
         Category category = new Category("test category");
 
         Item item = new Item(
+                1,
                 "this title will be too long. this title will be too long. this title will be too long. this title will be too long.",
                 user,
                 0,
@@ -461,6 +480,7 @@ class ItemServiceTest {
         Category category = new Category("test category");
 
         Item item = new Item(
+                1,
                 "il",
                 user,
                 0,
@@ -485,6 +505,7 @@ class ItemServiceTest {
         Category category = new Category("test category");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -508,6 +529,7 @@ class ItemServiceTest {
         Category category = new Category("test category");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -549,6 +571,7 @@ class ItemServiceTest {
         negWords.add("5.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 3,
@@ -611,6 +634,7 @@ class ItemServiceTest {
         negWords.add("5.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 3,
@@ -677,6 +701,7 @@ class ItemServiceTest {
         negWords.add("5.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -743,6 +768,7 @@ class ItemServiceTest {
         negWords.add("5.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 0,
@@ -810,6 +836,7 @@ class ItemServiceTest {
         negWords.add("5.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 2,
@@ -870,6 +897,7 @@ class ItemServiceTest {
         negWords.add("5.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 2,
@@ -937,6 +965,7 @@ class ItemServiceTest {
         negWords.add("6.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 2,
@@ -997,6 +1026,7 @@ class ItemServiceTest {
         posWords.add("5.");
 
         Item item = new Item(
+                1,
                 "test title",
                 user,
                 2,

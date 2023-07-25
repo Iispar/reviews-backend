@@ -335,7 +335,7 @@ class ReviewServiceTest {
 		given(reviewRepository.findAllBodysWithItemId(anyInt())).willReturn(new ArrayList<String>());
 		given(itemService.updateItemRatingAndWords(anyInt(), any(), any())).willReturn(new Item());
 		List<Review> list = new ArrayList<Review>();
-		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -368,8 +368,9 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewThrowsErrorWithBadLikes() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		List<Review> list = new ArrayList<Review>();
-		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -408,7 +409,7 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 		List<Review> list = new ArrayList<Review>();
-		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -441,65 +442,13 @@ class ReviewServiceTest {
 
 		verify(reviewRepository, never()).saveAll(list);
 	}
-	
-	@Test
-	void addReviewThrowsErrorWithTooLargeRating() {
-		List<Review> list = new ArrayList<Review>();
-		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
-		Review review1 = new Review(
-				new Date(1),
-				"title1",
-				"body1",
-				1,
-				0,
-				user,
-				8,
-				item
-				);
-		
-		list.add(review1);
-
-		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
-		.isInstanceOf(BadRequestException.class)
-		.hasMessageContaining("review with invalid rating. Has to be between 0-5.");
-
-
-		verify(reviewRepository, never()).saveAll(list);
-	}
-
-	@Test
-	void addReviewThrowsErrorWithTooSmallRating() {
-		List<Review> list = new ArrayList<Review>();
-		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
-		Review review1 = new Review(
-				new Date(1),
-				"title1",
-				"body1",
-				1,
-				0,
-				user,
-				-2,
-				item
-		);
-
-		list.add(review1);
-
-		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
-				.isInstanceOf(BadRequestException.class)
-				.hasMessageContaining("review with invalid rating. Has to be between 0-5.");
-
-
-		verify(reviewRepository, never()).saveAll(list);
-	}
 
 	@Test
 	void addReviewThrowsErrorWithBadUserId() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.empty());
 		List<Review> list = new ArrayList<Review>();
-		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -537,7 +486,7 @@ class ReviewServiceTest {
 	void addReviewThrowsErrorWithBaditemId() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
 		List<Review> list = new ArrayList<Review>();
-		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -566,6 +515,46 @@ class ReviewServiceTest {
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("item with id: " + item.getId() + " does not exist");
+
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+
+	@Test
+	void addReviewThrowsErrorWithDifferentItemIds() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		List<Review> list = new ArrayList<Review>();
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item2 = new Item(2, "test title", null, 1, new Category(), null, "test desc");
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				user,
+				2,
+				item
+		);
+		Review review2 = new Review(
+				new Date(1),
+				"title2",
+				"body2",
+				0,
+				0,
+				user,
+				0,
+				item2
+		);
+
+		list.add(review1);
+		list.add(review2);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("all reviews don't have the same id");
 
 
 		verify(reviewRepository, never()).saveAll(list);

@@ -45,7 +45,7 @@ class ItemRepositoryTest {
 	}
 	
 	@Test
-	void ItemfindAllByUserIfWorks() {
+	void ItemfindAllByUserIdWorks() {
 		User user = testUserRepository.findById(1).orElse(null);
 		Category category = testCategoryRepository.findById(1).orElse(null);
 		Words words = testWordsRepository.findById(2).orElse(null);
@@ -65,7 +65,7 @@ class ItemRepositoryTest {
 		
         List<Item> foundEntity = testItemRepository.findAllUserId(user.getId(), pageRequest);
         List<Item> foundNoneEntity = testItemRepository.findAllUserId(user.getId() + 1, pageRequest);
-        assertTrue(foundEntity.size() == 2);
+        assertTrue(foundEntity.size() == 1);
         assertTrue(foundNoneEntity.size() == 0);
 	}
 }

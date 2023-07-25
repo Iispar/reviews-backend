@@ -18,7 +18,6 @@ jobs:
   build:
     permissions: write-all
     runs-on: ubuntu-latest
-    container: ubuntu
 
     steps:
     - uses: actions/checkout@v3

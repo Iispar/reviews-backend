@@ -1,6 +1,7 @@
 package com.example.shopBackend.review;
 
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.user.UserRepository;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,15 @@ public class ReviewService {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+
+	@Autowired
+	private ItemService itemService;
 	
-	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository) {
+	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository, ItemService itemService) {
 		this.reviewRepository = reviewRepository;
 		this.userRepository = userRepository;
 		this.itemRepository = itemRepository;
+		this.itemService = itemService;
 	}
 
 	/**
@@ -42,19 +47,21 @@ public class ReviewService {
 	 * @return
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
-		List<String> reviewBodys = reviewRepository.findAllBodysWithItemId(review.get(0).getItem().getId());
+		int itemId = review.get(0).getItem().getId();
+		List<String> reviewBodys = reviewRepository.findAllBodysWithItemId(itemId);
 
 		for (int i = 0; i < review.size(); i += 1) {
 			reviewBodys.add(review.get(i).getBody());
 		}
 
 		RatedReviews ratedReviews = ReviewUtil.rateReviews(reviewBodys);
-		int defaultId = review.get(0).getItem().getId();
+
 		for (int i = 0; i < review.size(); i += 1) {
 
 			// sets the new calculated rating.
 			review.get(i).setRating(ratedReviews.getReviews().get(i).getStar());
-			if (review.get(i).getId() != defaultId) {
+
+			if (review.get(i).getId() != itemId) {
 				throw new BadRequestException(
 						"all reviews don't have the same id");
 			}
@@ -72,11 +79,11 @@ public class ReviewService {
 				throw new BadRequestException(
 						"review with invalid rating. Has to be between 0-5.");
 			}
-			int itemId = review.get(i).getItem().getId();
+			int CurrItemId = review.get(i).getItem().getId();
 			int userId = review.get(i).getUser().getId();
-			if (itemRepository.findById(itemId).isEmpty()) {
+			if (itemRepository.findById(CurrItemId).isEmpty()) {
 				throw new BadRequestException(
-						"item with id: " + itemId + " does not exist");
+						"item with id: " + CurrItemId + " does not exist");
 			}
 
 			if (userRepository.findById(userId).isEmpty()) {
@@ -85,12 +92,9 @@ public class ReviewService {
 			}
 		}
 
+
 		List<Review> res = reviewRepository.saveAll(review);
-
-		// TODO: update Item values !
-		// itemService.update...
-		// update item rating !!!!
-
+		itemService.updateItemRatingAndWords(itemId, ratedReviews.getTopPos(), ratedReviews.getTopNeg());
 		return res;
 	}
 	

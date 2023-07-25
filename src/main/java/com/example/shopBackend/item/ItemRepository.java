@@ -27,5 +27,4 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	 */
 	@Query(value = "SELECT * FROM items i WHERE i.item_account = ?1", nativeQuery = true)
 	List<Item> findAllUserId(int id, Pageable pageable);
-
 }

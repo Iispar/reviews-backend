@@ -5,10 +5,10 @@ import java.util.List;
 
 public class RatedReviews {
     private List<SingleRatedReview> reviews = new ArrayList<SingleRatedReview>();
-    private List<Object> topPos = new ArrayList<Object>();
-    private List<Object> topNeg = new ArrayList<Object>();
+    private List<String> topPos = new ArrayList<String>();
+    private List<String> topNeg = new ArrayList<String>();
 
-    public RatedReviews(List<SingleRatedReview> reviews, List<Object> topPos, List<Object> topNeg) {
+    public RatedReviews(List<SingleRatedReview> reviews, List<String> topPos, List<String> topNeg) {
         this.reviews = reviews;
         this.topPos = topPos;
         this.topNeg = topNeg;
@@ -24,19 +24,19 @@ public class RatedReviews {
         this.reviews = reviews;
     }
 
-    public List<Object> getTopPos() {
+    public List<String> getTopPos() {
         return topPos;
     }
 
-    public void setTopPos(List<Object> topPos) {
+    public void setTopPos(List<String> topPos) {
         this.topPos = topPos;
     }
 
-    public List<Object> getTopNeg() {
+    public List<String> getTopNeg() {
         return topNeg;
     }
 
-    public void setTopNeg(List<Object> topNeg) {
+    public void setTopNeg(List<String> topNeg) {
         this.topNeg = topNeg;
     }
 }

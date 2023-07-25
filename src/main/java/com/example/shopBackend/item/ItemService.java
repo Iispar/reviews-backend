@@ -1,6 +1,7 @@
 package com.example.shopBackend.item;
 
 import com.example.shopBackend.category.CategoryRepository;
+import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.user.UserRepository;
 import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
@@ -26,15 +27,19 @@ public class ItemService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private ReviewRepository reviewRepository;
+
+	@Autowired
 	CategoryRepository categoryRepository;
 
 	@Autowired
 	private WordsRepository wordsRepository;
 
-	public ItemService(ItemRepository itemRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
+	public ItemService(ItemRepository itemRepository, UserRepository userRepository, CategoryRepository categoryRepository, WordsRepository wordsRepository) {
 		this.itemRepository = itemRepository;
 		this.userRepository = userRepository;
 		this.categoryRepository = categoryRepository;
+		this.wordsRepository = wordsRepository;
 	}
 
 	/**
@@ -147,6 +152,50 @@ public class ItemService {
 		foundItem.setTitle(item.getTitle());
 		foundItem.setDesc(item.getDesc());
 
+		return itemRepository.save(foundItem);
+	}
+
+	/**
+	 * updates the items rating and words.
+	 * @param {int} id
+	 * 		  The id of the item you would like to update
+	 * @param {List<String>} posWords
+	 * 		  The pos words to be inserted to positive words.
+	 * @param {List<String>} negWords
+	 *  	  The neg words to be inserted to negative words.
+	 * @return saved updated item
+	 */
+	public Item updateItemRatingAndWords(int id, List<String> posWords, List<String> negWords) {
+		if (itemRepository.findById(id).orElse(null) == null) {
+			throw new BadRequestException(
+					"no items with id: " + id + " exists");
+		}
+
+		Item foundItem = itemRepository.findById(id).orElseThrow();
+		List<Integer> ratings = reviewRepository.findAllRatingsWithItemId(id);
+
+		int rating = ratings.stream().mapToInt(Integer::intValue).sum()/ratings.size();
+		if (rating < 1 || rating > 5) {
+			throw new BadRequestException(
+					"item rating invalid. Allowed only 1-5."
+			);
+		}
+
+		if (posWords.size() > 5 || posWords.size() < 1) {
+			throw new BadRequestException(
+					"pos words invalid. Has to have 1 to 5 items."
+			);
+		}
+
+		if (negWords.size() > 5 || negWords.size() < 1) {
+			throw new BadRequestException(
+					"neg words invalid. Has to have 1 to 5 items."
+			);
+		}
+
+		foundItem.setRating(rating);
+		foundItem.getWords().setPositive(posWords);
+		foundItem.getWords().setNegative(negWords);
 		return itemRepository.save(foundItem);
 	}
 }

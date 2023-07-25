@@ -108,5 +108,15 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 */
 	@Query(value = "SELECT review_body FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
 	List<String> findAllBodysWithItemId(int id);
+
+	/**
+	 * Querys all the reviews that match the item id and returns all the
+	 * review ratings.
+	 * @param {int} id
+	 * 	      Id of the item you wish to get results for.
+	 * @return rating of the all reviews that match the item id.
+	 */
+	@Query(value = "SELECT review_rating FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
+	List<Integer> findAllRatingsWithItemId(int id);
 }
 

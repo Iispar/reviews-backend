@@ -3,9 +3,12 @@ package com.example.shopBackend.item;
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.category.CategoryRepository;
+import com.example.shopBackend.review.Review;
+import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
+import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
 import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
@@ -20,12 +23,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -44,6 +49,9 @@ class ItemServiceTest {
 
     @Mock
     private CategoryRepository categoryRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @Mock
     private WordsRepository wordsRepository;
@@ -104,7 +112,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewWorks() {
+    void saveItemWorks() {
         given(userRepository.findById(any())).willReturn(Optional.of(new User()));
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
 
@@ -139,7 +147,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewThrowsWithNegativeRating() {
+    void saveItemThrowsWithNegativeRating() {
         List<Item> list = new ArrayList<Item>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
@@ -173,7 +181,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewThrowsWithTooLargeRating() {
+    void saveItemThrowsWithTooLargeRating() {
         List<Item> list = new ArrayList<Item>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
@@ -207,7 +215,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewThrowsWithTooLongTitle() {
+    void saveItemThrowsWithTooLongTitle() {
         List<Item> list = new ArrayList<Item>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
@@ -241,7 +249,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewThrowsWithTooShortTitle() {
+    void saveItemThrowsWithTooShortTitle() {
         List<Item> list = new ArrayList<Item>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
@@ -275,7 +283,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewThrowsWithBadDesc() {
+    void saveItemThrowsWithBadDesc() {
         List<Item> list = new ArrayList<Item>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
@@ -309,7 +317,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewThrowsWithBadCategoryId() {
+    void saveItemThrowsWithBadCategoryId() {
         given(categoryRepository.findById(any())).willReturn(Optional.empty());
         List<Item> list = new ArrayList<Item>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
@@ -343,7 +351,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveReviewThrowsWithBadUserId() {
+    void saveItemThrowsWithBadUserId() {
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
         given(userRepository.findById(any())).willReturn(Optional.empty());
         List<Item> list = new ArrayList<Item>();
@@ -513,6 +521,519 @@ class ItemServiceTest {
         assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("No categories exists with id: " + item.getCategory().getId());
+
+        verify(itemRepository, never()).save(item);
+    }
+    @Test
+    void updateItemRatingAndWordsWorks() {
+        given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        posWords.add("most pos");
+        posWords.add("2.");
+        posWords.add("3.");
+        posWords.add("4.");
+        posWords.add("5.");
+
+        negWords.add("most neg");
+        negWords.add("2.");
+        negWords.add("3.");
+        negWords.add("4.");
+        negWords.add("5.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                3,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                5,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                1,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+        testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords);
+
+        verify(itemRepository).save(item);
+    }
+
+    @Test
+    void updateItemRatingAndWordsThrowsWithBadItemId() {
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        posWords.add("most pos");
+        posWords.add("2.");
+        posWords.add("3.");
+        posWords.add("4.");
+        posWords.add("5.");
+
+        negWords.add("most neg");
+        negWords.add("2.");
+        negWords.add("3.");
+        negWords.add("4.");
+        negWords.add("5.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                3,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                5,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                1,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.empty());
+
+        assertThatThrownBy(() ->  testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("no items with id: " + item.getId() + " exists");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemRatingAndWordsThrowsWithTooLargeRating() {
+        given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(10, 5));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        posWords.add("most pos");
+        posWords.add("2.");
+        posWords.add("3.");
+        posWords.add("4.");
+        posWords.add("5.");
+
+        negWords.add("most neg");
+        negWords.add("2.");
+        negWords.add("3.");
+        negWords.add("4.");
+        negWords.add("5.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                0,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                8,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                10,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("item rating invalid. Allowed only 1-5");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemRatingAndWordsThrowsWithTooSmallRating() {
+        given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(0, 0));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        posWords.add("most pos");
+        posWords.add("2.");
+        posWords.add("3.");
+        posWords.add("4.");
+        posWords.add("5.");
+
+        negWords.add("most neg");
+        negWords.add("2.");
+        negWords.add("3.");
+        negWords.add("4.");
+        negWords.add("5.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                0,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                0,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                0,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("item rating invalid. Allowed only 1-5");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemRatingAndWordsThrowsWithTooManyPosWords() {
+        given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        posWords.add("most pos");
+        posWords.add("2.");
+        posWords.add("3.");
+        posWords.add("4.");
+        posWords.add("5.");
+        posWords.add("6.");
+
+        negWords.add("most neg");
+        negWords.add("2.");
+        negWords.add("3.");
+        negWords.add("4.");
+        negWords.add("5.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                2,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                4,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                1,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("pos words invalid. Has to have 1 to 5 items.");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemRatingAndWordsThrowsWithNotEnoughPosWords() {
+        given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        negWords.add("most neg");
+        negWords.add("2.");
+        negWords.add("3.");
+        negWords.add("4.");
+        negWords.add("5.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                2,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                4,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                1,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("pos words invalid. Has to have 1 to 5 items.");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemRatingAndWordsThrowsWithTooManyNegWords() {
+        given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        posWords.add("most pos");
+        posWords.add("2.");
+        posWords.add("3.");
+        posWords.add("4.");
+        posWords.add("5.");
+
+        negWords.add("most neg");
+        negWords.add("2.");
+        negWords.add("3.");
+        negWords.add("4.");
+        negWords.add("5.");
+        negWords.add("6.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                2,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                4,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                1,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("neg words invalid. Has to have 1 to 5 items.");
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItemRatingAndWordsThrowsWithNotEnoughNegWords() {
+        given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
+
+        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Category category = new Category("test category");
+
+        List<Review> reviews = new ArrayList<Review>();
+
+        List<String> posWords = new ArrayList<String>();
+        List<String> negWords = new ArrayList<String>();
+
+        posWords.add("most neg");
+        posWords.add("2.");
+        posWords.add("3.");
+        posWords.add("4.");
+        posWords.add("5.");
+
+        Item item = new Item(
+                "test title",
+                user,
+                2,
+                category,
+                new Words(1, posWords, negWords),
+                "test desc"
+        );
+
+        Review review1 = new Review(
+                new Date(1),
+                "this item is really good and i loved it",
+                "title",
+                0,
+                0,
+                user,
+                4,
+                item
+        );
+        Review review2 = new Review(
+                new Date(1),
+                "this item is really bad",
+                "title1",
+                0,
+                0,
+                user,
+                1,
+                item
+        );
+
+        reviews.add(review1);
+        reviews.add(review2);
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(item));
+
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("neg words invalid. Has to have 1 to 5 items.");
 
         verify(itemRepository, never()).save(item);
     }

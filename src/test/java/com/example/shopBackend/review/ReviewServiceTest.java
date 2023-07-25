@@ -4,6 +4,7 @@ import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
@@ -28,6 +29,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -48,6 +50,9 @@ class ReviewServiceTest {
 	
 	@Mock
 	private ItemRepository itemRepository;
+
+	@Mock
+	private ItemService itemService;
 
 	@InjectMocks
 	private ReviewService testReviewService;
@@ -327,6 +332,8 @@ class ReviewServiceTest {
 	void addReviewWorks() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(reviewRepository.findAllBodysWithItemId(anyInt())).willReturn(new ArrayList<String>());
+		given(itemService.updateItemRatingAndWords(anyInt(), any(), any())).willReturn(new Item());
 		List<Review> list = new ArrayList<Review>();
 		Item item = new Item("test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());

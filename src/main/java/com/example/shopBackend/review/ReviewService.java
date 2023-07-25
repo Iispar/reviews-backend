@@ -96,8 +96,7 @@ public class ReviewService {
 						"user with id: " + userId + " does not exist");
 			}
 		}
-
-
+		
 		List<Review> res = reviewRepository.saveAll(review);
 		itemService.updateItemRatingAndWords(itemId, ratedReviews.getTopPos(), ratedReviews.getTopNeg());
 		return res;

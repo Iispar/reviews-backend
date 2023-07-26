@@ -31,13 +31,17 @@ public class ReviewService {
 	private ItemRepository itemRepository;
 
 	@Autowired
+	private ReviewUtil reviewUtil;
+
+	@Autowired
 	private ItemService itemService;
+
 	
-	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository, ItemService itemService) {
+	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository, ItemService itemService, ReviewUtil reviewUtil) {
 		this.reviewRepository = reviewRepository;
 		this.userRepository = userRepository;
 		this.itemRepository = itemRepository;
-		this.itemService = itemService;
+		this.reviewUtil = reviewUtil;
 	}
 
 	/**
@@ -66,10 +70,7 @@ public class ReviewService {
 			reviewBodys.add(review.get(i).getBody());
 		}
 
-		RatedReviews ratedReviews;
-
-		ratedReviews = ReviewUtil.rateReviews(reviewBodys);
-
+		RatedReviews ratedReviews = reviewUtil.rateReviews(reviewBodys);
 		for (int i = 0; i < review.size(); i += 1) {
 
 			// sets the new calculated rating.
@@ -77,6 +78,11 @@ public class ReviewService {
 			if (review.get(i).getItem().getId() != itemId) {
 				throw new BadRequestException(
 						"all reviews don't have the same id");
+			}
+
+			if (review.get(i).getRating() > 5 || review.get(i).getRating() < 1) {
+				throw new BadRequestException(
+						"review with invalid rating. Has to be between 0-5.");
 			}
 
 			if (review.get(i).getDislikes() < 0) {
@@ -96,7 +102,7 @@ public class ReviewService {
 						"user with id: " + userId + " does not exist");
 			}
 		}
-		
+
 		List<Review> res = reviewRepository.saveAll(review);
 		itemService.updateItemRatingAndWords(itemId, ratedReviews.getTopPos(), ratedReviews.getTopNeg());
 		return res;

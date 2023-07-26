@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -38,8 +42,8 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class ReviewServiceTest {
-
 	
 	@Mock
 	private ReviewRepository reviewRepository;
@@ -53,9 +57,37 @@ class ReviewServiceTest {
 	@Mock
 	private ItemService itemService;
 
+	@Mock
+	private ReviewUtil reviewUtil;
+
+	@Mock
+	private WebClient webClientMock;
+
+	@Mock
+	private WebClient.RequestBodyUriSpec requestBodyUriSpecMock;
+
+	@Mock
+	private WebClient.RequestBodySpec requestBodySpecMock;
+
+	@SuppressWarnings("rawtypes")
+	@Mock
+	private WebClient.RequestHeadersSpec requestHeadersSpecMock;
+
+	@SuppressWarnings("rawtypes")
+	@Mock
+	private WebClient.RequestHeadersUriSpec requestHeadersUriSpecMock;
+
+	@Mock
+	private WebClient.ResponseSpec responseSpecMock;
+
+	@Mock
+	private Mono<RatedReviews> postResponseMock;
+
+
 	@InjectMocks
 	private ReviewService testReviewService;
-	
+
+
 	@Test
 	void GetAllReviewsForUserWorks() {
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
@@ -329,6 +361,15 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewWorks() {
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
+		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
+		singleRatedReviews.add(rate1);
+		singleRatedReviews.add(rate2);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 		given(reviewRepository.findAllBodysWithItemId(anyInt())).willReturn(new ArrayList<String>());
@@ -343,7 +384,7 @@ class ReviewServiceTest {
 				0,
 				0,
 				user,
-				0,
+				2,
 				item
 				);
 		Review review2 = new Review(
@@ -353,7 +394,7 @@ class ReviewServiceTest {
 				0,
 				0,
 				user,
-				0,
+				2,
 				item
 				);
 		
@@ -367,6 +408,15 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewThrowsErrorWithBadLikes() {
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
+		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
+		singleRatedReviews.add(rate1);
+		singleRatedReviews.add(rate2);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		List<Review> list = new ArrayList<Review>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
@@ -378,7 +428,7 @@ class ReviewServiceTest {
 				-1,
 				0,
 				user,
-				0,
+				2,
 				item
 				);
 		Review review2 = new Review(
@@ -388,7 +438,7 @@ class ReviewServiceTest {
 				0,
 				0,
 				user,
-				0,
+				2,
 				item
 				);
 		
@@ -405,6 +455,15 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewThrowsErrorWithBadDislikes() {
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
+		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
+		singleRatedReviews.add(rate1);
+		singleRatedReviews.add(rate2);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 		List<Review> list = new ArrayList<Review>();
@@ -417,7 +476,7 @@ class ReviewServiceTest {
 				1,
 				0,
 				user,
-				0,
+				2,
 				item
 				);
 		Review review2 = new Review(
@@ -425,9 +484,9 @@ class ReviewServiceTest {
 				"title2",
 				"body2",
 				0,
-				-1,
+				-4,
 				user,
-				0,
+				2,
 				item
 				);
 		
@@ -444,6 +503,15 @@ class ReviewServiceTest {
 
 	@Test
 	void addReviewThrowsErrorWithBadUserId() {
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
+		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
+		singleRatedReviews.add(rate1);
+		singleRatedReviews.add(rate2);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.empty());
 		List<Review> list = new ArrayList<Review>();
@@ -454,7 +522,7 @@ class ReviewServiceTest {
 				"title1",
 				"body1",
 				1,
-				0,
+				2,
 				user,
 				2,
 				item
@@ -466,7 +534,7 @@ class ReviewServiceTest {
 				0,
 				0,
 				user,
-				0,
+				2,
 				item
 		);
 
@@ -477,6 +545,74 @@ class ReviewServiceTest {
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("user with id: " + user.getId() + " does not exist");
 
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+
+	@Test
+	void addReviewThrowsErrorWithTooLargeRating() {
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", 8);
+		singleRatedReviews.add(rate1);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1"), List.of("1"));
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		List<Review> list = new ArrayList<Review>();
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				user,
+				4,
+				item
+		);
+
+		list.add(review1);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("review with invalid rating. Has to be between 0-5.");
+
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+
+	@Test
+	void addReviewThrowsErrorWithTooSmallRating() {
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", -2);
+		singleRatedReviews.add(rate1);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1"), List.of("1"));
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		List<Review> list = new ArrayList<Review>();
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				user,
+				4,
+				item
+		);
+
+		list.add(review1);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("review with invalid rating. Has to be between 0-5.");
 
 		verify(reviewRepository, never()).saveAll(list);
 	}
@@ -521,6 +657,16 @@ class ReviewServiceTest {
 
 	@Test
 	void addReviewThrowsErrorWithDifferentItemIds() {
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
+		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
+		singleRatedReviews.add(rate1);
+		singleRatedReviews.add(rate2);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+
+
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 		List<Review> list = new ArrayList<Review>();
@@ -544,7 +690,7 @@ class ReviewServiceTest {
 				0,
 				0,
 				user,
-				0,
+				4,
 				item2
 		);
 

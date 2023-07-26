@@ -70,7 +70,13 @@ public class ReviewService {
 			reviewBodys.add(review.get(i).getBody());
 		}
 
-		RatedReviews ratedReviews = reviewUtil.rateReviews(reviewBodys);
+		RatedReviews ratedReviews;
+		try {
+			ratedReviews = reviewUtil.rateReviews(reviewBodys);
+		} catch (Exception e) {
+			throw new RuntimeException("error while rating reviews");
+		}
+
 		for (int i = 0; i < review.size(); i += 1) {
 
 			// sets the new calculated rating.

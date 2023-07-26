@@ -715,4 +715,34 @@ class ReviewServiceTest {
 
 		verify(reviewRepository, never()).saveAll(list);
 	}
+
+	@Test
+	void addReviewThrowsErrorWhenRatingFails() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+
+		when(reviewUtil.rateReviews(any())).thenThrow(new RuntimeException());
+
+		List<Review> list = new ArrayList<Review>();
+		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				user,
+				2,
+				item
+		);
+
+		list.add(review1);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+				.isInstanceOf(java.lang.RuntimeException.class)
+				.hasMessageContaining("error while rating reviews");
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
 }

@@ -48,14 +48,14 @@ public class ReviewController {
 	public List<Review> getReviewsForUser(
 			@RequestParam("userId") int id,
 			@RequestParam("page") int page) {
-		List<Review> reviews = reviewService.getReviewsForUser(id, page);
+		List<Review> reviews = reviewService.getReviewsForUser(id, page, "review_date", "asc");
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with user id");
 		}
 		return reviews;
 	}
-	
+
 	/**
 	 * API GET call to /api/review/get/user?itemId=(input)&page=(input)&sort=(input)
 	 * will return the reviews for that item. This will be used in the latest on the home page

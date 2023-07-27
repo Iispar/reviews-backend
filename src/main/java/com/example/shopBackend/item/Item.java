@@ -57,6 +57,15 @@ public class Item {
 		this.desc = desc;
 	}
 
+    public Item(String title, User user, int rating, Category category, Words words, String desc) {
+		this.title = title;
+		this.user = user;
+		this.rating = rating;
+		this.category = category;
+		this.words = words;
+		this.desc = desc;
+    }
+
     public String getDesc() {
 		return desc;
 	}

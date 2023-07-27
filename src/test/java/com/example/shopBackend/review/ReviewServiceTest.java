@@ -23,8 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -60,41 +58,28 @@ class ReviewServiceTest {
 	@Mock
 	private ReviewUtil reviewUtil;
 
-	@Mock
-	private WebClient webClientMock;
-
-	@Mock
-	private WebClient.RequestBodyUriSpec requestBodyUriSpecMock;
-
-	@Mock
-	private WebClient.RequestBodySpec requestBodySpecMock;
-
-	@SuppressWarnings("rawtypes")
-	@Mock
-	private WebClient.RequestHeadersSpec requestHeadersSpecMock;
-
-	@SuppressWarnings("rawtypes")
-	@Mock
-	private WebClient.RequestHeadersUriSpec requestHeadersUriSpecMock;
-
-	@Mock
-	private WebClient.ResponseSpec responseSpecMock;
-
-	@Mock
-	private Mono<RatedReviews> postResponseMock;
-
 
 	@InjectMocks
 	private ReviewService testReviewService;
 
 
 	@Test
-	void GetAllReviewsForUserWorks() {
+	void GetAllReviewsForUserWorksWithAsc() {
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 
-		Pageable pageRequest = PageRequest.of(0, 4);
-		testReviewService.getReviewsForUser(1, 0);
+		Pageable pageRequest = PageRequest.of(0, 4, Sort.by("review_date").ascending());
+		testReviewService.getReviewsForUser(1, 0, "review_date", "asc");
 		
+		verify(reviewRepository).findAllUserId(1, pageRequest);
+	}
+
+	@Test
+	void GetAllReviewsForUserWorksWithDesc() {
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+
+		Pageable pageRequest = PageRequest.of(0, 4, Sort.by("review_date").descending());
+		testReviewService.getReviewsForUser(1, 0, "review_date", "desc");
+
 		verify(reviewRepository).findAllUserId(1, pageRequest);
 	}
 	
@@ -102,7 +87,7 @@ class ReviewServiceTest {
 	void GetAllReviewsForUserThrowsErrorWithNegativePage() {
 //		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 		
-		assertThatThrownBy(() -> testReviewService.getReviewsForUser(0, -1))
+		assertThatThrownBy(() -> testReviewService.getReviewsForUser(0, -1, "review_date", "asc"))
 			.isInstanceOf(java.lang.IllegalArgumentException.class)
 			.hasMessageContaining("Page index must not be less than zero");
 	}
@@ -112,7 +97,7 @@ class ReviewServiceTest {
 		
 		given(userRepository.findById(any())).willReturn(Optional.empty());
 		
-		assertThatThrownBy(() -> testReviewService.getReviewsForUser(1, 0))
+		assertThatThrownBy(() -> testReviewService.getReviewsForUser(1, 0, "review_date", "asc"))
 			.isInstanceOf(BadRequestException.class)
 			.hasMessageContaining("No users exists with id 1");
 		
@@ -139,6 +124,33 @@ class ReviewServiceTest {
 		testReviewService.getReviewsForItem(1, 0, "review_date", "desc");
 
 		verify(reviewRepository).findAllItemId(1, pageRequest);
+	}
+
+	@Test
+	void GetAllReviewsForUserThrowsErrorWithBadSort() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+		assertThatThrownBy(() -> testReviewService.getReviewsForUser(1, 0, "review_name", "asc"))
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("sort review_name is not a valid value for a sort in the entity.");
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		verify(reviewRepository, never()).findAllUserId(1, pageRequest);
+	}
+
+	@Test
+	void GetAllReviewsForUserThrowsErrorWithBadSortDir() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+
+		assertThatThrownBy(() -> testReviewService.getReviewsForUser(1, 0, "review_date", "ascending"))
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		verify(reviewRepository, never()).findAllUserId(1, pageRequest);
 	}
 	
 	@Test

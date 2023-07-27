@@ -7,6 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repo for the item table
@@ -27,4 +28,22 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	 */
 	@Query(value = "SELECT * FROM items i WHERE i.item_account = ?1", nativeQuery = true)
 	List<Item> findAllUserId(int id, Pageable pageable);
+
+	/**
+	 * Query to find count of all items for user.
+	 * @param {int} id
+	 * 		  The user id that searched.
+	 * @return the count of items that matched the query
+	 */
+	@Query(value = "SELECT COUNT(*) FROM items i WHERE i.item_account = ?1", nativeQuery = true)
+    int findItemCountForUserId(int userId);
+
+	/**
+	 * Query to find avg of ratings for users items
+	 * @param {int} id
+	 * 		  The user id that searched.
+	 * @return the avg of matched items
+	 */
+	@Query(value = "SELECT AVG(item_rating) FROM items i WHERE i.item_account = ?1", nativeQuery = true)
+	Optional<Float> findItemAvgRatingForUserId(int userId);
 }

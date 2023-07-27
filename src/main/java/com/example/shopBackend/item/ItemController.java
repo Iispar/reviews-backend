@@ -44,7 +44,7 @@ public class ItemController {
 	public List<Item> getItemsForUser(
 			@RequestParam("userId") int id,
 			@RequestParam("page") int page) {
-		List<Item> items = itemService.getItemsForUser(id, page);
+		List<Item> items = itemService.getItemsForUser(id, page, "none", "none");
 		if (items.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with user id");

@@ -8,7 +8,7 @@ import com.example.shopBackend.words.WordsRepository;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -89,15 +89,34 @@ public class ItemService {
 	 * 		  The id of the user you want items for.
 	 * @param {int} page
 	 * 		  The page you want to receive
+	 * @param {String} sort
+	 * 		  Entity value to be sorted with, none if no sort.
+	 * @param {String} sortDir
+	 * 		  The direction of the sort, none if no sort.
 	 * @return reviews that match query.
 	 */
-	public List<Item> getItemsForUser(int id, int page) {
+	public List<Item> getItemsForUser(int id, int page, String sort, String sortDir) {
+
+		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
+			throw new BadRequestException(
+					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
+		}
+
+		if (!(sort.equals("item_rating") || sort.equals("none"))) {
+			throw new BadRequestException(
+					"sort " + sort + " is not a valid value for a sort in the entity.");
+		}
+
 		if(userRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No users exists with id " + id);
 		}
 
-		Pageable pageRequest = PageRequest.of(page, 6);
+		PageRequest pageRequest;
+		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 6);
+		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 6, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 6, Sort.by(sort).descending());
+
 		return itemRepository.findAllUserId(id, pageRequest);
 	}
 	
@@ -166,7 +185,7 @@ public class ItemService {
 	 * @return saved updated item
 	 */
 	public Item updateItemRatingAndWords(int id, List<String> posWords, List<String> negWords) {
-		if (itemRepository.findById(id).orElse(null) == null) {
+		if (itemRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"no items with id: " + id + " exists");
 		}

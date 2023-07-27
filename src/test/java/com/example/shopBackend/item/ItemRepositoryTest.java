@@ -68,4 +68,63 @@ class ItemRepositoryTest {
         assertTrue(foundEntity.size() == 1);
         assertTrue(foundNoneEntity.size() == 0);
 	}
+
+	@Test
+	void ItemFindItemCountForUserIdWorks() {
+		User user = testUserRepository.findById(1).orElse(null);
+		Category category = testCategoryRepository.findById(1).orElse(null);
+		Words words = testWordsRepository.findById(2).orElse(null);
+
+		Item item = new Item(
+				1,
+				"new item title",
+				user,
+				4,
+				category,
+				words,
+				"test desc"
+		);
+		testItemRepository.save(item);
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		int foundEntity = testItemRepository.findItemCountForUserId(user.getId());
+		int foundNoneEntity = testItemRepository.findItemCountForUserId(user.getId() + 1);
+		assertTrue(foundEntity == 1);
+		assertTrue(foundNoneEntity == 0);
+	}
+
+	@Test
+	void ItemFindAvgRatingForUserWorks() {
+		User user = testUserRepository.findById(1).orElse(null);
+		Category category = testCategoryRepository.findById(1).orElse(null);
+		Words words = testWordsRepository.findById(2).orElse(null);
+		Words words2 = testWordsRepository.findById(3).orElse(null);
+
+		Item item = new Item(
+				"new item title",
+				user,
+				4,
+				category,
+				words,
+				"test desc"
+		);
+		Item item2 = new Item(
+				"new item title",
+				user,
+				2,
+				category,
+				words2,
+				"test desc"
+		);
+		testItemRepository.save(item);
+		testItemRepository.save(item2);
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		float foundEntity = testItemRepository.findItemAvgRatingForUserId(user.getId()).orElse(-2F);
+		Float notFoundEntity = testItemRepository.findItemAvgRatingForUserId(user.getId() + 1).orElse(-2F);
+		assertTrue(foundEntity == 3.3333333F);
+		assertTrue(notFoundEntity == -2F);
+	}
 }

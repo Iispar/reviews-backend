@@ -138,8 +138,22 @@ public class ReviewService {
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
-	public List<Review> getReviewsForUser(int id, int page) {
-		Pageable pageRequest = PageRequest.of(page, 4);
+	public List<Review> getReviewsForUser(int id, int page, String sort, String sortDir) {
+		Pageable pageRequest;
+
+		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
+			throw new BadRequestException(
+					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
+		}
+
+		if (!(sort.equals("review_date") || sort.equals("review_likes") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+			throw new BadRequestException(
+					"sort " + sort + " is not a valid value for a sort in the entity.");
+		}
+
+		if (sortDir == "asc") pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+
 		if(userRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No users exists with id " + id);

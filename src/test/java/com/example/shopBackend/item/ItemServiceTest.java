@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -60,11 +61,21 @@ class ItemServiceTest {
     private ItemService testItemService;
 
     @Test
-    void getItemsForUserWorks() {
+    void getItemsForUserWorksWithAsc() {
         given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 
-        Pageable pageRequest = PageRequest.of(0, 6);
-        testItemService.getItemsForUser(1, 0);
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").ascending());
+        testItemService.getItemsForUser(1, 0, "item_rating", "asc");
+
+        verify(itemRepository).findAllUserId(1, pageRequest);
+    }
+
+    @Test
+    void getItemsForUserWorksWithDesc() {
+        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").descending());
+        testItemService.getItemsForUser(1, 0, "item_rating", "desc");
 
         verify(itemRepository).findAllUserId(1, pageRequest);
     }
@@ -73,7 +84,7 @@ class ItemServiceTest {
     void getItemsForUserThrowsErrorWithNoMatchingUser() {
         given(userRepository.findById(any())).willReturn(Optional.empty());
 
-        assertThatThrownBy(() -> testItemService.getItemsForUser(1, 0))
+        assertThatThrownBy(() -> testItemService.getItemsForUser(1, 0, "none", "none"))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("No users exists with id 1");
 
@@ -86,9 +97,33 @@ class ItemServiceTest {
     void getItemsForUserThrowsErrorWithNegativePage() {
         given(userRepository.findById(any())).willReturn(Optional.of(new User()));
 
-        assertThatThrownBy(() -> testItemService.getItemsForUser(1, -1))
+        assertThatThrownBy(() -> testItemService.getItemsForUser(1, -1, "none", "none"))
                 .isInstanceOf(java.lang.IllegalArgumentException.class)
                 .hasMessageContaining("Page index must not be less than zero");
+    }
+
+    @Test
+    void GetItemsForUserThrowsErrorWithBadSortDir() {
+
+        assertThatThrownBy(() -> testItemService.getItemsForUser(1, 0, "item_rating", "ascending"))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
+
+        Pageable pageRequest = PageRequest.of(0, 4);
+
+        verify(reviewRepository, never()).findAllUserId(1, pageRequest);
+    }
+
+    @Test
+    void GetItemsForUserThrowsErrorWithBadSort() {
+
+        assertThatThrownBy(() -> testItemService.getItemsForUser(1, 0, "item_name", "asc"))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("sort item_name is not a valid value for a sort in the entity.");
+
+        Pageable pageRequest = PageRequest.of(0, 4);
+
+        verify(reviewRepository, never()).findAllUserId(1, pageRequest);
     }
 
     @Test

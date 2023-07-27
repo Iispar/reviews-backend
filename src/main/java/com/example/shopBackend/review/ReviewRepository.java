@@ -118,5 +118,15 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 */
 	@Query(value = "SELECT review_rating FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
 	List<Integer> findAllRatingsWithItemId(int id);
+
+	/**
+	 * Querys all the reviews that match the user id and returns all the
+	 * count of review
+	 * @param {int} id
+	 * 	      Id of the user you wish to get results for.
+	 * @return count of all matches
+	 */
+	@Query(value = "SELECT COUNT(*) FROM reviews r WHERE r.review_item IN (SELECT item_id FROM items i WHERE i.item_account = ?1)", nativeQuery = true)
+	int findCountWithUserId(int id);
 }
 

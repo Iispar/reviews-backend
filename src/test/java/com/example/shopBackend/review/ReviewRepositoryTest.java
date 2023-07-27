@@ -438,4 +438,53 @@ class ReviewRepositoryTest {
 		assertTrue(foundEntity.size() == 3);
 		assertTrue(foundNoneEntity.size() == 0);
 	}
+
+	@Test
+	void reviewsFindCountWithUserIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				Date.valueOf("2022-01-04"),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				user,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				Date.valueOf("2022-02-01"),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				user,
+				2,
+				item
+		);
+
+		Review review3 = new Review(
+				Date.valueOf("2022-01-05"),
+				"review 3 body for test",
+				"test item 3",
+				0,
+				0,
+				user,
+				3,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+		testReviewRepository.save(review3);
+
+		int foundEntity = testReviewRepository.findCountWithUserId(item.getId());
+		int notFoundEntity = testReviewRepository.findCountWithUserId(item.getId() + 1);
+
+
+		assertTrue(foundEntity == 3);
+		assertTrue(notFoundEntity == 0);
+	}
 }

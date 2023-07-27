@@ -6,6 +6,7 @@ import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.user.UserRepository;
+import com.example.shopBackend.words.Words;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -50,30 +51,39 @@ public class PagesService {
         Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
 
         int reviewCount = reviewRepository.findCountWithUserId(userId);
-        if (reviewCount == 0) {
-            throw new BadRequestException(
-                    "no reviews exist with userId");
-        }
         int itemCount = itemRepository.findItemCountForUserId(userId);
-        if (itemCount == 0) {
-            throw new BadRequestException(
-                    "no items exist with userId");
-        }
 
         List<Review> latestReviews = reviewRepository.findAllUserId(userId, reviewPageReq);
         List<Item> topItems = itemRepository.findAllUserId(userId, itemPageReq);
         List<Chart> chart = reviewRepository.findChartForUserByWeek(userId);
-        float ratingAvg = itemRepository.findItemAvgRatingForUserId(userId).orElse(-2F);
+
+        float ratingAvg = itemRepository.findItemAvgRatingForUserId(userId).orElse(0F);
 
         return new Homepage(latestReviews, topItems, ratingAvg, itemCount, reviewCount, chart);
     }
 
-    public void getItempage() {
-        //TODO:
-        // LATEST REVIEWS FOR ITEM
-        // CHART
-        // TOP WORDS
+    /**
+     * Creates an Itempage object with calls to the item and review repositories.
+     * @param {int} itemId
+     *        The id of the item for itempge.
+     * @return itempage of item with param id.
+     */
+    public ItemPage getItempageForItem(int itemId) {
+        Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
 
-        // HOW TO RETURN
+        Item item = itemRepository.findById(itemId).orElse(null);
+
+        if (item == null) {
+            throw new BadRequestException(
+                    "no items with id: " + itemId + " exists"
+            );
+        }
+
+        List<Review> latestReviews = reviewRepository.findAllItemId(itemId, reviewPageReq);
+
+        List<Chart> chart = reviewRepository.findChartForItemByWeek(itemId);
+        Words words = item.getWords();
+
+        return new ItemPage(latestReviews, chart, words.getPositive(), words.getNegative());
     }
 }

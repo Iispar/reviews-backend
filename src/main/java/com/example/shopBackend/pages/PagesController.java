@@ -31,8 +31,17 @@ public class PagesController {
         return pagesService.getHomepageForUser(id);
     }
 
-    // @GetMapping("/get/item")
-    // TODO: CREATE CALL TO SERVICE
-    // TODO: CREATE SERVICE TO CALL ALL THE DATA THAT WE NEED
-    // TODO: HOW TO RETURN? WHAT TYPE OF OBJECT?
+
+    /**
+     * GET call to /get/item?itemId=(input) will return all the data
+     * for the itempage, with the data corresponding to the item with the param id.
+     * @param {ind} id
+     *        The id we want the home page data for
+     * @return itempage data for item.
+     */
+    @GetMapping("/get/item")
+    public ItemPage GetItemPageForItem(
+            @RequestParam("itemid") int id) {
+        return pagesService.getItempageForItem(id);
+    }
 }

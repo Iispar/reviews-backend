@@ -27,9 +27,9 @@ public class Review {
 	@Column(name = "review_title", nullable = false)
 	private String title;
 	@Column(name = "review_likes", nullable = true)
-	private int likes;
+	private Integer likes;
 	@Column(name = "review_dislikes", nullable = true)
-	private int dislikes;
+	private Integer dislikes;
 	@Column(name = "review_rating", nullable = true)
 	private int rating;
 	
@@ -43,7 +43,7 @@ public class Review {
 	@JoinColumn(name = "review_item", referencedColumnName = "item_id", nullable = false)
 	private Item item;
 
-	public Review(Date date, String body, String title, int likes, int dislikes, User user, int rating, Item item) {
+	public Review(Date date, String body, String title, Integer likes, int dislikes, User user, int rating, Item item) {
 		this.date = date;
 		this.body = body;
 		this.title = title;
@@ -88,7 +88,7 @@ public class Review {
 		this.title = title;
 	}
 
-	public int getLikes() {
+	public Integer getLikes() {
 		return likes;
 	}
 
@@ -96,11 +96,11 @@ public class Review {
 		this.likes = likes;
 	}
 
-	public int getDislikes() {
+	public Integer getDislikes() {
 		return dislikes;
 	}
 
-	public void setDislikes(int dislikes) {
+	public void setDislikes(Integer dislikes) {
 		this.dislikes = dislikes;
 	}
 

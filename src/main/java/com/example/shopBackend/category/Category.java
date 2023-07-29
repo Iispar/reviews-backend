@@ -20,15 +20,15 @@ public class Category {
 	@Column(name = "category_id", nullable = false, updatable = false, unique = true)
 	private int id;
 	
-	@Column(name = "category_name", nullable = false, updatable = false, unique = false)
-	private String category;
+	@Column(name = "category_name", nullable = false, updatable = false)
+	private String name;
 	
 	
-	public Category(String category) {
-		this.category = category;
+	public Category(String name) {
+		this.name = name;
 	}
 	
-	public Category() {};
+	public Category() {}
 
 	public int getId() {
 		return id;
@@ -38,12 +38,12 @@ public class Category {
 		this.id = id;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getName() {
+		return name;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

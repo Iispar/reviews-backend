@@ -20,10 +20,10 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	
 	/**
 	 * Query to find all items for user for page.
-	 * @param {int} id
+	 * @param id
 	 * 		  The user id that searched.
-	 * @param {Pageable} pageable
-	 * 		  The pageable object that selects page.
+	 * @param pageable
+	 * 		  The pageable object that selects page and sorts.
 	 * @return the items that matched the query
 	 */
 	@Query(value = "SELECT * FROM items i WHERE i.item_account = ?1", nativeQuery = true)
@@ -31,19 +31,19 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 
 	/**
 	 * Query to find count of all items for user.
-	 * @param {int} id
+	 * @param id
 	 * 		  The user id that searched.
 	 * @return the count of items that matched the query
 	 */
 	@Query(value = "SELECT COUNT(*) FROM items i WHERE i.item_account = ?1", nativeQuery = true)
-    int findItemCountForUserId(int userId);
+    int findItemCountForUserId(int id);
 
 	/**
 	 * Query to find avg of ratings for users items
-	 * @param {int} id
+	 * @param id
 	 * 		  The user id that searched.
 	 * @return the avg of matched items
 	 */
 	@Query(value = "SELECT AVG(item_rating) FROM items i WHERE i.item_account = ?1", nativeQuery = true)
-	Optional<Float> findItemAvgRatingForUserId(int userId);
+	Optional<Float> findItemAvgRatingForUserId(int id);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/item")
 public class ItemController {
-	private ItemService itemService;
+	private final ItemService itemService;
 	
 	@Autowired
 	public ItemController(ItemService itemService) {
@@ -24,9 +24,9 @@ public class ItemController {
 	 * API GET call to /api/item/add with content in the body that describes the added item.
 	 * Will add it to the database. Used in the frontend allItem page with add item.
 	 *
-	 * @param {Item} item
-	 *               The item to be added to the database
-	 * @return True if successful. False otherwise
+	 * @param item
+	 * 		  The item to be added to the database
+	 * @return saved items
 	 */
 	@PostMapping("/add")
 	public List<Item> add(@RequestBody List<Item> item) {
@@ -36,9 +36,11 @@ public class ItemController {
 	/**
 	 * API GET call to /api/item/get?userId=(input)&page=(input)
 	 * will return all items for user on page that is selected.
-	 * @param {Item} item
-	 * 	      The item to be added to the database
-	 * @return True if successful. False otherwise
+	 * @param id
+	 * 	      The if of the user to get items for
+	 * @param page
+	 * 	      the page we want for the items
+	 * @return requested items
 	 */
 	@GetMapping("/get")
 	public List<Item> getItemsForUser(
@@ -55,20 +57,21 @@ public class ItemController {
 	/**
 	 * API DELETE call to /api/item/del?itemId=(input)
 	 * will delete the item with the corresponding id.
+	 * @param id
+	 * 		  The id of the item we want to delete
 	 * @return True if successful. False otherwise
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteItem(@RequestParam("itemId") int id) {
-		if (Boolean.TRUE.equals(itemService.deleteItem(id))) return true;
-		return false;
+		return Boolean.TRUE.equals(itemService.deleteItem(id));
 	}
 
 	/**
 	 * API PUT call to /api/item/update?itemId=(input) with an item in the body
 	 * will update the corresponding item with the id.
-	 * @param {int} id
-	 * 		  Id of the item to be updated.
-	 * @param {Item} item
+	 * @param id
+	 * 		  The id of the item to be updated.
+	 * @param item
 	 * 		  The item that has updated values.
 	 * @return Updated item
 	 */

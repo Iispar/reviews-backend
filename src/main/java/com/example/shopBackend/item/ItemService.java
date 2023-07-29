@@ -30,46 +30,47 @@ public class ItemService {
 	private ReviewRepository reviewRepository;
 
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 
 	@Autowired
 	private WordsRepository wordsRepository;
 
-	public ItemService(ItemRepository itemRepository, UserRepository userRepository, CategoryRepository categoryRepository, WordsRepository wordsRepository) {
+	public ItemService(ItemRepository itemRepository, UserRepository userRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository, WordsRepository wordsRepository) {
 		this.itemRepository = itemRepository;
 		this.userRepository = userRepository;
 		this.categoryRepository = categoryRepository;
 		this.wordsRepository = wordsRepository;
+		this.reviewRepository = reviewRepository;
 	}
 
 	/**
-	 * Saves a new item to the database.
-	 * @param {Item} item
+	 * Saves new items to the database.
+	 * @param item
 	 * 		  The item to be added to the database.
-	 * @return
+	 * @return saved items
 	 */
 	public List<Item> saveAllItems(List<Item> item) {
-		for (int i = 0; i < item.size(); i += 1) {
+		for (Item value : item) {
 			Words words = new Words();
 			wordsRepository.save(words);
-			item.get(i).setWords(words);
+			value.setWords(words);
 
-			if (item.get(i).getRating() < 0 || item.get(i).getRating() > 5) {
+			if (value.getRating() < 0 || value.getRating() > 5) {
 				throw new BadRequestException(
 						"item with invalid rating. Has to be between 0-5.");
 			}
 
-			if (item.get(i).getTitle().length() < 3 || item.get(i).getTitle().length() > 50) {
+			if (value.getTitle().length() < 3 || value.getTitle().length() > 50) {
 				throw new BadRequestException(
 						"item with invalid title. Length has to be between 3 and 50 characters");
 			}
-			if (item.get(i).getDesc().length() > 300) {
+			if (value.getDesc().length() > 300) {
 				throw new BadRequestException(
 						"item with invalid desc. Length has to be under 300 characters");
 			}
 
-			int categoryId = item.get(i).getCategory().getId();
-			int userId = item.get(i).getUser().getId();
+			int categoryId = value.getCategory().getId();
+			int userId = value.getUser().getId();
 
 			if (categoryRepository.findById(categoryId).isEmpty()) {
 				throw new BadRequestException(
@@ -85,13 +86,13 @@ public class ItemService {
 	}
 	/**
 	 * Finds all items for user. And returns them.
-	 * @param {int} id
+	 * @param id
 	 * 		  The id of the user you want items for.
-	 * @param {int} page
+	 * @param page
 	 * 		  The page you want to receive
-	 * @param {String} sort
+	 * @param sort
 	 * 		  Entity value to be sorted with, none if no sort.
-	 * @param {String} sortDir
+	 * @param sortDir
 	 * 		  The direction of the sort, none if no sort.
 	 * @return reviews that match query.
 	 */
@@ -121,10 +122,10 @@ public class ItemService {
 	}
 	
 	/**
-	 * deletes a item from the database.
-	 * @param {id} item
-	 * 		  The item to be deleted from the database.
-	 * @return
+	 * deletes an item from the database.
+	 * @param id
+	 * 		  The id to be deleted from the database.
+	 * @return true;
 	 */
 	public Boolean deleteItem(int id){
 		if(itemRepository.findById(id).isEmpty()) {
@@ -133,15 +134,20 @@ public class ItemService {
 		}
 
 		itemRepository.deleteById(id);
-		// check if fails
+
+		if(itemRepository.findById(id).isPresent()) {
+			throw new BadRequestException(
+					"Failed to delete item");
+		}
+
 		return true;
 	}
 
 	/**
 	 * Sets the new values to the updated item and saves it to the repository,
-	 * @param {int} id
-	 * 		  Id of the item to be updated.
-	 * @param {Item} item
+	 * @param id
+	 * 		  The id of the item to be updated.
+	 * @param item
 	 * 		  The item that has updated values.
 	 * @return Updated item
 	 */
@@ -176,11 +182,11 @@ public class ItemService {
 
 	/**
 	 * updates the items rating and words.
-	 * @param {int} id
+	 * @param id
 	 * 		  The id of the item you would like to update
-	 * @param {List<String>} posWords
+	 * @param posWords
 	 * 		  The pos words to be inserted to positive words.
-	 * @param {List<String>} negWords
+	 * @param negWords
 	 *  	  The neg words to be inserted to negative words.
 	 * @return saved updated item
 	 */
@@ -204,13 +210,13 @@ public class ItemService {
 			);
 		}
 
-		if (posWords.size() > 5 || posWords.size() < 1) {
+		if (posWords.size() > 5 || posWords.isEmpty()) {
 			throw new BadRequestException(
 					"pos words invalid. Has to have 1 to 5 items."
 			);
 		}
 
-		if (negWords.size() > 5 || negWords.size() < 1) {
+		if (negWords.size() > 5 || negWords.isEmpty()) {
 			throw new BadRequestException(
 					"neg words invalid. Has to have 1 to 5 items."
 			);

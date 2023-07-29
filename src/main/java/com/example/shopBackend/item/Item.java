@@ -31,7 +31,7 @@ public class Item {
 	@JoinColumn(name = "item_account", referencedColumnName = "account_id", nullable = false)
 	private User user;
 	
-	@Column(name = "item_rating", nullable = true)
+	@Column(name = "item_rating")
 	private float rating;
 	
 	// reference to category entity - unidirectional.
@@ -42,10 +42,10 @@ public class Item {
     
 	// reference to words entity - unidirectional.
     @OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "item_words", referencedColumnName = "words_id", nullable = true)
+	@JoinColumn(name = "item_words", referencedColumnName = "words_id")
 	private Words words;
 
-	public Item() {};
+	public Item() {}
 
 	public Item(int id, String title, User user, float rating, Category category, Words words, String desc) {
 		this.id = id;

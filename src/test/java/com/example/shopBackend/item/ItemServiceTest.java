@@ -33,8 +33,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @DataJpaTest()
@@ -128,7 +127,7 @@ class ItemServiceTest {
 
     @Test
     void deleteItem() {
-        given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+        given(itemRepository.findById(anyInt())).willReturn(Optional.of(new Item()), Optional.empty());
 
         testItemService.deleteItem(0);
 
@@ -144,6 +143,17 @@ class ItemServiceTest {
                 .hasMessageContaining("No items exists with id 0");
 
         verify(itemRepository, never()).deleteById(0);
+    }
+
+    @Test
+    void deleteItemThrowsErrorWithFailedDelete() {
+        given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+        assertThatThrownBy(() ->  testItemService.deleteItem(0))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("Failed to delete item");
+
+        verify(itemRepository).deleteById(0);
     }
 
     @Test

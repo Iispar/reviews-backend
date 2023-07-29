@@ -73,12 +73,12 @@ public class UserService {
 					"password doesn't include an uppercase letter, number or special character os is min length 8");
 		}
 
-		if (userRepository.findByUsername(user.getUsername()).orElse(null) != null && user.getUsername() != foundUser.getUsername()) {
+		if (userRepository.findByUsername(user.getUsername()).orElse(null) != null && !user.getUsername().equals(foundUser.getUsername())) {
 			throw new BadRequestException(
 					"an user with username: " + user.getUsername() + " already exists");
 		}
 
-		if (userRepository.findByEmail(user.getEmail()).orElse(null) != null && user.getEmail() != foundUser.getEmail()) {
+		if (userRepository.findByEmail(user.getEmail()).orElse(null) != null && !user.getEmail().equals(foundUser.getEmail())) {
 			throw new BadRequestException(
 					"an user with email: " + user.getEmail() + " already exists");
 		}

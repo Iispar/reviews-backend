@@ -64,7 +64,7 @@ public class ReviewService {
 					"item with id: " + itemId + " does not exist");
 		}
 
-		List<String> reviewBodys = reviewRepository.findAllBodysWithItemId(itemId);
+		List<String> reviewBodys = new ArrayList<>();
 
 		for (int i = 0; i < review.size(); i += 1) {
 			reviewBodys.add(review.get(i).getBody());
@@ -81,6 +81,7 @@ public class ReviewService {
 
 			// sets the new calculated rating.
 			review.get(i).setRating(ratedReviews.getReviews().get(i).getStar());
+
 			if (review.get(i).getItem().getId() != itemId) {
 				throw new BadRequestException(
 						"all reviews don't have the same id");

@@ -193,7 +193,11 @@ public class ItemService {
 		Item foundItem = itemRepository.findById(id).orElseThrow();
 		List<Integer> ratings = reviewRepository.findAllRatingsWithItemId(id);
 
-		int rating = ratings.stream().mapToInt(Integer::intValue).sum()/ratings.size();
+		double rating = ratings.stream()
+				.mapToDouble(d -> d)
+				.average()
+				.orElse(0.0);
+
 		if (rating < 1 || rating > 5) {
 			throw new BadRequestException(
 					"item rating invalid. Allowed only 1-5."
@@ -212,7 +216,7 @@ public class ItemService {
 			);
 		}
 
-		foundItem.setRating(rating);
+		foundItem.setRating((float) rating);
 		foundItem.getWords().setPositive(posWords);
 		foundItem.getWords().setNegative(negWords);
 		return itemRepository.save(foundItem);

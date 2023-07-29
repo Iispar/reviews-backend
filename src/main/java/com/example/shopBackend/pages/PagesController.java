@@ -41,7 +41,7 @@ public class PagesController {
      */
     @GetMapping("/get/item")
     public ItemPage GetItemPageForItem(
-            @RequestParam("itemid") int id) {
+            @RequestParam("itemId") int id) {
         return pagesService.getItempageForItem(id);
     }
 }

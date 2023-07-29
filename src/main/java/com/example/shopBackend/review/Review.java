@@ -26,9 +26,9 @@ public class Review {
 	private String body;
 	@Column(name = "review_title", nullable = false)
 	private String title;
-	@Column(name = "review_likes", nullable = true)
+	@Column(name = "review_likes", nullable = false)
 	private Integer likes;
-	@Column(name = "review_dislikes", nullable = true)
+	@Column(name = "review_dislikes", nullable = false)
 	private Integer dislikes;
 	@Column(name = "review_rating", nullable = true)
 	private int rating;

@@ -12,9 +12,6 @@ public class ReviewUtil {
 
     public RatedReviews rateReviews(List<String> reviews) {
 
-
-        System.out.println("WAS CALLED");
-
         JSONObject jsonReviews = new JSONObject();
         jsonReviews.put("reviews", reviews);
 

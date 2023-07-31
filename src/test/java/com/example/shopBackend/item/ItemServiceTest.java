@@ -13,6 +13,8 @@ import com.example.shopBackend.words.WordsRepository;
 import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -33,9 +35,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "unchecked"})
 @ActiveProfiles("test")
 @DataJpaTest()
 @ContextConfiguration(classes = ShopBackendApplication.class)
@@ -494,40 +497,19 @@ class ItemServiceTest {
         verify(itemRepository, never()).save(item);
     }
 
-    @Test
-    void updateItemThrowsErrorWithTooLongTitle() {
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "this title will be too long. this title will be too long. this title will be too long. this title will be too long.",
+            "il"
+    })
+    void updateItemThrowsErrorWithBadTitle(String title) {
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         Item item = new Item(
                 1,
-                "this title will be too long. this title will be too long. this title will be too long. this title will be too long.",
-                user,
-                0,
-                category,
-                null,
-                "test desc"
-        );
-
-        given(itemRepository.findById(any())).willReturn(Optional.of(item));
-        int itemId = item.getId();
-        assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
-                .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
-
-        verify(itemRepository, never()).save(item);
-    }
-
-    @Test
-    void updateItemThrowsErrorWithTooShortTitle() {
-        given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
-        Category category = new Category("test category");
-
-        Item item = new Item(
-                1,
-                "il",
+                title,
                 user,
                 0,
                 category,

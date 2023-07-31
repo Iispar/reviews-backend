@@ -22,32 +22,32 @@ public class UserService {
 	
 	/**
 	 * Saves a new user to the database.
-	 * @param {User} user
-	 * 		  The user to be added to the database.
-	 * @return
+	 *
+	 * @param users The user to be added to the database.
+	 * @return saved users
 	 */
 	public List<User> saveAllUsers(List<User> users) {
 
-		for (int i = 0; i < users.size(); i += 1) {
-			int roleId = users.get(i).getRole().getId();
+		for (User user : users) {
+			int roleId = user.getRole().getId();
 			if (roleRepository.findById(roleId).isEmpty()) {
 				throw new BadRequestException(
 						"role with id: " + roleId + " does not exist");
 			}
 
-			if (!users.get(i).getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w\\d@$!%*#?&]{8,}")) {
+			if (!user.getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w@$!%*#?&]{8,}")) {
 				throw new BadRequestException(
 						"password doesn't include an uppercase letter, number or special character os is min length 8");
 			}
 
-			if (userRepository.findByUsername(users.get(i).getUsername()).orElse(null) != null) {
+			if (userRepository.findByUsername(user.getUsername()).orElse(null) != null) {
 				throw new BadRequestException(
-						"an user with username: " + users.get(i).getUsername() + " already exists");
+						"an user with username: " + user.getUsername() + " already exists");
 			}
 
-			if (userRepository.findByEmail(users.get(i).getEmail()).orElse(null) != null) {
+			if (userRepository.findByEmail(user.getEmail()).orElse(null) != null) {
 				throw new BadRequestException(
-						"an user with email: " + users.get(i).getEmail() + " already exists");
+						"an user with email: " + user.getEmail() + " already exists");
 			}
 		}
 
@@ -68,7 +68,7 @@ public class UserService {
 					"role with id: " + roleId + " does not exist");
 		}
 
-		if (!user.getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w\\d@$!%*#?&]{8,}")) {
+		if (!user.getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w@$!%*#?&]{8,}")) {
 			throw new BadRequestException(
 					"password doesn't include an uppercase letter, number or special character os is min length 8");
 		}
@@ -93,9 +93,9 @@ public class UserService {
 
 	/**
 	 * deletes an user from the database.
-	 * @param {id} id
+	 * @param id
 	 * 		  The id of the user to be deleted from the database.
-	 * @return
+	 * @return true if successful
 	 */
 	public Boolean deleteUser(int id){
 		if(userRepository.findById(id).isEmpty()) {
@@ -104,6 +104,11 @@ public class UserService {
 		}
 
 		userRepository.deleteById(id);
+
+		if(userRepository.findById(id).isPresent()) {
+			throw new BadRequestException(
+					"deletion failed");
+		}
 		return true;
 	}
 }

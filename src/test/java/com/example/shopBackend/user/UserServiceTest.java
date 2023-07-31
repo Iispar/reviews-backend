@@ -46,7 +46,7 @@ class UserServiceTest {
         given(userRepository.findByUsername(any())).willReturn(Optional.empty());
         given(userRepository.findByEmail(any())).willReturn(Optional.empty());
 
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
         Role role = new Role(1, "test category");
         User user1 = new User(
                 1,
@@ -79,7 +79,7 @@ class UserServiceTest {
     void saveAllUsersThrowsWithBadRoleId() {
         given(roleRepository.findById(any())).willReturn(Optional.empty());
 
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
         Role role = new Role(1, "test category");
         User user1 = new User(
                 1,
@@ -114,7 +114,7 @@ class UserServiceTest {
     void saveAllUsersThrowsWithBadPasswordCharacter() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
 
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
         Role role = new Role(1, "test category");
         User user1 = new User(
                 1,
@@ -149,7 +149,7 @@ class UserServiceTest {
     void saveAllUsersThrowsWithTooShortPassword() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
 
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
         Role role = new Role(1, "test category");
         User user1 = new User(
                 1,
@@ -185,7 +185,7 @@ class UserServiceTest {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
         given(userRepository.findByUsername(any())).willReturn(Optional.of(new User()));
 
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
         Role role = new Role(1, "test category");
         User user1 = new User(
                 1,
@@ -222,7 +222,7 @@ class UserServiceTest {
         given(userRepository.findByUsername(any())).willReturn(Optional.empty());
         given(userRepository.findByEmail(any())).willReturn(Optional.of(new User()));
 
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
         Role role = new Role(1, "test category");
         User user1 = new User(
                 1,
@@ -294,7 +294,8 @@ class UserServiceTest {
         );
 
         given(userRepository.findById(any())).willReturn(Optional.of(user));
-        assertThatThrownBy(() -> testUserService.updateUser(updateUser.getId(), updateUser))
+        int userId = updateUser.getId();
+        assertThatThrownBy(() -> testUserService.updateUser(userId, updateUser))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("role with id: 1 does not exist");
 
@@ -304,7 +305,6 @@ class UserServiceTest {
     @Test
     void updateUserThrowsWithNoMatchingUser() {
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Role role = new Role(1, "test category");
 
         User updateUser = new User(
@@ -317,7 +317,8 @@ class UserServiceTest {
         );
 
         given(userRepository.findById(any())).willReturn(Optional.empty());
-        assertThatThrownBy(() -> testUserService.updateUser(updateUser.getId(), updateUser))
+        int userId = updateUser.getId();
+        assertThatThrownBy(() -> testUserService.updateUser(userId, updateUser))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("No users exists with id: 1");
 
@@ -343,7 +344,8 @@ class UserServiceTest {
         );
 
         given(userRepository.findById(any())).willReturn(Optional.of(user));
-        assertThatThrownBy(() -> testUserService.updateUser(updateUser.getId(), updateUser))
+        int userId = updateUser.getId();
+        assertThatThrownBy(() -> testUserService.updateUser(userId, updateUser))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("an user with email: " + updateUser.getEmail() + " already exists");
 
@@ -368,7 +370,8 @@ class UserServiceTest {
         );
 
         given(userRepository.findById(any())).willReturn(Optional.of(user));
-        assertThatThrownBy(() -> testUserService.updateUser(updateUser.getId(), updateUser))
+        int userId = updateUser.getId();
+        assertThatThrownBy(() -> testUserService.updateUser(userId, updateUser))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("an user with username: " + updateUser.getUsername() + " already exists");
 
@@ -392,7 +395,8 @@ class UserServiceTest {
         );
 
         given(userRepository.findById(any())).willReturn(Optional.of(user));
-        assertThatThrownBy(() -> testUserService.updateUser(updateUser.getId(), updateUser))
+        int userId = updateUser.getId();
+        assertThatThrownBy(() -> testUserService.updateUser(userId, updateUser))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("password doesn't include an uppercase letter, number or special character os is min length 8");
 
@@ -425,7 +429,7 @@ class UserServiceTest {
 
     @Test
     void deleteUserWorks() {
-        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+        given(userRepository.findById(any())).willReturn(Optional.of(new User()), Optional.empty());
 
         testUserService.deleteUser(0);
 
@@ -441,5 +445,16 @@ class UserServiceTest {
                 .hasMessageContaining("No users exists with id 0");
 
         verify(userRepository, never()).deleteById(0);
+    }
+
+    @Test
+    void deleteUserThrowsErrorWithFailedDeletion() {
+        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+
+        assertThatThrownBy(() ->  testUserService.deleteUser(0))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("deletion failed");
+
+        verify(userRepository).deleteById(0);
     }
 }

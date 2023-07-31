@@ -18,9 +18,9 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 
 	/**
 	 * Query to find all reviews for users for page.
-	 * @param {int} id
+	 * @param id
 	 * 		  The user id that searched.
-	 * @param {Pageable} pageable
+	 * @param pageable
 	 * 		  The pageable object that selects page.
 	 * @return the items that matched the query
 	 */
@@ -30,9 +30,9 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	
 	/**
 	 * Query to find all reviews for item for page.
-	 * @param {int} id
+	 * @param id
 	 * 		  The item id that searched.
-	 * @param {Pageable} pageable
+	 * @param pageable
 	 * 		  The pageable object that selects page.
 	 * @return the items that matched the query
 	 */
@@ -40,13 +40,13 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Review> findAllItemId(int id, Pageable pageable);
 	
 	/**
-	 * Query to find all reviews with searched title for a item returns selected page and sorted in what 
+	 * Query to find all reviews with searched title for an item returns selected page and sorted in what
 	 * is described in the pageable object.
-	 * @param {String} title
+	 * @param title
 	 * 		  The searched title.
-	 * @param {int} id
+	 * @param id
 	 * 	 	  The item id that is searched with.
-	 * @param {Pageable} pageable
+	 * @param pageable
 	 * 		  The pageable object that selects page and sort.
 	 * @return the items that matched the query
 	 */
@@ -56,12 +56,11 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	/**
 	 * Query first all the items that match the users id and then get their reviews.
 	 * Count the result, calc average of the rating attr and group results by month.
-	 * @param {int} id
-	 * 	      Id of the user you wish to get results for.
-	 * @return count of reviews and their avg rating grouped by month.
+	 * @param id
+	 * 	      id of the user you wish to get results for.
+	 * @return list of chart with count of reviews and their avg rating grouped by month.
 	 */
-	@Query(value = ""
-			+ "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
+	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
 			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)"
 			+ "GROUP BY MONTH(review_date)", nativeQuery = true)
 	List<Chart> findChartForUserByMonth(int id);
@@ -69,12 +68,11 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	/**
 	 * Query first all the items that match the users id and then get their reviews.
 	 * Count the result, calc average of the rating attr and group results by week.
-	 * @param {int} id
-	 * 	      Id of the user you wish to get results for.
-	 * @return count of reviews and their avg rating grouped by week.
+	 * @param id
+	 * 	      id of the user you wish to get results for.
+	 * @return list of count of reviews and their avg rating grouped by week.
 	 */
-	@Query(value = ""
-			+ "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
+	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
 			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)"
 			+ "GROUP BY WEEK(review_date)", nativeQuery = true)
 	List<Chart> findChartForUserByWeek(int id);
@@ -82,9 +80,9 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	/**
 	 * Query first all the reviews that match the item id.
 	 * Count the result, calc average of the rating attr and group results by month.
-	 * @param {int} id
-	 * 	      Id of the item you wish to get results for.
-	 * @return count of reviews and their avg rating grouped by month.
+	 * @param id
+	 * 	      id of the item you wish to get results for.
+	 * @return list of count of reviews and their avg rating grouped by month.
 	 */
 	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item = ?1 GROUP BY MONTH(review_date)", nativeQuery = true)
 	List<Chart> findChartForItemByMonth(int id);
@@ -92,38 +90,38 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	/**
 	 * Query first all the reviews that match the item id.
 	 * Count the result, calc average of the rating attr and group results by week.
-	 * @param {int} id
-	 * 	      Id of the item you wish to get results for.
-	 * @return count of reviews and their avg rating grouped by week.
+	 * @param id
+	 * 	      id of the item you wish to get results for.
+	 * @return list of count of reviews and their avg rating grouped by week.
 	 */
 	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item = ?1 GROUP BY WEEK(review_date)", nativeQuery = true)
 	List<Chart> findChartForItemByWeek(int id);
 
 	/**
-	 * Querys all the reviews that match the item id and returns all the
-	 * review bodys.
-	 * @param {int} id
-	 * 	      Id of the item you wish to get results for.
+	 * Queries all the reviews that match the item id and returns all the
+	 * review bodies.
+	 * @param id
+	 * 	      id of the item you wish to get results for.
 	 * @return body of the all reviews that match the item id.
 	 */
 	@Query(value = "SELECT review_body FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
 	List<String> findAllBodysWithItemId(int id);
 
 	/**
-	 * Querys all the reviews that match the item id and returns all the
+	 * Queries all the reviews that match the item id and returns all the
 	 * review ratings.
-	 * @param {int} id
-	 * 	      Id of the item you wish to get results for.
+	 * @param id
+	 * 	      id of the item you wish to get results for.
 	 * @return rating of the all reviews that match the item id.
 	 */
 	@Query(value = "SELECT review_rating FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
 	List<Integer> findAllRatingsWithItemId(int id);
 
 	/**
-	 * Querys all the reviews that match the user id and returns all the
+	 * Queries all the reviews that match the user id and returns all the
 	 * count of review
-	 * @param {int} id
-	 * 	      Id of the user you wish to get results for.
+	 * @param id
+	 * 	      id of the user you wish to get results for.
 	 * @return count of all matches
 	 */
 	@Query(value = "SELECT COUNT(*) FROM reviews r WHERE r.review_item IN (SELECT item_id FROM items i WHERE i.item_account = ?1)", nativeQuery = true)

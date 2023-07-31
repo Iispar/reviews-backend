@@ -5,6 +5,10 @@ import com.example.shopBackend.review.Review;
 
 import java.util.List;
 
+/**
+ * Class to include all wanted data for item page.
+ */
+@SuppressWarnings("unused")
 public class ItemPage {
     private List<Review> latestReviews;
     private List<Chart> chart;

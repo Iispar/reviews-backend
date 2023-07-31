@@ -4,6 +4,7 @@ import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.user.UserRepository;
 import exception.BadRequestException;
+import exception.CalculationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,7 @@ public class ReviewService {
 	private ItemService itemService;
 
 	
-	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository, ItemService itemService, ReviewUtil reviewUtil) {
+	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository, ReviewUtil reviewUtil) {
 		this.reviewRepository = reviewRepository;
 		this.userRepository = userRepository;
 		this.itemRepository = itemRepository;
@@ -46,9 +47,9 @@ public class ReviewService {
 
 	/**
 	 * Saves a new review to the database.
-	 * @param {List<Review>} review
+	 * @param  review
 	 * 		  The review to be added to the database.
-	 * @return
+	 * @return saved reviews.
 	 */
 	public List<Review> saveAllReviews(List<Review> review) {
 
@@ -66,15 +67,15 @@ public class ReviewService {
 
 		List<String> reviewBodys = new ArrayList<>();
 
-		for (int i = 0; i < review.size(); i += 1) {
-			reviewBodys.add(review.get(i).getBody());
+		for (Review value : review) {
+			reviewBodys.add(value.getBody());
 		}
 
 		RatedReviews ratedReviews;
 		try {
 			ratedReviews = reviewUtil.rateReviews(reviewBodys);
 		} catch (Exception e) {
-			throw new RuntimeException("error while rating reviews");
+			throw new CalculationException("error while rating reviews");
 		}
 
 		for (int i = 0; i < review.size(); i += 1) {
@@ -116,8 +117,8 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Deletes a item with the corresponding item_id.
-	 * @param {int} id
+	 * Deletes an item with the corresponding item_id.
+	 * @param id
 	 * 		  The id of the item to be deleted.
 	 * @return true if successful, false otherwise.
 	 */
@@ -133,9 +134,9 @@ public class ReviewService {
 	
 	/**
 	 * Finds all reviews for users items for page from the database. And returns them.
-	 * @param {int} id
+	 * @param id
 	 * 		  The id of the user you want reviews for.
-	 * @param {int} page
+	 * @param page
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
@@ -147,12 +148,12 @@ public class ReviewService {
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 
-		if (!(sort.equals("review_date") || sort.equals("review_likes") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+		if (!(sort.equals("review_date") || sort.equals("review_likes") || sort.equals("review_dislikes") ||  sort.equals("review_rating"))) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
 
-		if (sortDir == "asc") pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
 
 		if(userRepository.findById(id).isEmpty()) {
@@ -164,9 +165,9 @@ public class ReviewService {
 	
 	/**
 	 * Finds all reviews for item page from the database. And returns them.
-	 * @param {int} id
+	 * @param id
 	 * 		  The id of the item you want reviews for.
-	 * @param {int} page
+	 * @param page
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
@@ -181,13 +182,13 @@ public class ReviewService {
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 		
-		if (!(sort.equals("review_date") || sort.equals("review_likes") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
 		
 		Pageable pageRequest;
-		if (sortDir == "asc") pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
 		
 		
@@ -196,13 +197,13 @@ public class ReviewService {
 	
 	/**
 	 * Finds all reviews for item with title from the database and returns them.
-	 * @param {String} title
+	 * @param title
 	 * 		  The searched title.
-	 * @param {int} id
+	 * @param id
 	 * 		  The id of the item 
-	 * @param {String} sort
+	 * @param sort
 	 * 		  The sort used for search
-	 * @param {int} page
+	 * @param page
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
@@ -217,13 +218,13 @@ public class ReviewService {
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 		
-		if (!(sort.equals("review_date") || sort.equals("review_likes") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
 		
 		Pageable pageRequest;
-		if (sortDir == "asc") pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
 		
 		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
@@ -234,11 +235,11 @@ public class ReviewService {
 	/**
 	 * Finds the count of reviews and their average rating by user id and returns them
 	 * Different query depending on the wanted grouping.
-	 * @param {int} id
-	 * 	      Id of the user you wish to get results for.
-	 * @param {string} time
+	 * @param id
+	 * 	      id of the user you wish to get results for.
+	 * @param time
 	 * 		  Either month or week, the selection for grouping of results.
-	 * @return count of reviews and their avg rating grouped by parameter.
+	 * @return list of count of reviews and their avg rating grouped by parameter.
 	 */
 	public List<Chart> getChartForUser(String time, int id) {
 		
@@ -252,10 +253,10 @@ public class ReviewService {
 					"No users exists with id " + id);
 		}
 
-		List<Chart> res = new ArrayList<Chart>();
+		List<Chart> res;
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForUserByMonth(id);
-		} else if (time.equals("week")) {
+		} else {
 			res =  reviewRepository.findChartForUserByWeek(id);
 		}
 		return res;
@@ -264,11 +265,11 @@ public class ReviewService {
 	/**
 	 * Finds the count of reviews and their average rating by item id and returns them
 	 * Different query depending on the wanted grouping.
-	 * @param {int} id
-	 * 	      Id of the item you wish to get results for.
-	 * @param {string} time
+	 * @param id
+	 * 	      id of the item you wish to get results for.
+	 * @param time
 	 * 		  Either month or week, the selection for grouping of results.
-	 * @return count of reviews and their avg rating grouped by parameter.
+	 * @return list of count of reviews and their avg rating grouped by parameter.
 	 */
 	public List<Chart> getChartForItem(String time, int id) {
 		
@@ -282,10 +283,10 @@ public class ReviewService {
 					"No items exists with id " + id);
 		}
 		
-		List<Chart> res = new ArrayList<Chart>();
+		List<Chart> res;
 		if (time .equals("month")) {
 			res =  reviewRepository.findChartForItemByMonth(id);
-		} else if (time.equals("week")) {
+		} else {
 			res =  reviewRepository.findChartForItemByWeek(id);
 		}
 		return res;

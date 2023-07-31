@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.sql.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @DataJpaTest()
@@ -41,7 +41,7 @@ class ReviewRepositoryTest {
 	}
 	
 	@Test
-	void reviewFindAllUserIdWorks() throws Exception {
+	void reviewFindAllUserIdWorks() {
 		User user = testUserRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
@@ -73,12 +73,12 @@ class ReviewRepositoryTest {
 		
         List<Review> foundEntity = testReviewRepository.findAllUserId(user.getId(), pageRequest);
         List<Review> foundNoneEntity = testReviewRepository.findAllUserId(user.getId() + 1, pageRequest);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindAllByItemIdWorks() {
+	void reviewFindAllByItemIdWorks() {
 		User user = testUserRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
@@ -110,12 +110,12 @@ class ReviewRepositoryTest {
 		
         List<Review> foundEntity = testReviewRepository.findAllItemId(item.getId(), pageRequest);
         List<Review> foundNoneIdentity = testReviewRepository.findAllItemId(item.getId() + 1, pageRequest);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneIdentity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneIdentity.size());
 	}
 	
 	@Test
-	void reviewfindAllByTitleWorks() {
+	void reviewFindAllByTitleWorks() {
 		User user = testUserRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
@@ -148,13 +148,13 @@ class ReviewRepositoryTest {
         List<Review> foundEntity = testReviewRepository.findAllByTitleForItem("%item%", item.getId(), pageRequest);
         List<Review> foundOneIdentity = testReviewRepository.findAllByTitleForItem("%hello%", item.getId(), pageRequest);
         List<Review> foundNoneIdentity = testReviewRepository.findAllByTitleForItem("%original%", item.getId(), pageRequest);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundOneIdentity.size() == 1);
-        assertTrue(foundNoneIdentity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(1, foundOneIdentity.size());
+		assertEquals(0, foundNoneIdentity.size());
 	}
 	
 	@Test
-	void reviewfindChartMonthByUserIdWorks() {
+	void reviewFindChartMonthByUserIdWorks() {
 		User user = testUserRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
@@ -196,13 +196,13 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForUserByMonth(user.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForUserByMonth(user.getId() + 1);
-        
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindChartWeekByUserIdWorks() {
+	void reviewFindChartWeekByUserIdWorks() {
 		User user = testUserRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
@@ -244,12 +244,12 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForUserByWeek(user.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForUserByWeek(user.getId() + 1);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindChartMonthByItemIdWorks() {
+	void reviewFindChartMonthByItemIdWorks() {
 		User user = testUserRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
@@ -291,13 +291,13 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForItemByMonth(item.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByMonth(item.getId() + 1);
-        
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindChartWeekByItemIdWorks() {
+	void reviewFindChartWeekByItemIdWorks() {
 		User user = testUserRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
@@ -339,8 +339,8 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForItemByWeek(item.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByWeek(item.getId() + 1);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 
 	@Test
@@ -386,9 +386,9 @@ class ReviewRepositoryTest {
 
 		List<String> foundEntity = testReviewRepository.findAllBodysWithItemId(item.getId());
 		List<String> foundNoneEntity = testReviewRepository.findAllBodysWithItemId(item.getId() + 1);
-		assertTrue(foundEntity.get(0) == "review body for test");
-		assertTrue(foundEntity.size() == 3);
-		assertTrue(foundNoneEntity.size() == 0);
+		assertSame("review body for test", foundEntity.get(0));
+		assertEquals(3, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 
 	@Test
@@ -434,9 +434,9 @@ class ReviewRepositoryTest {
 
 		List<Integer> foundEntity = testReviewRepository.findAllRatingsWithItemId(item.getId());
 		List<Integer> foundNoneEntity = testReviewRepository.findAllRatingsWithItemId(item.getId() + 1);
-		assertTrue(foundEntity.get(0) == 4);
-		assertTrue(foundEntity.size() == 3);
-		assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(4, (int) foundEntity.get(0));
+		assertEquals(3, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 
 	@Test
@@ -484,7 +484,7 @@ class ReviewRepositoryTest {
 		int notFoundEntity = testReviewRepository.findCountWithUserId(item.getId() + 1);
 
 
-		assertTrue(foundEntity == 3);
-		assertTrue(notFoundEntity == 0);
+		assertEquals(3, foundEntity);
+		assertEquals(0, notFoundEntity);
 	}
 }

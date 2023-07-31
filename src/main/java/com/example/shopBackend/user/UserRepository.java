@@ -16,8 +16,8 @@ import java.util.Optional;
 public interface UserRepository extends PagingAndSortingRepository<User, Integer>, JpaRepository<User, Integer> {
     /**
      * Query to find user with email
-     * @param {String} email
-     *        Email to search an user for
+     * @param email
+     *        email to search a user for
      * @return the items that matched the query
      */
     @Query(value = "SELECT * FROM accounts a WHERE a.account_email = ?1", nativeQuery = true)
@@ -25,8 +25,8 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 
     /**
      * Query to find user with username
-     * @param {String} username
-     *        Username to search an user for
+     * @param username
+     *        Username to search a user for
      * @return the items that matched the query
      */
     @Query(value = "SELECT * FROM accounts a WHERE a.account_username = ?1", nativeQuery = true)

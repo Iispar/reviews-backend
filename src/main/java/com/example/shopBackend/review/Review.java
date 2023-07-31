@@ -11,6 +11,7 @@ import java.sql.Date;
  * @author iiro
  *
  */
+@SuppressWarnings("unused")
 @Entity(name="Review")
 @Table(name="reviews", schema="reviews_schema")
 public class Review {
@@ -30,7 +31,7 @@ public class Review {
 	private Integer likes;
 	@Column(name = "review_dislikes", nullable = false)
 	private Integer dislikes;
-	@Column(name = "review_rating", nullable = true)
+	@Column(name = "review_rating")
 	private int rating;
 	
 	// reference to customer entity - unidirectional.

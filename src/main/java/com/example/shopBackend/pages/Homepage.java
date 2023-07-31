@@ -7,9 +7,13 @@ import com.example.shopBackend.review.Review;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to include all wanted data for home page.
+ */
+@SuppressWarnings("unused")
 public class Homepage {
-    private List<Review> latesReviews = new ArrayList<Review>();
-    private List<Item> topItems = new ArrayList<Item>();
+    private List<Review> latestReviews = new ArrayList<>();
+    private List<Item> topItems = new ArrayList<>();
 
     private float ratingsAvg;
     private int itemsCount;
@@ -17,8 +21,8 @@ public class Homepage {
 
     private List<Chart> chart;
 
-    public Homepage(List<Review> latesReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<Chart> chart) {
-        this.latesReviews = latesReviews;
+    public Homepage(List<Review> latestReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<Chart> chart) {
+        this.latestReviews = latestReviews;
         this.topItems = topItems;
         this.ratingsAvg = ratingsAvg;
         this.itemsCount = itemsCount;
@@ -28,12 +32,12 @@ public class Homepage {
 
     public Homepage() {}
 
-    public List<Review> getLatesReviews() {
-        return latesReviews;
+    public List<Review> getLatestReviews() {
+        return latestReviews;
     }
 
-    public void setLatesReviews(List<Review> latesReviews) {
-        this.latesReviews = latesReviews;
+    public void setLatestReviews(List<Review> latestReviews) {
+        this.latestReviews = latestReviews;
     }
 
     public List<Item> getTopItems() {

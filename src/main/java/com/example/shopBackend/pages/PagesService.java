@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Services for page calls.
+ */
 @Service
 public class PagesService {
 
@@ -35,8 +38,8 @@ public class PagesService {
     }
 
     /**
-     * Creates an Homepage object with calls to the item and review repositories.
-     * @param {int} userId
+     * Creates a Homepage object with calls to the item and review repositories.
+     * @param userId
      *        The id of the user for homepage.
      * @return Homepage of user with param id.
      */
@@ -63,12 +66,12 @@ public class PagesService {
     }
 
     /**
-     * Creates an Itempage object with calls to the item and review repositories.
-     * @param {int} itemId
-     *        The id of the item for itempge.
-     * @return itempage of item with param id.
+     * Creates an ItemPage object with calls to the item and review repositories.
+     * @param  itemId
+     *        The id of the item for ItemPge.
+     * @return ItemPage of item with param id.
      */
-    public ItemPage getItempageForItem(int itemId) {
+    public ItemPage getItemPageForItem(int itemId) {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
 
         Item item = itemRepository.findById(itemId).orElse(null);

@@ -39,7 +39,7 @@ import static org.mockito.Mockito.verify;
 @ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class PagesServiceTest {
+class PagesServiceTest {
     @Mock
     private ReviewRepository reviewRepository;
 
@@ -99,7 +99,6 @@ public class PagesServiceTest {
     @Test
     void getHomepageForUserThrowsWithBadId() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
 
         given(userRepository.findById(any())).willReturn(Optional.empty());
 
@@ -111,13 +110,13 @@ public class PagesServiceTest {
     }
 
     @Test
-    void getItempageForItemWorks() {
+    void getItemPageForItemWorks() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
 
         given(itemRepository.findById(any())).willReturn(Optional.of(new Item(1, "test", new User(), 4.2F, new Category(), new Words(1, List.of("1"), List.of("1")), "desc")));
         given(reviewRepository.findAllItemId(anyInt(), any())).willReturn(List.of(new Review()));
 
-        testPagesService.getItempageForItem(1);
+        testPagesService.getItemPageForItem(1);
 
         verify(reviewRepository).findAllItemId(1, reviewPageReq);
         verify(reviewRepository).findChartForItemByWeek(1);
@@ -125,12 +124,11 @@ public class PagesServiceTest {
     }
 
     @Test
-    void getItempageForItemThrowsWithBadItemid() {
-        Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
+    void getItemPageForItemThrowsWithBadItemId() {
 
         given(itemRepository.findById(any())).willReturn(Optional.empty());
 
-        assertThatThrownBy(() -> testPagesService.getItempageForItem(1))
+        assertThatThrownBy(() -> testPagesService.getItemPageForItem(1))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("no items with id: 1 exists");
 

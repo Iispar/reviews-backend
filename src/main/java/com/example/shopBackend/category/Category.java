@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * The Item entity in the backend.
+ * The item category entity in the backend.
  * @author iiro
  *
  */

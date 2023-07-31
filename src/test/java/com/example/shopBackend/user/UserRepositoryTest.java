@@ -12,13 +12,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @DataJpaTest()
 @ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserRepositoryTest {
+class UserRepositoryTest {
     @Autowired
     private UserRepository testUserRepository;
 
@@ -34,7 +34,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void userFindByEmailWorks() throws Exception {
+    void userFindByEmailWorks() {
         Role role = testRoleRepository.findById(1).orElseThrow();
         User user = new User(
                 1,
@@ -49,12 +49,12 @@ public class UserRepositoryTest {
 
         User foundEntity = testUserRepository.findByEmail(user.getEmail()).orElse(null);
         User foundNoneEntity = testUserRepository.findByEmail("empty").orElse(null);
-        assertTrue(foundEntity != null);
-        assertTrue(foundNoneEntity == null);
+        assertNotNull(foundEntity);
+        assertNull(foundNoneEntity);
     }
 
     @Test
-    void userFindByUsernameWorks() throws Exception {
+    void userFindByUsernameWorks() {
         Role role = testRoleRepository.findById(1).orElseThrow();
         User user = new User(
                 1,
@@ -69,7 +69,7 @@ public class UserRepositoryTest {
 
         User foundEntity = testUserRepository.findByUsername(user.getUsername()).orElse(null);
         User foundNoneEntity = testUserRepository.findByUsername("empty").orElse(null);
-        assertTrue(foundEntity != null);
-        assertTrue(foundNoneEntity == null);
+        assertNotNull(foundEntity);
+        assertNull(foundNoneEntity);
     }
 }

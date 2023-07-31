@@ -12,6 +12,7 @@ import jakarta.persistence.*;
  * @author iiro
  *
  */
+@SuppressWarnings("unused")
 @Entity(name="Item")
 @Table(name="items", schema="reviews_schema")
 public class Item {

@@ -7,6 +7,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
+/**
+ * Rates the given reviews with a call to the API.
+ */
 @Service
 public class ReviewUtil {
 

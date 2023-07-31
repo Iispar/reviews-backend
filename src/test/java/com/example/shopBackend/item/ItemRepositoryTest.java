@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test")
 @DataJpaTest()
@@ -45,7 +45,7 @@ class ItemRepositoryTest {
 	}
 	
 	@Test
-	void ItemfindAllByUserIdWorks() {
+	void ItemFindAllByUserIdWorks() {
 		User user = testUserRepository.findById(1).orElse(null);
 		Category category = testCategoryRepository.findById(1).orElse(null);
 		Words words = testWordsRepository.findById(2).orElse(null);
@@ -62,11 +62,12 @@ class ItemRepositoryTest {
 		testItemRepository.save(item);
 		
 		Pageable pageRequest = PageRequest.of(0, 4);
-		
-        List<Item> foundEntity = testItemRepository.findAllUserId(user.getId(), pageRequest);
+
+		assert user != null;
+		List<Item> foundEntity = testItemRepository.findAllUserId(user.getId(), pageRequest);
         List<Item> foundNoneEntity = testItemRepository.findAllUserId(user.getId() + 1, pageRequest);
-        assertTrue(foundEntity.size() == 1);
-        assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(1, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 
 	@Test
@@ -86,12 +87,11 @@ class ItemRepositoryTest {
 		);
 		testItemRepository.save(item);
 
-		Pageable pageRequest = PageRequest.of(0, 4);
-
+		assert user != null;
 		int foundEntity = testItemRepository.findItemCountForUserId(user.getId());
 		int foundNoneEntity = testItemRepository.findItemCountForUserId(user.getId() + 1);
-		assertTrue(foundEntity == 1);
-		assertTrue(foundNoneEntity == 0);
+		assertEquals(1, foundEntity);
+		assertEquals(0, foundNoneEntity);
 	}
 
 	@Test
@@ -120,11 +120,10 @@ class ItemRepositoryTest {
 		testItemRepository.save(item);
 		testItemRepository.save(item2);
 
-		Pageable pageRequest = PageRequest.of(0, 4);
-
+		assert user != null;
 		float foundEntity = testItemRepository.findItemAvgRatingForUserId(user.getId()).orElse(-2F);
 		Float notFoundEntity = testItemRepository.findItemAvgRatingForUserId(user.getId() + 1).orElse(-2F);
-		assertTrue(foundEntity == 3.3333333F);
-		assertTrue(notFoundEntity == -2F);
+		assertEquals(3.3333333F, foundEntity);
+		assertEquals(-2F, notFoundEntity);
 	}
 }

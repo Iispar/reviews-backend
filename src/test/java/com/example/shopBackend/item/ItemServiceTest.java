@@ -35,6 +35,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("unused")
 @ActiveProfiles("test")
 @DataJpaTest()
 @ContextConfiguration(classes = ShopBackendApplication.class)
@@ -127,7 +128,7 @@ class ItemServiceTest {
 
     @Test
     void deleteItem() {
-        given(itemRepository.findById(anyInt())).willReturn(Optional.of(new Item()), Optional.empty());
+        given(itemRepository.findById(any())).willReturn(Optional.of(new Item()), Optional.empty());
 
         testItemService.deleteItem(0);
 
@@ -161,7 +162,7 @@ class ItemServiceTest {
         given(userRepository.findById(any())).willReturn(Optional.of(new User()));
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
 
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -195,7 +196,7 @@ class ItemServiceTest {
 
     @Test
     void saveItemThrowsWithNegativeRating() {
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -231,7 +232,7 @@ class ItemServiceTest {
 
     @Test
     void saveItemThrowsWithTooLargeRating() {
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -267,7 +268,7 @@ class ItemServiceTest {
 
     @Test
     void saveItemThrowsWithTooLongTitle() {
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -303,7 +304,7 @@ class ItemServiceTest {
 
     @Test
     void saveItemThrowsWithTooShortTitle() {
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -339,7 +340,7 @@ class ItemServiceTest {
 
     @Test
     void saveItemThrowsWithBadDesc() {
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -349,7 +350,7 @@ class ItemServiceTest {
                 0,
                 category,
                 null,
-                "too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. vtoo long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc"
+                "too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc"
 
         );
         Item item2 = new Item(
@@ -376,7 +377,7 @@ class ItemServiceTest {
     @Test
     void saveItemThrowsWithBadCategoryId() {
         given(categoryRepository.findById(any())).willReturn(Optional.empty());
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -413,7 +414,7 @@ class ItemServiceTest {
     void saveItemThrowsWithBadUserId() {
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
         given(userRepository.findById(any())).willReturn(Optional.empty());
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
@@ -485,8 +486,8 @@ class ItemServiceTest {
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.empty());
-
-        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+        int itemId = item.getId();
+        assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("No items exists with id: " + item.getId());
 
@@ -510,8 +511,8 @@ class ItemServiceTest {
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
-
-        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+        int itemId = item.getId();
+        assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
 
@@ -535,8 +536,8 @@ class ItemServiceTest {
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
-
-        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+        int itemId = item.getId();
+        assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
 
@@ -556,12 +557,12 @@ class ItemServiceTest {
                 0,
                 category,
                 null,
-                "test desc that is too long. test desc that is too long.  test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. vtest desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. "
+                "test desc that is too long. test desc that is too long.  test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. "
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
-
-        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+        int itemId = item.getId();
+        assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("item with invalid desc. Length has to be under 300 characters");
 
@@ -584,8 +585,8 @@ class ItemServiceTest {
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
-
-        assertThatThrownBy(() ->  testItemService.updateItem(item.getId(), item))
+        int itemId = item.getId();
+        assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("No categories exists with id: " + item.getCategory().getId());
 
@@ -598,10 +599,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         posWords.add("most pos");
         posWords.add("2.");
@@ -661,10 +662,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         posWords.add("most pos");
         posWords.add("2.");
@@ -713,8 +714,8 @@ class ItemServiceTest {
         reviews.add(review2);
 
         given(itemRepository.findById(any())).willReturn(Optional.empty());
-
-        assertThatThrownBy(() ->  testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+        int itemId = item.getId();
+        assertThatThrownBy(() ->  testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("no items with id: " + item.getId() + " exists");
 
@@ -728,10 +729,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         posWords.add("most pos");
         posWords.add("2.");
@@ -781,7 +782,8 @@ class ItemServiceTest {
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
 
-        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+        int itemId = item.getId();
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("item rating invalid. Allowed only 1-5");
 
@@ -795,10 +797,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         posWords.add("most pos");
         posWords.add("2.");
@@ -847,8 +849,8 @@ class ItemServiceTest {
         reviews.add(review2);
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
-
-        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+        int itemId = item.getId();
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("item rating invalid. Allowed only 1-5");
 
@@ -862,10 +864,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         posWords.add("most pos");
         posWords.add("2.");
@@ -915,8 +917,8 @@ class ItemServiceTest {
         reviews.add(review2);
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
-
-        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+        int itemId = item.getId();
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("pos words invalid. Has to have 1 to 5 items.");
 
@@ -930,10 +932,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         negWords.add("most neg");
         negWords.add("2.");
@@ -977,7 +979,8 @@ class ItemServiceTest {
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
 
-        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+        int itemId = item.getId();
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("pos words invalid. Has to have 1 to 5 items.");
 
@@ -991,10 +994,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         posWords.add("most pos");
         posWords.add("2.");
@@ -1045,7 +1048,8 @@ class ItemServiceTest {
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
 
-        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+        int itemId = item.getId();
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("neg words invalid. Has to have 1 to 5 items.");
 
@@ -1059,10 +1063,10 @@ class ItemServiceTest {
         User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
-        List<Review> reviews = new ArrayList<Review>();
+        List<Review> reviews = new ArrayList<>();
 
-        List<String> posWords = new ArrayList<String>();
-        List<String> negWords = new ArrayList<String>();
+        List<String> posWords = new ArrayList<>();
+        List<String> negWords = new ArrayList<>();
 
         posWords.add("most neg");
         posWords.add("2.");
@@ -1106,7 +1110,8 @@ class ItemServiceTest {
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
 
-        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(item.getId(), posWords, negWords))
+        int itemId = item.getId();
+        assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("neg words invalid. Has to have 1 to 5 items.");
 

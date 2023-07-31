@@ -373,7 +373,8 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewWorks() {
-		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		List<SingleRatedReview> singleRatedReviews;
+		singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
@@ -384,9 +385,9 @@ class ReviewServiceTest {
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-		given(reviewRepository.findAllBodysWithItemId(anyInt())).willReturn(new ArrayList<String>());
+		given(reviewRepository.findAllBodysWithItemId(anyInt())).willReturn(new ArrayList<>());
 		given(itemService.updateItemRatingAndWords(anyInt(), any(), any())).willReturn(new Item());
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
@@ -420,7 +421,7 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewThrowsErrorWithBadLikes() {
-		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
@@ -430,7 +431,7 @@ class ReviewServiceTest {
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
@@ -467,7 +468,7 @@ class ReviewServiceTest {
 	
 	@Test
 	void addReviewThrowsErrorWithBadDislikes() {
-		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
@@ -478,7 +479,7 @@ class ReviewServiceTest {
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
@@ -515,7 +516,7 @@ class ReviewServiceTest {
 
 	@Test
 	void addReviewThrowsErrorWithBadUserId() {
-		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
@@ -526,7 +527,7 @@ class ReviewServiceTest {
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.empty());
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
@@ -563,7 +564,7 @@ class ReviewServiceTest {
 
 	@Test
 	void addReviewThrowsErrorWithTooLargeRating() {
-		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 8);
 		singleRatedReviews.add(rate1);
 		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1"), List.of("1"));
@@ -572,7 +573,7 @@ class ReviewServiceTest {
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
@@ -598,7 +599,7 @@ class ReviewServiceTest {
 
 	@Test
 	void addReviewThrowsErrorWithTooSmallRating() {
-		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", -2);
 		singleRatedReviews.add(rate1);
 		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1"), List.of("1"));
@@ -606,7 +607,7 @@ class ReviewServiceTest {
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
@@ -630,9 +631,9 @@ class ReviewServiceTest {
 	}
 
 	@Test
-	void addReviewThrowsErrorWithBaditemId() {
+	void addReviewThrowsErrorWithBadItemId() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
@@ -669,7 +670,7 @@ class ReviewServiceTest {
 
 	@Test
 	void addReviewThrowsErrorWithDifferentItemIds() {
-		List<SingleRatedReview> singleRatedReviews = new ArrayList<SingleRatedReview>();
+		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
@@ -681,7 +682,7 @@ class ReviewServiceTest {
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		Item item2 = new Item(2, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
@@ -719,7 +720,7 @@ class ReviewServiceTest {
 
 	@Test
 	void addReviewThrowsErrorWhenInputEmpty() {
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(BadRequestException.class)
@@ -735,7 +736,7 @@ class ReviewServiceTest {
 
 		when(reviewUtil.rateReviews(any())).thenThrow(new RuntimeException());
 
-		List<Review> list = new ArrayList<Review>();
+		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(

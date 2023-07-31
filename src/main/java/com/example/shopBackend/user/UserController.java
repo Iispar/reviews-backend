@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-	private UserService userService;
+	private final UserService userService;
 	
 	@Autowired
 	public UserController(UserService userService) {
@@ -23,22 +23,21 @@ public class UserController {
 	/**
 	 * API GET call to /api/user/add with content in the body that describes the added user.
 	 * Will add it to the database.
-	 * @param {User} user
+	 * @param user
 	 * 	      The user to be added to the database
-	 * @return True if successful. False otherwise
+	 * @return saved users
 	 */
 	@PostMapping("/add")
-	public Boolean add(@RequestBody List<User> user) {
-		userService.saveAllUsers(user);
-		return true;
+	public List<User> add(@RequestBody List<User> user) {
+		return userService.saveAllUsers(user);
 	}
 
 	/**
 	 * API PUT call to /api/user/update?userId=(input) with content in the body that describes the updates to the user.
 	 * Will update it to the database.
-	 * @param {User} user
+	 * @param user
 	 * 	      The user to be updated to the database
-	 * @param {string} userId
+	 * @param userId
 	 * 	      The userId of the user to be updated
 	 * @return updated user
 	 */
@@ -54,7 +53,6 @@ public class UserController {
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteUser(@RequestParam("userId") int id) {
-		if (Boolean.TRUE.equals(userService.deleteUser(id))) return true;
-		return false;
+		return Boolean.TRUE.equals(userService.deleteUser(id));
 	}
 }

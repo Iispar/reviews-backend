@@ -17,18 +17,18 @@ public class Words {
 	@Column(name = "words_id", nullable = false, updatable = false, unique = true)
 	private int id;
 	
-	@Column(name = "words_positive", nullable = true, updatable = true, unique = false)
+	@Column(name = "words_positive")
 	private List<String> positive;
 
-	@Column(name = "words_negative", nullable = true, updatable = true, unique = false)
+	@Column(name = "words_negative")
 	private List<String> negative;
 	
 	public Words(int id, List<String> positive, List<String> negative) {
 		this.id = id;
 		this.positive = positive;
 		this.negative = negative;
-	};
-	
+	}
+
 	public Words() {}
 
 	public int getId() {

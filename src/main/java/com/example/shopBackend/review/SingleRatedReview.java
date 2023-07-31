@@ -1,5 +1,9 @@
 package com.example.shopBackend.review;
 
+/**
+ * Class for all the data in a single rated review
+ */
+@SuppressWarnings("unused")
 public class SingleRatedReview {
     private String review;
     private int star;
@@ -9,7 +13,7 @@ public class SingleRatedReview {
         this.star = star;
     }
 
-    public SingleRatedReview() {};
+    public SingleRatedReview() {}
 
     public int getStar() {
         return star;

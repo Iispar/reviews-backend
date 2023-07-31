@@ -1,36 +1,28 @@
-package com.example.reviewsbackend.review;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.sql.Date;
-import java.util.List;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.context.ActiveProfiles;
+package com.example.shopBackend.review;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
-import com.example.shopBackend.review.Chart;
-import com.example.shopBackend.review.Review;
-import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.user.UserRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+
+import java.sql.Date;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = ShopBackendApplication.class)
-// @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-// @ExtendWith(SpringExtension.class)
+@DataJpaTest()
+@ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ReviewRepositoryTest {
 	
@@ -47,39 +39,17 @@ class ReviewRepositoryTest {
 	void deleteAll() {
 		testReviewRepository.deleteAll();
 	}
-
-	@Test
-	void reviewFindByIdworks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
-		Review review = new Review(
-				new Date(0),
-				"review body for test",
-				"review title for test",
-				null,
-				null,
-				user,
-				4,
-				item
-				);
-		testReviewRepository.save(review);
-		
-        Review foundEntity = testReviewRepository.findById(review.getId());
-        Review foundNoneEntity = testReviewRepository.findById(review.getId() + 1);
-        assertNotNull(foundEntity);
-        assertNull(foundNoneEntity);
-	}
 	
 	@Test
 	void reviewFindAllUserIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
 				"review title for test",
-				null,
-				null,
+				0,
+				0,
 				user,
 				4,
 				item
@@ -89,8 +59,8 @@ class ReviewRepositoryTest {
 				new Date(1),
 				"review 2 body for test",
 				"review 2 title for test",
-				null,
-				null,
+				0,
+				0,
 				user,
 				2,
 				item
@@ -103,20 +73,20 @@ class ReviewRepositoryTest {
 		
         List<Review> foundEntity = testReviewRepository.findAllUserId(user.getId(), pageRequest);
         List<Review> foundNoneEntity = testReviewRepository.findAllUserId(user.getId() + 1, pageRequest);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindAllByItemIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+	void reviewFindAllByItemIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
 				"hello item",
-				null,
-				null,
+				0,
+				0,
 				user,
 				4,
 				item
@@ -126,8 +96,8 @@ class ReviewRepositoryTest {
 				new Date(1),
 				"review 2 body for test",
 				"test item 2",
-				null,
-				null,
+				0,
+				0,
 				user,
 				2,
 				item
@@ -140,20 +110,20 @@ class ReviewRepositoryTest {
 		
         List<Review> foundEntity = testReviewRepository.findAllItemId(item.getId(), pageRequest);
         List<Review> foundNoneIdentity = testReviewRepository.findAllItemId(item.getId() + 1, pageRequest);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneIdentity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneIdentity.size());
 	}
 	
 	@Test
-	void reviewfindAllByTitleWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+	void reviewFindAllByTitleWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				new Date(0),
 				"review body for test",
 				"hello item",
-				null,
-				null,
+				0,
+				0,
 				user,
 				4,
 				item
@@ -163,8 +133,8 @@ class ReviewRepositoryTest {
 				new Date(1),
 				"review 2 body for test",
 				"test item 2",
-				null,
-				null,
+				0,
+				0,
 				user,
 				2,
 				item
@@ -178,21 +148,21 @@ class ReviewRepositoryTest {
         List<Review> foundEntity = testReviewRepository.findAllByTitleForItem("%item%", item.getId(), pageRequest);
         List<Review> foundOneIdentity = testReviewRepository.findAllByTitleForItem("%hello%", item.getId(), pageRequest);
         List<Review> foundNoneIdentity = testReviewRepository.findAllByTitleForItem("%original%", item.getId(), pageRequest);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundOneIdentity.size() == 1);
-        assertTrue(foundNoneIdentity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(1, foundOneIdentity.size());
+		assertEquals(0, foundNoneIdentity.size());
 	}
 	
 	@Test
-	void reviewfindChartMonthByUserIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+	void reviewFindChartMonthByUserIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2023-01-01"),
 				"review body for test",
 				"hello item",
-				null,
-				null,
+				0,
+				0,
 				user,
 				4,
 				item
@@ -202,8 +172,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2023-02-01"),
 				"review 2 body for test",
 				"test item 2",
-				null,
-				null,
+				0,
+				0,
 				user,
 				2,
 				item
@@ -213,8 +183,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2022-01-05"),
 				"review 3 body for test",
 				"test item 3",
-				null,
-				null,
+				0,
+				0,
 				user,
 				3,
 				item
@@ -226,21 +196,21 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForUserByMonth(user.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForUserByMonth(user.getId() + 1);
-        
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindChartWeekByUserIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+	void reviewFindChartWeekByUserIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2022-01-04"),
 				"review body for test",
 				"hello item",
-				null,
-				null,
+				0,
+				0,
 				user,
 				4,
 				item
@@ -250,8 +220,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2022-02-01"),
 				"review 2 body for test",
 				"test item 2",
-				null,
-				null,
+				0,
+				0,
 				user,
 				2,
 				item
@@ -261,8 +231,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2022-01-05"),
 				"review 3 body for test",
 				"test item 3",
-				null,
-				null,
+				0,
+				0,
 				user,
 				3,
 				item
@@ -274,20 +244,20 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForUserByWeek(user.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForUserByWeek(user.getId() + 1);
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindChartMonthByItemIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+	void reviewFindChartMonthByItemIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2023-01-01"),
 				"review body for test",
 				"hello item",
-				null,
-				null,
+				0,
+				0,
 				user,
 				4,
 				item
@@ -297,8 +267,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2023-02-01"),
 				"review 2 body for test",
 				"test item 2",
-				null,
-				null,
+				0,
+				0,
 				user,
 				2,
 				item
@@ -308,8 +278,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2022-01-05"),
 				"review 3 body for test",
 				"test item 3",
-				null,
-				null,
+				0,
+				0,
 				user,
 				3,
 				item
@@ -321,21 +291,21 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForItemByMonth(item.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByMonth(item.getId() + 1);
-        
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
 	}
 	
 	@Test
-	void reviewfindChartWeekByItemIdWorks() {
-		User user = testUserRepository.findById(1);
-		Item item = testItemRepository.findById(1);
+	void reviewFindChartWeekByItemIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
 		Review review = new Review(
 				Date.valueOf("2022-01-04"),
 				"review body for test",
 				"hello item",
-				null,
-				null,
+				0,
+				0,
 				user,
 				4,
 				item
@@ -345,8 +315,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2022-02-01"),
 				"review 2 body for test",
 				"test item 2",
-				null,
-				null,
+				0,
+				0,
 				user,
 				2,
 				item
@@ -356,8 +326,8 @@ class ReviewRepositoryTest {
 				Date.valueOf("2022-01-05"),
 				"review 3 body for test",
 				"test item 3",
-				null,
-				null,
+				0,
+				0,
 				user,
 				3,
 				item
@@ -369,9 +339,152 @@ class ReviewRepositoryTest {
 		
         List<Chart> foundEntity = testReviewRepository.findChartForItemByWeek(item.getId());
         List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByWeek(item.getId() + 1);
-        System.out.println(foundEntity);
-        System.out.println("_________________________________________");
-        assertTrue(foundEntity.size() == 2);
-        assertTrue(foundNoneEntity.size() == 0);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
+	}
+
+	@Test
+	void reviewsFindAllBodysWithItemIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				Date.valueOf("2022-01-04"),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				user,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				Date.valueOf("2022-02-01"),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				user,
+				2,
+				item
+		);
+
+		Review review3 = new Review(
+				Date.valueOf("2022-01-05"),
+				"review 3 body for test",
+				"test item 3",
+				0,
+				0,
+				user,
+				3,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+		testReviewRepository.save(review3);
+
+		List<String> foundEntity = testReviewRepository.findAllBodysWithItemId(item.getId());
+		List<String> foundNoneEntity = testReviewRepository.findAllBodysWithItemId(item.getId() + 1);
+		assertSame("review body for test", foundEntity.get(0));
+		assertEquals(3, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
+	}
+
+	@Test
+	void reviewsFindAllRatingsWithItemIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				Date.valueOf("2022-01-04"),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				user,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				Date.valueOf("2022-02-01"),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				user,
+				2,
+				item
+		);
+
+		Review review3 = new Review(
+				Date.valueOf("2022-01-05"),
+				"review 3 body for test",
+				"test item 3",
+				0,
+				0,
+				user,
+				3,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+		testReviewRepository.save(review3);
+
+		List<Integer> foundEntity = testReviewRepository.findAllRatingsWithItemId(item.getId());
+		List<Integer> foundNoneEntity = testReviewRepository.findAllRatingsWithItemId(item.getId() + 1);
+		assertEquals(4, (int) foundEntity.get(0));
+		assertEquals(3, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
+	}
+
+	@Test
+	void reviewsFindCountWithUserIdWorks() {
+		User user = testUserRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				Date.valueOf("2022-01-04"),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				user,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				Date.valueOf("2022-02-01"),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				user,
+				2,
+				item
+		);
+
+		Review review3 = new Review(
+				Date.valueOf("2022-01-05"),
+				"review 3 body for test",
+				"test item 3",
+				0,
+				0,
+				user,
+				3,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+		testReviewRepository.save(review3);
+
+		int foundEntity = testReviewRepository.findCountWithUserId(item.getId());
+		int notFoundEntity = testReviewRepository.findCountWithUserId(item.getId() + 1);
+
+
+		assertEquals(3, foundEntity);
+		assertEquals(0, notFoundEntity);
 	}
 }

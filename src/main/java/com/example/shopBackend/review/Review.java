@@ -1,25 +1,17 @@
 package com.example.shopBackend.review;
 
-import java.sql.Date;
-
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.sql.Date;
 
 /**
  * The Review entity in the backend.
  * @author iiro
  *
  */
+@SuppressWarnings("unused")
 @Entity(name="Review")
 @Table(name="reviews", schema="reviews_schema")
 public class Review {
@@ -35,11 +27,11 @@ public class Review {
 	private String body;
 	@Column(name = "review_title", nullable = false)
 	private String title;
-	@Column(name = "review_likes", nullable = true)
-	private String likes;
-	@Column(name = "review_dislikes", nullable = true)
-	private String dislikes;
-	@Column(name = "review_rating", nullable = false)
+	@Column(name = "review_likes", nullable = false)
+	private Integer likes;
+	@Column(name = "review_dislikes", nullable = false)
+	private Integer dislikes;
+	@Column(name = "review_rating")
 	private int rating;
 	
 	// reference to customer entity - unidirectional.
@@ -52,7 +44,7 @@ public class Review {
 	@JoinColumn(name = "review_item", referencedColumnName = "item_id", nullable = false)
 	private Item item;
 
-	public Review(Date date, String body, String title, String likes, String dislikes, User user, int rating, Item item) {
+	public Review(Date date, String body, String title, Integer likes, int dislikes, User user, int rating, Item item) {
 		this.date = date;
 		this.body = body;
 		this.title = title;
@@ -97,19 +89,19 @@ public class Review {
 		this.title = title;
 	}
 
-	public String getLikes() {
+	public Integer getLikes() {
 		return likes;
 	}
 
-	public void setLikes(String likes) {
+	public void setLikes(int likes) {
 		this.likes = likes;
 	}
 
-	public String getDislikes() {
+	public Integer getDislikes() {
 		return dislikes;
 	}
 
-	public void setDislikes(String dislikes) {
+	public void setDislikes(Integer dislikes) {
 		this.dislikes = dislikes;
 	}
 

@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
  * @author iiro
  *
  */
+@SuppressWarnings("unused")
 @Entity(name="Account")
 @Table(name="accounts", schema="reviews_schema")
 public class User {
@@ -27,12 +28,12 @@ public class User {
 	@Column(name = "account_name", nullable = false)
 	private String name;
 	
-	@Column(name = "account_username", nullable = false)
+	@Column(name = "account_username", nullable = false, unique = true)
 	private String username;
 	
 	@Column(name = "account_password", nullable = false)
 	private String password;
-	
+
 	@Column(name = "account_email", nullable = false)
 	private String email;
 	
@@ -50,7 +51,7 @@ public class User {
 		this.role = role;
 	}
 	
-	public User() {};
+	public User() {}
 
 	public int getId() {
 		return id;

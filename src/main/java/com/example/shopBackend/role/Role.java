@@ -7,6 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * The role entity in the backend
+ */
 @Entity(name="Role")
 @Table(name="account_roles", schema="reviews_schema")
 public class Role {
@@ -24,7 +27,7 @@ public class Role {
 		this.name = name;
 	}
 	
-	public Role() {};
+	public Role() {}
 
 	public int getId() {
 		return id;

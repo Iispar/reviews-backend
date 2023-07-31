@@ -1,17 +1,9 @@
 package com.example.shopBackend.item;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.shopBackend.review.Review;
+import java.util.List;
 
 /**
  * The controller for calls to item table.
@@ -21,7 +13,7 @@ import com.example.shopBackend.review.Review;
 @RestController
 @RequestMapping("/api/item")
 public class ItemController {
-	private ItemService itemService;
+	private final ItemService itemService;
 	
 	@Autowired
 	public ItemController(ItemService itemService) {
@@ -31,30 +23,30 @@ public class ItemController {
 	/**
 	 * API GET call to /api/item/add with content in the body that describes the added item.
 	 * Will add it to the database. Used in the frontend allItem page with add item.
-	 * @param {Item} item
-	 * 	      The item to be added to the database
-	 * @return True if successful. False otherwise
+	 *
+	 * @param item
+	 * 		  The item to be added to the database
+	 * @return saved items
 	 */
 	@PostMapping("/add")
-	public Boolean add(@RequestBody List<Item> review) {
-		// TODO: calc average for item
-		// TODO: calc topwords
-		itemService.saveReview(review);
-		return true;
+	public List<Item> add(@RequestBody List<Item> item) {
+		return itemService.saveAllItems(item);
 	}
 	
 	/**
 	 * API GET call to /api/item/get?userId=(input)&page=(input)
 	 * will return all items for user on page that is selected.
-	 * @param {Item} item
-	 * 	      The item to be added to the database
-	 * @return True if successful. False otherwise
+	 * @param id
+	 * 	      The if of the user to get items for
+	 * @param page
+	 * 	      the page we want for the items
+	 * @return requested items
 	 */
 	@GetMapping("/get")
 	public List<Item> getItemsForUser(
 			@RequestParam("userId") int id,
 			@RequestParam("page") int page) {
-		List<Item> items = itemService.getItemsForUser(id, page);
+		List<Item> items = itemService.getItemsForUser(id, page, "none", "none");
 		if (items.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with user id");
@@ -65,11 +57,26 @@ public class ItemController {
 	/**
 	 * API DELETE call to /api/item/del?itemId=(input)
 	 * will delete the item with the corresponding id.
+	 * @param id
+	 * 		  The id of the item we want to delete
 	 * @return True if successful. False otherwise
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteItem(@RequestParam("itemId") int id) {
-		if (Boolean.TRUE.equals(itemService.deleteReview(id))) return true;
-		return false;
+		return Boolean.TRUE.equals(itemService.deleteItem(id));
+	}
+
+	/**
+	 * API PUT call to /api/item/update?itemId=(input) with an item in the body
+	 * will update the corresponding item with the id.
+	 * @param id
+	 * 		  The id of the item to be updated.
+	 * @param item
+	 * 		  The item that has updated values.
+	 * @return Updated item
+	 */
+	@PutMapping("/update")
+	public Item updateItem(@RequestParam("itemId") int id, @RequestBody Item item) {
+		return itemService.updateItem(id, item);
 	}
 }

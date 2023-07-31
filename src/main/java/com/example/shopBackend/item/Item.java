@@ -4,25 +4,15 @@ import com.example.shopBackend.category.Category;
 import com.example.shopBackend.user.User;
 import com.example.shopBackend.words.Words;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 /**
  * The Item entity in the backend.
  * @author iiro
  *
  */
+@SuppressWarnings("unused")
 @Entity(name="Item")
 @Table(name="items", schema="reviews_schema")
 public class Item {
@@ -33,14 +23,17 @@ public class Item {
 	
 	@Column(name = "item_title", nullable = false)
 	private String title;
+
+	@Column(name = "item_desc", nullable = false)
+	private String desc;
 	
 	// reference to seller entity - unidirectional.
     @ManyToOne
 	@JoinColumn(name = "item_account", referencedColumnName = "account_id", nullable = false)
 	private User user;
 	
-	@Column(name = "item_rating", nullable = false)
-	private String rating;
+	@Column(name = "item_rating")
+	private float rating;
 	
 	// reference to category entity - unidirectional.
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
@@ -49,20 +42,38 @@ public class Item {
 	private Category category;
     
 	// reference to words entity - unidirectional.
-    @OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "item_words", referencedColumnName = "words_id", nullable = false)
+    @OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "item_words", referencedColumnName = "words_id")
 	private Words words;
-	
-	public Item(int id, String title, User user, String rating, Category category, Words words) {
+
+	public Item() {}
+
+	public Item(int id, String title, User user, float rating, Category category, Words words, String desc) {
 		this.id = id;
 		this.title = title;
 		this.user = user;
 		this.rating = rating;
 		this.category = category;
 		this.words = words;
+		this.desc = desc;
 	}
 
-	public Item() {};
+    public Item(String title, User user, int rating, Category category, Words words, String desc) {
+		this.title = title;
+		this.user = user;
+		this.rating = rating;
+		this.category = category;
+		this.words = words;
+		this.desc = desc;
+    }
+
+    public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
 	public Words getWords() {
 		return words;
@@ -96,11 +107,11 @@ public class Item {
 		this.user = user;
 	}
 
-	public String getRating() {
+	public float getRating() {
 		return rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 

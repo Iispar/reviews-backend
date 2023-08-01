@@ -1,6 +1,7 @@
 package com.example.shopBackend.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +54,13 @@ public class ItemController {
 		}
 		return items;
 	}
+
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public String handleIllegalState(IllegalStateException illegalStateException) {
+		return illegalStateException.getMessage();
+	}
 	
 	/**
 	 * API DELETE call to /api/item/del?itemId=(input)
@@ -76,7 +84,9 @@ public class ItemController {
 	 * @return Updated item
 	 */
 	@PutMapping("/update")
-	public Item updateItem(@RequestParam("itemId") int id, @RequestBody Item item) {
+	public Item updateItem(
+			@RequestParam("itemId") int id,
+			@RequestBody Item item) {
 		return itemService.updateItem(id, item);
 	}
 }

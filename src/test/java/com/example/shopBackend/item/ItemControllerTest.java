@@ -177,7 +177,7 @@ class ItemControllerTest {
 
     @Test
     void deleteItemThrowsWithNoParams() throws Exception {
-        given(itemService.deleteItem(anyInt())).willReturn(false);
+        given(itemService.deleteItem(anyInt())).willReturn(true);
         mockMvc.perform(delete("/api/item/del"))
                 .andExpect(status().isBadRequest());
     }
@@ -251,9 +251,9 @@ class ItemControllerTest {
 
     @Test
     void updateItemThrowsWithNoContent() throws Exception {
-        mockMvc.perform(put("/api/item/update")
+        mockMvc.perform(put("/api/item/update?itemId=1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"))
+                .content(""))
                 .andExpect(status().isBadRequest());
     }
 }

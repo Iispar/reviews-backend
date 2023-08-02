@@ -42,7 +42,9 @@ public class UserController {
 	 * @return updated user
 	 */
 	@PutMapping("/update")
-	public User update(@RequestParam int userId, @RequestBody User user) {
+	public User update(
+			@RequestParam int userId,
+			@RequestBody User user) {
 		return userService.updateUser(userId, user);
 	}
 

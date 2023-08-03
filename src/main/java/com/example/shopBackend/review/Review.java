@@ -1,7 +1,7 @@
 package com.example.shopBackend.review;
 
+import com.example.shopBackend.account.Account;
 import com.example.shopBackend.item.Item;
-import com.example.shopBackend.user.User;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -37,20 +37,20 @@ public class Review {
 	// reference to customer entity - unidirectional.
     @ManyToOne
 	@JoinColumn(name = "review_account", referencedColumnName = "account_id", nullable = false)
-	private User user;
+	private Account account;
 
 	// reference to item entity - unidirectional.
     @ManyToOne
 	@JoinColumn(name = "review_item", referencedColumnName = "item_id", nullable = false)
 	private Item item;
 
-	public Review(Date date, String body, String title, Integer likes, int dislikes, User user, int rating, Item item) {
+	public Review(Date date, String body, String title, Integer likes, int dislikes, Account account, int rating, Item item) {
 		this.date = date;
 		this.body = body;
 		this.title = title;
 		this.likes = likes;
 		this.dislikes = dislikes;
-		this.user = user;
+		this.account = account;
 		this.rating = rating;
 		this.item = item;
 	}
@@ -105,12 +105,12 @@ public class Review {
 		this.dislikes = dislikes;
 	}
 
-	public User getUser() {
-		return user;
+	public Account getAccount() {
+		return account;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public int getRating() {

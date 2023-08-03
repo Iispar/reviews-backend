@@ -1,13 +1,13 @@
 package com.example.shopBackend.review;
 
 import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.account.Account;
+import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.Role;
-import com.example.shopBackend.user.User;
-import com.example.shopBackend.user.UserRepository;
 import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +47,7 @@ class ReviewServiceTest {
 	private ReviewRepository reviewRepository;
 	
 	@Mock
-	private UserRepository userRepository;
+	private AccountRepository accountRepository;
 	
 	@Mock
 	private ItemRepository itemRepository;
@@ -64,46 +64,46 @@ class ReviewServiceTest {
 
 
 	@Test
-	void GetAllReviewsForUserWorksWithAsc() {
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+	void GetAllReviewsForAccountWorksWithAsc() {
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
 		Pageable pageRequest = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-		testReviewService.getReviewsForUser(1, 0, "review_date", "asc");
+		testReviewService.getReviewsForAccount(1, 0, "review_date", "asc");
 		
-		verify(reviewRepository).findAllUserId(1, pageRequest);
+		verify(reviewRepository).findAllAccountId(1, pageRequest);
 	}
 
 	@Test
-	void GetAllReviewsForUserWorksWithDesc() {
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+	void GetAllReviewsForAccountWorksWithDesc() {
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
 		Pageable pageRequest = PageRequest.of(0, 4, Sort.by("review_date").descending());
-		testReviewService.getReviewsForUser(1, 0, "review_date", "desc");
+		testReviewService.getReviewsForAccount(1, 0, "review_date", "desc");
 
-		verify(reviewRepository).findAllUserId(1, pageRequest);
+		verify(reviewRepository).findAllAccountId(1, pageRequest);
 	}
 	
 	@Test
-	void GetAllReviewsForUserThrowsErrorWithNegativePage() {
-//		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+	void GetAllReviewsForAccountThrowsErrorWithNegativePage() {
+//		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		
-		assertThatThrownBy(() -> testReviewService.getReviewsForUser(0, -1, "review_date", "asc"))
+		assertThatThrownBy(() -> testReviewService.getReviewsForAccount(0, -1, "review_date", "asc"))
 			.isInstanceOf(java.lang.IllegalArgumentException.class)
 			.hasMessageContaining("Page index must not be less than zero");
 	}
 	
 	@Test
-	void GetAllReviewsForUserThrowsErrorWithNotMatchingUserId() {
+	void GetAllReviewsForAccountThrowsErrorWithNotMatchingAccountId() {
 		
-		given(userRepository.findById(any())).willReturn(Optional.empty());
+		given(accountRepository.findById(any())).willReturn(Optional.empty());
 		
-		assertThatThrownBy(() -> testReviewService.getReviewsForUser(1, 0, "review_date", "asc"))
+		assertThatThrownBy(() -> testReviewService.getReviewsForAccount(1, 0, "review_date", "asc"))
 			.isInstanceOf(BadRequestException.class)
-			.hasMessageContaining("No users exists with id 1");
+			.hasMessageContaining("No Accounts exists with id 1");
 		
 		Pageable pageRequest = PageRequest.of(0, 4);
 		
-		verify(reviewRepository, never()).findAllUserId(1, pageRequest);
+		verify(reviewRepository, never()).findAllAccountId(1, pageRequest);
 	}
 	
 	@Test
@@ -127,30 +127,30 @@ class ReviewServiceTest {
 	}
 
 	@Test
-	void GetAllReviewsForUserThrowsErrorWithBadSort() {
+	void GetAllReviewsForAccountThrowsErrorWithBadSort() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
-		assertThatThrownBy(() -> testReviewService.getReviewsForUser(1, 0, "review_name", "asc"))
+		assertThatThrownBy(() -> testReviewService.getReviewsForAccount(1, 0, "review_name", "asc"))
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("sort review_name is not a valid value for a sort in the entity.");
 
 		Pageable pageRequest = PageRequest.of(0, 4);
 
-		verify(reviewRepository, never()).findAllUserId(1, pageRequest);
+		verify(reviewRepository, never()).findAllAccountId(1, pageRequest);
 	}
 
 	@Test
-	void GetAllReviewsForUserThrowsErrorWithBadSortDir() {
+	void GetAllReviewsForAccountThrowsErrorWithBadSortDir() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-		assertThatThrownBy(() -> testReviewService.getReviewsForUser(1, 0, "review_date", "ascending"))
+		assertThatThrownBy(() -> testReviewService.getReviewsForAccount(1, 0, "review_date", "ascending"))
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
 
 		Pageable pageRequest = PageRequest.of(0, 4);
 
-		verify(reviewRepository, never()).findAllUserId(1, pageRequest);
+		verify(reviewRepository, never()).findAllAccountId(1, pageRequest);
 	}
 	
 	@Test
@@ -163,7 +163,7 @@ class ReviewServiceTest {
 	}
 	
 	@Test
-	void GetAllReviewsForItemThrowsErrorWithNotMatchingUserId() {
+	void GetAllReviewsForItemThrowsErrorWithNotMatchingAccountId() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
 		
 		assertThatThrownBy(() -> testReviewService.getReviewsForItem(1, 0, "review_date", "asc"))
@@ -233,7 +233,7 @@ class ReviewServiceTest {
 	}
 	
 	@Test
-	void getReviewsWithTitleForItemThrowsErrorWithNotMatchingUserId() {
+	void getReviewsWithTitleForItemThrowsErrorWithNotMatchingAccountId() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
 		
 		assertThatThrownBy(() ->  testReviewService.getReviewsWithTitleForItem("test_title", 1, 0, "review_date", "asc"))
@@ -272,43 +272,43 @@ class ReviewServiceTest {
 	}
 	
 	@Test
-	void getChartForUserWorksWithMonth() {
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+	void getChartForAccountWorksWithMonth() {
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-		testReviewService.getChartForUser("month", 0);
+		testReviewService.getChartForAccount("month", 0);
 
-		verify(reviewRepository).findChartForUserByMonth(0);
+		verify(reviewRepository).findChartForAccountByMonth(0);
 	}
 	
 	@Test
-	void getChartForUserWorksWithWeek() {
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+	void getChartForAccountWorksWithWeek() {
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-		testReviewService.getChartForUser("week", 0);
+		testReviewService.getChartForAccount("week", 0);
 
-		verify(reviewRepository).findChartForUserByWeek(0);
+		verify(reviewRepository).findChartForAccountByWeek(0);
 	}
 	
 	@Test
-	void getChartForUserThrowsErrorWithNotMatchingUser() {
-		given(userRepository.findById(any())).willReturn(Optional.empty());
+	void getChartForAccountThrowsErrorWithNotMatchingAccount() {
+		given(accountRepository.findById(any())).willReturn(Optional.empty());
 		
-		assertThatThrownBy(() ->  testReviewService.getChartForUser("week", 1))
+		assertThatThrownBy(() ->  testReviewService.getChartForAccount("week", 1))
 		.isInstanceOf(BadRequestException.class)
-		.hasMessageContaining("No users exists with id 1");
+		.hasMessageContaining("No Accounts exists with id 1");
 
-		verify(reviewRepository, never()).findChartForUserByWeek(0);
+		verify(reviewRepository, never()).findChartForAccountByWeek(0);
 	}
 	
 	@Test
-	void getChartForUserThrowsErrorWithBadTime() {
-//		given(userRepository.findById(any())).willReturn(Optional.empty());
+	void getChartForAccountThrowsErrorWithBadTime() {
+//		given(accountRepository.findById(any())).willReturn(Optional.empty());
 		
-		assertThatThrownBy(() ->  testReviewService.getChartForUser("weekend", 1))
+		assertThatThrownBy(() ->  testReviewService.getChartForAccount("weekend", 1))
 		.isInstanceOf(BadRequestException.class)
 		.hasMessageContaining("time weekend is not a valid value for a timespan . Either week or month");
 
-		verify(reviewRepository, never()).findChartForUserByWeek(0);
+		verify(reviewRepository, never()).findChartForAccountByWeek(0);
 	}
 	
 	@Test
@@ -330,7 +330,7 @@ class ReviewServiceTest {
 	}
 	
 	@Test
-	void getChartForItemThrowsErrorWithNotMatchingUser() {
+	void getChartForItemThrowsErrorWithNotMatchingAccount() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
 		
 		assertThatThrownBy(() ->  testReviewService.getChartForItem("week", 1))
@@ -342,7 +342,7 @@ class ReviewServiceTest {
 	
 	@Test
 	void getChartForItemThrowsErrorWithBadTime() {
-//		given(userRepository.findById(any())).willReturn(Optional.empty());
+//		given(accountRepository.findById(any())).willReturn(Optional.empty());
 		
 		assertThatThrownBy(() ->  testReviewService.getChartForItem("weekend", 1))
 		.isInstanceOf(BadRequestException.class)
@@ -384,19 +384,19 @@ class ReviewServiceTest {
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		given(reviewRepository.findAllBodysWithItemId(anyInt())).willReturn(new ArrayList<>());
 		given(itemService.updateItemRatingAndWords(anyInt(), any(), any())).willReturn(new Item());
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"this item is really good and i loved it",
 				"title",
 				0,
 				0,
-				user,
+				account,
 				2,
 				item
 				);
@@ -406,7 +406,7 @@ class ReviewServiceTest {
 				"title1",
 				0,
 				0,
-				user,
+				account,
 				2,
 				item
 				);
@@ -433,14 +433,14 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				-1,
 				0,
-				user,
+				account,
 				2,
 				item
 				);
@@ -450,7 +450,7 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				0,
-				user,
+				account,
 				2,
 				item
 				);
@@ -478,17 +478,17 @@ class ReviewServiceTest {
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				user,
+				account,
 				2,
 				item
 				);
@@ -498,7 +498,7 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				-4,
-				user,
+				account,
 				2,
 				item
 				);
@@ -515,7 +515,7 @@ class ReviewServiceTest {
 	}
 
 	@Test
-	void addReviewThrowsErrorWithBadUserId() {
+	void addReviewThrowsErrorWithBadAccountId() {
 		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
@@ -526,17 +526,17 @@ class ReviewServiceTest {
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.empty());
+		given(accountRepository.findById(any())).willReturn(Optional.empty());
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				2,
-				user,
+				account,
 				2,
 				item
 		);
@@ -546,7 +546,7 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				0,
-				user,
+				account,
 				2,
 				item
 		);
@@ -556,7 +556,7 @@ class ReviewServiceTest {
 
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(BadRequestException.class)
-				.hasMessageContaining("user with id: " + user.getId() + " does not exist");
+				.hasMessageContaining("Account with id: " + account.getId() + " does not exist");
 
 
 		verify(reviewRepository, never()).saveAll(list);
@@ -572,17 +572,17 @@ class ReviewServiceTest {
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				user,
+				account,
 				4,
 				item
 		);
@@ -606,17 +606,17 @@ class ReviewServiceTest {
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				user,
+				account,
 				4,
 				item
 		);
@@ -635,14 +635,14 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				user,
+				account,
 				2,
 				item
 		);
@@ -652,7 +652,7 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				0,
-				user,
+				account,
 				0,
 				item
 		);
@@ -681,18 +681,18 @@ class ReviewServiceTest {
 
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
 		Item item2 = new Item(2, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				user,
+				account,
 				2,
 				item
 		);
@@ -702,7 +702,7 @@ class ReviewServiceTest {
 				"body2",
 				0,
 				0,
-				user,
+				account,
 				4,
 				item2
 		);
@@ -732,20 +732,20 @@ class ReviewServiceTest {
 	@Test
 	void addReviewThrowsErrorWhenRatingFails() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
 		when(reviewUtil.rateReviews(any())).thenThrow(new RuntimeException());
 
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
 				"title1",
 				"body1",
 				1,
 				0,
-				user,
+				account,
 				2,
 				item
 		);

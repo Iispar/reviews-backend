@@ -36,36 +36,36 @@ public class ReviewController {
 	}
 	
 	/**
-	 * API GET call to /api/review/get/user?userId=(input)&page=(input)&sort=(input)
-	 * will return the reviews for that user. This will be used in the latest on the home page
+	 * API GET call to /api/review/get/account?accountId=(input)&page=(input)&sort=(input)
+	 * will return the reviews for that Account. This will be used in the latest on the home page
 	 * for the latest reviews. This also sorts the reviews from latest.
 	 * @param id
-	 * 		  The user id that searches for reviews.
+	 * 		  The Account id that searches for reviews.
 	 * @param page
 	 * 		  The page you want reviews from
-	 * @return latest reviews for userId from index (from) to index (to).
+	 * @return latest reviews for AccountId from index (from) to index (to).
 	 */
-	@GetMapping("/get/user")
-	public List<Review> getReviewsForUser(
-			@RequestParam("userId") int id,
+	@GetMapping("/get/account")
+	public List<Review> getReviewsForAccount(
+			@RequestParam("accountId") int id,
 			@RequestParam("page") int page) {
-		List<Review> reviews = reviewService.getReviewsForUser(id, page, "review_date", "asc");
+		List<Review> reviews = reviewService.getReviewsForAccount(id, page, "review_date", "asc");
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
-					"found no reviews with user id");
+					"found no reviews with Account id");
 		}
 		return reviews;
 	}
 
 	/**
-	 * API GET call to /api/review/get/user?itemId=(input)&page=(input)&sort=(input)
+	 * API GET call to /api/review/get/account?itemId=(input)&page=(input)&sort=(input)
 	 * will return the reviews for that item. This will be used in the latest on the home page
 	 * for the latest reviews. This also sorts the reviews from latest.
 	 * @param id
 	 * 		  The item id that searches for reviews.
 	 * @param page
 	 * 		  The page you want reviews from
-	 * @return latest reviews for userId from index (from) to index (to).
+	 * @return latest reviews for AccountId from index (from) to index (to).
 	 */
 	@GetMapping("/get/item")
 	public List<Review> getReviewsForItem(
@@ -112,19 +112,19 @@ public class ReviewController {
 	}
 	
 	/**
-	 * API GET call to /api/review/get/chart?userId=(input)&time=(input) will return the
+	 * API GET call to /api/review/get/chart?accountId=(input)&time=(input) will return the
 	 * corresponding data for the chart component.
 	 * @param id
-	 * 	      id of the user you wish to get results for.
+	 * 	      id of the Account you wish to get results for.
 	 * @param time
 	 * 		  Either month or week, the selection for grouping of results.
-	 * @return chart for user.
+	 * @return chart for Account.
 	 */
-	@GetMapping("/get/chart/user")
-	public List<Chart> getChartForUser(
-			@RequestParam("userId") int id,
+	@GetMapping("/get/chart/account")
+	public List<Chart> getChartForAccount(
+			@RequestParam("accountId") int id,
 			@RequestParam("time") String time) {
-	return reviewService.getChartForUser(time, id);
+	return reviewService.getChartForAccount(time, id);
 	}
 	
 	/**

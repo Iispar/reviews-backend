@@ -17,16 +17,16 @@ import java.util.List;
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Integer>, JpaRepository<Review, Integer> {
 
 	/**
-	 * Query to find all reviews for users for page.
+	 * Query to find all reviews for Accounts for page.
 	 * @param id
-	 * 		  The user id that searched.
+	 * 		  The Account id that searched.
 	 * @param pageable
 	 * 		  The pageable object that selects page.
 	 * @return the items that matched the query
 	 */
 	@Query(value = "SELECT * FROM reviews r WHERE r.review_item IN"
 			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)", nativeQuery = true)
-	List<Review> findAllUserId(int id, Pageable pageable);
+	List<Review> findAllAccountId(int id, Pageable pageable);
 	
 	/**
 	 * Query to find all reviews for item for page.
@@ -54,28 +54,28 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Review> findAllByTitleForItem(String title, int id, Pageable pageable);
 	
 	/**
-	 * Query first all the items that match the users id and then get their reviews.
+	 * Query first all the items that match the Accounts id and then get their reviews.
 	 * Count the result, calc average of the rating attr and group results by month.
 	 * @param id
-	 * 	      id of the user you wish to get results for.
+	 * 	      id of the Account you wish to get results for.
 	 * @return list of chart with count of reviews and their avg rating grouped by month.
 	 */
 	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
 			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)"
 			+ "GROUP BY MONTH(review_date)", nativeQuery = true)
-	List<Chart> findChartForUserByMonth(int id);
+	List<Chart> findChartForAccountByMonth(int id);
 	
 	/**
-	 * Query first all the items that match the users id and then get their reviews.
+	 * Query first all the items that match the Accounts id and then get their reviews.
 	 * Count the result, calc average of the rating attr and group results by week.
 	 * @param id
-	 * 	      id of the user you wish to get results for.
+	 * 	      id of the Account you wish to get results for.
 	 * @return list of count of reviews and their avg rating grouped by week.
 	 */
 	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating FROM reviews r WHERE r.review_item IN"
 			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)"
 			+ "GROUP BY WEEK(review_date)", nativeQuery = true)
-	List<Chart> findChartForUserByWeek(int id);
+	List<Chart> findChartForAccountByWeek(int id);
 	
 	/**
 	 * Query first all the reviews that match the item id.
@@ -118,13 +118,13 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Integer> findAllRatingsWithItemId(int id);
 
 	/**
-	 * Queries all the reviews that match the user id and returns all the
+	 * Queries all the reviews that match the Account id and returns all the
 	 * count of review
 	 * @param id
-	 * 	      id of the user you wish to get results for.
+	 * 	      id of the Account you wish to get results for.
 	 * @return count of all matches
 	 */
 	@Query(value = "SELECT COUNT(*) FROM reviews r WHERE r.review_item IN (SELECT item_id FROM items i WHERE i.item_account = ?1)", nativeQuery = true)
-	int findCountWithUserId(int id);
+	int findCountWithAccountId(int id);
 }
 

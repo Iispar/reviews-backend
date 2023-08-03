@@ -1,10 +1,10 @@
 package com.example.shopBackend.pages;
 
+import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
-import com.example.shopBackend.user.User;
 import com.example.shopBackend.words.Words;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class PagesControllerTest {
     PagesService pagesService;
 
     @Test
-    void getHomePageForUserWorks() throws Exception {
+    void getHomePageForAccountWorks() throws Exception {
         Chart chart = new Chart() {
 
             @Override
@@ -51,14 +51,14 @@ class PagesControllerTest {
                         "title",
                         5,
                         5,
-                        new User(),
+                        new Account(),
                         4,
                         new Item()
                 )),
                 List.of(new Item(
                         1,
                         "title",
-                        new User(),
+                        new Account(),
                         2F,
                         new Category(),
                         new Words(),
@@ -69,9 +69,9 @@ class PagesControllerTest {
                 2,
                 List.of(chart)
         );
-        given(pagesService.getHomepageForUser(anyInt())).willReturn(homepage);
+        given(pagesService.getHomepageForAccount(anyInt())).willReturn(homepage);
 
-        mockMvc.perform(get("/api/pages/get/home?userId=1", 1))
+        mockMvc.perform(get("/api/pages/get/home?accountId=1", 1))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.latestReviews[0].title").value(homepage.getLatestReviews().get(0).getTitle()))
                 .andExpect(jsonPath("$.topItems[0].desc").value(homepage.getTopItems().get(0).getDesc()))
@@ -82,7 +82,7 @@ class PagesControllerTest {
     }
 
     @Test
-    void getHomePageForUserThrowsWithNoParams() throws Exception {
+    void getHomePageForAccountThrowsWithNoParams() throws Exception {
         mockMvc.perform(get("/api/pages/get/home")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -110,7 +110,7 @@ class PagesControllerTest {
                         "title",
                         5,
                         5,
-                        new User(),
+                        new Account(),
                         4,
                         new Item()
                 )),

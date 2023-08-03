@@ -35,22 +35,22 @@ public class ItemController {
 	}
 	
 	/**
-	 * API GET call to /api/item/get?userId=(input)&page=(input)
-	 * will return all items for user on page that is selected.
+	 * API GET call to /api/item/get?accountId=(input)&page=(input)
+	 * will return all items for Account on page that is selected.
 	 * @param id
-	 * 	      The if of the user to get items for
+	 * 	      The if of the Account to get items for
 	 * @param page
 	 * 	      the page we want for the items
 	 * @return requested items
 	 */
 	@GetMapping("/get")
-	public List<Item> getItemsForUser(
-			@RequestParam("userId") int id,
+	public List<Item> getItemsForAccount(
+			@RequestParam("accountId") int id,
 			@RequestParam("page") int page) {
-		List<Item> items = itemService.getItemsForUser(id, page, "none", "none");
+		List<Item> items = itemService.getItemsForAccount(id, page, "none", "none");
 		if (items.isEmpty()) {
 			throw new IllegalStateException(
-					"found no reviews with user id");
+					"found no reviews with account id");
 		}
 		return items;
 	}

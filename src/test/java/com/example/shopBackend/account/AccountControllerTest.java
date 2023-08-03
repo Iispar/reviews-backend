@@ -1,4 +1,5 @@
-package com.example.shopBackend.user;
+package com.example.shopBackend.account;
+
 
 import com.example.shopBackend.role.Role;
 import org.junit.jupiter.api.Test;
@@ -16,17 +17,17 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(UserController.class)
-public class UserControllerTest {
+@WebMvcTest(AccountController.class)
+class AccountControllerTest {
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    UserService userService;
+    AccountService accountService;
 
     @Test
-    void addUserWorks() throws Exception {
-        User user = new User(
+    void addAccountWorks() throws Exception {
+         Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -38,14 +39,14 @@ public class UserControllerTest {
                 )
         );
 
-        given(userService.saveAllUsers(any())).willReturn(List.of(user));
+        given(accountService.saveAllAccounts(any())).willReturn(List.of(account));
 
-        mockMvc.perform(post("/api/user/add")
+        mockMvc.perform(post("/api/account/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         [{
                             "name": "seller",
-                            "username": "sellerUsername",
+                            "username": "sellerusername",
                             "password": "SellerPass123",
                             "email": "sellerEmail",
                             "role": {
@@ -55,28 +56,28 @@ public class UserControllerTest {
                         """))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(user.getId()))
-                .andExpect(jsonPath("$[0].name").value(user.getName()))
-                .andExpect(jsonPath("$[0].username").value(user.getUsername()))
-                .andExpect(jsonPath("$[0].password").value(user.getPassword()))
-                .andExpect(jsonPath("$[0].email").value(user.getEmail()))
-                .andExpect(jsonPath("$[0].role.name").value(user.getRole().getName()));
+                .andExpect(jsonPath("$[0].id").value(account.getId()))
+                .andExpect(jsonPath("$[0].name").value(account.getName()))
+                .andExpect(jsonPath("$[0].username").value(account.getusername()))
+                .andExpect(jsonPath("$[0].password").value(account.getPassword()))
+                .andExpect(jsonPath("$[0].email").value(account.getEmail()))
+                .andExpect(jsonPath("$[0].role.name").value(account.getRole().getName()));
     }
 
     @Test
-    void addUserThrowsWithNoItemGiven() throws Exception {
-        mockMvc.perform(post("/api/user/add")
+    void addAccountThrowsWithNoItemGiven() throws Exception {
+        mockMvc.perform(post("/api/account/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void updateUserWorks() throws Exception {
-        User user = new User(
+    void updateAccountWorks() throws Exception {
+        Account account = new Account(
                 1,
                 "updatedName",
-                "updatedUsername",
+                "updatedusername",
                 "updatedPass",
                 "updatedEmail",
                 new Role(
@@ -85,14 +86,14 @@ public class UserControllerTest {
                 )
         );
 
-        given(userService.updateUser(anyInt(), any())).willReturn(user);
+        given(accountService.updateAccount(anyInt(), any())).willReturn(account);
 
-        mockMvc.perform(put("/api/user/update?userId=1", 1)
+        mockMvc.perform(put("/api/account/update?accountId=1", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
                             "name": "updatedName",
-                            "username": "updatedUsername",
+                            "username": "updatedusername",
                             "password": "updatedPass",
                             "email": "updatedEmail",
                             "role": {
@@ -102,22 +103,22 @@ public class UserControllerTest {
                         """))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(user.getId()))
-                .andExpect(jsonPath("$.name").value(user.getName()))
-                .andExpect(jsonPath("$.username").value(user.getUsername()))
-                .andExpect(jsonPath("$.password").value(user.getPassword()))
-                .andExpect(jsonPath("$.email").value(user.getEmail()))
-                .andExpect(jsonPath("$.role.name").value(user.getRole().getName()));
+                .andExpect(jsonPath("$.id").value(account.getId()))
+                .andExpect(jsonPath("$.name").value(account.getName()))
+                .andExpect(jsonPath("$.username").value(account.getusername()))
+                .andExpect(jsonPath("$.password").value(account.getPassword()))
+                .andExpect(jsonPath("$.email").value(account.getEmail()))
+                .andExpect(jsonPath("$.role.name").value(account.getRole().getName()));
     }
     @Test
-    void updateUserThrowsWithNoParams() throws Exception {
+    void updateAccountThrowsWithNoParams() throws Exception {
 
-        mockMvc.perform(put("/api/user/update")
+        mockMvc.perform(put("/api/account/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         {
                             "name": "updatedName",
-                            "username": "updatedUsername",
+                            "username": "updatedusername",
                             "password": "updatedPass",
                             "email": "updatedEmail",
                             "role": {
@@ -130,36 +131,36 @@ public class UserControllerTest {
     }
 
     @Test
-    void updateUserThrowsWithNoContent() throws Exception {
+    void updateAccountThrowsWithNoContent() throws Exception {
 
-        mockMvc.perform(put("/api/user/update?userId=1", 1)
+        mockMvc.perform(put("/api/account/update?accountId=1", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(""))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void deleteUserWorks() throws Exception {
-        given(userService.deleteUser(anyInt())).willReturn(true);
-        mockMvc.perform(delete("/api/user/del?userId=1", 1)
-                        .contentType(MediaType.APPLICATION_JSON))
+    void deleteAccountWorks() throws Exception {
+        given(accountService.deleteAccount(anyInt())).willReturn(true);
+        mockMvc.perform(delete("/api/account/del?accountId=1", 1)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
 
     @Test
-    void deleteUserReturnsFalseIfFails() throws Exception {
-        given(userService.deleteUser(anyInt())).willReturn(false);
-        mockMvc.perform(delete("/api/user/del?userId=1", 1)
+    void deleteAccountReturnsFalseIfFails() throws Exception {
+        given(accountService.deleteAccount(anyInt())).willReturn(false);
+        mockMvc.perform(delete("/api/account/del?accountId=1", 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string("false"));
     }
 
     @Test
-    void deleteUserThrowsWithNoParams() throws Exception {
-        given(userService.deleteUser(anyInt())).willReturn(true);
-        mockMvc.perform(delete("/api/user/del"))
+    void deleteAccountThrowsWithNoParams() throws Exception {
+        given(accountService.deleteAccount(anyInt())).willReturn(true);
+        mockMvc.perform(delete("/api/account/del"))
                 .andExpect(status().isBadRequest());
     }
 }

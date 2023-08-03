@@ -1,9 +1,9 @@
 package com.example.shopBackend.review;
 
+import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.role.Role;
-import com.example.shopBackend.user.User;
 import com.example.shopBackend.words.Words;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ class ReviewControllerTest {
         Item item = new Item(
                 1,
                 "test title",
-                new User(),
+                new Account(),
                 1,
                 new Category(),
                 new Words(),
@@ -44,7 +44,7 @@ class ReviewControllerTest {
 
         );
 
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -59,7 +59,7 @@ class ReviewControllerTest {
                 "title",
                 5,
                 3,
-                user,
+                account,
                 3,
                 item
         );
@@ -76,7 +76,7 @@ class ReviewControllerTest {
                             "rating": 3,
                             "likes":5,
                             "dislikes": 3,
-                            "user": {
+                            "Account": {
                                 "id": 1
                                 },
                             "item": {
@@ -92,7 +92,7 @@ class ReviewControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(review.getRating()))
                 .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
                 .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].user.id").value(review.getUser().getId()))
+                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
                 .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
     }
 
@@ -105,11 +105,11 @@ class ReviewControllerTest {
     }
 
     @Test
-    void getReviewsForUserWorks() throws Exception {
+    void getReviewsForAccountWorks() throws Exception {
         Item item = new Item(
                 1,
                 "test title",
-                new User(),
+                new Account(),
                 1,
                 new Category(),
                 new Words(),
@@ -117,7 +117,7 @@ class ReviewControllerTest {
 
         );
 
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -132,14 +132,14 @@ class ReviewControllerTest {
                 "title",
                 5,
                 3,
-                user,
+                account,
                 3,
                 item
         );
 
-        given(reviewService.getReviewsForUser(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
 
-        mockMvc.perform(get("/api/review/get/user?userId=1&page=0", 1, 0))
+        mockMvc.perform(get("/api/review/get/account?accountId=1&page=0", 1, 0))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(review.getTitle()))
                 .andExpect(jsonPath("$[0].body").value(review.getBody()))
@@ -147,16 +147,16 @@ class ReviewControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(review.getRating()))
                 .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
                 .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].user.id").value(review.getUser().getId()))
+                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
                 .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
     }
 
     @Test
-    void getReviewsForUserThrowsWithNoParams() throws Exception {
+    void getReviewsForAccountThrowsWithNoParams() throws Exception {
         Item item = new Item(
                 1,
                 "test title",
-                new User(),
+                new Account(),
                 1,
                 new Category(),
                 new Words(),
@@ -164,7 +164,7 @@ class ReviewControllerTest {
 
         );
 
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -179,23 +179,23 @@ class ReviewControllerTest {
                 "title",
                 5,
                 3,
-                user,
+                account,
                 3,
                 item
         );
 
-        given(reviewService.getReviewsForUser(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
-        mockMvc.perform(get("/api/review/get/user"))
+        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        mockMvc.perform(get("/api/review/get/account"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void getReviewsForUserThrowsWithNoResults() throws Exception {
-        given(reviewService.getReviewsForUser(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
-        mockMvc.perform(get("/api/review/get/user?userId=1&page=0", 1, 0)
+    void getReviewsForAccountThrowsWithNoResults() throws Exception {
+        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
+        mockMvc.perform(get("/api/review/get/account?accountId=1&page=0", 1, 0)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("found no reviews with user id"));
+                .andExpect(content().string("found no reviews with Account id"));
     }
 
     @Test
@@ -203,7 +203,7 @@ class ReviewControllerTest {
         Item item = new Item(
                 1,
                 "test title",
-                new User(),
+                new Account(),
                 1,
                 new Category(),
                 new Words(),
@@ -211,7 +211,7 @@ class ReviewControllerTest {
 
         );
 
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -226,7 +226,7 @@ class ReviewControllerTest {
                 "title",
                 5,
                 3,
-                user,
+                account,
                 3,
                 item
         );
@@ -241,7 +241,7 @@ class ReviewControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(review.getRating()))
                 .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
                 .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].user.id").value(review.getUser().getId()))
+                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
                 .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
     }
 
@@ -250,7 +250,7 @@ class ReviewControllerTest {
         Item item = new Item(
                 1,
                 "test title",
-                new User(),
+                new Account(),
                 1,
                 new Category(),
                 new Words(),
@@ -258,7 +258,7 @@ class ReviewControllerTest {
 
         );
 
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -273,7 +273,7 @@ class ReviewControllerTest {
                 "title",
                 5,
                 3,
-                user,
+                account,
                 3,
                 item
         );
@@ -285,7 +285,7 @@ class ReviewControllerTest {
 
     @Test
     void getReviewsForItemThrowsWithNoResults() throws Exception {
-        given(reviewService.getReviewsForUser(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
+        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
         mockMvc.perform(get("/api/review/get/item?itemId=1&page=0&sort=review_date&sortDir=desc", 1, 0)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -318,7 +318,7 @@ class ReviewControllerTest {
     }
 
     @Test
-    void getChartForUserWorks() throws Exception {
+    void getChartForAccountWorks() throws Exception {
         Chart chart = new Chart() {
             @Override
             public int getRating() {
@@ -331,16 +331,16 @@ class ReviewControllerTest {
             }
         };
 
-        given(reviewService.getChartForUser(any(), anyInt())).willReturn(List.of(chart));
+        given(reviewService.getChartForAccount(any(), anyInt())).willReturn(List.of(chart));
 
-        mockMvc.perform(get("/api/review/get/chart/user?userId=1&time=week", 1, 0))
+        mockMvc.perform(get("/api/review/get/chart/account?accountId=1&time=week", 1, 0))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].count").value(chart.getCount()))
                 .andExpect(jsonPath("$[0].rating").value(chart.getRating()));
     }
 
     @Test
-    void getChartForUserThrowsWithNoParams() throws Exception {
+    void getChartForAccountThrowsWithNoParams() throws Exception {
         Chart chart = new Chart() {
             @Override
             public int getRating() {
@@ -353,9 +353,9 @@ class ReviewControllerTest {
             }
         };
 
-        given(reviewService.getChartForUser(any(), anyInt())).willReturn(List.of(chart));
+        given(reviewService.getChartForAccount(any(), anyInt())).willReturn(List.of(chart));
 
-        mockMvc.perform(get("/api/review/get/chart/user", 1, 0))
+        mockMvc.perform(get("/api/review/get/chart/account", 1, 0))
                 .andExpect(status().isBadRequest());
     }
 
@@ -406,7 +406,7 @@ class ReviewControllerTest {
         Item item = new Item(
                 1,
                 "test title",
-                new User(),
+                new Account(),
                 1,
                 new Category(),
                 new Words(),
@@ -414,7 +414,7 @@ class ReviewControllerTest {
 
         );
 
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -429,7 +429,7 @@ class ReviewControllerTest {
                 "title",
                 5,
                 3,
-                user,
+                account,
                 3,
                 item
         );
@@ -445,7 +445,7 @@ class ReviewControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(review.getRating()))
                 .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
                 .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].user.id").value(review.getUser().getId()))
+                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
                 .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
     }
 
@@ -454,7 +454,7 @@ class ReviewControllerTest {
         Item item = new Item(
                 1,
                 "test title",
-                new User(),
+                new Account(),
                 1,
                 new Category(),
                 new Words(),
@@ -462,7 +462,7 @@ class ReviewControllerTest {
 
         );
 
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -477,7 +477,7 @@ class ReviewControllerTest {
                 "title",
                 5,
                 3,
-                user,
+                account,
                 3,
                 item
         );

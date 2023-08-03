@@ -1,8 +1,8 @@
 package com.example.shopBackend.item;
 
+import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.role.Role;
-import com.example.shopBackend.user.User;
 import com.example.shopBackend.words.Words;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class ItemControllerTest {
 
     @Test
     void addItemWorks() throws Exception {
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -43,7 +43,7 @@ class ItemControllerTest {
         Words words = new Words(1, List.of("1"), List.of("1"));
         Item item = new Item(
                 "test title",
-                user,
+                account,
                 1,
                 category,
                 words,
@@ -58,7 +58,7 @@ class ItemControllerTest {
                 .content("""
                         [{
                             "title": "test title",
-                            "user": {
+                            "Account": {
                                 "id": 1
                             },
                             "category": {
@@ -72,7 +72,7 @@ class ItemControllerTest {
 
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(item.getTitle()))
-                .andExpect(jsonPath("$[0].user.name").value(item.getUser().getName()))
+                .andExpect(jsonPath("$[0].account.name").value(item.getAccount().getName()))
                 .andExpect(jsonPath("$[0].category.name").value(item.getCategory().getName()))
                 .andExpect(jsonPath("$[0].rating").value(item.getRating()))
                 .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()))
@@ -88,8 +88,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItemsForUserWorks() throws Exception {
-        User user = new User(
+    void getItemsForAccountWorks() throws Exception {
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -101,7 +101,7 @@ class ItemControllerTest {
         Words words = new Words(1, List.of("1"), List.of("1"));
         Item item = new Item(
                 "test title",
-                user,
+                account,
                 1,
                 category,
                 words,
@@ -109,12 +109,12 @@ class ItemControllerTest {
 
         );
 
-        given(itemService.getItemsForUser(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
 
-        mockMvc.perform(get("/api/item/get?userId=1&page=0", 1, 0))
+        mockMvc.perform(get("/api/item/get?accountId=1&page=0", 1, 0))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(item.getTitle()))
-                .andExpect(jsonPath("$[0].user.name").value(item.getUser().getName()))
+                .andExpect(jsonPath("$[0].account.name").value(item.getAccount().getName()))
                 .andExpect(jsonPath("$[0].category.name").value(item.getCategory().getName()))
                 .andExpect(jsonPath("$[0].rating").value(item.getRating()))
                 .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()))
@@ -122,8 +122,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItemsForUserThrowsWithNoParams() throws Exception {
-        User user = new User(
+    void getItemsForAccountThrowsWithNoParams() throws Exception {
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -135,7 +135,7 @@ class ItemControllerTest {
         Words words = new Words(1, List.of("1"), List.of("1"));
         Item item = new Item(
                 "test title",
-                user,
+                account,
                 1,
                 category,
                 words,
@@ -143,18 +143,18 @@ class ItemControllerTest {
 
         );
 
-        given(itemService.getItemsForUser(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
         mockMvc.perform(get("/api/item/get"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void getItemsForUserThrowsWithNoResults() throws Exception {
-        given(itemService.getItemsForUser(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
-        mockMvc.perform(get("/api/item/get?userId=1&page=0", 1, 0)
+    void getItemsForAccountThrowsWithNoResults() throws Exception {
+        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
+        mockMvc.perform(get("/api/item/get?accountId=1&page=0", 1, 0)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest())
-            .andExpect(content().string("found no reviews with user id"));
+            .andExpect(content().string("found no reviews with account id"));
     }
 
     @Test
@@ -184,7 +184,7 @@ class ItemControllerTest {
 
     @Test
     void updateItemWorks() throws Exception {
-        User user = new User(
+        Account account = new Account(
                 1,
                 "name",
                 "username",
@@ -196,7 +196,7 @@ class ItemControllerTest {
         Words words = new Words(1, List.of("1"), List.of("1"));
         Item item = new Item(
                 "test title",
-                user,
+                account,
                 1,
                 category,
                 words,
@@ -210,7 +210,7 @@ class ItemControllerTest {
                 .content("""
                         {
                             "title": "postTest 12",
-                            "user": {
+                            "Account": {
                                 "id": 1
                             },
                             "category": {
@@ -222,7 +222,7 @@ class ItemControllerTest {
                         }"""))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value(item.getTitle()))
-                .andExpect(jsonPath("$.user.name").value(item.getUser().getName()))
+                .andExpect(jsonPath("$.account.name").value(item.getAccount().getName()))
                 .andExpect(jsonPath("$.category.name").value(item.getCategory().getName()))
                 .andExpect(jsonPath("$.rating").value(item.getRating()))
                 .andExpect(jsonPath("$.words.id").value(item.getWords().getId()))
@@ -236,7 +236,7 @@ class ItemControllerTest {
                 .content("""
                         {
                             "title": "postTest 12",
-                            "user": {
+                            "Account": {
                                 "id": 1
                             },
                             "category": {

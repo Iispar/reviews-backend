@@ -22,16 +22,16 @@ public class PagesController {
     }
 
     /**
-     * GET call to /get/home?userId=(input) will return all the data
-     * for the homepage, with the data corresponding to the user with the param id.
+     * GET call to /get/home?accountId=(input) will return all the data
+     * for the homepage, with the data corresponding to the Account with the param id.
      * @param id
      *        The id we want the home page data for
-     * @return homepage data for user.
+     * @return homepage data for Account.
      */
     @GetMapping("/get/home")
-    public Homepage getHomePageForUser(
-        @RequestParam("userId") int id) {
-        return pagesService.getHomepageForUser(id);
+    public Homepage getHomePageForAccount(
+        @RequestParam("accountId") int id) {
+        return pagesService.getHomepageForAccount(id);
     }
 
 

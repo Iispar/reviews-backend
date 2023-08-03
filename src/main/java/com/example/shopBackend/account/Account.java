@@ -1,4 +1,4 @@
-package com.example.shopBackend.user;
+package com.example.shopBackend.account;
 
 import com.example.shopBackend.role.Role;
 
@@ -12,14 +12,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * The User entity
+ * The Account entity
  * @author iiro
  *
  */
 @SuppressWarnings("unused")
 @Entity(name="Account")
 @Table(name="accounts", schema="reviews_schema")
-public class User {
+public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "account_id", nullable = false, updatable = false, unique = true)
@@ -42,7 +42,7 @@ public class User {
 	@JoinColumn(name = "account_role", referencedColumnName = "role_id", nullable = false)
 	private Role role;
 
-	public User(int id, String name, String username, String password, String email, Role role) {
+	public Account(int id, String name, String username, String password, String email, Role role) {
 		this.id = id;
 		this.name = name;
 		this.username = username;
@@ -51,7 +51,7 @@ public class User {
 		this.role = role;
 	}
 	
-	public User() {}
+	public Account() {}
 
 	public int getId() {
 		return id;
@@ -69,11 +69,11 @@ public class User {
 		this.name = name;
 	}
 
-	public String getUsername() {
+	public String getusername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public void setusername(String username) {
 		this.username = username;
 	}
 

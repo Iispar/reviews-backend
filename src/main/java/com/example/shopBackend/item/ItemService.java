@@ -1,8 +1,8 @@
 package com.example.shopBackend.item;
 
+import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.category.CategoryRepository;
 import com.example.shopBackend.review.ReviewRepository;
-import com.example.shopBackend.user.UserRepository;
 import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
 import exception.BadRequestException;
@@ -24,7 +24,7 @@ public class ItemService {
 	@Autowired
 	private ItemRepository itemRepository;
 	@Autowired
-	private UserRepository userRepository;
+	private AccountRepository accountRepository;
 
 	@Autowired
 	private ReviewRepository reviewRepository;
@@ -35,9 +35,9 @@ public class ItemService {
 	@Autowired
 	private WordsRepository wordsRepository;
 
-	public ItemService(ItemRepository itemRepository, UserRepository userRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository, WordsRepository wordsRepository) {
+	public ItemService(ItemRepository itemRepository, AccountRepository accountRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository, WordsRepository wordsRepository) {
 		this.itemRepository = itemRepository;
-		this.userRepository = userRepository;
+		this.accountRepository = accountRepository;
 		this.categoryRepository = categoryRepository;
 		this.wordsRepository = wordsRepository;
 		this.reviewRepository = reviewRepository;
@@ -70,24 +70,24 @@ public class ItemService {
 			}
 
 			int categoryId = value.getCategory().getId();
-			int userId = value.getUser().getId();
+			int AccountId = value.getAccount().getId();
 
 			if (categoryRepository.findById(categoryId).isEmpty()) {
 				throw new BadRequestException(
 						"category with id: " + categoryId + " does not exist");
 			}
 
-			if (userRepository.findById(userId).isEmpty()) {
+			if (accountRepository.findById(AccountId).isEmpty()) {
 				throw new BadRequestException(
-						"user with id: " + userId + " does not exist");
+						"Account with id: " + AccountId + " does not exist");
 			}
 		}
 		return itemRepository.saveAll(item);
 	}
 	/**
-	 * Finds all items for user. And returns them.
+	 * Finds all items for Account. And returns them.
 	 * @param id
-	 * 		  The id of the user you want items for.
+	 * 		  The id of the Account you want items for.
 	 * @param page
 	 * 		  The page you want to receive
 	 * @param sort
@@ -96,7 +96,7 @@ public class ItemService {
 	 * 		  The direction of the sort, none if no sort.
 	 * @return reviews that match query.
 	 */
-	public List<Item> getItemsForUser(int id, int page, String sort, String sortDir) {
+	public List<Item> getItemsForAccount(int id, int page, String sort, String sortDir) {
 
 		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
 			throw new BadRequestException(
@@ -108,9 +108,9 @@ public class ItemService {
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
 
-		if(userRepository.findById(id).isEmpty()) {
+		if(accountRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
-					"No users exists with id " + id);
+					"No Accounts exists with id " + id);
 		}
 
 		PageRequest pageRequest;
@@ -118,7 +118,7 @@ public class ItemService {
 		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 6, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 6, Sort.by(sort).descending());
 
-		return itemRepository.findAllUserId(id, pageRequest);
+		return itemRepository.findAllAccountId(id, pageRequest);
 	}
 	
 	/**

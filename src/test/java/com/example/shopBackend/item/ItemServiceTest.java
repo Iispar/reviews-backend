@@ -1,13 +1,13 @@
 package com.example.shopBackend.item;
 
 import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.account.Account;
+import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.category.CategoryRepository;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.role.Role;
-import com.example.shopBackend.user.User;
-import com.example.shopBackend.user.UserRepository;
 import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
 import exception.BadRequestException;
@@ -49,7 +49,7 @@ class ItemServiceTest {
     private ItemRepository itemRepository;
 
     @Mock
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     @Mock
     private CategoryRepository categoryRepository;
@@ -64,69 +64,69 @@ class ItemServiceTest {
     private ItemService testItemService;
 
     @Test
-    void getItemsForUserWorksWithAsc() {
-        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+    void getItemsForAccountWorksWithAsc() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
         Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").ascending());
-        testItemService.getItemsForUser(1, 0, "item_rating", "asc");
+        testItemService.getItemsForAccount(1, 0, "item_rating", "asc");
 
-        verify(itemRepository).findAllUserId(1, pageRequest);
+        verify(itemRepository).findAllAccountId(1, pageRequest);
     }
 
     @Test
-    void getItemsForUserWorksWithDesc() {
-        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+    void getItemsForAccountWorksWithDesc() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
         Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").descending());
-        testItemService.getItemsForUser(1, 0, "item_rating", "desc");
+        testItemService.getItemsForAccount(1, 0, "item_rating", "desc");
 
-        verify(itemRepository).findAllUserId(1, pageRequest);
+        verify(itemRepository).findAllAccountId(1, pageRequest);
     }
 
     @Test
-    void getItemsForUserThrowsErrorWithNoMatchingUser() {
-        given(userRepository.findById(any())).willReturn(Optional.empty());
+    void getItemsForAccountThrowsErrorWithNoMatchingAccount() {
+        given(accountRepository.findById(any())).willReturn(Optional.empty());
 
-        assertThatThrownBy(() -> testItemService.getItemsForUser(1, 0, "none", "none"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, 0, "none", "none"))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("No users exists with id 1");
+                .hasMessageContaining("No Accounts exists with id 1");
 
         Pageable pageRequest = PageRequest.of(0, 6);
 
-        verify(itemRepository, never()).findAllUserId(1, pageRequest);
+        verify(itemRepository, never()).findAllAccountId(1, pageRequest);
     }
 
     @Test
-    void getItemsForUserThrowsErrorWithNegativePage() {
-        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+    void getItemsForAccountThrowsErrorWithNegativePage() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        assertThatThrownBy(() -> testItemService.getItemsForUser(1, -1, "none", "none"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, -1, "none", "none"))
                 .isInstanceOf(java.lang.IllegalArgumentException.class)
                 .hasMessageContaining("Page index must not be less than zero");
     }
 
     @Test
-    void GetItemsForUserThrowsErrorWithBadSortDir() {
+    void GetItemsForAccountThrowsErrorWithBadSortDir() {
 
-        assertThatThrownBy(() -> testItemService.getItemsForUser(1, 0, "item_rating", "ascending"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, 0, "item_rating", "ascending"))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
 
         Pageable pageRequest = PageRequest.of(0, 4);
 
-        verify(reviewRepository, never()).findAllUserId(1, pageRequest);
+        verify(reviewRepository, never()).findAllAccountId(1, pageRequest);
     }
 
     @Test
-    void GetItemsForUserThrowsErrorWithBadSort() {
+    void GetItemsForAccountThrowsErrorWithBadSort() {
 
-        assertThatThrownBy(() -> testItemService.getItemsForUser(1, 0, "item_name", "asc"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, 0, "item_name", "asc"))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("sort item_name is not a valid value for a sort in the entity.");
 
         Pageable pageRequest = PageRequest.of(0, 4);
 
-        verify(reviewRepository, never()).findAllUserId(1, pageRequest);
+        verify(reviewRepository, never()).findAllAccountId(1, pageRequest);
     }
 
     @Test
@@ -162,16 +162,16 @@ class ItemServiceTest {
 
     @Test
     void saveItemWorks() {
-        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
 
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -181,7 +181,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -200,12 +200,12 @@ class ItemServiceTest {
     @Test
     void saveItemThrowsWithNegativeRating() {
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 -2,
                 category,
                 null,
@@ -215,7 +215,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -236,12 +236,12 @@ class ItemServiceTest {
     @Test
     void saveItemThrowsWithTooLargeRating() {
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 10,
                 category,
                 null,
@@ -251,7 +251,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -272,12 +272,12 @@ class ItemServiceTest {
     @Test
     void saveItemThrowsWithTooLongTitle() {
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "this title will be way too long to be allowed as the value. this title will be way too long to be allowed as the value.",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -287,7 +287,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -308,12 +308,12 @@ class ItemServiceTest {
     @Test
     void saveItemThrowsWithTooShortTitle() {
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "th",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -323,7 +323,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -344,12 +344,12 @@ class ItemServiceTest {
     @Test
     void saveItemThrowsWithBadDesc() {
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -359,7 +359,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -381,12 +381,12 @@ class ItemServiceTest {
     void saveItemThrowsWithBadCategoryId() {
         given(categoryRepository.findById(any())).willReturn(Optional.empty());
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -395,7 +395,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -414,16 +414,16 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveItemThrowsWithBadUserId() {
+    void saveItemThrowsWithBadAccountId() {
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
-        given(userRepository.findById(any())).willReturn(Optional.empty());
+        given(accountRepository.findById(any())).willReturn(Optional.empty());
         List<Item> list = new ArrayList<>();
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
         Item item1 = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -432,7 +432,7 @@ class ItemServiceTest {
         Item item2 = new Item(
                 2,
                 "test title 2",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -445,7 +445,7 @@ class ItemServiceTest {
 
         assertThatThrownBy(() ->  testItemService.saveAllItems(list))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("user with id: " + user.getId() + " does not exist");
+                .hasMessageContaining("Account with id: " + account.getId() + " does not exist");
 
         verify(itemRepository, never()).saveAll(list);
     }
@@ -454,13 +454,13 @@ class ItemServiceTest {
     void updateItemWorks() {
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -475,13 +475,13 @@ class ItemServiceTest {
 
     @Test
     void updateItemThrowsErrorWithNoFoundItem() {
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -504,13 +504,13 @@ class ItemServiceTest {
     })
     void updateItemThrowsErrorWithBadTitle(String title) {
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         Item item = new Item(
                 1,
                 title,
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -529,13 +529,13 @@ class ItemServiceTest {
     @Test
     void updateItemThrowsErrorWithBadDesc() {
         given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -553,13 +553,13 @@ class ItemServiceTest {
 
     @Test
     void updateItemThrowsErrorWithNoCategory() {
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 null,
@@ -578,7 +578,7 @@ class ItemServiceTest {
     void updateItemRatingAndWordsWorks() {
         given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -601,7 +601,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 3,
                 category,
                 new Words(1, posWords, negWords),
@@ -614,7 +614,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 5,
                 item
         );
@@ -624,7 +624,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 1,
                 item
         );
@@ -641,7 +641,7 @@ class ItemServiceTest {
     @Test
     void updateItemRatingAndWordsThrowsWithBadItemId() {
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -664,7 +664,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 3,
                 category,
                 new Words(1, posWords, negWords),
@@ -677,7 +677,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 5,
                 item
         );
@@ -687,7 +687,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 1,
                 item
         );
@@ -708,7 +708,7 @@ class ItemServiceTest {
     void updateItemRatingAndWordsThrowsWithTooLargeRating() {
         given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(10, 5));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -731,7 +731,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 new Words(1, posWords, negWords),
@@ -744,7 +744,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 8,
                 item
         );
@@ -754,7 +754,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 10,
                 item
         );
@@ -776,7 +776,7 @@ class ItemServiceTest {
     void updateItemRatingAndWordsThrowsWithTooSmallRating() {
         given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(0, 0));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -799,7 +799,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 0,
                 category,
                 new Words(1, posWords, negWords),
@@ -812,7 +812,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 0,
                 item
         );
@@ -822,7 +822,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 0,
                 item
         );
@@ -843,7 +843,7 @@ class ItemServiceTest {
     void updateItemRatingAndWordsThrowsWithTooManyPosWords() {
         given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -867,7 +867,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 2,
                 category,
                 new Words(1, posWords, negWords),
@@ -880,7 +880,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 4,
                 item
         );
@@ -890,7 +890,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 1,
                 item
         );
@@ -911,7 +911,7 @@ class ItemServiceTest {
     void updateItemRatingAndWordsThrowsWithNotEnoughPosWords() {
         given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -928,7 +928,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 2,
                 category,
                 new Words(1, posWords, negWords),
@@ -941,7 +941,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 4,
                 item
         );
@@ -951,7 +951,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 1,
                 item
         );
@@ -973,7 +973,7 @@ class ItemServiceTest {
     void updateItemRatingAndWordsThrowsWithTooManyNegWords() {
         given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -997,7 +997,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 2,
                 category,
                 new Words(1, posWords, negWords),
@@ -1010,7 +1010,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 4,
                 item
         );
@@ -1020,7 +1020,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 1,
                 item
         );
@@ -1042,7 +1042,7 @@ class ItemServiceTest {
     void updateItemRatingAndWordsThrowsWithNotEnoughNegWords() {
         given(reviewRepository.findAllRatingsWithItemId(anyInt())).willReturn(List.of(5, 1));
 
-        User user = new User(1, "test name", "test username", "testPass", "testEmail", new Role());
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Category category = new Category("test category");
 
         List<Review> reviews = new ArrayList<>();
@@ -1059,7 +1059,7 @@ class ItemServiceTest {
         Item item = new Item(
                 1,
                 "test title",
-                user,
+                account,
                 2,
                 category,
                 new Words(1, posWords, negWords),
@@ -1072,7 +1072,7 @@ class ItemServiceTest {
                 "title",
                 0,
                 0,
-                user,
+                account,
                 4,
                 item
         );
@@ -1082,7 +1082,7 @@ class ItemServiceTest {
                 "title1",
                 0,
                 0,
-                user,
+                account,
                 1,
                 item
         );

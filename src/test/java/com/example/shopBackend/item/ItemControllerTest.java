@@ -71,19 +71,19 @@ class ItemControllerTest {
                         """))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("test title"))
-                .andExpect(jsonPath("$[0].user.name").value("name"))
-                .andExpect(jsonPath("$[0].category.name").value("category"))
-                .andExpect(jsonPath("$[0].rating").value(1))
-                .andExpect(jsonPath("$[0].words.id").value(1))
-                .andExpect(jsonPath("$[0].desc").value("test desc"));
+                .andExpect(jsonPath("$[0].title").value(item.getTitle()))
+                .andExpect(jsonPath("$[0].user.name").value(item.getUser().getName()))
+                .andExpect(jsonPath("$[0].category.name").value(item.getCategory().getName()))
+                .andExpect(jsonPath("$[0].rating").value(item.getRating()))
+                .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()))
+                .andExpect(jsonPath("$[0].desc").value(item.getDesc()));
     }
 
     @Test
     void addItemThrowsWithNoItemGiven() throws Exception {
         mockMvc.perform(post("/api/item/add")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
+                        .content(""))
                 .andExpect(status().isBadRequest());
     }
 
@@ -113,12 +113,12 @@ class ItemControllerTest {
 
         mockMvc.perform(get("/api/item/get?userId=1&page=0", 1, 0))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("test title"))
-                .andExpect(jsonPath("$[0].user.name").value("name"))
-                .andExpect(jsonPath("$[0].rating").value(1))
-                .andExpect(jsonPath("$[0].category.name").value("category"))
-                .andExpect(jsonPath("$[0].words.id").value(1))
-                .andExpect(jsonPath("$[0].desc").value("test desc"));
+                .andExpect(jsonPath("$[0].title").value(item.getTitle()))
+                .andExpect(jsonPath("$[0].user.name").value(item.getUser().getName()))
+                .andExpect(jsonPath("$[0].category.name").value(item.getCategory().getName()))
+                .andExpect(jsonPath("$[0].rating").value(item.getRating()))
+                .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()))
+                .andExpect(jsonPath("$[0].desc").value(item.getDesc()));
     }
 
     @Test
@@ -221,12 +221,12 @@ class ItemControllerTest {
                             "desc": "test desc"
                         }"""))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("test title"))
-                .andExpect(jsonPath("$.user.name").value("name"))
-                .andExpect(jsonPath("$.category.name").value("category"))
-                .andExpect(jsonPath("$.rating").value(1))
-                .andExpect(jsonPath("$.words.id").value(1))
-                .andExpect(jsonPath("$.desc").value("test desc"));
+                .andExpect(jsonPath("$.title").value(item.getTitle()))
+                .andExpect(jsonPath("$.user.name").value(item.getUser().getName()))
+                .andExpect(jsonPath("$.category.name").value(item.getCategory().getName()))
+                .andExpect(jsonPath("$.rating").value(item.getRating()))
+                .andExpect(jsonPath("$.words.id").value(item.getWords().getId()))
+                .andExpect(jsonPath("$.desc").value(item.getDesc()));
     }
 
     @Test

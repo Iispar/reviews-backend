@@ -55,12 +55,12 @@ public class UserControllerTest {
                         """))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].name").value("name"))
-                .andExpect(jsonPath("$[0].username").value("username"))
-                .andExpect(jsonPath("$[0].password").value("pass"))
-                .andExpect(jsonPath("$[0].email").value("email"))
-                .andExpect(jsonPath("$[0].role.name").value("role"));
+                .andExpect(jsonPath("$[0].id").value(user.getId()))
+                .andExpect(jsonPath("$[0].name").value(user.getName()))
+                .andExpect(jsonPath("$[0].username").value(user.getUsername()))
+                .andExpect(jsonPath("$[0].password").value(user.getPassword()))
+                .andExpect(jsonPath("$[0].email").value(user.getEmail()))
+                .andExpect(jsonPath("$[0].role.name").value(user.getRole().getName()));
     }
 
     @Test
@@ -102,11 +102,12 @@ public class UserControllerTest {
                         """))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("updatedName"))
-                .andExpect(jsonPath("$.username").value("updatedUsername"))
-                .andExpect(jsonPath("$.password").value("updatedPass"))
-                .andExpect(jsonPath("$.email").value("updatedEmail"))
-                .andExpect(jsonPath("$.role.name").value("role"));
+                .andExpect(jsonPath("$.id").value(user.getId()))
+                .andExpect(jsonPath("$.name").value(user.getName()))
+                .andExpect(jsonPath("$.username").value(user.getUsername()))
+                .andExpect(jsonPath("$.password").value(user.getPassword()))
+                .andExpect(jsonPath("$.email").value(user.getEmail()))
+                .andExpect(jsonPath("$.role.name").value(user.getRole().getName()));
     }
     @Test
     void updateUserThrowsWithNoParams() throws Exception {

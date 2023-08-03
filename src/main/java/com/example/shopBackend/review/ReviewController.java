@@ -1,6 +1,7 @@
 package com.example.shopBackend.review;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class ReviewController {
 		List<Review> reviews = reviewService.getReviewsForItem(id, page, sort, sortDir);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
-					"found no reviews with user id");
+					"found no reviews with item id");
 		}
 		return reviews;
 	}
@@ -105,7 +106,7 @@ public class ReviewController {
 		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, page, id, sort, sortDir);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
-					"found no reviews with item id and name");
+					"found no reviews with item id and title");
 		}
 		return reviews;
 	}
@@ -152,5 +153,12 @@ public class ReviewController {
 	@DeleteMapping("/del")
 	public boolean deleteReview(@RequestParam("reviewId") int id) {
 		return Boolean.TRUE.equals(reviewService.deleteReview(id));
+	}
+
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public String handleIllegalState(IllegalStateException illegalStateException) {
+		return illegalStateException.getMessage();
 	}
 }

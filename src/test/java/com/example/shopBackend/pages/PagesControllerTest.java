@@ -73,12 +73,12 @@ class PagesControllerTest {
 
         mockMvc.perform(get("/api/pages/get/home?userId=1", 1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.latestReviews[0].title").value("title"))
-                .andExpect(jsonPath("$.topItems[0].desc").value("desc"))
-                .andExpect(jsonPath("$.ratingsAvg").value(2.3F))
-                .andExpect(jsonPath("$.itemsCount").value(2))
-                .andExpect(jsonPath("$.reviewsCount").value(2))
-                .andExpect(jsonPath("$.chart[0].count").value(1));
+                .andExpect(jsonPath("$.latestReviews[0].title").value(homepage.getLatestReviews().get(0).getTitle()))
+                .andExpect(jsonPath("$.topItems[0].desc").value(homepage.getTopItems().get(0).getDesc()))
+                .andExpect(jsonPath("$.ratingsAvg").value(homepage.getRatingsAvg()))
+                .andExpect(jsonPath("$.itemsCount").value(homepage.getItemsCount()))
+                .andExpect(jsonPath("$.reviewsCount").value(homepage.getReviewsCount()))
+                .andExpect(jsonPath("$.chart[0].count").value(homepage.getChart().get(0).getCount()));
     }
 
     @Test
@@ -123,10 +123,10 @@ class PagesControllerTest {
 
         mockMvc.perform(get("/api/pages/get/item?itemId=1", 1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.latestReviews[0].title").value("title"))
-                .andExpect(jsonPath("$.chart[0].count").value(1))
-                .andExpect(jsonPath("$.topPos[0]").value("pos"))
-                .andExpect(jsonPath("$.topNeg[0]").value("neg"));
+                .andExpect(jsonPath("$.latestReviews[0].title").value(itempage.getLatestReviews().get(0).getTitle()))
+                .andExpect(jsonPath("$.chart[0].count").value(itempage.getChart().get(0).getCount()))
+                .andExpect(jsonPath("$.topPos[0]").value(itempage.getTopPos().get(0)))
+                .andExpect(jsonPath("$.topNeg[0]").value(itempage.getTopNeg().get(0)));
     }
 
     @Test

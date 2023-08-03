@@ -1,6 +1,5 @@
 package com.example.shopBackend.item;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +8,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@Disabled
 public class ItemIntegrationTest {
     @Autowired
     private WebTestClient webClient;
@@ -24,10 +22,10 @@ public class ItemIntegrationTest {
                 .expectBody()
                 .jsonPath("$[0].title").isEqualTo("initItem title")
                 .jsonPath("$[0].id").isEqualTo(1)
-                .jsonPath("$[0].account").isEqualTo(1)
-                .jsonPath("$[0].category").isEqualTo(1)
+                .jsonPath("$[0].account.id").isEqualTo(1)
+                .jsonPath("$[0].category.id").isEqualTo(1)
                 .jsonPath("$[0].rating").isEqualTo(4)
-                .jsonPath("$[0].words").isEqualTo(1)
+                .jsonPath("$[0].words.id").isEqualTo(1)
                 .jsonPath("$[0].desc").isEqualTo("test desc");
 
 

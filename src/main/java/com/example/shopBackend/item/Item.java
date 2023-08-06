@@ -58,7 +58,7 @@ public class Item {
 		this.desc = desc;
 	}
 
-    public Item(String title, Account account, int rating, Category category, Words words, String desc) {
+    public Item(String title, Account account, float rating, Category category, Words words, String desc) {
 		this.title = title;
 		this.account = account;
 		this.rating = rating;

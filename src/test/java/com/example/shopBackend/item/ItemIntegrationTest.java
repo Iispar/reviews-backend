@@ -1,6 +1,5 @@
 package com.example.shopBackend.item;
 
-import com.example.shopBackend.account.AccountRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,9 +20,6 @@ class ItemIntegrationTest {
 
     @Autowired
     public ItemRepository itemRepository;
-
-    @Autowired
-    public AccountRepository accountRepository;
 
     @Test
     void getItemsWorks() {
@@ -74,7 +70,6 @@ class ItemIntegrationTest {
                 .jsonPath("$[0].desc").isEqualTo("test desc");
 
         assertTrue(itemRepository.findAll().size() == items + 1);
-        itemRepository.deleteById(2);
     }
 
     @Test

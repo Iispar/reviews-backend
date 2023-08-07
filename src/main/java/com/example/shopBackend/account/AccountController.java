@@ -55,6 +55,7 @@ public class AccountController {
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteAccount(@RequestParam("accountId") int id) {
+
 		return Boolean.TRUE.equals(accountService.deleteAccount(id));
 	}
 }

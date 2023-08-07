@@ -1,5 +1,8 @@
 package com.example.shopBackend.account;
 
+import com.example.shopBackend.item.Item;
+import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.RoleRepository;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,12 @@ public class AccountService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private ItemService itemService;
+
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	/**
 	 * Saves a new account to the database.
@@ -86,7 +95,7 @@ public class AccountService {
 		foundAccount.setEmail(account.getEmail());
 		foundAccount.setName(account.getName());
 		foundAccount.setPassword(account.getPassword());
-		foundAccount.setusername(account.getPassword());
+		foundAccount.setusername(account.getusername());
 
 		return accountRepository.save(foundAccount);
 	}
@@ -101,6 +110,15 @@ public class AccountService {
 		if(accountRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No Accounts exists with id " + id);
+		}
+
+		List<Item> items = itemRepository.findAll();
+
+		// delete all items this account has
+		for (Item item : items) {
+			if (item.getAccount().getId() == id) {
+				itemService.deleteItem(item.getId());
+			}
 		}
 
 		accountRepository.deleteById(id);

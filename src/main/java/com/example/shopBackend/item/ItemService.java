@@ -2,6 +2,7 @@ package com.example.shopBackend.item;
 
 import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.category.CategoryRepository;
+import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
@@ -131,6 +132,15 @@ public class ItemService {
 		if(itemRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No items exists with id " + id);
+		}
+
+		List<Review> reviews = reviewRepository.findAll();
+
+		// delete all items this account has
+		for (Review review : reviews) {
+			if (review.getItem().getId() == id) {
+				reviewRepository.deleteById(review.getId());
+			}
 		}
 
 		itemRepository.deleteById(id);

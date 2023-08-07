@@ -74,7 +74,7 @@ class ReviewRepositoryTest {
 		
         List<Review> foundEntity = testReviewRepository.findAllAccountId(account.getId(), pageRequest);
         List<Review> foundNoneEntity = testReviewRepository.findAllAccountId(account.getId() + 1, pageRequest);
-		assertEquals(2, foundEntity.size());
+		assertEquals(3, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
 	
@@ -111,7 +111,7 @@ class ReviewRepositoryTest {
 		
         List<Review> foundEntity = testReviewRepository.findAllItemId(item.getId(), pageRequest);
         List<Review> foundNoneIdentity = testReviewRepository.findAllItemId(item.getId() + 1, pageRequest);
-		assertEquals(2, foundEntity.size());
+		assertEquals(3, foundEntity.size());
 		assertEquals(0, foundNoneIdentity.size());
 	}
 	
@@ -387,8 +387,8 @@ class ReviewRepositoryTest {
 
 		List<String> foundEntity = testReviewRepository.findAllBodysWithItemId(item.getId());
 		List<String> foundNoneEntity = testReviewRepository.findAllBodysWithItemId(item.getId() + 1);
-		assertSame("review body for test", foundEntity.get(0));
-		assertEquals(3, foundEntity.size());
+		assertSame("review body for test", foundEntity.get(1));
+		assertEquals(4, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
 
@@ -436,7 +436,7 @@ class ReviewRepositoryTest {
 		List<Integer> foundEntity = testReviewRepository.findAllRatingsWithItemId(item.getId());
 		List<Integer> foundNoneEntity = testReviewRepository.findAllRatingsWithItemId(item.getId() + 1);
 		assertEquals(4, (int) foundEntity.get(0));
-		assertEquals(3, foundEntity.size());
+		assertEquals(4, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
 
@@ -485,7 +485,7 @@ class ReviewRepositoryTest {
 		int notFoundEntity = testReviewRepository.findCountWithAccountId(item.getId() + 1);
 
 
-		assertEquals(3, foundEntity);
+		assertEquals(4, foundEntity);
 		assertEquals(0, notFoundEntity);
 	}
 }

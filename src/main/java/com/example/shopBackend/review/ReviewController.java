@@ -103,7 +103,7 @@ public class ReviewController {
 			@RequestParam("sortDir") String sortDir,
 			@RequestParam("page") int page){
 		
-		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, page, id, sort, sortDir);
+		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, id, page, sort, sortDir);
 		if (reviews.isEmpty()) {
 			throw new IllegalStateException(
 					"found no reviews with item id and title");

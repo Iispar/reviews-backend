@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +37,6 @@ class ItemIntegrationTest {
     }
 
     @Test
-    @Transactional
     void addItemsWorks() {
         int items = itemRepository.findAll().size();
         webClient.post().uri("/api/item/add")
@@ -56,7 +54,6 @@ class ItemIntegrationTest {
                             "rating": "1",
                             "desc": "test desc"
                         }]
-                                                
                         """
                 )
                 .exchange()

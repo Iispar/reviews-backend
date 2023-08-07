@@ -2,6 +2,7 @@ package com.example.shopBackend.account;
 
 
 import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.role.RoleRepository;
 import exception.BadRequestException;
@@ -38,6 +39,9 @@ class AccountServiceTest {
 
     @Mock
     private RoleRepository roleRepository;
+
+    @Mock
+    private ItemRepository itemRepository;
 
     @InjectMocks
     private AccountService testAccountService;
@@ -432,6 +436,7 @@ class AccountServiceTest {
     @Test
     void deleteAccountWorks() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()), Optional.empty());
+        given(itemRepository.findAll()).willReturn(new ArrayList<>());
 
         testAccountService.deleteAccount(0);
 

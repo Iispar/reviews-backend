@@ -21,8 +21,8 @@ public class AccountController {
 	}
 	
 	/**
-	 * API GET call to /api/account/add with content in the body that describes the added account.
-	 * Will add it to the database.
+	 * API POST call to /api/account/add with content in the body that describes the added account
+	 * will add it to the database.
 	 * @param account
 	 * 	      The account to be added to the database
 	 * @return saved accounts
@@ -33,8 +33,8 @@ public class AccountController {
 	}
 
 	/**
-	 * API PUT call to /api/account/update?accountId=(input) with content in the body that describes the updates to the account.
-	 * Will update it to the database.
+	 * API PUT call to /api/account/update?accountId=(input) with content in the body that describes the updates to the account
+	 * will update it to the database.
 	 * @param account
 	 * 	      The account to be updated to the database
 	 * @param accountId
@@ -51,7 +51,7 @@ public class AccountController {
 	/**
 	 * API DELETE call to /api/account/del?accountId=(input)
 	 * will delete the account with the corresponding id.
-	 * @return True if successful. False otherwise
+	 * @return True if successful. Error otherwise
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteAccount(@RequestParam("accountId") int id) {

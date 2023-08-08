@@ -31,36 +31,30 @@ public class PagesService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public PagesService(ReviewRepository reviewRepository, ItemRepository itemRepository, AccountRepository accountRepository) {
-        this.reviewRepository = reviewRepository;
-        this.itemRepository = itemRepository;
-        this.accountRepository = accountRepository;
-    }
-
     /**
      * Creates a Homepage object with calls to the item and review repositories.
-     * @param AccountId
+     * @param accountId
      *        The id of the Account for homepage.
      * @return Homepage of Account with param id.
      */
-    public Homepage getHomepageForAccount(int AccountId) {
+    public Homepage getHomepageForAccount(int accountId) {
 
-        if (accountRepository.findById(AccountId).isEmpty()) {
+        if (accountRepository.findById(accountId).isEmpty()) {
             throw new BadRequestException(
-                    "no Accounts with id: " + AccountId + " exists");
+                    "no Accounts with id: " + accountId + " exists");
         }
 
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
 
-        int reviewCount = reviewRepository.findCountWithAccountId(AccountId);
-        int itemCount = itemRepository.findItemCountForAccountId(AccountId);
+        int reviewCount = reviewRepository.findCountWithAccountId(accountId);
+        int itemCount = itemRepository.findItemCountForAccountId(accountId);
 
-        List<Review> latestReviews = reviewRepository.findAllAccountId(AccountId, reviewPageReq);
-        List<Item> topItems = itemRepository.findAllAccountId(AccountId, itemPageReq);
-        List<Chart> chart = reviewRepository.findChartForAccountByWeek(AccountId);
+        List<Review> latestReviews = reviewRepository.findAllAccountId(accountId, reviewPageReq);
+        List<Item> topItems = itemRepository.findAllAccountId(accountId, itemPageReq);
+        List<Chart> chart = reviewRepository.findChartForAccountByWeek(accountId);
 
-        float ratingAvg = itemRepository.findItemAvgRatingForAccountId(AccountId).orElse(0F);
+        float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
 
         return new Homepage(latestReviews, topItems, ratingAvg, itemCount, reviewCount, chart);
     }

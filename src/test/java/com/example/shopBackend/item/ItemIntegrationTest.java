@@ -8,7 +8,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -66,9 +66,10 @@ class ItemIntegrationTest {
                 .jsonPath("$[0].words.id").isEqualTo(4)
                 .jsonPath("$[0].desc").isEqualTo("test desc");
 
-        assertTrue(itemRepository.findAll().size() == items + 1);
+        assertEquals(itemRepository.findAll().size(), items + 1);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     void deleteItemWorks() {
         webClient.delete().uri("/api/item/del?itemId=1")
@@ -76,7 +77,7 @@ class ItemIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody().toString().equals("true");
 
-        assertTrue(itemRepository.findAll().size() == 0);
+        assertEquals(0, itemRepository.findAll().size());
 
     }
 
@@ -99,7 +100,7 @@ class ItemIntegrationTest {
                             },
                             "rating": 4,
                             "desc": "test desc"
-                        }                  
+                        }
                         """
                 )
                 .exchange()

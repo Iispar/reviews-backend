@@ -55,7 +55,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    void AccountFindByusernameWorks() {
+    void AccountFindByUsernameWorks() {
         Role role = testRoleRepository.findById(1).orElseThrow();
         Account account = new Account(
                 1,
@@ -68,8 +68,8 @@ class AccountRepositoryTest {
 
         testaccountRepository.save(account);
 
-        Account foundEntity = testaccountRepository.findByusername(account.getusername()).orElse(null);
-        Account foundNoneEntity = testaccountRepository.findByusername("empty").orElse(null);
+        Account foundEntity = testaccountRepository.findByUsername(account.getUsername()).orElse(null);
+        Account foundNoneEntity = testaccountRepository.findByUsername("empty").orElse(null);
         assertNotNull(foundEntity);
         assertNull(foundNoneEntity);
     }

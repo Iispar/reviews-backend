@@ -17,7 +17,7 @@ import java.util.List;
 public interface ReviewRepository extends PagingAndSortingRepository<Review, Integer>, JpaRepository<Review, Integer> {
 
 	/**
-	 * Query to find all reviews for Accounts for page.
+	 * Query to find all reviews for Account.
 	 * @param id
 	 * 		  The Account id that searched.
 	 * @param pageable
@@ -29,7 +29,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Review> findAllAccountId(int id, Pageable pageable);
 	
 	/**
-	 * Query to find all reviews for item for page.
+	 * Query to find all reviews for item.
 	 * @param id
 	 * 		  The item id that searched.
 	 * @param pageable
@@ -40,8 +40,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Review> findAllItemId(int id, Pageable pageable);
 	
 	/**
-	 * Query to find all reviews with searched title for an item returns selected page and sorted in what
-	 * is described in the pageable object.
+	 * Query to find all reviews with searched title for an item.
 	 * @param title
 	 * 		  The searched title.
 	 * @param id
@@ -52,6 +51,19 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 */
 	@Query(value = "SELECT * FROM reviews r WHERE r.review_title LIKE ?1 AND r.review_item = ?2", nativeQuery = true)
 	List<Review> findAllByTitleForItem(String title, int id, Pageable pageable);
+
+	/**
+	 * Query to find all reviews with searched body for an item.
+	 * @param body
+	 * 		  The searched body.
+	 * @param id
+	 * 	 	  The item id that is searched with.
+	 * @param pageable
+	 * 		  The pageable object that selects page and sort.
+	 * @return the items that matched the query
+	 */
+	@Query(value = "SELECT * FROM reviews r WHERE r.review_body LIKE ?1 AND r.review_item = ?2", nativeQuery = true)
+	List<Review> findAllByBodyForItem(String body, int id, Pageable pageable);
 	
 	/**
 	 * Query first all the items that match the Accounts id and then get their reviews.

@@ -2,7 +2,10 @@ package com.example.shopBackend.account;
 
 
 import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.category.Category;
+import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.role.RoleRepository;
 import exception.BadRequestException;
@@ -23,8 +26,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 @ActiveProfiles("test")
@@ -43,13 +45,16 @@ class AccountServiceTest {
     @Mock
     private ItemRepository itemRepository;
 
+    @Mock
+    private ItemService itemService;
+
     @InjectMocks
     private AccountService testAccountService;
 
     @Test
     void saveAllAccounts() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByusername(any())).willReturn(Optional.empty());
+        given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
         given(accountRepository.findByEmail(any())).willReturn(Optional.empty());
 
         List<Account> list = new ArrayList<>();
@@ -187,9 +192,9 @@ class AccountServiceTest {
     }
 
     @Test
-    void saveAllAccountsThrowsWithNotUniqueusername() {
+    void saveAllAccountsThrowsWithNotUniqueUsername() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByusername(any())).willReturn(Optional.of(new Account()));
+        given(accountRepository.findByUsername(any())).willReturn(Optional.of(new Account()));
 
         List<Account> list = new ArrayList<>();
         Role role = new Role(1, "test category");
@@ -225,7 +230,7 @@ class AccountServiceTest {
     @Test
     void saveAllAccountsThrowsWithNotUniqueEmail() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByusername(any())).willReturn(Optional.empty());
+        given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
         given(accountRepository.findByEmail(any())).willReturn(Optional.of(new Account()));
 
         List<Account> list = new ArrayList<>();
@@ -262,7 +267,7 @@ class AccountServiceTest {
     @Test
     void updateAccountWorks() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByusername(any())).willReturn(Optional.empty());
+        given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
         given(accountRepository.findByEmail(any())).willReturn(Optional.empty());
 
         Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
@@ -334,7 +339,7 @@ class AccountServiceTest {
     @Test
     void updateAccountThrowsWithBadEmail() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByusername(any())).willReturn(Optional.empty());
+        given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
         given(accountRepository.findByEmail(any())).willReturn(Optional.of(new Account()));
 
         Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
@@ -359,9 +364,9 @@ class AccountServiceTest {
     }
 
     @Test
-    void updateAccountThrowsWithBadusername() {
+    void updateAccountThrowsWithBadUsername() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByusername(any())).willReturn(Optional.of(new Account()));
+        given(accountRepository.findByUsername(any())).willReturn(Optional.of(new Account()));
 
         Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Role role = new Role(1, "test category");
@@ -379,7 +384,7 @@ class AccountServiceTest {
         int AccountId = updateAccount.getId();
         assertThatThrownBy(() -> testAccountService.updateAccount(AccountId, updateAccount))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("an account with username: " + updateAccount.getusername() + " already exists");
+                .hasMessageContaining("an account with username: " + updateAccount.getUsername() + " already exists");
 
         verify(accountRepository, never()).save(updateAccount);
     }
@@ -410,9 +415,9 @@ class AccountServiceTest {
     }
 
     @Test
-    void updateAccountWorksWithSameEmailAndusername() {
+    void updateAccountWorksWithSameEmailAndUsername() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByusername(any())).willReturn(Optional.of(new Account()));
+        given(accountRepository.findByUsername(any())).willReturn(Optional.of(new Account()));
         given(accountRepository.findByEmail(any())).willReturn(Optional.of(new Account()));
 
         Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
@@ -435,12 +440,61 @@ class AccountServiceTest {
 
     @Test
     void deleteAccountWorks() {
+        Item item = new Item(
+                1,
+                "test title",
+                new Account(
+                        1,
+                        "name",
+                        "username",
+                        "pass",
+                        "email",
+                        new Role()
+                ),
+                0,
+                new Category(),
+                null,
+                "test desc"
+
+        );
+
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()), Optional.empty());
-        given(itemRepository.findAll()).willReturn(new ArrayList<>());
+        given(itemRepository.findAll()).willReturn(List.of(item));
 
         testAccountService.deleteAccount(0);
 
         verify(accountRepository).deleteById(0);
+    }
+
+    @Test
+    void deleteAccountThrowsWithFailureToDeleteItems() {
+        Item item = new Item(
+                1,
+                "test title",
+                new Account(
+                        1,
+                        "name",
+                        "username",
+                        "pass",
+                        "email",
+                        new Role()
+                ),
+                0,
+                new Category(),
+                null,
+                "test desc"
+
+        );
+
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()), Optional.empty());
+        given(itemRepository.findAll()).willReturn(List.of(item));
+        given(itemService.deleteItem(anyInt())).willThrow(new RuntimeException());
+
+        assertThatThrownBy(() ->  testAccountService.deleteAccount(1))
+                .isInstanceOf(java.lang.RuntimeException.class)
+                .hasMessageContaining("error: null. While deleting item with id: 1");
+
+        verify(accountRepository, never()).deleteById(0);
     }
 
     @Test

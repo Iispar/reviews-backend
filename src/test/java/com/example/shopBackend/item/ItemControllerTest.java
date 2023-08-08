@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -146,15 +145,6 @@ class ItemControllerTest {
         given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
         mockMvc.perform(get("/api/item/get"))
                 .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void getItemsForAccountThrowsWithNoResults() throws Exception {
-        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
-        mockMvc.perform(get("/api/item/get?accountId=1&page=0", 1, 0)
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest())
-            .andExpect(content().string("found no reviews with account id"));
     }
 
     @Test

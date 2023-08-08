@@ -46,7 +46,7 @@ class AccountControllerTest {
                         .content("""
                         [{
                             "name": "seller",
-                            "username": "sellerusername",
+                            "username": "sellerUsername",
                             "password": "SellerPass123",
                             "email": "sellerEmail",
                             "role": {
@@ -58,7 +58,7 @@ class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(account.getId()))
                 .andExpect(jsonPath("$[0].name").value(account.getName()))
-                .andExpect(jsonPath("$[0].username").value(account.getusername()))
+                .andExpect(jsonPath("$[0].username").value(account.getUsername()))
                 .andExpect(jsonPath("$[0].password").value(account.getPassword()))
                 .andExpect(jsonPath("$[0].email").value(account.getEmail()))
                 .andExpect(jsonPath("$[0].role.name").value(account.getRole().getName()));
@@ -77,7 +77,7 @@ class AccountControllerTest {
         Account account = new Account(
                 1,
                 "updatedName",
-                "updatedusername",
+                "updatedUsername",
                 "updatedPass",
                 "updatedEmail",
                 new Role(
@@ -93,7 +93,7 @@ class AccountControllerTest {
                 .content("""
                         {
                             "name": "updatedName",
-                            "username": "updatedusername",
+                            "username": "updatedUsername",
                             "password": "updatedPass",
                             "email": "updatedEmail",
                             "role": {
@@ -105,7 +105,7 @@ class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(account.getId()))
                 .andExpect(jsonPath("$.name").value(account.getName()))
-                .andExpect(jsonPath("$.username").value(account.getusername()))
+                .andExpect(jsonPath("$.username").value(account.getUsername()))
                 .andExpect(jsonPath("$.password").value(account.getPassword()))
                 .andExpect(jsonPath("$.email").value(account.getEmail()))
                 .andExpect(jsonPath("$.role.name").value(account.getRole().getName()));
@@ -118,7 +118,7 @@ class AccountControllerTest {
                         .content("""
                         {
                             "name": "updatedName",
-                            "username": "updatedusername",
+                            "username": "updatedUsername",
                             "password": "updatedPass",
                             "email": "updatedEmail",
                             "role": {

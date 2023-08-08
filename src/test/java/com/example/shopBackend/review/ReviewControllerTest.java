@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -190,15 +189,6 @@ class ReviewControllerTest {
     }
 
     @Test
-    void getReviewsForAccountThrowsWithNoResults() throws Exception {
-        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
-        mockMvc.perform(get("/api/review/get/account?accountId=1&page=0", 1, 0)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("found no reviews with Account id"));
-    }
-
-    @Test
     void getReviewsForItemWorks() throws Exception {
         Item item = new Item(
                 1,
@@ -281,15 +271,6 @@ class ReviewControllerTest {
         given(reviewService.getReviewsForItem(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
         mockMvc.perform(get("/api/review/get/item"))
                 .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void getReviewsForItemThrowsWithNoResults() throws Exception {
-        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
-        mockMvc.perform(get("/api/review/get/item?itemId=1&page=0&sort=review_date&sortDir=desc", 1, 0)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("found no reviews with item id"));
     }
 
     @Test
@@ -437,7 +418,7 @@ class ReviewControllerTest {
         given(reviewService.getReviewsWithTitleForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
 
 
-        mockMvc.perform(get("/api/review/get/search?title=test&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0))
+        mockMvc.perform(get("/api/review/get/search/title?title=ti&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(review.getTitle()))
                 .andExpect(jsonPath("$[0].body").value(review.getBody()))
@@ -485,16 +466,96 @@ class ReviewControllerTest {
         given(reviewService.getReviewsWithTitleForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
 
 
-        mockMvc.perform(get("/api/review/get/search", "test", 4, "review_date", "asc", 0))
+        mockMvc.perform(get("/api/review/get/search/title", "test", 4, "review_date", "asc", 0))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void getReviewsWithTitleForItemThrowsWithNoResults() throws Exception {
-        given(reviewService.getReviewsWithTitleForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(new ArrayList<>());
-        mockMvc.perform(get("/api/review/get/search?title=test&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("found no reviews with item id and title"));
+    void getReviewsWithBodyForItemWorks() throws Exception {
+        Item item = new Item(
+                1,
+                "test title",
+                new Account(),
+                1,
+                new Category(),
+                new Words(),
+                "test desc"
+
+        );
+
+        Account account = new Account(
+                1,
+                "name",
+                "username",
+                "pass",
+                "email",
+                new Role()
+        );
+
+        Review review = new Review(
+                new Date(3),
+                "body",
+                "title",
+                5,
+                3,
+                account,
+                3,
+                item
+        );
+
+        given(reviewService.getReviewsWithBodyForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+
+
+        mockMvc.perform(get("/api/review/get/search/body?body=bo&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value(review.getTitle()))
+                .andExpect(jsonPath("$[0].body").value(review.getBody()))
+                .andExpect(jsonPath("$[0].date").value("1970-01-01"))
+                .andExpect(jsonPath("$[0].rating").value(review.getRating()))
+                .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
+                .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
+                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
+                .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
     }
+
+    @Test
+    void getReviewsWithBodyForItemThrowsWithNoParams() throws Exception {
+        Item item = new Item(
+                1,
+                "test title",
+                new Account(),
+                1,
+                new Category(),
+                new Words(),
+                "test desc"
+
+        );
+
+        Account account = new Account(
+                1,
+                "name",
+                "username",
+                "pass",
+                "email",
+                new Role()
+        );
+
+        Review review = new Review(
+                new Date(3),
+                "body",
+                "title",
+                5,
+                3,
+                account,
+                3,
+                item
+        );
+
+        given(reviewService.getReviewsWithBodyForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+
+
+        mockMvc.perform(get("/api/review/get/search/body", "test", 4, "review_date", "asc", 0))
+                .andExpect(status().isBadRequest());
+    }
+
 }

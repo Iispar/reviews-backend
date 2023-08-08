@@ -4,10 +4,12 @@ import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.category.CategoryRepository;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
+import com.example.shopBackend.review.ReviewService;
 import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class ItemService {
 
 	@Autowired
 	private ItemRepository itemRepository;
+
 	@Autowired
 	private AccountRepository accountRepository;
 
@@ -36,13 +39,9 @@ public class ItemService {
 	@Autowired
 	private WordsRepository wordsRepository;
 
-	public ItemService(ItemRepository itemRepository, AccountRepository accountRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository, WordsRepository wordsRepository) {
-		this.itemRepository = itemRepository;
-		this.accountRepository = accountRepository;
-		this.categoryRepository = categoryRepository;
-		this.wordsRepository = wordsRepository;
-		this.reviewRepository = reviewRepository;
-	}
+	@Lazy
+	@Autowired
+	private ReviewService reviewService;
 
 	/**
 	 * Saves new items to the database.
@@ -52,6 +51,7 @@ public class ItemService {
 	 */
 	public List<Item> saveAllItems(List<Item> item) {
 		for (Item value : item) {
+			// create new top words for the item
 			Words words = new Words();
 			wordsRepository.save(words);
 			value.setWords(words);
@@ -71,16 +71,16 @@ public class ItemService {
 			}
 
 			int categoryId = value.getCategory().getId();
-			int AccountId = value.getAccount().getId();
+			int accountId = value.getAccount().getId();
 
 			if (categoryRepository.findById(categoryId).isEmpty()) {
 				throw new BadRequestException(
 						"category with id: " + categoryId + " does not exist");
 			}
 
-			if (accountRepository.findById(AccountId).isEmpty()) {
+			if (accountRepository.findById(accountId).isEmpty()) {
 				throw new BadRequestException(
-						"Account with id: " + AccountId + " does not exist");
+						"Account with id: " + accountId + " does not exist");
 			}
 		}
 		return itemRepository.saveAll(item);
@@ -114,6 +114,7 @@ public class ItemService {
 					"No Accounts exists with id " + id);
 		}
 
+		// creates pageRequest
 		PageRequest pageRequest;
 		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 6);
 		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 6, Sort.by(sort).ascending());
@@ -139,7 +140,11 @@ public class ItemService {
 		// delete all items this account has
 		for (Review review : reviews) {
 			if (review.getItem().getId() == id) {
-				reviewRepository.deleteById(review.getId());
+				try {
+					reviewService.deleteReview(review.getId());
+				} catch (Exception e) {
+					throw new BadRequestException("error: " + e.getMessage() + ". While deleting review with id: " + review.getId());
+				}
 			}
 		}
 
@@ -209,6 +214,7 @@ public class ItemService {
 		Item foundItem = itemRepository.findById(id).orElseThrow();
 		List<Integer> ratings = reviewRepository.findAllRatingsWithItemId(id);
 
+		// get rating average
 		double rating = ratings.stream()
 				.mapToDouble(d -> d)
 				.average()

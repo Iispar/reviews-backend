@@ -17,7 +17,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -108,7 +108,7 @@ class ReviewIntegrationTest {
                 .jsonPath("$[0].account.id").isEqualTo(1)
                 .jsonPath("$[0].item.id").isEqualTo(1);
 
-        assertTrue(reviewRepository.findAll().size() == reviews + 1);
+        assertEquals(reviewRepository.findAll().size(), reviews + 1);
     }
 
     @Test
@@ -146,8 +146,25 @@ class ReviewIntegrationTest {
     }
 
     @Test
-    void getReviewsForSearch() {
-        webClient.get().uri("/api/review/get/search?title=tit&itemId=1&page=0&sort=review_date&sortDir=asc")
+    void getReviewsForTitleSearch() {
+        webClient.get().uri("/api/review/get/search/title?title=tit&itemId=1&page=0&sort=review_date&sortDir=asc")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].title").isEqualTo("title")
+                .jsonPath("$[0].body").isEqualTo("body")
+                .jsonPath("$[0].date").isEqualTo("2022-02-02")
+                .jsonPath("$[0].rating").isEqualTo(4)
+                .jsonPath("$[0].likes").isEqualTo(2)
+                .jsonPath("$[0].dislikes").isEqualTo(2)
+                .jsonPath("$[0].account.id").isEqualTo(1)
+                .jsonPath("$[0].item.id").isEqualTo(1);
+
+    }
+
+    @Test
+    void getReviewsForBodySearch() {
+        webClient.get().uri("/api/review/get/search/body?body=bo&itemId=1&page=0&sort=review_date&sortDir=asc")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -182,6 +199,7 @@ class ReviewIntegrationTest {
 
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     void deleteReviewWorks() {
         webClient.delete().uri("/api/review/del?reviewId=1")
@@ -189,7 +207,7 @@ class ReviewIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody().toString().equals("true");
 
-        assertTrue(reviewRepository.findAll().size() == 0);
+        assertEquals(0, reviewRepository.findAll().size());
 
     }
 }

@@ -71,13 +71,15 @@ public class ReviewService {
 			reviewBodys.add(value.getBody());
 		}
 
+		// calculates ratings
 		RatedReviews ratedReviews;
 		try {
 			ratedReviews = reviewUtil.rateReviews(reviewBodys);
 		} catch (Exception e) {
-			throw new CalculationException("error while rating reviews");
+			throw new CalculationException("error: " + e.getMessage() + ". While calculating reviews");
 		}
 
+		// check for errors with reviews
 		for (int i = 0; i < review.size(); i += 1) {
 
 			// sets the new calculated rating.
@@ -111,6 +113,7 @@ public class ReviewService {
 			}
 		}
 
+		// save reviews and update item
 		List<Review> res = reviewRepository.saveAll(review);
 		itemService.updateItemRatingAndWords(itemId, ratedReviews.getTopPos(), ratedReviews.getTopNeg());
 		return res;
@@ -120,7 +123,7 @@ public class ReviewService {
 	 * Deletes an item with the corresponding item_id.
 	 * @param id
 	 * 		  The id of the item to be deleted.
-	 * @return true if successful, false otherwise.
+	 * @return true
 	 */
 	public Boolean deleteReview(int id) {
 		if(reviewRepository.findById(id).isEmpty()) {
@@ -133,12 +136,12 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Finds all reviews for Accounts items for page from the database. And returns them.
+	 * Finds all reviews for Accounts with id.
 	 * @param id
 	 * 		  The id of the Account you want reviews for.
 	 * @param page
 	 * 		  The page you want to receive
-	 * @return reviews that match query.
+	 * @return reviews with corresponding id
 	 */
 	public List<Review> getReviewsForAccount(int id, int page, String sort, String sortDir) {
 		Pageable pageRequest;
@@ -164,12 +167,12 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Finds all reviews for item page from the database. And returns them.
+	 * Finds all reviews for item with corresponding id
 	 * @param id
 	 * 		  The id of the item you want reviews for.
 	 * @param page
 	 * 		  The page you want to receive
-	 * @return reviews that match query.
+	 * @return reviews for item
 	 */
 	public List<Review> getReviewsForItem(int id, int page, String sort, String sortDir) {
 		if(itemRepository.findById(id).isEmpty()) {
@@ -222,14 +225,55 @@ public class ReviewService {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
-		
+
+		// creates pageRequest
 		Pageable pageRequest;
 		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
-		
+
+		// formats title for sql.
 		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
 		
 		return reviewRepository.findAllByTitleForItem(formattedTitle, id, pageRequest);
+	}
+
+	/**
+	 * Finds all reviews for item with body from the database and returns them.
+	 * @param body
+	 * 		  The searched body.
+	 * @param id
+	 * 		  The id of the item
+	 * @param sort
+	 * 		  The sort used for search
+	 * @param page
+	 * 		  The page you want to receive
+	 * @return reviews that match query.
+	 */
+	public List<Review> getReviewsWithBodyForItem(String body, int id, int page, String sort, String sortDir) {
+		if(itemRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No items exists with id " + id);
+		}
+
+		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
+			throw new BadRequestException(
+					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
+		}
+
+		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+			throw new BadRequestException(
+					"sort " + sort + " is not a valid value for a sort in the entity.");
+		}
+
+		// creates pageRequest.
+		Pageable pageRequest;
+		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+
+		// formats body for sql.
+		String formattedBody = String.format("%%%s%%", body).replaceAll("[ ,_]", "%");
+
+		return reviewRepository.findAllByBodyForItem(formattedBody, id, pageRequest);
 	}
 	
 	/**

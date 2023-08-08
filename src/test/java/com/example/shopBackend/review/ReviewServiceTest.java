@@ -202,11 +202,82 @@ class ReviewServiceTest {
 	}
 	
 	@Test
+	void getReviewsWithBodyForItemWorksWithAsc() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+		testReviewService.getReviewsWithBodyForItem("test_title", 0, 1,"review_date", "asc");
+		
+		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").ascending());
+
+		verify(reviewRepository).findAllByBodyForItem("%test%title%", 0, pageRequest);
+	}
+
+	@Test
+	void getReviewsWithBodyForItemWorksWithDesc() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+
+		testReviewService.getReviewsWithBodyForItem("test_title", 0, 1,"review_date", "desc");
+
+		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").descending());
+
+		verify(reviewRepository).findAllByBodyForItem("%test%title%", 0, pageRequest);
+	}
+	
+	@Test
+	void getReviewsWithBodyForItemThrowsErrorWithNegativePage() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		
+		assertThatThrownBy(() -> testReviewService.getReviewsWithBodyForItem("test_title", 0, -1, "review_date", "asc"))
+			.isInstanceOf(java.lang.IllegalArgumentException.class)
+			.hasMessageContaining("Page index must not be less than zero");
+	}
+	
+	@Test
+	void getReviewsWithBodyForItemThrowsErrorWithNotMatchingAccountId() {
+		given(itemRepository.findById(any())).willReturn(Optional.empty());
+		
+		assertThatThrownBy(() ->  testReviewService.getReviewsWithBodyForItem("test_title", 1, 0, "review_date", "asc"))
+			.isInstanceOf(BadRequestException.class)
+			.hasMessageContaining("No items exists with id 1");
+		
+		Pageable pageRequest = PageRequest.of(0, 4);
+		
+		verify(reviewRepository, never()).findAllByBodyForItem("%test%title%", 1, pageRequest);
+	}
+	
+	@Test
+	void getReviewsWithBodyForItemThrowsErrorWithBadSort() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		
+		assertThatThrownBy(() -> testReviewService.getReviewsWithBodyForItem("test_title", 1, 0, "review_name", "asc"))
+			.isInstanceOf(BadRequestException.class)
+			.hasMessageContaining("sort review_name is not a valid value for a sort in the entity.");
+		
+		Pageable pageRequest = PageRequest.of(0, 4);
+		
+		verify(reviewRepository, never()).findAllByBodyForItem("%test%title%", 1, pageRequest);
+	}
+	
+	@Test
+	void getReviewsWithBodyForItemThrowsErrorWithBadSortDir() {
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		
+		assertThatThrownBy(() -> testReviewService.getReviewsWithBodyForItem("test_title", 1, 0, "review_name", "ascending"))
+			.isInstanceOf(BadRequestException.class)
+			.hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
+		
+		Pageable pageRequest = PageRequest.of(0, 4);
+		
+		verify(reviewRepository, never()).findAllByBodyForItem("%test%title%", 1, pageRequest);
+	}
+
+
+	@Test
 	void getReviewsWithTitleForItemWorksWithAsc() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
 		testReviewService.getReviewsWithTitleForItem("test_title", 0, 1,"review_date", "asc");
-		
+
 		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").ascending());
 
 		verify(reviewRepository).findAllByTitleForItem("%test%title%", 0, pageRequest);
@@ -222,52 +293,52 @@ class ReviewServiceTest {
 
 		verify(reviewRepository).findAllByTitleForItem("%test%title%", 0, pageRequest);
 	}
-	
+
 	@Test
 	void getReviewsWithTitleForItemThrowsErrorWithNegativePage() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		
+
 		assertThatThrownBy(() -> testReviewService.getReviewsWithTitleForItem("test_title", 0, -1, "review_date", "asc"))
-			.isInstanceOf(java.lang.IllegalArgumentException.class)
-			.hasMessageContaining("Page index must not be less than zero");
+				.isInstanceOf(java.lang.IllegalArgumentException.class)
+				.hasMessageContaining("Page index must not be less than zero");
 	}
-	
+
 	@Test
 	void getReviewsWithTitleForItemThrowsErrorWithNotMatchingAccountId() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
-		
+
 		assertThatThrownBy(() ->  testReviewService.getReviewsWithTitleForItem("test_title", 1, 0, "review_date", "asc"))
-			.isInstanceOf(BadRequestException.class)
-			.hasMessageContaining("No items exists with id 1");
-		
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("No items exists with id 1");
+
 		Pageable pageRequest = PageRequest.of(0, 4);
-		
+
 		verify(reviewRepository, never()).findAllByTitleForItem("%test%title%", 1, pageRequest);
 	}
-	
+
 	@Test
 	void getReviewsWithTitleForItemThrowsErrorWithBadSort() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		
+
 		assertThatThrownBy(() -> testReviewService.getReviewsWithTitleForItem("test_title", 1, 0, "review_name", "asc"))
-			.isInstanceOf(BadRequestException.class)
-			.hasMessageContaining("sort review_name is not a valid value for a sort in the entity.");
-		
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("sort review_name is not a valid value for a sort in the entity.");
+
 		Pageable pageRequest = PageRequest.of(0, 4);
-		
+
 		verify(reviewRepository, never()).findAllByTitleForItem("%test%title%", 1, pageRequest);
 	}
-	
+
 	@Test
 	void getReviewsWithTitleForItemThrowsErrorWithBadSortDir() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		
+
 		assertThatThrownBy(() -> testReviewService.getReviewsWithTitleForItem("test_title", 1, 0, "review_name", "ascending"))
-			.isInstanceOf(BadRequestException.class)
-			.hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
-		
+				.isInstanceOf(BadRequestException.class)
+				.hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
+
 		Pageable pageRequest = PageRequest.of(0, 4);
-		
+
 		verify(reviewRepository, never()).findAllByTitleForItem("%test%title%", 1, pageRequest);
 	}
 	
@@ -734,7 +805,7 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-		when(reviewUtil.rateReviews(any())).thenThrow(new RuntimeException());
+		given(reviewUtil.rateReviews(any())).willThrow(new RuntimeException());
 
 		List<Review> list = new ArrayList<>();
 		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
@@ -754,7 +825,7 @@ class ReviewServiceTest {
 
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(java.lang.RuntimeException.class)
-				.hasMessageContaining("error while rating reviews");
+				.hasMessageContaining("error: null. While calculating reviews");
 
 		verify(reviewRepository, never()).saveAll(list);
 	}

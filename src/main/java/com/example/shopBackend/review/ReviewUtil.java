@@ -12,12 +12,21 @@ import java.util.List;
 
 
 /**
- * Rates the given reviews with a call to the API.
+ * Utils for reviews
  */
 @Service
 public class ReviewUtil {
+
+    // get url from properties
     @Value("${review-api.baseUrl}")
     String baseUrl;
+
+    /**
+     * Rates the reviews by calling the rating API.
+     * @param reviews
+     *        Reviews to be rated.
+     * @return rated reviews
+     */
     public RatedReviews rateReviews(List<String> reviews) {
 
         JSONObject jsonReviews = new JSONObject();

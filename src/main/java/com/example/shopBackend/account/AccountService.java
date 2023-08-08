@@ -6,6 +6,7 @@ import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.RoleRepository;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,19 +27,30 @@ public class AccountService {
 	@Autowired
 	private ItemService itemService;
 
+	@Lazy
 	@Autowired
 	private ItemRepository itemRepository;
-	
+
+	public AccountService(AccountRepository accountRepository, RoleRepository roleRepository, ItemService itemService, ItemRepository itemRepository) {
+		this.accountRepository = accountRepository;
+		this.roleRepository = roleRepository;
+		this.itemService = itemService;
+		this.itemRepository = itemRepository;
+	}
+
 	/**
 	 * Saves a new account to the database.
 	 *
-	 * @param accounts The account to be added to the database.
+	 * @param accounts
+	 * 		  The account to be added to the database.
 	 * @return saved accounts
 	 */
 	public List<Account> saveAllAccounts(List<Account> accounts) {
 
+		// loop all inputs and checks for errors.
 		for (Account account : accounts) {
 			int roleId = account.getRole().getId();
+
 			if (roleRepository.findById(roleId).isEmpty()) {
 				throw new BadRequestException(
 						"role with id: " + roleId + " does not exist");
@@ -49,9 +61,9 @@ public class AccountService {
 						"password doesn't include an uppercase letter, number or special character os is min length 8");
 			}
 
-			if (accountRepository.findByusername(account.getusername()).orElse(null) != null) {
+			if (accountRepository.findByUsername(account.getUsername()).orElse(null) != null) {
 				throw new BadRequestException(
-						"an account with username: " + account.getusername() + " already exists");
+						"an account with username: " + account.getUsername() + " already exists");
 			}
 
 			if (accountRepository.findByEmail(account.getEmail()).orElse(null) != null) {
@@ -64,8 +76,17 @@ public class AccountService {
 	}
 
 
+	/**
+	 * Updates an account in the database.
+	 * @param accountId
+	 * 		  The id of the account to be updated
+	 * @param account
+	 * 		  The account to be updated to the database.
+	 * @return updated account
+	 */
 	public Account updateAccount(int accountId, Account account) {
 		Account foundAccount = accountRepository.findById(accountId).orElse(null);
+
 		if (foundAccount == null) {
 			throw new BadRequestException(
 					"No accounts exists with id: " + accountId);
@@ -82,9 +103,9 @@ public class AccountService {
 					"password doesn't include an uppercase letter, number or special character os is min length 8");
 		}
 
-		if (accountRepository.findByusername(account.getusername()).orElse(null) != null && !account.getusername().equals(foundAccount.getusername())) {
+		if (accountRepository.findByUsername(account.getUsername()).orElse(null) != null && !account.getUsername().equals(foundAccount.getUsername())) {
 			throw new BadRequestException(
-					"an account with username: " + account.getusername() + " already exists");
+					"an account with username: " + account.getUsername() + " already exists");
 		}
 
 		if (accountRepository.findByEmail(account.getEmail()).orElse(null) != null && !account.getEmail().equals(foundAccount.getEmail())) {
@@ -95,7 +116,7 @@ public class AccountService {
 		foundAccount.setEmail(account.getEmail());
 		foundAccount.setName(account.getName());
 		foundAccount.setPassword(account.getPassword());
-		foundAccount.setusername(account.getusername());
+		foundAccount.setUsername(account.getUsername());
 
 		return accountRepository.save(foundAccount);
 	}
@@ -114,10 +135,14 @@ public class AccountService {
 
 		List<Item> items = itemRepository.findAll();
 
-		// delete all items this account has
+		// deletes all items that account has.
 		for (Item item : items) {
 			if (item.getAccount().getId() == id) {
-				itemService.deleteItem(item.getId());
+				try {
+					itemService.deleteItem(item.getId());
+				} catch (Exception e) {
+					throw new BadRequestException("error: " + e.getMessage() + ". While deleting item with id: " + item.getId());
+				}
 			}
 		}
 

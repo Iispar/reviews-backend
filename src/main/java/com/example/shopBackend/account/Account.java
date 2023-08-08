@@ -69,11 +69,11 @@ public class Account {
 		this.name = name;
 	}
 
-	public String getusername() {
+	public String getUsername() {
 		return username;
 	}
 
-	public void setusername(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 

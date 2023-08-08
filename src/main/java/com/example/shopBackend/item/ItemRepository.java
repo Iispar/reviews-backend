@@ -19,7 +19,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 
 	
 	/**
-	 * Query to find all items for Account for page.
+	 * Query to find all items for Account with id
 	 * @param id
 	 * 		  The Account id that searched.
 	 * @param pageable
@@ -39,7 +39,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
     int findItemCountForAccountId(int id);
 
 	/**
-	 * Query to find avg of ratings for Accounts items
+	 * Query to find average of ratings for Accounts items
 	 * @param id
 	 * 		  The Account id that searched.
 	 * @return the avg of matched items

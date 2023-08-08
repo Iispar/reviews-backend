@@ -7,6 +7,7 @@ import com.example.shopBackend.category.Category;
 import com.example.shopBackend.category.CategoryRepository;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
+import com.example.shopBackend.review.ReviewService;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.words.Words;
 import com.example.shopBackend.words.WordsRepository;
@@ -59,6 +60,9 @@ class ItemServiceTest {
 
     @Mock
     private WordsRepository wordsRepository;
+
+    @Mock
+    private ReviewService reviewService;
 
     @InjectMocks
     private ItemService testItemService;
@@ -136,6 +140,30 @@ class ItemServiceTest {
         testItemService.deleteItem(0);
 
         verify(itemRepository).deleteById(0);
+    }
+
+    @Test
+    void deleteItemThrowsWithFailedReviewDeletion() {
+        Review review = new Review(
+                new Date(1),
+                "title1",
+                "body1",
+                1,
+                0,
+                new Account(),
+                2,
+                new Item(1, "title", new Account(), 4F, new Category(), new Words(), "desc")
+        );
+
+        given(itemRepository.findById(any())).willReturn(Optional.of(new Item()), Optional.empty());
+        given(reviewRepository.findAll()).willReturn(List.of(review));
+        given(reviewService.deleteReview(anyInt())).willThrow(new RuntimeException());
+
+        assertThatThrownBy(() ->  testItemService.deleteItem(1))
+                .isInstanceOf(java.lang.RuntimeException.class)
+                .hasMessageContaining("error: null. While deleting review with id: 0");
+
+        verify(itemRepository, never()).deleteById(0);
     }
 
     @Test

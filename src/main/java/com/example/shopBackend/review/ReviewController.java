@@ -23,12 +23,12 @@ public class ReviewController {
 	}
 	
 	/**
-	 * API GET call to /api/review/add with content in the body that describes the added review.
-	 * Will add it to the database. Used in the frontend item page with add review.
+	 * API GET call to /api/review/add with content in the body that describes the added review
+	 * will add it to the database. Used in the frontend item page with add review.
 	 *
 	 * @param review
 	 *        The review to be added to the database
-	 * @return True if successful. False otherwise
+	 * @return True if successful. Error otherwise
 	 */
 	@PostMapping("/add")
 	public List<Review> add(@RequestBody List<Review> review) {
@@ -36,36 +36,33 @@ public class ReviewController {
 	}
 	
 	/**
-	 * API GET call to /api/review/get/account?accountId=(input)&page=(input)&sort=(input)
-	 * will return the reviews for that Account. This will be used in the latest on the home page
-	 * for the latest reviews. This also sorts the reviews from latest.
+	 * API GET call to /api/review/get/account?accountId=(input)&page=(input)
+	 * will return the reviews for that Account. Reviews are sorted in ascending date
 	 * @param id
 	 * 		  The Account id that searches for reviews.
 	 * @param page
 	 * 		  The page you want reviews from
-	 * @return latest reviews for AccountId from index (from) to index (to).
+	 * @return selected reviews for account in date ascending order.
 	 */
 	@GetMapping("/get/account")
 	public List<Review> getReviewsForAccount(
 			@RequestParam("accountId") int id,
 			@RequestParam("page") int page) {
-		List<Review> reviews = reviewService.getReviewsForAccount(id, page, "review_date", "asc");
-		if (reviews.isEmpty()) {
-			throw new IllegalStateException(
-					"found no reviews with Account id");
-		}
-		return reviews;
+		return reviewService.getReviewsForAccount(id, page, "review_date", "asc");
 	}
 
 	/**
-	 * API GET call to /api/review/get/account?itemId=(input)&page=(input)&sort=(input)
-	 * will return the reviews for that item. This will be used in the latest on the home page
-	 * for the latest reviews. This also sorts the reviews from latest.
+	 * API GET call to /api/review/get/item?itemId=(input)&page=(input)&sort=(input)&sortDir=(input)
+	 * will return the reviews for that item. Sorts the reviews as specified with sort and sortDir.
 	 * @param id
 	 * 		  The item id that searches for reviews.
+	 * @param sort
+	 * 		  The sort used for search
+	 * @param sortDir
+	 * 		  The direction of the sort
 	 * @param page
-	 * 		  The page you want reviews from
-	 * @return latest reviews for AccountId from index (from) to index (to).
+	 * 		  The page you want results of.
+	 * @return selected reviews for item
 	 */
 	@GetMapping("/get/item")
 	public List<Review> getReviewsForItem(
@@ -73,29 +70,25 @@ public class ReviewController {
 			@RequestParam("page") int page,
 			@RequestParam("sort") String sort,
 			@RequestParam("sortDir") String sortDir) {
-		List<Review> reviews = reviewService.getReviewsForItem(id, page, sort, sortDir);
-		if (reviews.isEmpty()) {
-			throw new IllegalStateException(
-					"found no reviews with item id");
-		}
-		return reviews;
+		return reviewService.getReviewsForItem(id, page, sort, sortDir);
 	}
 
 	/**
-	 * API GET call to /api/review/get/search?title=(input)&itemId=(input)&sort=(input)&page=(input)
-	 * will return the reviews that match the inputted title search. This will be used in the items
-	 * reviews component as search.
+	 * API GET call to /api/review/get/search/title?title=(input)&itemId=(input)&sort=(input)&sortDir=(input)&page=(input)
+	 * will return the reviews that match the inputted title search. Sorted as determined with sort and sortDir.
 	 * @param title
 	 * 	      Title that was searched.
 	 * @param id
 	 * 		  the id of the item the reviews correspond to.
 	 * @param sort
 	 * 		  The sort used for search
+	 * @param sortDir
+	 * 		  The direction of the sort
 	 * @param page
 	 * 		  The page you want results of.
 	 * @return reviews that match the title and id of search
 	 */
-	@GetMapping("/get/search")
+	@GetMapping("/get/search/title")
 	public List<Review> getReviewsWithTitleForItem(
 			@RequestParam("title") String title,
 			@RequestParam("itemId") int id,
@@ -103,16 +96,37 @@ public class ReviewController {
 			@RequestParam("sortDir") String sortDir,
 			@RequestParam("page") int page){
 		
-		List<Review> reviews = reviewService.getReviewsWithTitleForItem(title, id, page, sort, sortDir);
-		if (reviews.isEmpty()) {
-			throw new IllegalStateException(
-					"found no reviews with item id and title");
-		}
-		return reviews;
+		return reviewService.getReviewsWithTitleForItem(title, id, page, sort, sortDir);
+	}
+
+	/**
+	 * API GET call to /api/review/get/search/body?title=(input)&itemId=(input)&sort=(input)&sortDir=(input)&page=(input)
+	 * will return the reviews that match the inputted title search. Sorted as determined with sort and sortDir.
+	 * @param body
+	 * 	      Body that was searched.
+	 * @param id
+	 * 		  the id of the item the reviews correspond to.
+	 * @param sort
+	 * 		  The sort used for search
+	 * @param sortDir
+	 * 		  The direction of the sort
+	 * @param page
+	 * 		  The page you want results of.
+	 * @return reviews that match the body and id of search
+	 */
+	@GetMapping("/get/search/body")
+	public List<Review> getReviewsWithBodyForItem(
+			@RequestParam("body") String body,
+			@RequestParam("itemId") int id,
+			@RequestParam("sort") String sort,
+			@RequestParam("sortDir") String sortDir,
+			@RequestParam("page") int page){
+
+		return reviewService.getReviewsWithBodyForItem(body, id, page, sort, sortDir);
 	}
 	
 	/**
-	 * API GET call to /api/review/get/chart?accountId=(input)&time=(input) will return the
+	 * API GET call to /api/review/get/chart/account?accountId=(input)&time=(input) will return the
 	 * corresponding data for the chart component.
 	 * @param id
 	 * 	      id of the Account you wish to get results for.
@@ -128,7 +142,7 @@ public class ReviewController {
 	}
 	
 	/**
-	 * API GET call to /api/review/get/chart?itemId=(input)&time=(input) will return the
+	 * API GET call to /api/review/get/chart/item?itemId=(input)&time=(input) will return the
 	 * corresponding data for the chart component.
 	 * @param id
 	 * 	      id of the item you wish to get results for.

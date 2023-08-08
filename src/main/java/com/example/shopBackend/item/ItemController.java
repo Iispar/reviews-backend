@@ -1,6 +1,7 @@
 package com.example.shopBackend.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class ItemController {
 	}
 	
 	/**
-	 * API GET call to /api/item/add with content in the body that describes the added item.
-	 * Will add it to the database. Used in the frontend allItem page with add item.
+	 * API POST call to /api/item/add with content in the body that describes the added item
+	 * will add it to the database.
 	 *
 	 * @param item
 	 * 		  The item to be added to the database
@@ -34,24 +35,27 @@ public class ItemController {
 	}
 	
 	/**
-	 * API GET call to /api/item/get?userId=(input)&page=(input)
-	 * will return all items for user on page that is selected.
+	 * API GET call to /api/item/get?accountId=(input)&page=(input)
+	 * will return all items for Account on page that is selected.
 	 * @param id
-	 * 	      The if of the user to get items for
+	 * 	      The if of the Account to get items for
 	 * @param page
 	 * 	      the page we want for the items
 	 * @return requested items
 	 */
 	@GetMapping("/get")
-	public List<Item> getItemsForUser(
-			@RequestParam("userId") int id,
+	public List<Item> getItemsForAccount(
+			@RequestParam("accountId") int id,
 			@RequestParam("page") int page) {
-		List<Item> items = itemService.getItemsForUser(id, page, "none", "none");
-		if (items.isEmpty()) {
-			throw new IllegalStateException(
-					"found no reviews with user id");
-		}
-		return items;
+		return itemService.getItemsForAccount(id, page, "none", "none");
+	}
+
+	// exception handler that is used for tests.
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public String handleIllegalState(IllegalStateException illegalStateException) {
+		return illegalStateException.getMessage();
 	}
 	
 	/**
@@ -59,7 +63,7 @@ public class ItemController {
 	 * will delete the item with the corresponding id.
 	 * @param id
 	 * 		  The id of the item we want to delete
-	 * @return True if successful. False otherwise
+	 * @return True if successful. Error otherwise
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteItem(@RequestParam("itemId") int id) {
@@ -76,7 +80,9 @@ public class ItemController {
 	 * @return Updated item
 	 */
 	@PutMapping("/update")
-	public Item updateItem(@RequestParam("itemId") int id, @RequestBody Item item) {
+	public Item updateItem(
+			@RequestParam("itemId") int id,
+			@RequestBody Item item) {
 		return itemService.updateItem(id, item);
 	}
 }

@@ -1,13 +1,13 @@
 package com.example.shopBackend.pages;
 
 import com.example.shopBackend.ShopBackendApplication;
+import com.example.shopBackend.account.Account;
+import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
-import com.example.shopBackend.user.User;
-import com.example.shopBackend.user.UserRepository;
 import com.example.shopBackend.words.Words;
 import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
@@ -47,73 +47,73 @@ class PagesServiceTest {
     private ItemRepository itemRepository;
 
     @Mock
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     @InjectMocks
     private PagesService testPagesService;
 
     @Test
-    void getHomepageForUserWorks() {
+    void getHomepageForAccountWorks() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
 
-        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-        given(reviewRepository.findCountWithUserId(anyInt())).willReturn(2);
-        given(itemRepository.findItemCountForUserId(anyInt())).willReturn(2);
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
+        given(reviewRepository.findCountWithAccountId(anyInt())).willReturn(2);
+        given(itemRepository.findItemCountForAccountId(anyInt())).willReturn(2);
 
-        testPagesService.getHomepageForUser(1);
+        testPagesService.getHomepageForAccount(1);
 
-        verify(reviewRepository).findAllUserId(1, reviewPageReq);
-        verify(itemRepository).findAllUserId(1, itemPageReq);
-        verify(reviewRepository).findChartForUserByWeek(1);
-        verify(reviewRepository).findCountWithUserId(1);
-        verify(itemRepository).findItemCountForUserId(1);
-        verify(itemRepository).findItemAvgRatingForUserId(1);
+        verify(reviewRepository).findAllAccountId(1, reviewPageReq);
+        verify(itemRepository).findAllAccountId(1, itemPageReq);
+        verify(reviewRepository).findChartForAccountByWeek(1);
+        verify(reviewRepository).findCountWithAccountId(1);
+        verify(itemRepository).findItemCountForAccountId(1);
+        verify(itemRepository).findItemAvgRatingForAccountId(1);
     }
 
     @Test
-    void getHomepageForUserWorksWithNoReviews() {
+    void getHomepageForAccountWorksWithNoReviews() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
 
-        given(userRepository.findById(any())).willReturn(Optional.of(new User()));
-        given(reviewRepository.findCountWithUserId(anyInt())).willReturn(0);
-        given(itemRepository.findItemCountForUserId(anyInt())).willReturn(0);
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
+        given(reviewRepository.findCountWithAccountId(anyInt())).willReturn(0);
+        given(itemRepository.findItemCountForAccountId(anyInt())).willReturn(0);
 
-        given(reviewRepository.findAllUserId(anyInt(), any())).willReturn(new ArrayList<>());
-        given(itemRepository.findAllUserId(anyInt(), any())).willReturn(new ArrayList<>());
-        given(reviewRepository.findChartForUserByWeek(anyInt())).willReturn(new ArrayList<>());
+        given(reviewRepository.findAllAccountId(anyInt(), any())).willReturn(new ArrayList<>());
+        given(itemRepository.findAllAccountId(anyInt(), any())).willReturn(new ArrayList<>());
+        given(reviewRepository.findChartForAccountByWeek(anyInt())).willReturn(new ArrayList<>());
 
-        given(itemRepository.findItemAvgRatingForUserId(anyInt())).willReturn(Optional.empty());
+        given(itemRepository.findItemAvgRatingForAccountId(anyInt())).willReturn(Optional.empty());
 
-        testPagesService.getHomepageForUser(1);
+        testPagesService.getHomepageForAccount(1);
 
-        verify(reviewRepository).findAllUserId(1, reviewPageReq);
-        verify(itemRepository).findAllUserId(1, itemPageReq);
-        verify(reviewRepository).findChartForUserByWeek(1);
-        verify(reviewRepository).findCountWithUserId(1);
-        verify(itemRepository).findItemCountForUserId(1);
-        verify(itemRepository).findItemAvgRatingForUserId(1);
+        verify(reviewRepository).findAllAccountId(1, reviewPageReq);
+        verify(itemRepository).findAllAccountId(1, itemPageReq);
+        verify(reviewRepository).findChartForAccountByWeek(1);
+        verify(reviewRepository).findCountWithAccountId(1);
+        verify(itemRepository).findItemCountForAccountId(1);
+        verify(itemRepository).findItemAvgRatingForAccountId(1);
     }
 
     @Test
-    void getHomepageForUserThrowsWithBadId() {
+    void getHomepageForAccountThrowsWithBadId() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
 
-        given(userRepository.findById(any())).willReturn(Optional.empty());
+        given(accountRepository.findById(any())).willReturn(Optional.empty());
 
-        assertThatThrownBy(() -> testPagesService.getHomepageForUser(1))
+        assertThatThrownBy(() -> testPagesService.getHomepageForAccount(1))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("no users with id: 1 exists");
+                .hasMessageContaining("no Accounts with id: 1 exists");
 
-        verify(reviewRepository, never()).findAllUserId(1, reviewPageReq);
+        verify(reviewRepository, never()).findAllAccountId(1, reviewPageReq);
     }
 
     @Test
     void getItemPageForItemWorks() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
 
-        given(itemRepository.findById(any())).willReturn(Optional.of(new Item(1, "test", new User(), 4.2F, new Category(), new Words(1, List.of("1"), List.of("1")), "desc")));
+        given(itemRepository.findById(any())).willReturn(Optional.of(new Item(1, "test", new Account(), 4.2F, new Category(), new Words(1, List.of("1"), List.of("1")), "desc")));
         given(reviewRepository.findAllItemId(anyInt(), any())).willReturn(List.of(new Review()));
 
         testPagesService.getItemPageForItem(1);

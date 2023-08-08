@@ -1,11 +1,11 @@
 package com.example.shopBackend.pages;
 
+import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
-import com.example.shopBackend.user.UserRepository;
 import com.example.shopBackend.words.Words;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,38 +29,32 @@ public class PagesService {
     private ItemRepository itemRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    public PagesService(ReviewRepository reviewRepository, ItemRepository itemRepository, UserRepository userRepository) {
-        this.reviewRepository = reviewRepository;
-        this.itemRepository = itemRepository;
-        this.userRepository = userRepository;
-    }
+    private AccountRepository accountRepository;
 
     /**
      * Creates a Homepage object with calls to the item and review repositories.
-     * @param userId
-     *        The id of the user for homepage.
-     * @return Homepage of user with param id.
+     * @param accountId
+     *        The id of the Account for homepage.
+     * @return Homepage of Account with param id.
      */
-    public Homepage getHomepageForUser(int userId) {
+    public Homepage getHomepageForAccount(int accountId) {
 
-        if (userRepository.findById(userId).isEmpty()) {
+        if (accountRepository.findById(accountId).isEmpty()) {
             throw new BadRequestException(
-                    "no users with id: " + userId + " exists");
+                    "no Accounts with id: " + accountId + " exists");
         }
 
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
 
-        int reviewCount = reviewRepository.findCountWithUserId(userId);
-        int itemCount = itemRepository.findItemCountForUserId(userId);
+        int reviewCount = reviewRepository.findCountWithAccountId(accountId);
+        int itemCount = itemRepository.findItemCountForAccountId(accountId);
 
-        List<Review> latestReviews = reviewRepository.findAllUserId(userId, reviewPageReq);
-        List<Item> topItems = itemRepository.findAllUserId(userId, itemPageReq);
-        List<Chart> chart = reviewRepository.findChartForUserByWeek(userId);
+        List<Review> latestReviews = reviewRepository.findAllAccountId(accountId, reviewPageReq);
+        List<Item> topItems = itemRepository.findAllAccountId(accountId, itemPageReq);
+        List<Chart> chart = reviewRepository.findChartForAccountByWeek(accountId);
 
-        float ratingAvg = itemRepository.findItemAvgRatingForUserId(userId).orElse(0F);
+        float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
 
         return new Homepage(latestReviews, topItems, ratingAvg, itemCount, reviewCount, chart);
     }

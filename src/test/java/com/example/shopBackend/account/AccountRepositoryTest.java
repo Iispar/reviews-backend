@@ -1,4 +1,4 @@
-package com.example.shopBackend.user;
+package com.example.shopBackend.account;
 
 import com.example.shopBackend.ShopBackendApplication;
 import com.example.shopBackend.item.ItemRepository;
@@ -12,15 +12,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ActiveProfiles("test")
 @DataJpaTest()
 @ContextConfiguration(classes = ShopBackendApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class UserRepositoryTest {
+class AccountRepositoryTest {
     @Autowired
-    private UserRepository testUserRepository;
+    private AccountRepository testaccountRepository;
 
     @Autowired
     private RoleRepository testRoleRepository;
@@ -30,13 +31,13 @@ class UserRepositoryTest {
 
     @AfterEach
     void deleteAll() {
-        testUserRepository.deleteAll();
+        testaccountRepository.deleteAll();
     }
 
     @Test
-    void userFindByEmailWorks() {
+    void AccountFindByEmailWorks() {
         Role role = testRoleRepository.findById(1).orElseThrow();
-        User user = new User(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -45,18 +46,18 @@ class UserRepositoryTest {
                 role
         );
 
-        testUserRepository.save(user);
+        testaccountRepository.save(account);
 
-        User foundEntity = testUserRepository.findByEmail(user.getEmail()).orElse(null);
-        User foundNoneEntity = testUserRepository.findByEmail("empty").orElse(null);
+        Account foundEntity = testaccountRepository.findByEmail(account.getEmail()).orElse(null);
+        Account foundNoneEntity = testaccountRepository.findByEmail("empty").orElse(null);
         assertNotNull(foundEntity);
         assertNull(foundNoneEntity);
     }
 
     @Test
-    void userFindByUsernameWorks() {
+    void AccountFindByUsernameWorks() {
         Role role = testRoleRepository.findById(1).orElseThrow();
-        User user = new User(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -65,10 +66,10 @@ class UserRepositoryTest {
                 role
         );
 
-        testUserRepository.save(user);
+        testaccountRepository.save(account);
 
-        User foundEntity = testUserRepository.findByUsername(user.getUsername()).orElse(null);
-        User foundNoneEntity = testUserRepository.findByUsername("empty").orElse(null);
+        Account foundEntity = testaccountRepository.findByUsername(account.getUsername()).orElse(null);
+        Account foundNoneEntity = testaccountRepository.findByUsername("empty").orElse(null);
         assertNotNull(foundEntity);
         assertNull(foundNoneEntity);
     }

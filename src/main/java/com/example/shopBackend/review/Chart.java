@@ -7,6 +7,6 @@ package com.example.shopBackend.review;
  */
 @SuppressWarnings("unused")
 public interface Chart {
-	String getRating();    
-	String getCount();
+	int getRating();
+	int getCount();
 }

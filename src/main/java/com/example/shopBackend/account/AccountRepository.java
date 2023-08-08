@@ -1,4 +1,4 @@
-package com.example.shopBackend.user;
+package com.example.shopBackend.account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,27 +8,27 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * Repo for the users.
+ * Repo for the accounts.
  * @author iiro
  *
  */
 @Repository
-public interface UserRepository extends PagingAndSortingRepository<User, Integer>, JpaRepository<User, Integer> {
+public interface AccountRepository extends PagingAndSortingRepository<Account, Integer>, JpaRepository<Account, Integer> {
     /**
-     * Query to find user with email
+     * Query to find account with email
      * @param email
-     *        email to search a user for
-     * @return the items that matched the query
+     *        email to search an account for
+     * @return the account that matched the query
      */
     @Query(value = "SELECT * FROM accounts a WHERE a.account_email = ?1", nativeQuery = true)
-    Optional<User> findByEmail(String email);
+    Optional<Account> findByEmail(String email);
 
     /**
-     * Query to find user with username
+     * Query to find account with username
      * @param username
-     *        Username to search a user for
-     * @return the items that matched the query
+     *        username to search an account for
+     * @return the account that matched the query
      */
     @Query(value = "SELECT * FROM accounts a WHERE a.account_username = ?1", nativeQuery = true)
-    Optional<User> findByUsername(String username);
+    Optional<Account> findByUsername(String username);
 }

@@ -1,8 +1,8 @@
 package com.example.shopBackend.review;
 
+import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
-import com.example.shopBackend.user.UserRepository;
 import exception.BadRequestException;
 import exception.CalculationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ReviewService {
 	private ReviewRepository reviewRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private AccountRepository accountRepository;
 	
 	@Autowired
 	private ItemRepository itemRepository;
@@ -38,9 +38,9 @@ public class ReviewService {
 	private ItemService itemService;
 
 	
-	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ItemRepository itemRepository, ReviewUtil reviewUtil) {
+	public ReviewService(ReviewRepository reviewRepository, AccountRepository accountRepository, ItemRepository itemRepository, ReviewUtil reviewUtil) {
 		this.reviewRepository = reviewRepository;
-		this.userRepository = userRepository;
+		this.accountRepository = accountRepository;
 		this.itemRepository = itemRepository;
 		this.reviewUtil = reviewUtil;
 	}
@@ -71,13 +71,15 @@ public class ReviewService {
 			reviewBodys.add(value.getBody());
 		}
 
+		// calculates ratings
 		RatedReviews ratedReviews;
 		try {
 			ratedReviews = reviewUtil.rateReviews(reviewBodys);
 		} catch (Exception e) {
-			throw new CalculationException("error while rating reviews");
+			throw new CalculationException("error: " + e.getMessage() + ". While calculating reviews");
 		}
 
+		// check for errors with reviews
 		for (int i = 0; i < review.size(); i += 1) {
 
 			// sets the new calculated rating.
@@ -103,14 +105,15 @@ public class ReviewService {
 						"review with negative likes not allowed");
 			}
 
-			int userId = review.get(i).getUser().getId();
+			int accountId = review.get(i).getAccount().getId();
 
-			if (userRepository.findById(userId).isEmpty()) {
+			if (accountRepository.findById(accountId).isEmpty()) {
 				throw new BadRequestException(
-						"user with id: " + userId + " does not exist");
+						"Account with id: " + accountId + " does not exist");
 			}
 		}
 
+		// save reviews and update item
 		List<Review> res = reviewRepository.saveAll(review);
 		itemService.updateItemRatingAndWords(itemId, ratedReviews.getTopPos(), ratedReviews.getTopNeg());
 		return res;
@@ -120,7 +123,7 @@ public class ReviewService {
 	 * Deletes an item with the corresponding item_id.
 	 * @param id
 	 * 		  The id of the item to be deleted.
-	 * @return true if successful, false otherwise.
+	 * @return true
 	 */
 	public Boolean deleteReview(int id) {
 		if(reviewRepository.findById(id).isEmpty()) {
@@ -133,14 +136,14 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Finds all reviews for users items for page from the database. And returns them.
+	 * Finds all reviews for Accounts with id.
 	 * @param id
-	 * 		  The id of the user you want reviews for.
+	 * 		  The id of the Account you want reviews for.
 	 * @param page
 	 * 		  The page you want to receive
-	 * @return reviews that match query.
+	 * @return reviews with corresponding id
 	 */
-	public List<Review> getReviewsForUser(int id, int page, String sort, String sortDir) {
+	public List<Review> getReviewsForAccount(int id, int page, String sort, String sortDir) {
 		Pageable pageRequest;
 
 		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
@@ -156,20 +159,20 @@ public class ReviewService {
 		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
 
-		if(userRepository.findById(id).isEmpty()) {
+		if(accountRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
-					"No users exists with id " + id);
+					"No Accounts exists with id " + id);
 		}
-		return reviewRepository.findAllUserId(id, pageRequest);
+		return reviewRepository.findAllAccountId(id, pageRequest);
 	}
 	
 	/**
-	 * Finds all reviews for item page from the database. And returns them.
+	 * Finds all reviews for item with corresponding id
 	 * @param id
 	 * 		  The id of the item you want reviews for.
 	 * @param page
 	 * 		  The page you want to receive
-	 * @return reviews that match query.
+	 * @return reviews for item
 	 */
 	public List<Review> getReviewsForItem(int id, int page, String sort, String sortDir) {
 		if(itemRepository.findById(id).isEmpty()) {
@@ -222,42 +225,83 @@ public class ReviewService {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
-		
+
+		// creates pageRequest
 		Pageable pageRequest;
 		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
-		
+
+		// formats title for sql.
 		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
 		
 		return reviewRepository.findAllByTitleForItem(formattedTitle, id, pageRequest);
 	}
+
+	/**
+	 * Finds all reviews for item with body from the database and returns them.
+	 * @param body
+	 * 		  The searched body.
+	 * @param id
+	 * 		  The id of the item
+	 * @param sort
+	 * 		  The sort used for search
+	 * @param page
+	 * 		  The page you want to receive
+	 * @return reviews that match query.
+	 */
+	public List<Review> getReviewsWithBodyForItem(String body, int id, int page, String sort, String sortDir) {
+		if(itemRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No items exists with id " + id);
+		}
+
+		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
+			throw new BadRequestException(
+					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
+		}
+
+		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+			throw new BadRequestException(
+					"sort " + sort + " is not a valid value for a sort in the entity.");
+		}
+
+		// creates pageRequest.
+		Pageable pageRequest;
+		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+
+		// formats body for sql.
+		String formattedBody = String.format("%%%s%%", body).replaceAll("[ ,_]", "%");
+
+		return reviewRepository.findAllByBodyForItem(formattedBody, id, pageRequest);
+	}
 	
 	/**
-	 * Finds the count of reviews and their average rating by user id and returns them
+	 * Finds the count of reviews and their average rating by Account id and returns them
 	 * Different query depending on the wanted grouping.
 	 * @param id
-	 * 	      id of the user you wish to get results for.
+	 * 	      id of the Account you wish to get results for.
 	 * @param time
 	 * 		  Either month or week, the selection for grouping of results.
 	 * @return list of count of reviews and their avg rating grouped by parameter.
 	 */
-	public List<Chart> getChartForUser(String time, int id) {
+	public List<Chart> getChartForAccount(String time, int id) {
 		
 		if (!(time.equals("month") || time.equals("week"))) {
 			throw new BadRequestException(
 					"time " + time + " is not a valid value for a timespan . Either week or month");
 		}
 		
-		if(userRepository.findById(id).isEmpty()) {
+		if(accountRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
-					"No users exists with id " + id);
+					"No Accounts exists with id " + id);
 		}
 
 		List<Chart> res;
 		if (time .equals("month")) {
-			res =  reviewRepository.findChartForUserByMonth(id);
+			res =  reviewRepository.findChartForAccountByMonth(id);
 		} else {
-			res =  reviewRepository.findChartForUserByWeek(id);
+			res =  reviewRepository.findChartForAccountByWeek(id);
 		}
 		return res;
 	}

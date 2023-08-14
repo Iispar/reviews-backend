@@ -58,4 +58,15 @@ public class AccountController {
 
 		return Boolean.TRUE.equals(accountService.deleteAccount(id));
 	}
+
+	/**
+	 * API POST call to /api/account/login with the login info in the body
+	 * will reference the database to see if the login info is correct.
+	 * @return accountId
+	 */
+	@PostMapping("/login")
+	public boolean login(@RequestParam("accountId") int id) {
+
+		return Boolean.TRUE.equals(accountService.deleteAccount(id));
+	}
 }

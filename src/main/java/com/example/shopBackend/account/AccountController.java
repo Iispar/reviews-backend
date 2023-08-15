@@ -1,9 +1,9 @@
 package com.example.shopBackend.account;
 
+import com.example.shopBackend.security.AuthRequest;
+import com.example.shopBackend.security.AuthRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * The controller for the Account table
@@ -28,8 +28,13 @@ public class AccountController {
 	 * @return saved accounts
 	 */
 	@PostMapping("/add")
-	public List<Account> add(@RequestBody List<Account> account) {
-		return accountService.saveAllAccounts(account);
+	public AuthRes add(@RequestBody Account account) {
+		return accountService.saveAccounts(account);
+	}
+
+	@PostMapping("/login")
+	public AuthRes login(@RequestBody AuthRequest request) {
+		return accountService.login(request);
 	}
 
 	/**
@@ -55,17 +60,6 @@ public class AccountController {
 	 */
 	@DeleteMapping("/del")
 	public boolean deleteAccount(@RequestParam("accountId") int id) {
-
-		return Boolean.TRUE.equals(accountService.deleteAccount(id));
-	}
-
-	/**
-	 * API POST call to /api/account/login with the login info in the body
-	 * will reference the database to see if the login info is correct.
-	 * @return accountId
-	 */
-	@PostMapping("/login")
-	public boolean login(@RequestParam("accountId") int id) {
 
 		return Boolean.TRUE.equals(accountService.deleteAccount(id));
 	}

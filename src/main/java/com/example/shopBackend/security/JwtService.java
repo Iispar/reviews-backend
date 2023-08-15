@@ -18,10 +18,10 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    @Value("${SECRET_KEY}")
-    private static String SECRET_KEY;
+    @Value("${secret-key}")
+    private String SECRET_KEY;
 
-    public String getEmail(String token) {
+    public String getUsername(String token) {
         return getClaim(token, Claims::getSubject);
     }
 
@@ -48,7 +48,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 120))
+                .setExpiration(new Date(System.currentTimeMillis() * 1000 * 120))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -58,12 +58,12 @@ public class JwtService {
     }
 
     public Boolean checkToken(String token, UserDetails userDetails) {
-        final String username = getEmail(token);
+        final String username = getUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     public Boolean isTokenExpired(String token) {
-        return getExpiration(token).before(new Date());
+        return getExpiration(token).before(new Date(System.currentTimeMillis()));
     }
 
     private Key getSigningKey() {

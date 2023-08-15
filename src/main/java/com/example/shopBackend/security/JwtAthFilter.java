@@ -1,5 +1,6 @@
 package com.example.shopBackend.security;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,12 +10,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+@Component
 public class JwtAthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
@@ -26,9 +29,12 @@ public class JwtAthFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            @Nonnull HttpServletRequest request,
+            @Nonnull HttpServletResponse response,
+            @Nonnull FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader(AUTHORIZATION);
-        final String email;
+        final String username;
         final String jwtToken;
 
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
@@ -37,9 +43,10 @@ public class JwtAthFilter extends OncePerRequestFilter {
         }
 
         jwtToken = authHeader.substring(7);
-        email = jwtService.getEmail(jwtToken);
-        if (email == null || SecurityContextHolder.getContext().getAuthentication() == null) {
-           UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+        username = jwtService.getUsername(jwtToken);
+
+        if (username == null || SecurityContextHolder.getContext().getAuthentication() == null) {
+           UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
            if (jwtService.checkToken(jwtToken, userDetails)) {
                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

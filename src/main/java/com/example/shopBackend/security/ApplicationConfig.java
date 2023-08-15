@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,10 +22,10 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailService(){
-        return username -> (UserDetails) accountRepository.findByEmail(username).orElseThrow(
+    public UserDetailsService userDetailService ()  {
+        return username -> accountRepository.findByUsername(username).orElseThrow(
                 () -> new BadRequestException(
-                        "user nor found with email"
+                        "user not found with username"
         ));
     }
 
@@ -40,7 +39,6 @@ public class ApplicationConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailService());
         authProvider.setPasswordEncoder(passwordEncoder());
-
         return authProvider;
     }
 

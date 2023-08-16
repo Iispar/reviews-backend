@@ -1,5 +1,8 @@
 package com.example.shopBackend.pages;
 
+import com.example.shopBackend.account.Account;
+import com.example.shopBackend.role.Role;
+import com.example.shopBackend.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +17,22 @@ class PagesIntegrationTest {
     @Autowired
     private WebTestClient webClient;
 
+    @Autowired
+    private JwtService jwtService;
+
     @Test
     void getHomePageWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/pages/get/home?accountId=1")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -29,7 +45,17 @@ class PagesIntegrationTest {
 
     @Test
     void getItemPageWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/pages/get/item?itemId=1")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()

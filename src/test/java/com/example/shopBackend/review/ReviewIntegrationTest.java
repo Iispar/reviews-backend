@@ -1,5 +1,8 @@
 package com.example.shopBackend.review;
 
+import com.example.shopBackend.account.Account;
+import com.example.shopBackend.role.Role;
+import com.example.shopBackend.security.JwtService;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
@@ -27,6 +30,9 @@ class ReviewIntegrationTest {
     private WebTestClient webClient;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private ReviewRepository reviewRepository;
 
     private static MockWebServer mockWebServer;
@@ -50,6 +56,15 @@ class ReviewIntegrationTest {
 
     @Test
     void addReviewWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         int reviews = reviewRepository.findAll().size();
 
         mockWebServer.enqueue(
@@ -77,6 +92,7 @@ class ReviewIntegrationTest {
 
         webClient.post().uri("/api/review/add")
                 .contentType(MediaType.APPLICATION_JSON)
+                .headers(http -> http.setBearerAuth(token))
                 .bodyValue(
                         """
                         [{
@@ -96,6 +112,7 @@ class ReviewIntegrationTest {
                                                 
                         """
                 )
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -113,7 +130,17 @@ class ReviewIntegrationTest {
 
     @Test
     void getReviewsForAccount() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/review/get/account?accountId=1&page=0")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -130,7 +157,17 @@ class ReviewIntegrationTest {
 
     @Test
     void getReviewsForItem() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/review/get/item?itemId=1&page=0&sort=review_date&sortDir=asc")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -147,7 +184,17 @@ class ReviewIntegrationTest {
 
     @Test
     void getReviewsForTitleSearch() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/review/get/search/title?title=tit&itemId=1&page=0&sort=review_date&sortDir=asc")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -164,7 +211,17 @@ class ReviewIntegrationTest {
 
     @Test
     void getReviewsForBodySearch() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/review/get/search/body?body=bo&itemId=1&page=0&sort=review_date&sortDir=asc")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -181,7 +238,17 @@ class ReviewIntegrationTest {
 
     @Test
     void getChartForAccount() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/review/get/chart/account?accountId=1&time=week")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -191,7 +258,17 @@ class ReviewIntegrationTest {
 
     @Test
     void getChartForItem() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/review/get/chart/item?itemId=1&time=week")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -202,7 +279,17 @@ class ReviewIntegrationTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     void deleteReviewWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.delete().uri("/api/review/del?reviewId=1")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody().toString().equals("true");

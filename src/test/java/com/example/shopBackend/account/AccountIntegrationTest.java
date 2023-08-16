@@ -1,5 +1,7 @@
 package com.example.shopBackend.account;
 
+import com.example.shopBackend.role.Role;
+import com.example.shopBackend.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AccountIntegrationTest {
+
     @Autowired
     private WebTestClient webClient;
+
+    @Autowired
+    private JwtService jwtService;
 
     @Autowired
     public AccountRepository accountRepository;
@@ -41,11 +47,7 @@ class AccountIntegrationTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$[0].name").isEqualTo("test")
-                .jsonPath("$[0].username").isEqualTo("testUsername")
-                .jsonPath("$[0].password").isEqualTo("testPass123!")
-                .jsonPath("$[0].email").isEqualTo("testEmail")
-                .jsonPath("$[0].role.id").isEqualTo(1);
+                .jsonPath("$.token").exists();
 
         assertEquals(accountRepository.findAll().size(), items + 1);
     }
@@ -53,7 +55,18 @@ class AccountIntegrationTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     void deleteAccountWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
+
         webClient.delete().uri("/api/account/del?accountId=1")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody().toString().equals("true");
@@ -64,8 +77,18 @@ class AccountIntegrationTest {
 
     @Test
     void updateAccountWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller username",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.put().uri("/api/account/update?accountId=1")
                 .contentType(MediaType.APPLICATION_JSON)
+                .headers(http -> http.setBearerAuth(token))
                 .bodyValue(
                         """
                         {

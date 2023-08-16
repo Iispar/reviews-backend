@@ -58,7 +58,7 @@ public class AccountService {
 	 * 		  The account to be added to the database.
 	 * @return saved accounts
 	 */
-	public AuthRes saveAccounts(Account account) {
+	public AuthRes saveAccount(Account account) {
 
 			int roleId = account.getRole().getId();
 

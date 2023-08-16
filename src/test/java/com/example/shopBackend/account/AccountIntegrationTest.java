@@ -27,7 +27,7 @@ class AccountIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(
                         """
-                        [{
+                        {
                             "name": "test",
                             "username": "testUsername",
                             "password": "testPass123!",
@@ -35,7 +35,7 @@ class AccountIntegrationTest {
                             "role": {
                                 "id": 1
                             }
-                        }]
+                        }
                         """
                 )
                 .exchange()

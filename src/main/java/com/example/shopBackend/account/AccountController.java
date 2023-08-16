@@ -29,7 +29,7 @@ public class AccountController {
 	 */
 	@PostMapping("/add")
 	public AuthRes add(@RequestBody Account account) {
-		return accountService.saveAccounts(account);
+		return accountService.saveAccount(account);
 	}
 
 	@PostMapping("/login")

@@ -22,6 +22,7 @@ public class SecurityConfig {
         this.authenticationProvider = authenticationProvider;
     }
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth

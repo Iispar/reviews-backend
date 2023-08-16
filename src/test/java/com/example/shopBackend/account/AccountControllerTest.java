@@ -2,22 +2,25 @@ package com.example.shopBackend.account;
 
 
 import com.example.shopBackend.role.Role;
+import com.example.shopBackend.security.AuthRes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(AccountController.class)
+@WebMvcTest(value =AccountController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@ContextConfiguration(classes = AccountController.class)
 class AccountControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -39,12 +42,12 @@ class AccountControllerTest {
                 )
         );
 
-        given(accountService.saveAllAccounts(any())).willReturn(List.of(account));
+        given(accountService.saveAccount(any())).willReturn(new AuthRes("token"));
 
-        mockMvc.perform(post("/api/account/add")
+        mockMvc.perform(post("/api/account/add").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                        [{
+                        {
                             "name": "seller",
                             "username": "sellerUsername",
                             "password": "SellerPass123",
@@ -52,23 +55,18 @@ class AccountControllerTest {
                             "role": {
                                 "id": 1
                             }
-                        }]
+                        }
                         """))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(account.getId()))
-                .andExpect(jsonPath("$[0].name").value(account.getName()))
-                .andExpect(jsonPath("$[0].username").value(account.getUsername()))
-                .andExpect(jsonPath("$[0].password").value(account.getPassword()))
-                .andExpect(jsonPath("$[0].email").value(account.getEmail()))
-                .andExpect(jsonPath("$[0].role.name").value(account.getRole().getName()));
+                .andExpect(jsonPath("$.token").value("token"));
     }
 
     @Test
     void addAccountThrowsWithNoItemGiven() throws Exception {
         mockMvc.perform(post("/api/account/add")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
+                        .content(""))
                 .andExpect(status().isBadRequest());
     }
 

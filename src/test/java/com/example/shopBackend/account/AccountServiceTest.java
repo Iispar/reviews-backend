@@ -8,6 +8,7 @@ import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.role.RoleRepository;
+import com.example.shopBackend.security.AuthRequest;
 import com.example.shopBackend.security.JwtService;
 import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -54,6 +56,9 @@ class AccountServiceTest {
 
     @Mock
     private JwtService jwtService;
+
+    @Mock
+    AuthenticationManager authenticationManager;
 
     @InjectMocks
     private AccountService testAccountService;
@@ -185,6 +190,42 @@ class AccountServiceTest {
                 .hasMessageContaining("an account with email: example@gmail.com already exists");
 
         verify(accountRepository, never()).save(account);
+    }
+
+    @Test
+    void loginWorks() {
+
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
+        AuthRequest request = new AuthRequest(
+                "test",
+                "test"
+        );
+
+        given(accountRepository.findByUsername(any())).willReturn(Optional.of(account));
+        testAccountService.login(request);
+
+        verify(accountRepository).findByUsername("test");
+    }
+
+
+
+
+    @Test
+    void loginThrowsWithNoUserInDB() {
+
+        given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
+
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
+        AuthRequest request = new AuthRequest(
+                "test",
+                "test"
+        );
+
+        assertThatThrownBy(() -> testAccountService.login(request))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("no users with username: test");
+
+        verify(accountRepository).findByUsername("test");
     }
 
     @Test

@@ -71,6 +71,30 @@ class AccountControllerTest {
     }
 
     @Test
+    void loginWorks() throws Exception {
+        given(accountService.login(any())).willReturn(new AuthRes("token"));
+        mockMvc.perform(post("/api/account/login").with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "username": "sellerUsername",
+                            "password": "SellerPass123"
+                        }
+                        """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").value("token"));
+    }
+
+    @Test
+    void loginThrowsWithNoItem() throws Exception {
+        given(accountService.login(any())).willReturn(new AuthRes("token"));
+        mockMvc.perform(post("/api/account/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void updateAccountWorks() throws Exception {
         Account account = new Account(
                 1,

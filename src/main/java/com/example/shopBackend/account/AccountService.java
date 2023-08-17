@@ -39,6 +39,7 @@ public class AccountService {
 
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
+
 	private final AuthenticationManager authenticationManager;
 
 	public AccountService(AccountRepository accountRepository, RoleRepository roleRepository, ItemService itemService, ItemRepository itemRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
@@ -86,17 +87,23 @@ public class AccountService {
 
 			accountRepository.save(account);
 			var jwtToken = jwtService.newToken(account);
-			return AuthRes.builder().token(jwtToken).build();
+		return new AuthRes(jwtToken);
 	}
 
 	public AuthRes login(AuthRequest request) {
+
 		authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+			new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
 		);
-		var account = accountRepository.findByUsername(request.getUsername()).orElseThrow(); // catch
+
+		Account account;
+
+		account = accountRepository.findByUsername(request.getUsername()).orElseThrow(() ->
+				new BadRequestException("no users with username: " + request.getUsername()));
+
 		var jwtToken = jwtService.newToken(account);
 
-		return AuthRes.builder().token(jwtToken).build();
+		return new AuthRes(jwtToken);
 	}
 
 
@@ -109,12 +116,10 @@ public class AccountService {
 	 * @return updated account
 	 */
 	public Account updateAccount(int accountId, Account account) {
-		Account foundAccount = accountRepository.findById(accountId).orElse(null);
-
-		if (foundAccount == null) {
-			throw new BadRequestException(
-					"No accounts exists with id: " + accountId);
-		}
+		Account foundAccount = accountRepository.findById(accountId).orElseThrow(() ->
+				new BadRequestException(
+						"No accounts exists with id: " + accountId)
+				);
 
 		int roleId = account.getRole().getId();
 		if (roleRepository.findById(roleId).isEmpty()) {

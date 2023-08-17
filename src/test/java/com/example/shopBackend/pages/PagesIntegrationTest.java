@@ -25,7 +25,7 @@ class PagesIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -48,7 +48,7 @@ class PagesIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()

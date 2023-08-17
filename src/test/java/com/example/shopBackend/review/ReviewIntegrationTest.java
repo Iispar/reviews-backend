@@ -59,7 +59,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -133,7 +133,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -160,7 +160,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -187,7 +187,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -214,7 +214,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -241,7 +241,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -261,7 +261,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -282,7 +282,7 @@ class ReviewIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()

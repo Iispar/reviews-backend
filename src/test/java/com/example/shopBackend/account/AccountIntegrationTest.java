@@ -5,6 +5,7 @@ import com.example.shopBackend.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AccountIntegrationTest {
+
+    ApplicationContext context;
 
     @Autowired
     private WebTestClient webClient;
@@ -58,7 +61,7 @@ class AccountIntegrationTest {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()
@@ -76,11 +79,30 @@ class AccountIntegrationTest {
     }
 
     @Test
+    void loginWorks() {
+        webClient.post().uri("/api/account/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                // this password below should not be visible but for the sake of being able to run tests without having to contact me for additional files it is visible.
+                .bodyValue(
+                        """
+                        {
+                            "username": "initSeller",
+                            "password": "adminPass123!"
+                        }
+                        """
+                )
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.token").exists();
+    }
+
+    @Test
     void updateAccountWorks() {
         Account account = new Account(
                 1,
                 "test",
-                "initSeller username",
+                "initSeller",
                 "initSeller pass",
                 "email",
                 new Role()

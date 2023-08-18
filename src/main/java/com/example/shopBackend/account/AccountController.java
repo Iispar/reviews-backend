@@ -1,9 +1,9 @@
 package com.example.shopBackend.account;
 
+import com.example.shopBackend.security.AuthRequest;
+import com.example.shopBackend.security.AuthRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * The controller for the Account table
@@ -25,11 +25,23 @@ public class AccountController {
 	 * will add it to the database.
 	 * @param account
 	 * 	      The account to be added to the database
-	 * @return saved accounts
+	 * @return Jwt token
 	 */
 	@PostMapping("/add")
-	public List<Account> add(@RequestBody List<Account> account) {
-		return accountService.saveAllAccounts(account);
+	public AuthRes add(@RequestBody Account account) {
+		return accountService.saveAccount(account);
+	}
+
+	/**
+	 * API POST call to /api/account/login with content in the body that describes the account trying to log in
+	 * with username and password.
+	 * @param request
+	 * 		  The username and password trying to log in.
+	 * @return Jwt token
+	 */
+	@PostMapping("/login")
+	public AuthRes login(@RequestBody AuthRequest request) {
+		return accountService.login(request);
 	}
 
 	/**

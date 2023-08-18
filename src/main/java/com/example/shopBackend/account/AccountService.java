@@ -4,9 +4,15 @@ import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.RoleRepository;
+import com.example.shopBackend.security.AuthRequest;
+import com.example.shopBackend.security.AuthRes;
+import com.example.shopBackend.security.JwtService;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,24 +37,30 @@ public class AccountService {
 	@Autowired
 	private ItemRepository itemRepository;
 
-	public AccountService(AccountRepository accountRepository, RoleRepository roleRepository, ItemService itemService, ItemRepository itemRepository) {
+	private final PasswordEncoder passwordEncoder;
+	private final JwtService jwtService;
+
+	private final AuthenticationManager authenticationManager;
+
+	public AccountService(AccountRepository accountRepository, RoleRepository roleRepository, ItemService itemService, ItemRepository itemRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
 		this.accountRepository = accountRepository;
 		this.roleRepository = roleRepository;
 		this.itemService = itemService;
 		this.itemRepository = itemRepository;
+		this.passwordEncoder = passwordEncoder;
+		this.jwtService = jwtService;
+		this.authenticationManager = authenticationManager;
 	}
 
 	/**
 	 * Saves a new account to the database.
 	 *
-	 * @param accounts
+	 * @param account
 	 * 		  The account to be added to the database.
-	 * @return saved accounts
+	 * @return Jwt token
 	 */
-	public List<Account> saveAllAccounts(List<Account> accounts) {
+	public AuthRes saveAccount(Account account) {
 
-		// loop all inputs and checks for errors.
-		for (Account account : accounts) {
 			int roleId = account.getRole().getId();
 
 			if (roleRepository.findById(roleId).isEmpty()) {
@@ -61,6 +73,8 @@ public class AccountService {
 						"password doesn't include an uppercase letter, number or special character os is min length 8");
 			}
 
+			account.setPassword(passwordEncoder.encode(account.getPassword()));
+
 			if (accountRepository.findByUsername(account.getUsername()).orElse(null) != null) {
 				throw new BadRequestException(
 						"an account with username: " + account.getUsername() + " already exists");
@@ -70,9 +84,32 @@ public class AccountService {
 				throw new BadRequestException(
 						"an account with email: " + account.getEmail() + " already exists");
 			}
-		}
 
-		return accountRepository.saveAll(accounts);
+			accountRepository.save(account);
+			var jwtToken = jwtService.newToken(account);
+		return new AuthRes(jwtToken);
+	}
+
+	/**
+	 * Logins user in
+	 * @param request
+	 * 		  The username and password trying to log in.
+	 * @return Jwt token
+	 */
+	public AuthRes login(AuthRequest request) {
+
+		authenticationManager.authenticate(
+			new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+		);
+
+		Account account;
+
+		account = accountRepository.findByUsername(request.getUsername()).orElseThrow(() ->
+				new BadRequestException("no users with username: " + request.getUsername()));
+
+		var jwtToken = jwtService.newToken(account);
+
+		return new AuthRes(jwtToken);
 	}
 
 
@@ -85,12 +122,10 @@ public class AccountService {
 	 * @return updated account
 	 */
 	public Account updateAccount(int accountId, Account account) {
-		Account foundAccount = accountRepository.findById(accountId).orElse(null);
-
-		if (foundAccount == null) {
-			throw new BadRequestException(
-					"No accounts exists with id: " + accountId);
-		}
+		Account foundAccount = accountRepository.findById(accountId).orElseThrow(() ->
+				new BadRequestException(
+						"No accounts exists with id: " + accountId)
+				);
 
 		int roleId = account.getRole().getId();
 		if (roleRepository.findById(roleId).isEmpty()) {

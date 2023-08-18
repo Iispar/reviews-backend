@@ -8,6 +8,8 @@ import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.role.RoleRepository;
+import com.example.shopBackend.security.AuthRequest;
+import com.example.shopBackend.security.JwtService;
 import exception.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,10 +18,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +49,16 @@ class AccountServiceTest {
     private ItemRepository itemRepository;
 
     @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
     private ItemService itemService;
+
+    @Mock
+    private JwtService jwtService;
+
+    @Mock
+    AuthenticationManager authenticationManager;
 
     @InjectMocks
     private AccountService testAccountService;
@@ -57,9 +69,8 @@ class AccountServiceTest {
         given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
         given(accountRepository.findByEmail(any())).willReturn(Optional.empty());
 
-        List<Account> list = new ArrayList<>();
         Role role = new Role(1, "test category");
-        Account account1 = new Account(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -68,31 +79,17 @@ class AccountServiceTest {
                 role
         );
 
-        Account account2 = new Account(
-                2,
-                "test2 name",
-                "username 2",
-                "passWord321!",
-                "example2@gmail.com",
-                role
-        );
+        testAccountService.saveAccount(account);
 
-
-        list.add(account1);
-        list.add(account2);
-
-        testAccountService.saveAllAccounts(list);
-
-        verify(accountRepository).saveAll(list);
+        verify(accountRepository).save(account);
     }
 
     @Test
     void saveAllAccountsThrowsWithBadRoleId() {
         given(roleRepository.findById(any())).willReturn(Optional.empty());
 
-        List<Account> list = new ArrayList<>();
         Role role = new Role(1, "test category");
-        Account account1 = new Account(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -101,33 +98,19 @@ class AccountServiceTest {
                 role
         );
 
-        Account account2 = new Account(
-                2,
-                "test2 name",
-                "username 2",
-                "passWord321!",
-                "example2@gmail.com",
-                role
-        );
-
-
-        list.add(account1);
-        list.add(account2);
-
-        assertThatThrownBy(() ->  testAccountService.saveAllAccounts(list))
+        assertThatThrownBy(() ->  testAccountService.saveAccount(account))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("role with id: 1 does not exist");
 
-        verify(accountRepository, never()).saveAll(list);
+        verify(accountRepository, never()).save(account);
     }
 
     @Test
     void saveAllAccountsThrowsWithBadPasswordCharacter() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
 
-        List<Account> list = new ArrayList<>();
         Role role = new Role(1, "test category");
-        Account account1 = new Account(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -136,33 +119,19 @@ class AccountServiceTest {
                 role
         );
 
-        Account account2 = new Account(
-                2,
-                "test2 name",
-                "username 2",
-                "passWord321!",
-                "example2@gmail.com",
-                role
-        );
-
-
-        list.add(account1);
-        list.add(account2);
-
-        assertThatThrownBy(() ->  testAccountService.saveAllAccounts(list))
+        assertThatThrownBy(() ->  testAccountService.saveAccount(account))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("password doesn't include an uppercase letter, number or special character os is min length 8");
 
-        verify(accountRepository, never()).saveAll(list);
+        verify(accountRepository, never()).save(account);
     }
 
     @Test
     void saveAllAccountsThrowsWithTooShortPassword() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
 
-        List<Account> list = new ArrayList<>();
         Role role = new Role(1, "test category");
-        Account account1 = new Account(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -171,24 +140,11 @@ class AccountServiceTest {
                 role
         );
 
-        Account account2 = new Account(
-                2,
-                "test2 name",
-                "username 2",
-                "passWord321!",
-                "example2@gmail.com",
-                role
-        );
-
-
-        list.add(account1);
-        list.add(account2);
-
-        assertThatThrownBy(() ->  testAccountService.saveAllAccounts(list))
+        assertThatThrownBy(() ->  testAccountService.saveAccount(account))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("password doesn't include an uppercase letter, number or special character os is min length 8");
 
-        verify(accountRepository, never()).saveAll(list);
+        verify(accountRepository, never()).save(account);
     }
 
     @Test
@@ -196,9 +152,8 @@ class AccountServiceTest {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
         given(accountRepository.findByUsername(any())).willReturn(Optional.of(new Account()));
 
-        List<Account> list = new ArrayList<>();
         Role role = new Role(1, "test category");
-        Account account1 = new Account(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -207,24 +162,11 @@ class AccountServiceTest {
                 role
         );
 
-        Account account2 = new Account(
-                2,
-                "test2 name",
-                "username 2",
-                "passWord321!",
-                "example2@gmail.com",
-                role
-        );
-
-
-        list.add(account1);
-        list.add(account2);
-
-        assertThatThrownBy(() ->  testAccountService.saveAllAccounts(list))
+        assertThatThrownBy(() ->  testAccountService.saveAccount(account))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("an account with username: username already exists");
 
-        verify(accountRepository, never()).saveAll(list);
+        verify(accountRepository, never()).save(account);
     }
 
     @Test
@@ -233,9 +175,8 @@ class AccountServiceTest {
         given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
         given(accountRepository.findByEmail(any())).willReturn(Optional.of(new Account()));
 
-        List<Account> list = new ArrayList<>();
         Role role = new Role(1, "test category");
-        Account account1 = new Account(
+        Account account = new Account(
                 1,
                 "test name",
                 "username",
@@ -244,24 +185,47 @@ class AccountServiceTest {
                 role
         );
 
-        Account account2 = new Account(
-                2,
-                "test2 name",
-                "username 2",
-                "passWord321!",
-                "example2@gmail.com",
-                role
-        );
-
-
-        list.add(account1);
-        list.add(account2);
-
-        assertThatThrownBy(() ->  testAccountService.saveAllAccounts(list))
+        assertThatThrownBy(() ->  testAccountService.saveAccount(account))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("an account with email: example@gmail.com already exists");
 
-        verify(accountRepository, never()).saveAll(list);
+        verify(accountRepository, never()).save(account);
+    }
+
+    @Test
+    void loginWorks() {
+
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
+        AuthRequest request = new AuthRequest(
+                "test",
+                "test"
+        );
+
+        given(accountRepository.findByUsername(any())).willReturn(Optional.of(account));
+        testAccountService.login(request);
+
+        verify(accountRepository).findByUsername("test");
+    }
+
+
+
+
+    @Test
+    void loginThrowsWithNoUserInDB() {
+
+        given(accountRepository.findByUsername(any())).willReturn(Optional.empty());
+
+        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
+        AuthRequest request = new AuthRequest(
+                "test",
+                "test"
+        );
+
+        assertThatThrownBy(() -> testAccountService.login(request))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("no users with username: test");
+
+        verify(accountRepository).findByUsername("test");
     }
 
     @Test

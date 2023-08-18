@@ -206,12 +206,11 @@ public class ItemService {
 	 * @return saved updated item
 	 */
 	public Item updateItemRatingAndWords(int id, List<String> posWords, List<String> negWords) {
-		if (itemRepository.findById(id).isEmpty()) {
-			throw new BadRequestException(
-					"no items with id: " + id + " exists");
-		}
 
-		Item foundItem = itemRepository.findById(id).orElseThrow();
+		Item foundItem = itemRepository.findById(id).orElseThrow(() ->
+				new BadRequestException(
+						"no items with id: " + id + " exists")
+				);
 		List<Integer> ratings = reviewRepository.findAllRatingsWithItemId(id);
 
 		// get rating average

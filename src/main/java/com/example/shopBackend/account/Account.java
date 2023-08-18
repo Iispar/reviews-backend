@@ -10,6 +10,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * The Account entity
@@ -19,7 +24,7 @@ import jakarta.persistence.Table;
 @SuppressWarnings("unused")
 @Entity(name="Account")
 @Table(name="accounts", schema="reviews_schema")
-public class Account {
+public class Account implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "account_id", nullable = false, updatable = false, unique = true)
@@ -73,8 +78,33 @@ public class Account {
 		return username;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.emptyList();
 	}
 
 	public String getPassword() {

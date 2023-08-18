@@ -3,14 +3,17 @@ package com.example.shopBackend.pages;
 import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
+import com.example.shopBackend.item.ItemController;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.words.Words;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
@@ -22,7 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(PagesController.class)
+@WebMvcTest(value= PagesController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@ContextConfiguration(classes = PagesController.class)
 class PagesControllerTest {
     @Autowired
     MockMvc mockMvc;

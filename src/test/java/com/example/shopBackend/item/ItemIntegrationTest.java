@@ -1,5 +1,8 @@
 package com.example.shopBackend.item;
 
+import com.example.shopBackend.account.Account;
+import com.example.shopBackend.role.Role;
+import com.example.shopBackend.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,11 +21,24 @@ class ItemIntegrationTest {
     private WebTestClient webClient;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     public ItemRepository itemRepository;
 
     @Test
     void getItemsWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.get().uri("/api/item/get?accountId=1&page=0")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -38,9 +54,19 @@ class ItemIntegrationTest {
 
     @Test
     void addItemsWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         int items = itemRepository.findAll().size();
         webClient.post().uri("/api/item/add")
                 .contentType(MediaType.APPLICATION_JSON)
+                .headers(http -> http.setBearerAuth(token))
                 .bodyValue(
                         """
                         [{
@@ -72,7 +98,17 @@ class ItemIntegrationTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     void deleteItemWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.delete().uri("/api/item/del?itemId=1")
+                .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody().toString().equals("true");
@@ -83,8 +119,18 @@ class ItemIntegrationTest {
 
     @Test
     void updateItemWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
         webClient.put().uri("/api/item/update?itemId=1")
                 .contentType(MediaType.APPLICATION_JSON)
+                .headers(http -> http.setBearerAuth(token))
                 .bodyValue(
                         """
                         {

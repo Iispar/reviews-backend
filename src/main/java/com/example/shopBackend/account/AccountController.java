@@ -25,13 +25,20 @@ public class AccountController {
 	 * will add it to the database.
 	 * @param account
 	 * 	      The account to be added to the database
-	 * @return saved accounts
+	 * @return Jwt token
 	 */
 	@PostMapping("/add")
 	public AuthRes add(@RequestBody Account account) {
 		return accountService.saveAccount(account);
 	}
 
+	/**
+	 * API POST call to /api/account/login with content in the body that describes the account trying to log in
+	 * with username and password.
+	 * @param request
+	 * 		  The username and password trying to log in.
+	 * @return Jwt token
+	 */
 	@PostMapping("/login")
 	public AuthRes login(@RequestBody AuthRequest request) {
 		return accountService.login(request);

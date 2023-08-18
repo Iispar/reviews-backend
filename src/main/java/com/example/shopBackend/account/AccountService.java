@@ -57,7 +57,7 @@ public class AccountService {
 	 *
 	 * @param account
 	 * 		  The account to be added to the database.
-	 * @return saved accounts
+	 * @return Jwt token
 	 */
 	public AuthRes saveAccount(Account account) {
 
@@ -90,6 +90,12 @@ public class AccountService {
 		return new AuthRes(jwtToken);
 	}
 
+	/**
+	 * Logins user in
+	 * @param request
+	 * 		  The username and password trying to log in.
+	 * @return Jwt token
+	 */
 	public AuthRes login(AuthRequest request) {
 
 		authenticationManager.authenticate(

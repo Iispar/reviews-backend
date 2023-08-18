@@ -2,6 +2,9 @@ package com.example.shopBackend.security;
 
 import lombok.Data;
 
+/**
+ * The authentication response object
+ */
 @Data
 public class AuthRes {
 
@@ -11,5 +14,5 @@ public class AuthRes {
         this.token = token;
     }
 
-    public AuthRes() {};
+
 }

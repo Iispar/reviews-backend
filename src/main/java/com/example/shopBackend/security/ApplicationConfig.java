@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Configuration for the spring security application
+ */
 @Configuration
 public class ApplicationConfig {
 
@@ -21,6 +24,10 @@ public class ApplicationConfig {
         this.accountRepository = accountRepository;
     }
 
+    /**
+     * Tells the spring security to search user with username from the database.
+     * @return found user.
+     */
     @Bean
     public UserDetailsService userDetailService ()  {
         return username -> accountRepository.findByUsername(username).orElseThrow(
@@ -34,6 +41,11 @@ public class ApplicationConfig {
         return authConfig.getAuthenticationManager();
     }
 
+    /**
+     * creates spring security authenticationProvider setUserDetailsService and setPasswordEncoder as our custom.
+     * @return created authenticationProvider.
+     */
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -42,6 +54,10 @@ public class ApplicationConfig {
         return authProvider;
     }
 
+    /**
+     * Creates a new BcryptPasswordEncoder.
+     * @return created passwordEncoder.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

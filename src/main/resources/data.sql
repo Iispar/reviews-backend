@@ -7,7 +7,7 @@ INSERT INTO words (words_positive, words_negative) VALUES (null, null);
 INSERT INTO words (words_positive, words_negative) VALUES (null, null);
 INSERT INTO words (words_positive, words_negative) VALUES (null, null);
 
-INSERT INTO accounts (account_email, account_name, account_password, account_userName, account_role) VALUES ('initSeller email', 'initSeller name', '$2a$10$5mSixSVx0wraeBxQYnSzm.6Ub/fQkiFbPn.FP/UJtcadiZpjbpCmS', 'initSeller', 1);
+INSERT INTO accounts (account_email, account_name, account_password, account_userName, account_role) VALUES ('initSeller email', 'initSeller name', '$2a$10$nUVvgTwR.l.a9E4GWEChXuj/mt23HWUDqeUdzW/Y6HMhwBuKYk21S', 'initSeller', 1);
 INSERT INTO accounts (account_email, account_name, account_password, account_userName, account_role) VALUES ('initCus email', 'initCus name', 'initCus pass', 'initCus username', 2);
 
 INSERT INTO items (item_title, item_account, item_category, item_rating, item_words, item_desc) VALUES ('initItem title', 1, 1, 4, 1, 'test desc');

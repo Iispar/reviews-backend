@@ -15,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static java.lang.Boolean.*;
+import static java.lang.Boolean.TRUE;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**

@@ -7,7 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
@@ -18,12 +18,16 @@ import java.util.function.Function;
 /**
  * Helpers for Jwt
  */
-@Service
+@Component
 public class JwtService {
 
     // gets secret key from application.properties
-    @Value("${secret-key}")
     private String SECRET_KEY;
+
+    public JwtService(@Value("${secret-key}") String SECRET_KEY){
+        this.SECRET_KEY = SECRET_KEY;
+    }
+
 
     /**
      * Gets username from token

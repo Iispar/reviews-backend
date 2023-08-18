@@ -39,14 +39,9 @@ public class AccountService {
 
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
-
 	private final AuthenticationManager authenticationManager;
 
-	public AccountService(AccountRepository accountRepository, RoleRepository roleRepository, ItemService itemService, ItemRepository itemRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
-		this.accountRepository = accountRepository;
-		this.roleRepository = roleRepository;
-		this.itemService = itemService;
-		this.itemRepository = itemRepository;
+	public AccountService(PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
 		this.passwordEncoder = passwordEncoder;
 		this.jwtService = jwtService;
 		this.authenticationManager = authenticationManager;
@@ -86,7 +81,7 @@ public class AccountService {
 			}
 
 			accountRepository.save(account);
-			var jwtToken = jwtService.newToken(account);
+			String jwtToken = jwtService.newToken(account);
 		return new AuthRes(jwtToken);
 	}
 
@@ -97,17 +92,13 @@ public class AccountService {
 	 * @return Jwt token
 	 */
 	public AuthRes login(AuthRequest request) {
-
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
 		);
 
-		Account account;
-
-		account = accountRepository.findByUsername(request.getUsername()).orElseThrow(() ->
+		Account account = accountRepository.findByUsername(request.getUsername()).orElseThrow(() ->
 				new BadRequestException("no users with username: " + request.getUsername()));
-
-		var jwtToken = jwtService.newToken(account);
+		String jwtToken = jwtService.newToken(account);
 
 		return new AuthRes(jwtToken);
 	}

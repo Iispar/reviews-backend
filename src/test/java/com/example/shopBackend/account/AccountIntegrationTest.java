@@ -12,9 +12,10 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties="secret-key=GjPID0mTzi+PkzF2qZxlrUWq/g+XuJT28aegItULfXM=")
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
 class AccountIntegrationTest {
 
     @Autowired
@@ -79,7 +80,6 @@ class AccountIntegrationTest {
     void loginWorks() {
         webClient.post().uri("/api/account/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                // this password below should not be visible but for the sake of being able to run tests without having to contact me for additional files it is visible.
                 .bodyValue(
                         """
                         {

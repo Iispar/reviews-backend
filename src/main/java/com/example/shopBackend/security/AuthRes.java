@@ -5,6 +5,7 @@ import lombok.Data;
 /**
  * The authentication response object
  */
+
 @Data
 public class AuthRes {
 

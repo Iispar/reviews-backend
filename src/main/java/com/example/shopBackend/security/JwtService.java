@@ -22,7 +22,7 @@ import java.util.function.Function;
 public class JwtService {
 
     // gets secret key from application.properties
-    private String SECRET_KEY;
+    private final String SECRET_KEY;
 
     public JwtService(@Value("${secret.key}") String SECRET_KEY){
         this.SECRET_KEY = SECRET_KEY;

@@ -57,8 +57,7 @@ class ItemRepositoryTest {
 				account,
 				4,
 				category,
-				words,
-				"test desc"
+				words
 				);
 		testItemRepository.save(item);
 		
@@ -83,8 +82,7 @@ class ItemRepositoryTest {
 				account,
 				4,
 				category,
-				words,
-				"test desc"
+				words
 		);
 		testItemRepository.save(item);
 
@@ -107,16 +105,14 @@ class ItemRepositoryTest {
 				account,
 				4,
 				category,
-				words,
-				"test desc"
+				words
 		);
 		Item item2 = new Item(
 				"new item title",
 				account,
 				2,
 				category,
-				words2,
-				"test desc"
+				words2
 		);
 		testItemRepository.save(item);
 		testItemRepository.save(item2);

@@ -48,9 +48,7 @@ class ItemControllerTest {
                 account,
                 1,
                 category,
-                words,
-                "test desc"
-
+                words
         );
 
         given(itemService.saveAllItems(any())).willReturn(List.of(item));
@@ -77,8 +75,7 @@ class ItemControllerTest {
                 .andExpect(jsonPath("$[0].account.name").value(item.getAccount().getName()))
                 .andExpect(jsonPath("$[0].category.name").value(item.getCategory().getName()))
                 .andExpect(jsonPath("$[0].rating").value(item.getRating()))
-                .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()))
-                .andExpect(jsonPath("$[0].desc").value(item.getDesc()));
+                .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()));
     }
 
     @Test
@@ -106,8 +103,7 @@ class ItemControllerTest {
                 account,
                 1,
                 category,
-                words,
-                "test desc"
+                words
 
         );
 
@@ -119,8 +115,7 @@ class ItemControllerTest {
                 .andExpect(jsonPath("$[0].account.name").value(item.getAccount().getName()))
                 .andExpect(jsonPath("$[0].category.name").value(item.getCategory().getName()))
                 .andExpect(jsonPath("$[0].rating").value(item.getRating()))
-                .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()))
-                .andExpect(jsonPath("$[0].desc").value(item.getDesc()));
+                .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()));
     }
 
     @Test
@@ -140,9 +135,7 @@ class ItemControllerTest {
                 account,
                 1,
                 category,
-                words,
-                "test desc"
-
+                words
         );
 
         given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
@@ -192,9 +185,7 @@ class ItemControllerTest {
                 account,
                 1,
                 category,
-                words,
-                "test desc"
-
+                words
         );
 
         given(itemService.updateItem(anyInt(), any())).willReturn(item);
@@ -218,8 +209,7 @@ class ItemControllerTest {
                 .andExpect(jsonPath("$.account.name").value(item.getAccount().getName()))
                 .andExpect(jsonPath("$.category.name").value(item.getCategory().getName()))
                 .andExpect(jsonPath("$.rating").value(item.getRating()))
-                .andExpect(jsonPath("$.words.id").value(item.getWords().getId()))
-                .andExpect(jsonPath("$.desc").value(item.getDesc()));
+                .andExpect(jsonPath("$.words.id").value(item.getWords().getId()));
     }
 
     @Test

@@ -3,7 +3,6 @@ package com.example.shopBackend.review;
 import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
-import com.example.shopBackend.item.ItemController;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.words.Words;
 import org.junit.jupiter.api.Test;
@@ -42,9 +41,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(
@@ -115,9 +112,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(
@@ -162,9 +157,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(
@@ -200,9 +193,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(
@@ -247,8 +238,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
+                new Words()
 
         );
 
@@ -394,9 +384,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(
@@ -442,9 +430,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(
@@ -482,9 +468,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(
@@ -530,9 +514,7 @@ class ReviewControllerTest {
                 new Account(),
                 1,
                 new Category(),
-                new Words(),
-                "test desc"
-
+                new Words()
         );
 
         Account account = new Account(

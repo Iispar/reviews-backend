@@ -459,7 +459,7 @@ class ReviewServiceTest {
 		given(reviewRepository.findAllBodysWithItemId(anyInt())).willReturn(new ArrayList<>());
 		given(itemService.updateItemRatingAndWords(anyInt(), any(), any())).willReturn(new Item());
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -503,7 +503,7 @@ class ReviewServiceTest {
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -551,7 +551,7 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -599,7 +599,7 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(accountRepository.findById(any())).willReturn(Optional.empty());
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -645,7 +645,7 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -679,7 +679,7 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -705,7 +705,7 @@ class ReviewServiceTest {
 	void addReviewThrowsErrorWithBadItemId() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -754,8 +754,8 @@ class ReviewServiceTest {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
-		Item item2 = new Item(2, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
+		Item item2 = new Item(2, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),
@@ -808,7 +808,7 @@ class ReviewServiceTest {
 		given(reviewUtil.rateReviews(any())).willThrow(new RuntimeException());
 
 		List<Review> list = new ArrayList<>();
-		Item item = new Item(1, "test title", null, 1, new Category(), null, "test desc");
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
 		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
 		Review review1 = new Review(
 				new Date(1),

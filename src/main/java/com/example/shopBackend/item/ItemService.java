@@ -65,10 +65,6 @@ public class ItemService {
 				throw new BadRequestException(
 						"item with invalid title. Length has to be between 3 and 50 characters");
 			}
-			if (value.getDesc().length() > 300) {
-				throw new BadRequestException(
-						"item with invalid desc. Length has to be under 300 characters");
-			}
 
 			int categoryId = value.getCategory().getId();
 			int accountId = value.getAccount().getId();
@@ -183,14 +179,8 @@ public class ItemService {
 					"item with invalid title. Length has to be between 3 and 50 characters");
 		}
 
-		if (item.getDesc().length() > 300) {
-			throw new BadRequestException(
-					"item with invalid desc. Length has to be under 300 characters");
-		}
-
 		foundItem.setCategory(item.getCategory());
 		foundItem.setTitle(item.getTitle());
-		foundItem.setDesc(item.getDesc());
 
 		return itemRepository.save(foundItem);
 	}

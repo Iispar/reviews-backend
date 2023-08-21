@@ -152,7 +152,7 @@ class ItemServiceTest {
                 0,
                 new Account(),
                 2,
-                new Item(1, "title", new Account(), 4F, new Category(), new Words(), "desc")
+                new Item(1, "title", new Account(), 4F, new Category(), new Words())
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(new Item()), Optional.empty());
@@ -202,8 +202,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
         Item item2 = new Item(
@@ -212,8 +211,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
 
@@ -236,8 +234,7 @@ class ItemServiceTest {
                 account,
                 -2,
                 category,
-                null,
-                "test desc"
+                null
 
         );
         Item item2 = new Item(
@@ -246,8 +243,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
 
@@ -272,8 +268,7 @@ class ItemServiceTest {
                 account,
                 10,
                 category,
-                null,
-                "test desc"
+                null
 
         );
         Item item2 = new Item(
@@ -282,8 +277,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
 
@@ -308,8 +302,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
         Item item2 = new Item(
@@ -318,8 +311,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
 
@@ -344,8 +336,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
         Item item2 = new Item(
@@ -354,8 +345,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
 
@@ -365,42 +355,6 @@ class ItemServiceTest {
         assertThatThrownBy(() ->  testItemService.saveAllItems(list))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
-
-        verify(itemRepository, never()).saveAll(list);
-    }
-
-    @Test
-    void saveItemThrowsWithBadDesc() {
-        List<Item> list = new ArrayList<>();
-        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
-        Category category = new Category("test category");
-        Item item1 = new Item(
-                1,
-                "test title",
-                account,
-                0,
-                category,
-                null,
-                "too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc. too long of a desc"
-
-        );
-        Item item2 = new Item(
-                2,
-                "test title 2",
-                account,
-                0,
-                category,
-                null,
-                "test desc"
-
-        );
-
-        list.add(item1);
-        list.add(item2);
-
-        assertThatThrownBy(() ->  testItemService.saveAllItems(list))
-                .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("item with invalid desc. Length has to be under 300 characters");
 
         verify(itemRepository, never()).saveAll(list);
     }
@@ -417,8 +371,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
         );
         Item item2 = new Item(
                 2,
@@ -426,8 +379,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
 
@@ -454,8 +406,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
         );
         Item item2 = new Item(
                 2,
@@ -463,8 +414,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
 
         );
 
@@ -491,8 +441,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
@@ -512,8 +461,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.empty());
@@ -541,8 +489,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
@@ -550,31 +497,6 @@ class ItemServiceTest {
         assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
-
-        verify(itemRepository, never()).save(item);
-    }
-
-    @Test
-    void updateItemThrowsErrorWithBadDesc() {
-        given(categoryRepository.findById(any())).willReturn(Optional.of(new Category()));
-        Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
-        Category category = new Category("test category");
-
-        Item item = new Item(
-                1,
-                "test title",
-                account,
-                0,
-                category,
-                null,
-                "test desc that is too long. test desc that is too long.  test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. test desc that is too long. "
-        );
-
-        given(itemRepository.findById(any())).willReturn(Optional.of(item));
-        int itemId = item.getId();
-        assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
-                .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("item with invalid desc. Length has to be under 300 characters");
 
         verify(itemRepository, never()).save(item);
     }
@@ -590,8 +512,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                null,
-                "test desc"
+                null
         );
 
         given(itemRepository.findById(any())).willReturn(Optional.of(item));
@@ -632,8 +553,7 @@ class ItemServiceTest {
                 account,
                 3,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(
@@ -695,8 +615,7 @@ class ItemServiceTest {
                 account,
                 3,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(
@@ -762,8 +681,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(
@@ -830,8 +748,7 @@ class ItemServiceTest {
                 account,
                 0,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(
@@ -898,8 +815,7 @@ class ItemServiceTest {
                 account,
                 2,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(
@@ -959,8 +875,7 @@ class ItemServiceTest {
                 account,
                 2,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(
@@ -1028,8 +943,7 @@ class ItemServiceTest {
                 account,
                 2,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(
@@ -1090,8 +1004,7 @@ class ItemServiceTest {
                 account,
                 2,
                 category,
-                new Words(1, posWords, negWords),
-                "test desc"
+                new Words(1, posWords, negWords)
         );
 
         Review review1 = new Review(

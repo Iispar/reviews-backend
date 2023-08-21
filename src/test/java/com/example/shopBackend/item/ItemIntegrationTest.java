@@ -47,8 +47,7 @@ class ItemIntegrationTest {
                 .jsonPath("$[0].account.id").isEqualTo(1)
                 .jsonPath("$[0].category.id").isEqualTo(1)
                 .jsonPath("$[0].rating").isEqualTo(4)
-                .jsonPath("$[0].words.id").isEqualTo(1)
-                .jsonPath("$[0].desc").isEqualTo("test desc");
+                .jsonPath("$[0].words.id").isEqualTo(1);
 
     }
 
@@ -77,8 +76,7 @@ class ItemIntegrationTest {
                             "category": {
                                 "id": 1
                             },
-                            "rating": "1",
-                            "desc": "test desc"
+                            "rating": "1"
                         }]
                         """
                 )
@@ -89,8 +87,7 @@ class ItemIntegrationTest {
                 .jsonPath("$[0].account.id").isEqualTo(1)
                 .jsonPath("$[0].category.id").isEqualTo(1)
                 .jsonPath("$[0].rating").isEqualTo(1)
-                .jsonPath("$[0].words.id").isEqualTo(4)
-                .jsonPath("$[0].desc").isEqualTo("test desc");
+                .jsonPath("$[0].words.id").isEqualTo(4);
 
         assertEquals(itemRepository.findAll().size(), items + 1);
     }
@@ -144,8 +141,7 @@ class ItemIntegrationTest {
                             "words": {
                                 "id": 1
                             },
-                            "rating": 4,
-                            "desc": "test desc"
+                            "rating": 4
                         }
                         """
                 )
@@ -156,7 +152,6 @@ class ItemIntegrationTest {
                 .jsonPath("$.account.id").isEqualTo(1)
                 .jsonPath("$.category.id").isEqualTo(1)
                 .jsonPath("$.rating").isEqualTo(4)
-                .jsonPath("$.words.id").isEqualTo(1)
-                .jsonPath("$.desc").isEqualTo("test desc");
+                .jsonPath("$.words.id").isEqualTo(1);
     }
 }

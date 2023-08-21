@@ -3,7 +3,6 @@ package com.example.shopBackend.pages;
 import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
-import com.example.shopBackend.item.ItemController;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.words.Words;
@@ -65,8 +64,7 @@ class PagesControllerTest {
                         new Account(),
                         2F,
                         new Category(),
-                        new Words(),
-                        "desc"
+                        new Words()
                 )),
                 2.3F,
                 2,
@@ -78,7 +76,6 @@ class PagesControllerTest {
         mockMvc.perform(get("/api/pages/get/home?accountId=1", 1))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.latestReviews[0].title").value(homepage.getLatestReviews().get(0).getTitle()))
-                .andExpect(jsonPath("$.topItems[0].desc").value(homepage.getTopItems().get(0).getDesc()))
                 .andExpect(jsonPath("$.ratingsAvg").value(homepage.getRatingsAvg()))
                 .andExpect(jsonPath("$.itemsCount").value(homepage.getItemsCount()))
                 .andExpect(jsonPath("$.reviewsCount").value(homepage.getReviewsCount()))

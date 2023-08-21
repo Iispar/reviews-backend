@@ -23,9 +23,6 @@ public class Item {
 	
 	@Column(name = "item_title", nullable = false)
 	private String title;
-
-	@Column(name = "item_desc", nullable = false)
-	private String desc;
 	
 	// reference to seller entity - unidirectional.
     @ManyToOne
@@ -48,32 +45,22 @@ public class Item {
 
 	public Item() {}
 
-	public Item(int id, String title, Account account, float rating, Category category, Words words, String desc) {
+	public Item(int id, String title, Account account, float rating, Category category, Words words) {
 		this.id = id;
 		this.title = title;
 		this.account = account;
 		this.rating = rating;
 		this.category = category;
 		this.words = words;
-		this.desc = desc;
 	}
 
-    public Item(String title, Account account, float rating, Category category, Words words, String desc) {
+    public Item(String title, Account account, float rating, Category category, Words words) {
 		this.title = title;
 		this.account = account;
 		this.rating = rating;
 		this.category = category;
 		this.words = words;
-		this.desc = desc;
     }
-
-    public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
 
 	public Words getWords() {
 		return words;

@@ -417,9 +417,7 @@ class AccountServiceTest {
                 ),
                 0,
                 new Category(),
-                null,
-                "test desc"
-
+                null
         );
 
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()), Optional.empty());
@@ -445,9 +443,7 @@ class AccountServiceTest {
                 ),
                 0,
                 new Category(),
-                null,
-                "test desc"
-
+                null
         );
 
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()), Optional.empty());

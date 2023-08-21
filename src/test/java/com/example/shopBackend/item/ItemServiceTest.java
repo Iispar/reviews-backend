@@ -320,7 +320,7 @@ class ItemServiceTest {
 
         assertThatThrownBy(() ->  testItemService.saveAllItems(list))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
+                .hasMessageContaining("item with invalid title. Length has to be between 3 and 100 characters");
 
         verify(itemRepository, never()).saveAll(list);
     }
@@ -354,7 +354,7 @@ class ItemServiceTest {
 
         assertThatThrownBy(() ->  testItemService.saveAllItems(list))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
+                .hasMessageContaining("item with invalid title. Length has to be between 3 and 100 characters");
 
         verify(itemRepository, never()).saveAll(list);
     }
@@ -475,7 +475,7 @@ class ItemServiceTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "this title will be too long. this title will be too long. this title will be too long. this title will be too long.",
+            "this title will be too long. this title will be too long. this title will be too long. this title will be too long. this title will be too long this title will be too long this title will be too long this title will be too long ",
             "il"
     })
     void updateItemThrowsErrorWithBadTitle(String title) {
@@ -496,7 +496,7 @@ class ItemServiceTest {
         int itemId = item.getId();
         assertThatThrownBy(() ->  testItemService.updateItem(itemId, item))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("item with invalid title. Length has to be between 3 and 50 characters");
+                .hasMessageContaining("item with invalid title. Length has to be between 3 and 100 characters");
 
         verify(itemRepository, never()).save(item);
     }

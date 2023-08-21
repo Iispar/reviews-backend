@@ -61,9 +61,9 @@ public class ItemService {
 						"item with invalid rating. Has to be between 0-5.");
 			}
 
-			if (value.getTitle().length() < 3 || value.getTitle().length() > 50) {
+			if (value.getTitle().length() < 3 || value.getTitle().length() > 100) {
 				throw new BadRequestException(
-						"item with invalid title. Length has to be between 3 and 50 characters");
+						"item with invalid title. Length has to be between 3 and 100 characters");
 			}
 
 			int categoryId = value.getCategory().getId();
@@ -174,9 +174,9 @@ public class ItemService {
 					"No categories exists with id: " + item.getCategory().getId());
 		}
 
-		if (item.getTitle().length() < 3 || item.getTitle().length() > 50) {
+		if (item.getTitle().length() < 3 || item.getTitle().length() > 100) {
 			throw new BadRequestException(
-					"item with invalid title. Length has to be between 3 and 50 characters");
+					"item with invalid title. Length has to be between 3 and 100 characters");
 		}
 
 		foundItem.setCategory(item.getCategory());

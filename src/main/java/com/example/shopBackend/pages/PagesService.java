@@ -52,7 +52,7 @@ public class PagesService {
 
         List<Review> latestReviews = reviewRepository.findAllAccountId(accountId, reviewPageReq);
         List<Item> topItems = itemRepository.findAllAccountId(accountId, itemPageReq);
-        List<Chart> chart = reviewRepository.findChartForAccountByWeek(accountId);
+        List<Chart> chart = reviewRepository.findChartForAccountByMonth(accountId);
 
         float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
 

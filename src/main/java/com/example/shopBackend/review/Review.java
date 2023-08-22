@@ -23,9 +23,13 @@ public class Review {
 	
 	@Column(name = "review_date", nullable = false)
 	private Date date;
-	@Column(name = "review_body", nullable = false)
+
+	@Lob
+	@Column(name = "review_body", nullable = false, columnDefinition = "text")
 	private String body;
-	@Column(name = "review_title", nullable = false)
+
+	@Lob
+	@Column(name = "review_title", nullable = false, columnDefinition = "text")
 	private String title;
 	@Column(name = "review_likes", nullable = false)
 	private Integer likes;

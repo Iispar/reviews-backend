@@ -802,6 +802,11 @@ class ItemServiceTest {
         posWords.add("4.");
         posWords.add("5.");
         posWords.add("6.");
+        posWords.add("7.");
+        posWords.add("8.");
+        posWords.add("9.");
+        posWords.add("10.");
+        posWords.add("11.");
 
         negWords.add("most neg");
         negWords.add("2.");
@@ -936,6 +941,11 @@ class ItemServiceTest {
         negWords.add("4.");
         negWords.add("5.");
         negWords.add("6.");
+        negWords.add("7.");
+        negWords.add("8.");
+        negWords.add("9.");
+        negWords.add("10.");
+        negWords.add("11.");
 
         Item item = new Item(
                 1,

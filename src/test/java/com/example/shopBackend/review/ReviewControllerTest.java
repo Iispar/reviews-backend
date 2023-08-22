@@ -296,7 +296,7 @@ class ReviewControllerTest {
     void getChartForAccountWorks() throws Exception {
         Chart chart = new Chart() {
             @Override
-            public int getRating() {
+            public double getRating() {
                 return 1;
             }
 
@@ -318,7 +318,7 @@ class ReviewControllerTest {
     void getChartForAccountThrowsWithNoParams() throws Exception {
         Chart chart = new Chart() {
             @Override
-            public int getRating() {
+            public double getRating() {
                 return 1;
             }
 
@@ -338,7 +338,7 @@ class ReviewControllerTest {
     void getChartForItemWorks() throws Exception {
         Chart chart = new Chart() {
             @Override
-            public int getRating() {
+            public double getRating() {
                 return 1;
             }
 
@@ -360,7 +360,7 @@ class ReviewControllerTest {
     void getChartForItemThrowsWithNoParams() throws Exception {
         Chart chart = new Chart() {
             @Override
-            public int getRating() {
+            public double getRating() {
                 return 1;
             }
 

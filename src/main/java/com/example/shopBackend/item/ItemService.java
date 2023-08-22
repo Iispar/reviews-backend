@@ -215,15 +215,16 @@ public class ItemService {
 			);
 		}
 
-		if (posWords.size() > 5 || posWords.isEmpty()) {
+		if (posWords.size() > 10 || posWords.isEmpty()) {
+			System.out.println(posWords);
 			throw new BadRequestException(
-					"pos words invalid. Has to have 1 to 5 items."
+					"pos words invalid. Has to have 1 to 10 items."
 			);
 		}
 
-		if (negWords.size() > 5 || negWords.isEmpty()) {
+		if (negWords.size() > 10 || negWords.isEmpty()) {
 			throw new BadRequestException(
-					"neg words invalid. Has to have 1 to 5 items."
+					"neg words invalid. Has to have 1 to 10 items."
 			);
 		}
 

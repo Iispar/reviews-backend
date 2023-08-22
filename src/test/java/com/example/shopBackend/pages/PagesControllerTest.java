@@ -38,7 +38,7 @@ class PagesControllerTest {
         Chart chart = new Chart() {
 
             @Override
-            public int getRating() {
+            public double getRating() {
                 return 1;
             }
 
@@ -94,7 +94,7 @@ class PagesControllerTest {
         Chart chart = new Chart() {
 
             @Override
-            public int getRating() {
+            public double getRating() {
                 return 1;
             }
 

@@ -3,6 +3,7 @@ package com.example.shopBackend.pages;
 import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
+import com.example.shopBackend.review.BarChart;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.words.Words;
@@ -46,6 +47,23 @@ class PagesControllerTest {
             public int getCount() {
                 return 1;
             }
+
+            @Override
+            public String getTime() {
+                return "2";
+            }
+        };
+        BarChart barChart = new BarChart() {
+
+            @Override
+            public String getRating() {
+                return "1";
+            }
+
+            @Override
+            public double getCount() {
+                return 1;
+            }
         };
         Homepage homepage = new Homepage(
                 List.of(new Review(
@@ -69,6 +87,7 @@ class PagesControllerTest {
                 2.3F,
                 2,
                 2,
+                List.of(barChart),
                 List.of(chart)
         );
         given(pagesService.getHomepageForAccount(anyInt())).willReturn(homepage);
@@ -101,6 +120,11 @@ class PagesControllerTest {
             @Override
             public int getCount() {
                 return 1;
+            }
+
+            @Override
+            public String getTime() {
+                return "2";
             }
         };
 

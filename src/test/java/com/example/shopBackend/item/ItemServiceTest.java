@@ -851,7 +851,7 @@ class ItemServiceTest {
         int itemId = item.getId();
         assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("pos words invalid. Has to have 1 to 5 items.");
+                .hasMessageContaining("pos words invalid. Has to have 1 to 10 items.");
 
         verify(itemRepository, never()).save(item);
     }
@@ -912,7 +912,7 @@ class ItemServiceTest {
         int itemId = item.getId();
         assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("pos words invalid. Has to have 1 to 5 items.");
+                .hasMessageContaining("pos words invalid. Has to have 1 to 10 items.");
 
         verify(itemRepository, never()).save(item);
     }
@@ -985,7 +985,7 @@ class ItemServiceTest {
         int itemId = item.getId();
         assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("neg words invalid. Has to have 1 to 5 items.");
+                .hasMessageContaining("neg words invalid. Has to have 1 to 10 items.");
 
         verify(itemRepository, never()).save(item);
     }
@@ -1046,7 +1046,7 @@ class ItemServiceTest {
         int itemId = item.getId();
         assertThatThrownBy(() -> testItemService.updateItemRatingAndWords(itemId, posWords, negWords))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("neg words invalid. Has to have 1 to 5 items.");
+                .hasMessageContaining("neg words invalid. Has to have 1 to 10 items.");
 
         verify(itemRepository, never()).save(item);
     }

@@ -65,7 +65,8 @@ class PagesServiceTest {
 
         verify(reviewRepository).findAllAccountId(1, reviewPageReq);
         verify(itemRepository).findAllAccountId(1, itemPageReq);
-        verify(reviewRepository).findChartForAccountByWeek(1);
+        verify(reviewRepository).findChartForAccountByMonth(1);
+        verify(reviewRepository).findRatingDistributionWithAccountId(1);
         verify(reviewRepository).findCountWithAccountId(1);
         verify(itemRepository).findItemCountForAccountId(1);
         verify(itemRepository).findItemAvgRatingForAccountId(1);
@@ -82,7 +83,6 @@ class PagesServiceTest {
 
         given(reviewRepository.findAllAccountId(anyInt(), any())).willReturn(new ArrayList<>());
         given(itemRepository.findAllAccountId(anyInt(), any())).willReturn(new ArrayList<>());
-        given(reviewRepository.findChartForAccountByWeek(anyInt())).willReturn(new ArrayList<>());
 
         given(itemRepository.findItemAvgRatingForAccountId(anyInt())).willReturn(Optional.empty());
 
@@ -90,7 +90,8 @@ class PagesServiceTest {
 
         verify(reviewRepository).findAllAccountId(1, reviewPageReq);
         verify(itemRepository).findAllAccountId(1, itemPageReq);
-        verify(reviewRepository).findChartForAccountByWeek(1);
+        verify(reviewRepository).findChartForAccountByMonth(1);
+        verify(reviewRepository).findRatingDistributionWithAccountId(1);
         verify(reviewRepository).findCountWithAccountId(1);
         verify(itemRepository).findItemCountForAccountId(1);
         verify(itemRepository).findItemAvgRatingForAccountId(1);

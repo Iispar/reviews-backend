@@ -1,6 +1,7 @@
 package com.example.shopBackend.pages;
 
 import com.example.shopBackend.item.Item;
+import com.example.shopBackend.review.BarChart;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 
@@ -19,15 +20,26 @@ public class Homepage {
     private int itemsCount;
     private int reviewsCount;
 
+    private List<BarChart> barChart;
+
     private List<Chart> chart;
 
-    public Homepage(List<Review> latestReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<Chart> chart) {
+    public Homepage(List<Review> latestReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<BarChart> barChart, List<Chart> chart) {
         this.latestReviews = latestReviews;
         this.topItems = topItems;
         this.ratingsAvg = ratingsAvg;
         this.itemsCount = itemsCount;
         this.reviewsCount = reviewsCount;
+        this.barChart = barChart;
         this.chart = chart;
+    }
+
+    public List<BarChart> getBarChart() {
+        return barChart;
+    }
+
+    public void setBarChart(List<BarChart> barChart) {
+        this.barChart = barChart;
     }
 
     public Homepage() {}

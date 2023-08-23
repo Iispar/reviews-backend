@@ -18,8 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.sql.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @DataJpaTest()
@@ -240,6 +239,54 @@ class ReviewRepositoryTest {
 		assertEquals(2, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
+
+	@Test
+	void reviewFindDistributionByAccount() {
+		Account account = testaccountRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				Date.valueOf("2023-01-01"),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				account,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				Date.valueOf("2023-02-01"),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				account,
+				2,
+				item
+		);
+
+		Review review3 = new Review(
+				Date.valueOf("2022-01-05"),
+				"review 3 body for test",
+				"test item 3",
+				0,
+				0,
+				account,
+				3,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+		testReviewRepository.save(review3);
+
+		List<BarChart> foundEntity = testReviewRepository.findRatingDistributionWithAccountId(account.getId());
+		List<BarChart> foundNoneEntity = testReviewRepository.findRatingDistributionWithAccountId(account.getId() + 1);
+
+		assertEquals(3, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
+	}
 	
 	@Test
 	void reviewFindChartWeekByAccountIdWorks() {
@@ -387,9 +434,10 @@ class ReviewRepositoryTest {
 	void reviewsFindAllBodysWithItemIdWorks() {
 		Account account = testaccountRepository.findById(1).orElseThrow();
 		Item item = testItemRepository.findById(1).orElseThrow();
+		String string = "test";
 		Review review = new Review(
 				Date.valueOf("2022-01-04"),
-				"review body for test",
+				string,
 				"hello item",
 				0,
 				0,
@@ -426,7 +474,7 @@ class ReviewRepositoryTest {
 
 		List<String> foundEntity = testReviewRepository.findAllBodysWithItemId(item.getId());
 		List<String> foundNoneEntity = testReviewRepository.findAllBodysWithItemId(item.getId() + 1);
-		assertSame("review body for test", foundEntity.get(1));
+		assertTrue(string.equals(foundEntity.get(1)));
 		assertEquals(4, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}

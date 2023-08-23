@@ -3,6 +3,7 @@ package com.example.shopBackend.pages;
 import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.review.BarChart;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
@@ -53,10 +54,11 @@ public class PagesService {
         List<Review> latestReviews = reviewRepository.findAllAccountId(accountId, reviewPageReq);
         List<Item> topItems = itemRepository.findAllAccountId(accountId, itemPageReq);
         List<Chart> chart = reviewRepository.findChartForAccountByMonth(accountId);
+        List<BarChart> barChart = reviewRepository.findRatingDistributionWithAccountId(accountId);
 
         float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
 
-        return new Homepage(latestReviews, topItems, ratingAvg, itemCount, reviewCount, chart);
+        return new Homepage(latestReviews, topItems, ratingAvg, itemCount, reviewCount, barChart, chart);
     }
 
     /**

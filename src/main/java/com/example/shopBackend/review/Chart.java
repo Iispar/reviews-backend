@@ -9,4 +9,5 @@ package com.example.shopBackend.review;
 public interface Chart {
 	double getRating();
 	int getCount();
+	String getTime();
 }

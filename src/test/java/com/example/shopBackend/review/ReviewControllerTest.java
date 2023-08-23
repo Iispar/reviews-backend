@@ -304,6 +304,11 @@ class ReviewControllerTest {
             public int getCount() {
                 return 2;
             }
+
+            @Override
+            public String getTime() {
+                return "2";
+            }
         };
 
         given(reviewService.getChartForAccount(any(), anyInt())).willReturn(List.of(chart));
@@ -326,6 +331,11 @@ class ReviewControllerTest {
             public int getCount() {
                 return 2;
             }
+
+            @Override
+            public String getTime() {
+                return "2";
+            }
         };
 
         given(reviewService.getChartForAccount(any(), anyInt())).willReturn(List.of(chart));
@@ -345,6 +355,11 @@ class ReviewControllerTest {
             @Override
             public int getCount() {
                 return 2;
+            }
+
+            @Override
+            public String getTime() {
+                return "2";
             }
         };
 
@@ -367,6 +382,11 @@ class ReviewControllerTest {
             @Override
             public int getCount() {
                 return 2;
+            }
+
+            @Override
+            public String getTime() {
+                return "2";
             }
         };
 

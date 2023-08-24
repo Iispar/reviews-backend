@@ -56,8 +56,8 @@ class PagesControllerTest {
         BarChart barChart = new BarChart() {
 
             @Override
-            public String getRating() {
-                return "1";
+            public int getRating() {
+                return 1;
             }
 
             @Override

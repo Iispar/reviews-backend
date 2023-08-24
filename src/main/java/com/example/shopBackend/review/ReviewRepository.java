@@ -72,7 +72,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 * 	      id of the Account you wish to get results for.
 	 * @return list of chart with count of reviews and their avg rating grouped by month.
 	 */
-	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating, MONTH(review_date) AS time FROM reviews r WHERE r.review_item IN"
+	@Query(value = "SELECT COUNT(review_rating) AS count, AVG(review_rating) AS rating, MONTHNAME(review_date) AS time FROM reviews r WHERE r.review_item IN"
 			+ "(SELECT item_id FROM items i WHERE i.item_account = ?1)"
 			+ "GROUP BY MONTH(review_date)", nativeQuery = true)
 	List<Chart> findChartForAccountByMonth(int id);

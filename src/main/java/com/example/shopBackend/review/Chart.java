@@ -6,8 +6,13 @@ package com.example.shopBackend.review;
  *
  */
 @SuppressWarnings("unused")
-public interface Chart {
+public interface Chart extends Comparable<Chart> {
 	double getRating();
 	int getCount();
 	String getTime();
+
+	@Override
+	default int compareTo(Chart o) {
+		return this.getTime().compareTo(o.getTime());
+	}
 }

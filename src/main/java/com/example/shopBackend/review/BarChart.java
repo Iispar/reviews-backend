@@ -7,7 +7,18 @@ package com.example.shopBackend.review;
  *
  */
 @SuppressWarnings("unused")
-public interface BarChart {
-    String getRating();
+public interface BarChart extends Comparable<BarChart> {
+    int getRating();
     double getCount();
+
+    @Override
+    default int compareTo(BarChart o) {
+        if (this.getRating() > o.getRating()) {
+            return 1;
+        }
+        else if (this.getRating() < o.getRating()) {
+            return -1;
+        }
+        else return 0;
+    }
 }

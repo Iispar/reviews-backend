@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,7 +55,66 @@ public class PagesService {
         List<Review> latestReviews = reviewRepository.findAllAccountId(accountId, reviewPageReq);
         List<Item> topItems = itemRepository.findAllAccountId(accountId, itemPageReq);
         List<Chart> chart = reviewRepository.findChartForAccountByMonth(accountId);
+
+        // reverse the order
+        Collections.reverse(chart);
+
+        Chart empty = new Chart() {
+            @Override
+            public double getRating() {
+                return -1;
+            }
+
+            @Override
+            public int getCount() {
+                return -1;
+            }
+
+            @Override
+            public String getTime() {
+                return null;
+            }
+        };
+
+        // remove if chart has over 5 objects.
+        while (chart.size() > 5) {
+            chart.remove(0);
+        }
+
+        // add one empty one to the end and start to display it correctly.
+        chart.add(0, empty);
+        chart.add(chart.size(), empty);
+
+
         List<BarChart> barChart = reviewRepository.findRatingDistributionWithAccountId(accountId);
+        // sort barChart list
+        Collections.sort(barChart);
+
+        // if has any empty ratings create new object with zero count
+        // a bit clumsy atm but TODO: optimize this.
+        if (barChart.size() != 5) {
+            int curr = 1;
+            for (int i = 0; i < barChart.size(); i += 1) {
+                if (barChart.get(i).getRating() != curr) {
+                    int finalCurr = curr;
+                    barChart.add(new BarChart() {
+                        @Override
+                        public int getRating() {
+                            return finalCurr;
+                        }
+
+                        @Override
+                        public double getCount() {
+                            return 0;
+                        }
+                    });
+                }
+                else {
+                    curr++;
+                }
+            }
+        }
+
 
         float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
 

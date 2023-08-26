@@ -52,6 +52,11 @@ class PagesControllerTest {
             public String getTime() {
                 return "2";
             }
+
+            @Override
+            public String getYear() {
+                return "2";
+            }
         };
         BarChart barChart = new BarChart() {
 
@@ -66,6 +71,7 @@ class PagesControllerTest {
             }
         };
         Homepage homepage = new Homepage(
+                "test",
                 List.of(new Review(
                         new Date(9),
                         "body",
@@ -124,6 +130,11 @@ class PagesControllerTest {
 
             @Override
             public String getTime() {
+                return "2";
+            }
+
+            @Override
+            public String getYear() {
                 return "2";
             }
         };

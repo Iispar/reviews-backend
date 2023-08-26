@@ -42,7 +42,7 @@ class AccountControllerTest {
                 )
         );
 
-        given(accountService.saveAccount(any())).willReturn(new AuthRes("token"));
+        given(accountService.saveAccount(any())).willReturn(new AuthRes("token", 1));
 
         mockMvc.perform(post("/api/account/add").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -59,7 +59,8 @@ class AccountControllerTest {
                         """))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value("token"));
+                .andExpect(jsonPath("$.token").value("token"))
+                .andExpect(jsonPath("$.accountId").value(1));
     }
 
     @Test
@@ -72,7 +73,7 @@ class AccountControllerTest {
 
     @Test
     void loginWorks() throws Exception {
-        given(accountService.login(any())).willReturn(new AuthRes("token"));
+        given(accountService.login(any())).willReturn(new AuthRes("token", 1));
         mockMvc.perform(post("/api/account/login").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -82,12 +83,13 @@ class AccountControllerTest {
                         }
                         """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value("token"));
+                .andExpect(jsonPath("$.token").value("token"))
+                .andExpect(jsonPath("$.accountId").value(1));
     }
 
     @Test
     void loginThrowsWithNoItem() throws Exception {
-        given(accountService.login(any())).willReturn(new AuthRes("token"));
+        given(accountService.login(any())).willReturn(new AuthRes("token", 1));
         mockMvc.perform(post("/api/account/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(""))

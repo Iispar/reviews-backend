@@ -1,5 +1,6 @@
 package com.example.shopBackend.pages;
 
+import com.example.shopBackend.account.Account;
 import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,11 +42,9 @@ public class PagesService {
      * @return Homepage of Account with param id.
      */
     public Homepage getHomepageForAccount(int accountId) {
-
-        if (accountRepository.findById(accountId).isEmpty()) {
-            throw new BadRequestException(
-                    "no Accounts with id: " + accountId + " exists");
-        }
+        Account account = accountRepository.findById(accountId).orElseThrow(() ->
+                new BadRequestException("no Accounts with id: " + accountId + " exists")
+        );
 
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
@@ -74,10 +74,15 @@ public class PagesService {
             public String getTime() {
                 return null;
             }
+
+            @Override
+            public String getYear() {
+                return null;
+            }
         };
 
         // remove if chart has over 5 objects.
-        while (chart.size() > 5) {
+        while (!Arrays.asList(3, 5, 7).contains(chart.size())) {
             chart.remove(0);
         }
 
@@ -118,7 +123,7 @@ public class PagesService {
 
         float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
 
-        return new Homepage(latestReviews, topItems, ratingAvg, itemCount, reviewCount, barChart, chart);
+        return new Homepage(account.getName(), latestReviews, topItems, ratingAvg, itemCount, reviewCount, barChart, chart);
     }
 
     /**

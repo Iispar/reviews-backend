@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -303,6 +305,36 @@ public class ReviewService {
 		} else {
 			res =  reviewRepository.findChartForAccountByWeek(id);
 		}
+
+		Chart empty = new Chart() {
+			@Override
+			public double getRating() {
+				return -1;
+			}
+
+			@Override
+			public int getCount() {
+				return -1;
+			}
+
+			@Override
+			public String getTime() {
+				return null;
+			}
+
+			@Override
+			public String getYear() {
+				return null;
+			}
+		};
+
+		Collections.reverse(res);
+		while (!Arrays.asList(3, 5, 7, 9).contains(res.size())) {
+			res.remove(0);
+		}
+
+		res.add(0, empty);
+		res.add(res.size(), empty);
 		return res;
 	}
 	

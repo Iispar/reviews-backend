@@ -10,6 +10,7 @@ public interface Chart extends Comparable<Chart> {
 	double getRating();
 	int getCount();
 	String getTime();
+	String getYear();
 
 	@Override
 	default int compareTo(Chart o) {

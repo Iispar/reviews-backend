@@ -82,7 +82,7 @@ public class AccountService {
 
 			accountRepository.save(account);
 			String jwtToken = jwtService.newToken(account);
-		return new AuthRes(jwtToken);
+		return new AuthRes(jwtToken, account.getId());
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class AccountService {
 				new BadRequestException("no users with username: " + request.getUsername()));
 		String jwtToken = jwtService.newToken(account);
 
-		return new AuthRes(jwtToken);
+		return new AuthRes(jwtToken, account.getId());
 	}
 
 

@@ -13,6 +13,8 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public class Homepage {
+
+    private String accountName;
     private List<Review> latestReviews = new ArrayList<>();
     private List<Item> topItems = new ArrayList<>();
 
@@ -24,7 +26,8 @@ public class Homepage {
 
     private List<Chart> chart;
 
-    public Homepage(List<Review> latestReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<BarChart> barChart, List<Chart> chart) {
+    public Homepage(String accountName, List<Review> latestReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<BarChart> barChart, List<Chart> chart) {
+        this.accountName = accountName;
         this.latestReviews = latestReviews;
         this.topItems = topItems;
         this.ratingsAvg = ratingsAvg;
@@ -43,6 +46,14 @@ public class Homepage {
     }
 
     public Homepage() {}
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
 
     public List<Review> getLatestReviews() {
         return latestReviews;

@@ -10,8 +10,10 @@ import lombok.Data;
 public class AuthRes {
 
     private String token;
+    private int accountId;
 
-    public AuthRes(String token) {
+    public AuthRes(String token, int accountId) {
+        this.accountId = accountId;
         this.token = token;
     }
 

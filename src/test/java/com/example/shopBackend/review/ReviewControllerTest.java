@@ -309,6 +309,10 @@ class ReviewControllerTest {
             public String getTime() {
                 return "2";
             }
+            @Override
+            public String getYear() {
+                return "2";
+            }
         };
 
         given(reviewService.getChartForAccount(any(), anyInt())).willReturn(List.of(chart));
@@ -336,6 +340,11 @@ class ReviewControllerTest {
             public String getTime() {
                 return "2";
             }
+
+            @Override
+            public String getYear() {
+                return "2";
+            }
         };
 
         given(reviewService.getChartForAccount(any(), anyInt())).willReturn(List.of(chart));
@@ -359,6 +368,11 @@ class ReviewControllerTest {
 
             @Override
             public String getTime() {
+                return "2";
+            }
+
+            @Override
+            public String getYear() {
                 return "2";
             }
         };
@@ -386,6 +400,11 @@ class ReviewControllerTest {
 
             @Override
             public String getTime() {
+                return "2";
+            }
+
+            @Override
+            public String getYear() {
                 return "2";
             }
         };

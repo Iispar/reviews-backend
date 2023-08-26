@@ -310,7 +310,7 @@ class ReviewControllerTest {
                 return "2";
             }
             @Override
-            public String getYear() {
+            public String getTimeYear() {
                 return "2";
             }
         };
@@ -342,7 +342,7 @@ class ReviewControllerTest {
             }
 
             @Override
-            public String getYear() {
+            public String getTimeYear() {
                 return "2";
             }
         };
@@ -372,7 +372,7 @@ class ReviewControllerTest {
             }
 
             @Override
-            public String getYear() {
+            public String getTimeYear() {
                 return "2";
             }
         };
@@ -404,7 +404,7 @@ class ReviewControllerTest {
             }
 
             @Override
-            public String getYear() {
+            public String getTimeYear() {
                 return "2";
             }
         };

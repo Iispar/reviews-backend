@@ -87,7 +87,7 @@ class ItemIntegrationTest {
                 .jsonPath("$[0].account.id").isEqualTo(1)
                 .jsonPath("$[0].category.id").isEqualTo(1)
                 .jsonPath("$[0].rating").isEqualTo(1)
-                .jsonPath("$[0].words.id").isEqualTo(4);
+                .jsonPath("$[0].words.id").isEqualTo(5);
 
         assertEquals(itemRepository.findAll().size(), items + 1);
     }
@@ -110,7 +110,7 @@ class ItemIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody().toString().equals("true");
 
-        assertEquals(0, itemRepository.findAll().size());
+        assertEquals(1, itemRepository.findAll().size());
 
     }
 

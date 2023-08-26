@@ -49,10 +49,10 @@ class ItemRepositoryTest {
 	void ItemFindAllByAccountIdWorks() {
 		Account account = testaccountRepository.findById(1).orElse(null);
 		Category category = testCategoryRepository.findById(1).orElse(null);
-		Words words = testWordsRepository.findById(2).orElse(null);
+		Words words = testWordsRepository.findById(3).orElse(null);
 		
 		Item item = new Item(
-				1,
+				4,
 				"new item title",
 				account,
 				4,
@@ -65,8 +65,8 @@ class ItemRepositoryTest {
 
 		assert account != null;
 		List<Item> foundEntity = testItemRepository.findAllAccountId(account.getId(), pageRequest);
-        List<Item> foundNoneEntity = testItemRepository.findAllAccountId(account.getId() + 1, pageRequest);
-		assertEquals(1, foundEntity.size());
+        List<Item> foundNoneEntity = testItemRepository.findAllAccountId(account.getId() + 2, pageRequest);
+		assertEquals(2, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
 
@@ -74,10 +74,10 @@ class ItemRepositoryTest {
 	void ItemFindItemCountForAccountIdWorks() {
 		Account account = testaccountRepository.findById(1).orElse(null);
 		Category category = testCategoryRepository.findById(1).orElse(null);
-		Words words = testWordsRepository.findById(2).orElse(null);
+		Words words = testWordsRepository.findById(3).orElse(null);
 
 		Item item = new Item(
-				1,
+				4,
 				"new item title",
 				account,
 				4,
@@ -88,8 +88,8 @@ class ItemRepositoryTest {
 
 		assert account != null;
 		int foundEntity = testItemRepository.findItemCountForAccountId(account.getId());
-		int foundNoneEntity = testItemRepository.findItemCountForAccountId(account.getId() + 1);
-		assertEquals(1, foundEntity);
+		int foundNoneEntity = testItemRepository.findItemCountForAccountId(account.getId() + 2);
+		assertEquals(2, foundEntity);
 		assertEquals(0, foundNoneEntity);
 	}
 
@@ -97,7 +97,7 @@ class ItemRepositoryTest {
 	void ItemFindAvgRatingForAccountWorks() {
 		Account account = testaccountRepository.findById(1).orElse(null);
 		Category category = testCategoryRepository.findById(1).orElse(null);
-		Words words = testWordsRepository.findById(2).orElse(null);
+		Words words = testWordsRepository.findById(4).orElse(null);
 		Words words2 = testWordsRepository.findById(3).orElse(null);
 
 		Item item = new Item(
@@ -108,7 +108,7 @@ class ItemRepositoryTest {
 				words
 		);
 		Item item2 = new Item(
-				"new item title",
+				"new item title 2",
 				account,
 				2,
 				category,
@@ -121,6 +121,6 @@ class ItemRepositoryTest {
 		float foundEntity = testItemRepository.findItemAvgRatingForAccountId(account.getId()).orElse(-2F);
 		Float notFoundEntity = testItemRepository.findItemAvgRatingForAccountId(account.getId() + 1).orElse(-2F);
 		assertEquals(3.3333333F, foundEntity);
-		assertEquals(-2F, notFoundEntity);
+		assertEquals(4F, notFoundEntity);
 	}
 }

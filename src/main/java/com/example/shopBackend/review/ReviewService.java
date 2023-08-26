@@ -323,13 +323,13 @@ public class ReviewService {
 			}
 
 			@Override
-			public String getYear() {
+			public String getTimeYear() {
 				return null;
 			}
 		};
 
 		Collections.reverse(res);
-		while (!Arrays.asList(3, 5, 7, 9).contains(res.size())) {
+		while (!Arrays.asList(0, 3, 5, 7, 9).contains(res.size())) {
 			res.remove(0);
 		}
 

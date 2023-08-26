@@ -72,7 +72,7 @@ class ReviewRepositoryTest {
 		Pageable pageRequest = PageRequest.of(0, 4);
 		
         List<Review> foundEntity = testReviewRepository.findAllAccountId(account.getId(), pageRequest);
-        List<Review> foundNoneEntity = testReviewRepository.findAllAccountId(account.getId() + 1, pageRequest);
+        List<Review> foundNoneEntity = testReviewRepository.findAllAccountId(account.getId() + 2, pageRequest);
 		assertEquals(3, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
@@ -109,7 +109,7 @@ class ReviewRepositoryTest {
 		Pageable pageRequest = PageRequest.of(0, 4);
 		
         List<Review> foundEntity = testReviewRepository.findAllItemId(item.getId(), pageRequest);
-        List<Review> foundNoneIdentity = testReviewRepository.findAllItemId(item.getId() + 1, pageRequest);
+        List<Review> foundNoneIdentity = testReviewRepository.findAllItemId(item.getId() + 2, pageRequest);
 		assertEquals(3, foundEntity.size());
 		assertEquals(0, foundNoneIdentity.size());
 	}
@@ -234,7 +234,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 		
         List<Chart> foundEntity = testReviewRepository.findChartForAccountByMonth(account.getId());
-        List<Chart> foundNoneEntity = testReviewRepository.findChartForAccountByMonth(account.getId() + 1);
+        List<Chart> foundNoneEntity = testReviewRepository.findChartForAccountByMonth(account.getId() + 2);
 
 		assertEquals(2, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
@@ -282,7 +282,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 
 		List<BarChart> foundEntity = testReviewRepository.findRatingDistributionWithAccountId(account.getId());
-		List<BarChart> foundNoneEntity = testReviewRepository.findRatingDistributionWithAccountId(account.getId() + 1);
+		List<BarChart> foundNoneEntity = testReviewRepository.findRatingDistributionWithAccountId(account.getId() + 2);
 
 		assertEquals(3, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
@@ -330,7 +330,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 		
         List<Chart> foundEntity = testReviewRepository.findChartForAccountByWeek(account.getId());
-        List<Chart> foundNoneEntity = testReviewRepository.findChartForAccountByWeek(account.getId() + 1);
+        List<Chart> foundNoneEntity = testReviewRepository.findChartForAccountByWeek(account.getId() + 2);
 		assertEquals(2, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
@@ -377,7 +377,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 		
         List<Chart> foundEntity = testReviewRepository.findChartForItemByMonth(item.getId());
-        List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByMonth(item.getId() + 1);
+        List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByMonth(item.getId() + 2);
 
 		assertEquals(2, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
@@ -425,7 +425,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 		
         List<Chart> foundEntity = testReviewRepository.findChartForItemByWeek(item.getId());
-        List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByWeek(item.getId() + 1);
+        List<Chart> foundNoneEntity = testReviewRepository.findChartForItemByWeek(item.getId() + 2);
 		assertEquals(2, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
@@ -473,7 +473,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 
 		List<String> foundEntity = testReviewRepository.findAllBodysWithItemId(item.getId());
-		List<String> foundNoneEntity = testReviewRepository.findAllBodysWithItemId(item.getId() + 1);
+		List<String> foundNoneEntity = testReviewRepository.findAllBodysWithItemId(item.getId() + 2);
 		assertTrue(string.equals(foundEntity.get(1)));
 		assertEquals(4, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
@@ -521,7 +521,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 
 		List<Integer> foundEntity = testReviewRepository.findAllRatingsWithItemId(item.getId());
-		List<Integer> foundNoneEntity = testReviewRepository.findAllRatingsWithItemId(item.getId() + 1);
+		List<Integer> foundNoneEntity = testReviewRepository.findAllRatingsWithItemId(item.getId() + 2);
 		assertEquals(4, (int) foundEntity.get(0));
 		assertEquals(4, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
@@ -569,7 +569,7 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review3);
 
 		int foundEntity = testReviewRepository.findCountWithAccountId(item.getId());
-		int notFoundEntity = testReviewRepository.findCountWithAccountId(item.getId() + 1);
+		int notFoundEntity = testReviewRepository.findCountWithAccountId(item.getId() + 2);
 
 
 		assertEquals(4, foundEntity);

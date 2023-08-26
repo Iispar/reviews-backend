@@ -54,7 +54,7 @@ class PagesControllerTest {
             }
 
             @Override
-            public String getYear() {
+            public String getTimeYear() {
                 return "2";
             }
         };
@@ -134,7 +134,7 @@ class PagesControllerTest {
             }
 
             @Override
-            public String getYear() {
+            public String getTimeYear() {
                 return "2";
             }
         };

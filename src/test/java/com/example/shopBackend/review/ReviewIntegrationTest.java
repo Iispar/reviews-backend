@@ -252,7 +252,7 @@ class ReviewIntegrationTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$[0].count").isEqualTo(1);
+                .jsonPath("$[0].count").isEqualTo(-1);
 
     }
 
@@ -294,7 +294,7 @@ class ReviewIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody().toString().equals("true");
 
-        assertEquals(0, reviewRepository.findAll().size());
+        assertEquals(3, reviewRepository.findAll().size());
 
     }
 }

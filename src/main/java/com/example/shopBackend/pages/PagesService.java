@@ -76,13 +76,13 @@ public class PagesService {
             }
 
             @Override
-            public String getYear() {
+            public String getTimeYear() {
                 return null;
             }
         };
 
         // remove if chart has over 5 objects.
-        while (!Arrays.asList(3, 5, 7).contains(chart.size())) {
+        while (!Arrays.asList(0, 3, 5, 7).contains(chart.size())) {
             chart.remove(0);
         }
 

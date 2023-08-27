@@ -49,7 +49,7 @@ public class ItemController {
 			@RequestParam("sortDir") String sortDir,
 			@RequestParam("accountId") int id,
 			@RequestParam("page") int page) {
-		return itemService.getItemsForAccount(id, page, sort, sort);
+		return itemService.getItemsForAccount(id, page, sort, sortDir);
 	}
 
 	/**

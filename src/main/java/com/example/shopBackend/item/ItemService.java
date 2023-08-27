@@ -100,7 +100,7 @@ public class ItemService {
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 
-		if (!(sort.equals("item_rating") || sort.equals("none"))) {
+		if (!(sort.equals("rating") || sort.equals("reviews") || sort.equals("none"))) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
@@ -138,7 +138,7 @@ public class ItemService {
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 
-		if (!(sort.equals("item_rating") || sort.equals("none"))) {
+		if (!(sort.equals("rating") || sort.equals("reviews") || sort.equals("none"))) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}

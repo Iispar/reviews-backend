@@ -71,8 +71,8 @@ class ItemServiceTest {
     void getItemsForAccountWorksWithAsc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").ascending());
-        testItemService.getItemsForAccount(1, 0, "item_rating", "asc");
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").ascending());
+        testItemService.getItemsForAccount(1, 0, "rating", "asc");
 
         verify(itemRepository).findAllForAccountWithReviewCount(1, pageRequest);
     }
@@ -81,8 +81,8 @@ class ItemServiceTest {
     void getItemsForAccountWorksWithDesc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").descending());
-        testItemService.getItemsForAccount(1, 0, "item_rating", "desc");
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").descending());
+        testItemService.getItemsForAccount(1, 0, "rating", "desc");
 
         verify(itemRepository).findAllForAccountWithReviewCount(1, pageRequest);
     }
@@ -112,7 +112,7 @@ class ItemServiceTest {
     @Test
     void GetItemsForAccountThrowsErrorWithBadSortDir() {
 
-        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, 0, "item_rating", "ascending"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, 0, "rating", "ascending"))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
 
@@ -124,9 +124,9 @@ class ItemServiceTest {
     @Test
     void GetItemsForAccountThrowsErrorWithBadSort() {
 
-        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, 0, "item_name", "asc"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccount(1, 0, "name", "asc"))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("sort item_name is not a valid value for a sort in the entity.");
+                .hasMessageContaining("sort name is not a valid value for a sort in the entity.");
 
         Pageable pageRequest = PageRequest.of(0, 4);
 
@@ -1054,8 +1054,8 @@ class ItemServiceTest {
     void getItemsForAccountWithTitleWorksWithAsc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").ascending());
-        testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_rating", "asc");
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").ascending());
+        testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "rating", "asc");
 
         verify(itemRepository).findAllForAccountWithReviewCountWithTitle("%title%", 1, pageRequest);
     }
@@ -1064,8 +1064,8 @@ class ItemServiceTest {
     void getItemsForAccountWithTitleWorksWithDesc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").descending());
-        testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_rating", "desc");
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").descending());
+        testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "rating", "desc");
 
         verify(itemRepository).findAllForAccountWithReviewCountWithTitle("%title%", 1, pageRequest);
     }
@@ -1095,7 +1095,7 @@ class ItemServiceTest {
     @Test
     void GetItemsForAccountWithTitleThrowsErrorWithBadSortDir() {
 
-        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_rating", "ascending"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "rating", "ascending"))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
 
@@ -1107,9 +1107,9 @@ class ItemServiceTest {
     @Test
     void GetItemsForAccountWithTitleThrowsErrorWithBadSort() {
 
-        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_name", "asc"))
+        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "name", "asc"))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("sort item_name is not a valid value for a sort in the entity.");
+                .hasMessageContaining("sort name is not a valid value for a sort in the entity.");
 
         Pageable pageRequest = PageRequest.of(0, 4);
     }

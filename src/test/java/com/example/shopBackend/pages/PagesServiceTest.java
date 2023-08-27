@@ -55,7 +55,7 @@ class PagesServiceTest {
     @Test
     void getHomepageForAccountWorks() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
+        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").descending());
 
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
         given(reviewRepository.findCountWithAccountId(anyInt())).willReturn(2);
@@ -64,18 +64,18 @@ class PagesServiceTest {
         testPagesService.getHomepageForAccount(1);
 
         verify(reviewRepository).findAllAccountId(1, reviewPageReq);
+        verify(itemRepository).findItemCountForAccountId(1);
         verify(itemRepository).findAllAccountId(1, itemPageReq);
         verify(reviewRepository).findChartForAccountByMonth(1);
         verify(reviewRepository).findRatingDistributionWithAccountId(1);
         verify(reviewRepository).findCountWithAccountId(1);
-        verify(itemRepository).findItemCountForAccountId(1);
         verify(itemRepository).findItemAvgRatingForAccountId(1);
     }
 
     @Test
     void getHomepageForAccountWorksWithNoReviews() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
+        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").descending());
 
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
         given(reviewRepository.findCountWithAccountId(anyInt())).willReturn(0);
@@ -116,11 +116,17 @@ class PagesServiceTest {
 
         given(itemRepository.findById(any())).willReturn(Optional.of(new Item(1, "test", new Account(), 4.2F, new Category(), new Words(1, List.of("1"), List.of("1")))));
         given(reviewRepository.findAllItemId(anyInt(), any())).willReturn(List.of(new Review()));
+        given(reviewRepository.findReviewCountForItem(anyInt())).willReturn(2);
+        given(reviewRepository.findPosReviewCountForItem(anyInt())).willReturn(2);
+        given(reviewRepository.findNegReviewCountForItem(anyInt())).willReturn(2);
 
         testPagesService.getItemPageForItem(1);
 
         verify(reviewRepository).findAllItemId(1, reviewPageReq);
         verify(reviewRepository).findChartForItemByWeek(1);
+        verify(reviewRepository).findReviewCountForItem(1);
+        verify(reviewRepository).findPosReviewCountForItem(1);
+        verify(reviewRepository).findNegReviewCountForItem(1);
         verify(itemRepository).findById(1);
     }
 

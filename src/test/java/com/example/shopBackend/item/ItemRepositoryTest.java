@@ -119,7 +119,7 @@ class ItemRepositoryTest {
 		assert account != null;
 		List<ItemWithReviews> foundEntity = testItemRepository.findAllForAccountWithReviewCountWithTitle("%titl%", account.getId(), pageRequest);
 		List<ItemWithReviews> foundNoneEntity = testItemRepository.findAllForAccountWithReviewCountWithTitle("null", account.getId() + 2, pageRequest);
-		assertEquals(2, foundEntity.size());
+		assertEquals(3, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
 

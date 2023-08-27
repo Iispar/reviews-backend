@@ -140,6 +140,11 @@ class PagesControllerTest {
         };
 
         ItemPage itempage = new ItemPage(
+                "title",
+                4,
+                2,
+                2,
+                4,
                 List.of(new Review(
                         new Date(9),
                         "body",
@@ -162,7 +167,10 @@ class PagesControllerTest {
                 .andExpect(jsonPath("$.latestReviews[0].title").value(itempage.getLatestReviews().get(0).getTitle()))
                 .andExpect(jsonPath("$.chart[0].count").value(itempage.getChart().get(0).getCount()))
                 .andExpect(jsonPath("$.topPos[0]").value(itempage.getTopPos().get(0)))
-                .andExpect(jsonPath("$.topNeg[0]").value(itempage.getTopNeg().get(0)));
+                .andExpect(jsonPath("$.title").value(itempage.getTitle()))
+                .andExpect(jsonPath("$.topNeg[0]").value(itempage.getTopNeg().get(0)))
+                .andExpect(jsonPath("$.reviews").value(itempage.getReviews()))
+                .andExpect(jsonPath("$.rating").value(itempage.getRating()));
     }
 
     @Test

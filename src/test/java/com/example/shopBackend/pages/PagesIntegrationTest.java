@@ -62,6 +62,11 @@ class PagesIntegrationTest {
                 .jsonPath("$.latestReviews[0].id").isEqualTo(2)
                 .jsonPath("$.chart[0].count").isEqualTo(3)
                 .jsonPath("$.topNeg").isEqualTo(null)
-                .jsonPath("$.topPos").isEqualTo(null);
+                .jsonPath("$.topPos").isEqualTo(null)
+                .jsonPath("$.reviews").isEqualTo(3)
+                .jsonPath("$.rating").isEqualTo(4)
+                .jsonPath("$.positiveReviews").isEqualTo(3)
+                .jsonPath("$.negativeReviews").isEqualTo(0)
+                .jsonPath("$.title").isEqualTo("initItem title 2");
     }
 }

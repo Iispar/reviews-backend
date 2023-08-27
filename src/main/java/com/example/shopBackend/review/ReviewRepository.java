@@ -147,5 +147,32 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	 */
 	@Query(value = "SELECT COUNT(*) FROM reviews r WHERE r.review_item IN (SELECT item_id FROM items i WHERE i.item_account = ?1)", nativeQuery = true)
 	int findCountWithAccountId(int id);
+
+	/**
+	 * Queries the count of reviews for item with selected id.
+	 * @param id
+	 * 		  Selected item id.
+	 * @return count of reviews that match the query.
+	 */
+	@Query(value = "SELECT COUNT(*) FROM reviews r WHERE r.review_item = ?1", nativeQuery = true)
+	int findReviewCountForItem(int id);
+
+	/**
+	 * Queries the count of reviews that are positive for item with selected id.
+	 * @param id
+	 * 		  Selected item id.
+	 * @return count of reviews that match the query.
+	 */
+	@Query(value = "SELECT COUNT(*) FROM reviews r WHERE r.review_item = ?1 AND r.review_rating > 3", nativeQuery = true)
+	int findPosReviewCountForItem(int id);
+
+	/**
+	 * Queries the count of reviews that are negative for item with selected id.
+	 * @param id
+	 * 		  Selected item id.
+	 * @return count of reviews that match the query.
+	 */
+	@Query(value = "SELECT COUNT(*) FROM reviews r WHERE r.review_item = ?1 AND r.review_rating < 3", nativeQuery = true)
+	int findNegReviewCountForItem(int id);
 }
 

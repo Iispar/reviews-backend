@@ -575,4 +575,115 @@ class ReviewRepositoryTest {
 		assertEquals(4, foundEntity);
 		assertEquals(0, notFoundEntity);
 	}
+
+	@Test
+	void reviewFindCountWithItemIdWorks() {
+		Account account = testaccountRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				new Date(0),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				account,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				new Date(1),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				account,
+				2,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		int foundEntity = testReviewRepository.findReviewCountForItem(item.getId());
+		int foundNoneIdentity = testReviewRepository.findReviewCountForItem(item.getId() + 2);
+		assertEquals(3, foundEntity);
+		assertEquals(0, foundNoneIdentity);
+	}
+
+	@Test
+	void reviewFindPosCountWithItemIdWorks() {
+		Account account = testaccountRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				new Date(0),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				account,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				new Date(1),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				account,
+				2,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		int foundEntity = testReviewRepository.findPosReviewCountForItem(item.getId());
+		int foundNoneIdentity = testReviewRepository.findPosReviewCountForItem(item.getId() + 2);
+		assertEquals(2, foundEntity);
+		assertEquals(0, foundNoneIdentity);
+	}
+
+	@Test
+	void reviewFindNegCountWithItemIdWorks() {
+		Account account = testaccountRepository.findById(1).orElseThrow();
+		Item item = testItemRepository.findById(1).orElseThrow();
+		Review review = new Review(
+				new Date(0),
+				"review body for test",
+				"hello item",
+				0,
+				0,
+				account,
+				4,
+				item
+		);
+
+		Review review2 = new Review(
+				new Date(1),
+				"review 2 body for test",
+				"test item 2",
+				0,
+				0,
+				account,
+				2,
+				item
+		);
+
+		testReviewRepository.save(review);
+		testReviewRepository.save(review2);
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		int foundEntity = testReviewRepository.findNegReviewCountForItem(item.getId());
+		int foundNoneIdentity = testReviewRepository.findNegReviewCountForItem(item.getId() + 2);
+		assertEquals(1, foundEntity);
+		assertEquals(0, foundNoneIdentity);
+	}
 }

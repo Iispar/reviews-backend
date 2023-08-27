@@ -47,7 +47,7 @@ public class PagesService {
         );
 
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").ascending());
+        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").descending());
 
         int reviewCount = reviewRepository.findCountWithAccountId(accountId);
         int itemCount = itemRepository.findItemCountForAccountId(accountId);
@@ -133,6 +133,7 @@ public class PagesService {
      * @return ItemPage of item with param id.
      */
     public ItemPage getItemPageForItem(int itemId) {
+
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
 
         Item item = itemRepository.findById(itemId).orElse(null);
@@ -143,11 +144,18 @@ public class PagesService {
             );
         }
 
+        String title = item.getTitle();
+        double rating = item.getRating();
+
+        int reviews = reviewRepository.findReviewCountForItem(item.getId());
+        int positiveReviews = reviewRepository.findPosReviewCountForItem(item.getId());
+        int negativeReviews = reviewRepository.findNegReviewCountForItem(item.getId());
+
         List<Review> latestReviews = reviewRepository.findAllItemId(itemId, reviewPageReq);
 
         List<Chart> chart = reviewRepository.findChartForItemByWeek(itemId);
         Words words = item.getWords();
 
-        return new ItemPage(latestReviews, chart, words.getPositive(), words.getNegative());
+        return new ItemPage(title, reviews, positiveReviews, negativeReviews, rating, latestReviews, chart, words.getPositive(), words.getNegative());
     }
 }

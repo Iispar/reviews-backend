@@ -93,7 +93,7 @@ public class ItemService {
 	 * 		  The direction of the sort, none if no sort.
 	 * @return reviews that match query.
 	 */
-	public List<Item> getItemsForAccount(int id, int page, String sort, String sortDir) {
+	public List<ItemWithReviews> getItemsForAccount(int id, int page, String sort, String sortDir) {
 
 		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
 			throw new BadRequestException(
@@ -116,7 +116,48 @@ public class ItemService {
 		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 6, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 6, Sort.by(sort).descending());
 
-		return itemRepository.findAllAccountId(id, pageRequest);
+		return itemRepository.findAllForAccountWithReviewCount(id, pageRequest);
+	}
+
+	/**
+	 * Finds all items for Account. And returns them.
+	 * @param id
+	 * 		  The id of the Account you want items for.
+	 * @param page
+	 * 		  The page you want to receive
+	 * @param sort
+	 * 		  Entity value to be sorted with, none if no sort.
+	 * @param sortDir
+	 * 		  The direction of the sort, none if no sort.
+	 * @return reviews that match query.
+	 */
+	public List<ItemWithReviews> getItemsForAccountWithTitleAndSorts(String title, int id, int page, String sort, String sortDir) {
+
+		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
+			throw new BadRequestException(
+					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
+		}
+
+		if (!(sort.equals("item_rating") || sort.equals("none"))) {
+			throw new BadRequestException(
+					"sort " + sort + " is not a valid value for a sort in the entity.");
+		}
+
+		if(accountRepository.findById(id).isEmpty()) {
+			throw new BadRequestException(
+					"No Accounts exists with id " + id);
+		}
+
+		// creates pageRequest
+		PageRequest pageRequest;
+		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 6);
+		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 6, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 6, Sort.by(sort).descending());
+
+		// formats title for sql.
+		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
+
+		return itemRepository.findAllForAccountWithReviewCountWithTitle(formattedTitle, id, pageRequest);
 	}
 	
 	/**

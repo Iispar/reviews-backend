@@ -74,7 +74,7 @@ class ItemServiceTest {
         Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").ascending());
         testItemService.getItemsForAccount(1, 0, "item_rating", "asc");
 
-        verify(itemRepository).findAllAccountId(1, pageRequest);
+        verify(itemRepository).findAllForAccountWithReviewCount(1, pageRequest);
     }
 
     @Test
@@ -84,7 +84,7 @@ class ItemServiceTest {
         Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").descending());
         testItemService.getItemsForAccount(1, 0, "item_rating", "desc");
 
-        verify(itemRepository).findAllAccountId(1, pageRequest);
+        verify(itemRepository).findAllForAccountWithReviewCount(1, pageRequest);
     }
 
     @Test
@@ -97,7 +97,7 @@ class ItemServiceTest {
 
         Pageable pageRequest = PageRequest.of(0, 6);
 
-        verify(itemRepository, never()).findAllAccountId(1, pageRequest);
+        verify(itemRepository, never()).findAllForAccountWithReviewCount(1, pageRequest);
     }
 
     @Test
@@ -1049,5 +1049,68 @@ class ItemServiceTest {
                 .hasMessageContaining("neg words invalid. Has to have 1 to 10 items.");
 
         verify(itemRepository, never()).save(item);
+    }
+    @Test
+    void getItemsForAccountWithTitleWorksWithAsc() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
+
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").ascending());
+        testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_rating", "asc");
+
+        verify(itemRepository).findAllForAccountWithReviewCountWithTitle("%title%", 1, pageRequest);
+    }
+
+    @Test
+    void getItemsForAccountWithTitleWorksWithDesc() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
+
+        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("item_rating").descending());
+        testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_rating", "desc");
+
+        verify(itemRepository).findAllForAccountWithReviewCountWithTitle("%title%", 1, pageRequest);
+    }
+
+    @Test
+    void getItemsForAccountWithTitleThrowsErrorWithNoMatchingAccount() {
+        given(accountRepository.findById(any())).willReturn(Optional.empty());
+
+        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "none", "none"))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("No Accounts exists with id 1");
+
+        Pageable pageRequest = PageRequest.of(0, 6);
+
+        verify(itemRepository, never()).findAllForAccountWithReviewCount(1, pageRequest);
+    }
+
+    @Test
+    void getItemsForAccountWithTitleThrowsErrorWithNegativePage() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
+
+        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, -1, "none", "none"))
+                .isInstanceOf(java.lang.IllegalArgumentException.class)
+                .hasMessageContaining("Page index must not be less than zero");
+    }
+
+    @Test
+    void GetItemsForAccountWithTitleThrowsErrorWithBadSortDir() {
+
+        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_rating", "ascending"))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
+
+        Pageable pageRequest = PageRequest.of(0, 4);
+
+        verify(reviewRepository, never()).findAllAccountId(1, pageRequest);
+    }
+
+    @Test
+    void GetItemsForAccountWithTitleThrowsErrorWithBadSort() {
+
+        assertThatThrownBy(() -> testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "item_name", "asc"))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("sort item_name is not a valid value for a sort in the entity.");
+
+        Pageable pageRequest = PageRequest.of(0, 4);
     }
 }

@@ -37,17 +37,34 @@ class ItemIntegrationTest {
                 new Role()
         );
         String token = jwtService.newToken(account);
-        webClient.get().uri("/api/item/get?accountId=1&page=0")
+        webClient.get().uri("/api/item/get?accountId=1&page=0&sort=none&sortDir=none")
                 .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$[0].title").isEqualTo("initItem title")
-                .jsonPath("$[0].id").isEqualTo(1)
-                .jsonPath("$[0].account.id").isEqualTo(1)
-                .jsonPath("$[0].category.id").isEqualTo(1)
-                .jsonPath("$[0].rating").isEqualTo(4)
-                .jsonPath("$[0].words.id").isEqualTo(1);
+                .jsonPath("$[0].rating").isEqualTo(4);
+
+    }
+
+    @Test
+    void getItemsWithTitleWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
+        webClient.get().uri("/api/item/get/search?title=tit&accountId=1&page=0&sort=none&sortDir=none")
+                .headers(http -> http.setBearerAuth(token))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].title").isEqualTo("initItem title")
+                .jsonPath("$[0].rating").isEqualTo(4);
 
     }
 

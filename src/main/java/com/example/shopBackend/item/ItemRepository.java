@@ -30,6 +30,28 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	List<Item> findAllAccountId(int id, Pageable pageable);
 
 	/**
+	 * Query to find all items for Account with id and count of their reviews
+	 * @param id
+	 * 		  The Account id that searched.
+	 * @param pageable
+	 * 		  The pageable object that selects page and sorts.
+	 * @return the items that matched the query
+	 */
+	@Query(value = "SELECT i.item_id AS id, i.item_title AS title, i.item_rating as rating, COUNT(r.review_id) AS reviews FROM items i JOIN reviews r ON r.review_item = i.item_id GROUP BY i.item_id", nativeQuery = true)
+	List<ItemWithReviews> findAllForAccountWithReviewCount(int id, Pageable pageable);
+
+	/**
+	 * Query to find all items for Account with id and title. Returns items with the count of their reviews
+	 * @param id
+	 * 		  The Account id that searched.
+	 * @param pageable
+	 * 		  The pageable object that selects page and sorts.
+	 * @return the items that matched the query
+	 */
+	@Query(value = "SELECT i.item_id AS id, i.item_title AS title, i.item_rating as rating, COUNT(r.review_id) AS reviews FROM items i JOIN reviews r ON r.review_item = i.item_id WHERE i.item_title LIKE ?1 GROUP BY i.item_id", nativeQuery = true)
+	List<ItemWithReviews> findAllForAccountWithReviewCountWithTitle(String title, int id, Pageable pageable);
+
+	/**
 	 * Query to find count of all items for Account.
 	 * @param id
 	 * 		  The Account id that searched.

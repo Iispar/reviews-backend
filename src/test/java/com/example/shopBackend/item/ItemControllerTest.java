@@ -98,24 +98,34 @@ class ItemControllerTest {
         );
         Category category = new Category("category");
         Words words = new Words(1, List.of("1"), List.of("1"));
-        Item item = new Item(
-                "test title",
-                account,
-                1,
-                category,
-                words
+        ItemWithReviews item = new ItemWithReviews() {
+            @Override
+            public double getId() {
+                return 0;
+            }
 
-        );
+            @Override
+            public int getRating() {
+                return 0;
+            }
+
+            @Override
+            public String getTitle() {
+                return null;
+            }
+
+            @Override
+            public String getReviews() {
+                return null;
+            }
+        };
 
         given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
 
-        mockMvc.perform(get("/api/item/get?accountId=1&page=0", 1, 0))
+        mockMvc.perform(get("/api/item/get?accountId=1&page=0&sort=none&sortDir=none", 1, 0))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(item.getTitle()))
-                .andExpect(jsonPath("$[0].account.name").value(item.getAccount().getName()))
-                .andExpect(jsonPath("$[0].category.name").value(item.getCategory().getName()))
-                .andExpect(jsonPath("$[0].rating").value(item.getRating()))
-                .andExpect(jsonPath("$[0].words.id").value(item.getWords().getId()));
+                .andExpect(jsonPath("$[0].rating").value(item.getRating()));
     }
 
     @Test
@@ -130,16 +140,111 @@ class ItemControllerTest {
         );
         Category category = new Category("category");
         Words words = new Words(1, List.of("1"), List.of("1"));
-        Item item = new Item(
-                "test title",
-                account,
-                1,
-                category,
-                words
-        );
+        ItemWithReviews item = new ItemWithReviews() {
+            @Override
+            public double getId() {
+                return 0;
+            }
+
+            @Override
+            public int getRating() {
+                return 0;
+            }
+
+            @Override
+            public String getTitle() {
+                return null;
+            }
+
+            @Override
+            public String getReviews() {
+                return null;
+            }
+        };
 
         given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
         mockMvc.perform(get("/api/item/get"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getItemsWithTitleForAccountWorks() throws Exception {
+        Account account = new Account(
+                1,
+                "name",
+                "username",
+                "pass",
+                "email",
+                new Role()
+        );
+        Category category = new Category("category");
+        Words words = new Words(1, List.of("1"), List.of("1"));
+        ItemWithReviews item = new ItemWithReviews() {
+            @Override
+            public double getId() {
+                return 0;
+            }
+
+            @Override
+            public int getRating() {
+                return 0;
+            }
+
+            @Override
+            public String getTitle() {
+                return null;
+            }
+
+            @Override
+            public String getReviews() {
+                return null;
+            }
+        };
+
+        given(itemService.getItemsForAccountWithTitleAndSorts(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+
+        mockMvc.perform(get("/api/item/get/search?title=ti&accountId=1&page=0&sort=none&sortDir=none", 1, 0))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value(item.getTitle()))
+                .andExpect(jsonPath("$[0].rating").value(item.getRating()));
+    }
+
+    @Test
+    void getItemsForAccountWithTitleThrowsWithNoParams() throws Exception {
+        Account account = new Account(
+                1,
+                "name",
+                "username",
+                "pass",
+                "email",
+                new Role()
+        );
+        Category category = new Category("category");
+        Words words = new Words(1, List.of("1"), List.of("1"));
+        ItemWithReviews item = new ItemWithReviews() {
+            @Override
+            public double getId() {
+                return 0;
+            }
+
+            @Override
+            public int getRating() {
+                return 0;
+            }
+
+            @Override
+            public String getTitle() {
+                return null;
+            }
+
+            @Override
+            public String getReviews() {
+                return null;
+            }
+        };
+
+        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+        mockMvc.perform(get("/api/item/get/search"))
                 .andExpect(status().isBadRequest());
     }
 

@@ -218,19 +218,20 @@ public class ReviewService {
 					"No items exists with id " + id);
 		}
 		
-		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
+		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
 			throw new BadRequestException(
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 		
-		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating")) || sort.equals("none")) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
 
 		// creates pageRequest
 		Pageable pageRequest;
-		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 4);
+		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
 
 		// formats title for sql.

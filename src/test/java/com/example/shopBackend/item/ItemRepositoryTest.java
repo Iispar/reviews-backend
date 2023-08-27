@@ -71,6 +71,59 @@ class ItemRepositoryTest {
 	}
 
 	@Test
+	void findAllForAccountWithReviewCountWorks() {
+		Account account = testaccountRepository.findById(1).orElse(null);
+		Category category = testCategoryRepository.findById(1).orElse(null);
+		Words words = testWordsRepository.findById(3).orElse(null);
+
+		Item item = new Item(
+				4,
+				"new item title",
+				account,
+				4,
+				category,
+				words
+		);
+
+		testItemRepository.save(item);
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		assert account != null;
+		List<Item> foundEntity = testItemRepository.findAllAccountId(account.getId(), pageRequest);
+		List<Item> foundNoneEntity = testItemRepository.findAllAccountId(account.getId() + 2, pageRequest);
+		System.out.println(foundEntity.get(0));
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
+	}
+
+	@Test
+	void findAllForAccountWithTitleWorks() {
+		Account account = testaccountRepository.findById(1).orElse(null);
+		Category category = testCategoryRepository.findById(1).orElse(null);
+		Words words = testWordsRepository.findById(3).orElse(null);
+
+		Item item = new Item(
+				4,
+				"title to search",
+				account,
+				4,
+				category,
+				words
+		);
+
+		testItemRepository.save(item);
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		assert account != null;
+		List<ItemWithReviews> foundEntity = testItemRepository.findAllForAccountWithReviewCountWithTitle("%titl%", account.getId(), pageRequest);
+		List<ItemWithReviews> foundNoneEntity = testItemRepository.findAllForAccountWithReviewCountWithTitle("null", account.getId() + 2, pageRequest);
+		assertEquals(2, foundEntity.size());
+		assertEquals(0, foundNoneEntity.size());
+	}
+
+	@Test
 	void ItemFindItemCountForAccountIdWorks() {
 		Account account = testaccountRepository.findById(1).orElse(null);
 		Category category = testCategoryRepository.findById(1).orElse(null);

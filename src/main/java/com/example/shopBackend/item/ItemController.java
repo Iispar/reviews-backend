@@ -44,10 +44,37 @@ public class ItemController {
 	 * @return requested items
 	 */
 	@GetMapping("/get")
-	public List<Item> getItemsForAccount(
+	public List<ItemWithReviews> getItemsForAccount(
+			@RequestParam("sort") String sort,
+			@RequestParam("sortDir") String sortDir,
 			@RequestParam("accountId") int id,
 			@RequestParam("page") int page) {
-		return itemService.getItemsForAccount(id, page, "none", "none");
+		return itemService.getItemsForAccount(id, page, sort, sort);
+	}
+
+	/**
+	 * API GET call to /api/item/get/search?title=(input)&accountId=(input)&page=(input)
+	 * will return all items for Account on page that is selected.
+	 * @param title
+	 * 	      The title to get items for
+	 * @param id
+	 * 	      The id of the Account to get items for
+	 * @param page
+	 * 	      the page we want for the items
+	 * @param sort
+	 * 		  The sort used for search
+	 * @param sortDir
+	 * 		  The direction of the sort
+	 * @return items that match title and search
+	 */
+	@GetMapping("/get/search")
+	public List<ItemWithReviews> getItemsForAccountWithTitle(
+			@RequestParam("title") String title,
+			@RequestParam("accountId") int id,
+			@RequestParam("sort") String sort,
+			@RequestParam("sortDir") String sortDir,
+			@RequestParam("page") int page) {
+		return itemService.getItemsForAccountWithTitleAndSorts(title, id, page, sort, sortDir);
 	}
 
 	// exception handler that is used for tests.

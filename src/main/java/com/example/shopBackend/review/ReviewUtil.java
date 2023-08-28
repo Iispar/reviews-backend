@@ -42,4 +42,26 @@ public class ReviewUtil {
                 .bodyToMono(RatedReviews.class)
                 .block();
     }
+
+    /**
+     * Gets the reviews top words by calling the rating API.
+     * @param reviews
+     *        Reviews to get top words for.
+     * @return top words
+     */
+    public TopWords topWordsForReviews(List<SingleRatedReview> reviews) {
+
+        JSONObject jsonReviews = new JSONObject();
+        jsonReviews.put("reviews", reviews);
+
+        WebClient webClient = WebClient.create(baseUrl);
+
+        return webClient.post()
+                .uri("/getTop")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(jsonReviews)
+                .retrieve()
+                .bodyToMono(TopWords.class)
+                .block();
+    }
 }

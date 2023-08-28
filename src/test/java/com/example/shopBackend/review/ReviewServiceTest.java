@@ -386,9 +386,9 @@ class ReviewServiceTest {
 	void getChartForItemWorksWithMonth() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
-		testReviewService.getChartForItem("month", 0);
+		testReviewService.getChartForItem("month", 1);
 
-		verify(reviewRepository).findChartForItemByMonth(0);
+		verify(reviewRepository).findChartForItemByMonth(1);
 	}
 	
 	@Test
@@ -450,9 +450,12 @@ class ReviewServiceTest {
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
 		singleRatedReviews.add(rate2);
-		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
+
+		TopWords topWords = new TopWords(List.of("1"), List.of("1")){};
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+		when(reviewUtil.topWordsForReviews(any())).thenReturn(topWords);
 
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
@@ -497,7 +500,7 @@ class ReviewServiceTest {
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
 		singleRatedReviews.add(rate2);
-		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
@@ -544,7 +547,7 @@ class ReviewServiceTest {
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
 		singleRatedReviews.add(rate2);
-		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
@@ -592,7 +595,7 @@ class ReviewServiceTest {
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
 		singleRatedReviews.add(rate2);
-		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
@@ -638,7 +641,7 @@ class ReviewServiceTest {
 		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", 8);
 		singleRatedReviews.add(rate1);
-		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1"), List.of("1"));
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
@@ -673,7 +676,7 @@ class ReviewServiceTest {
 		List<SingleRatedReview> singleRatedReviews = new ArrayList<>();
 		SingleRatedReview rate1 = new SingleRatedReview("test 1", -2);
 		singleRatedReviews.add(rate1);
-		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1"), List.of("1"));
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
@@ -746,7 +749,7 @@ class ReviewServiceTest {
 		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
 		singleRatedReviews.add(rate1);
 		singleRatedReviews.add(rate2);
-		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews, List.of("1", "2"), List.of("1", "2"));
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
 
 		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
 
@@ -826,6 +829,45 @@ class ReviewServiceTest {
 		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
 				.isInstanceOf(java.lang.RuntimeException.class)
 				.hasMessageContaining("error: null. While calculating reviews");
+
+		verify(reviewRepository, never()).saveAll(list);
+	}
+
+	@Test
+	void addReviewThrowsErrorWhenTopWords() {
+		List<SingleRatedReview> singleRatedReviews;
+		singleRatedReviews = new ArrayList<>();
+		SingleRatedReview rate1 = new SingleRatedReview("test 1", 5);
+		SingleRatedReview rate2 = new SingleRatedReview("test 2", 2);
+		singleRatedReviews.add(rate1);
+		singleRatedReviews.add(rate2);
+		RatedReviews ratedReviews = new RatedReviews(singleRatedReviews);
+
+		when(reviewUtil.rateReviews(any())).thenReturn(ratedReviews);
+		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
+		given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
+
+		given(reviewUtil.topWordsForReviews(any())).willThrow(new RuntimeException());
+
+		List<Review> list = new ArrayList<>();
+		Item item = new Item(1, "test title", null, 1, new Category(), null);
+		Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
+		Review review1 = new Review(
+				new Date(1),
+				"title1",
+				"body1",
+				1,
+				0,
+				account,
+				2,
+				item
+		);
+
+		list.add(review1);
+
+		assertThatThrownBy(() ->  testReviewService.saveAllReviews(list))
+				.isInstanceOf(java.lang.RuntimeException.class)
+				.hasMessageContaining("error: null. While getting top words");
 
 		verify(reviewRepository, never()).saveAll(list);
 	}

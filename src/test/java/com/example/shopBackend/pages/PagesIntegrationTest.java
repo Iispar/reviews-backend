@@ -38,7 +38,7 @@ class PagesIntegrationTest {
                 .expectBody()
                 .jsonPath("$.latestReviews[0].id").isEqualTo(2)
                 .jsonPath("$.topItems[0].id").isEqualTo(2)
-                .jsonPath("$.chart[0].count").isEqualTo(-1)
+                .jsonPath("$.chart[0].count").isEqualTo(3)
                 .jsonPath("$.ratingsAvg").isEqualTo(4)
                 .jsonPath("$.itemsCount").isEqualTo(1);
     }

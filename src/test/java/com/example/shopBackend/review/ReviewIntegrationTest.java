@@ -78,7 +78,17 @@ class ReviewIntegrationTest {
                                       "review": "this sucks!! and is the worst item ever",
                                       "star": 1
                                     }
-                                  ],
+                                  ]
+                                }
+                                """
+                        )
+        );
+        mockWebServer.enqueue(
+                new MockResponse().setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                        .setBody(
+                                """
+                                {
                                   "topNeg": [
                                     "not enough words"
                                   ],
@@ -252,7 +262,7 @@ class ReviewIntegrationTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$[0].count").isEqualTo(-1);
+                .jsonPath("$[0].count").isEqualTo(1);
 
     }
 

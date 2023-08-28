@@ -58,6 +58,8 @@ public class PagesService {
 
         // reverse the order
         Collections.reverse(chart);
+        //calc average of all reviews counts so that the chart starts from the middle
+        int avg = (int)chart.stream().map(Chart::getCount).mapToInt(a -> a).average().orElse(0);
 
         Chart empty = new Chart() {
             @Override
@@ -67,7 +69,7 @@ public class PagesService {
 
             @Override
             public int getCount() {
-                return -1;
+                return avg;
             }
 
             @Override
@@ -154,6 +156,42 @@ public class PagesService {
         List<Review> latestReviews = reviewRepository.findAllItemId(itemId, reviewPageReq);
 
         List<Chart> chart = reviewRepository.findChartForItemByWeek(itemId);
+        Collections.reverse(chart);
+        //calc average of all reviews counts so that the chart starts from the middle
+        int avg = (int)chart.stream().map(Chart::getCount).mapToInt(a -> a).average().orElse(0);
+
+        Chart empty = new Chart() {
+            @Override
+            public double getRating() {
+                return -1;
+            }
+
+            @Override
+            public int getCount() {
+                return avg;
+            }
+
+            @Override
+            public String getTime() {
+                return null;
+            }
+
+            @Override
+            public String getTimeYear() {
+                return null;
+            }
+        };
+
+        // remove if chart has over 5 objects.
+        while (!Arrays.asList(0, 3, 5, 7).contains(chart.size())) {
+            chart.remove(0);
+        }
+
+        // add one empty one to the end and start to display it correctly.
+        chart.add(0, empty);
+        chart.add(chart.size(), empty);
+
+
         Words words = item.getWords();
 
         return new ItemPage(title, reviews, positiveReviews, negativeReviews, rating, latestReviews, chart, words.getPositive(), words.getNegative());

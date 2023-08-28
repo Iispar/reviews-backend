@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Services for the review entity
@@ -81,6 +82,22 @@ public class ReviewService {
 			throw new CalculationException("error: " + e.getMessage() + ". While calculating reviews");
 		}
 
+		// calculates top words
+		TopWords topWords;
+		Pageable all = Pageable.unpaged();
+		List<SingleRatedReview> reviews =
+				reviewRepository.findAllItemId(itemId, all)
+						.stream()
+						.map(a -> new SingleRatedReview(a.getBody(), a.getRating()))
+						.collect(Collectors.toList());;
+		ratedReviews.getReviews().stream().map(reviews::add);
+
+		try {
+			topWords = reviewUtil.topWordsForReviews(reviews);
+		} catch (Exception e) {
+			throw new CalculationException("error: " + e.getMessage() + ". While getting top words");
+		}
+
 		// check for errors with reviews
 		for (int i = 0; i < review.size(); i += 1) {
 
@@ -117,7 +134,7 @@ public class ReviewService {
 
 		// save reviews and update item
 		List<Review> res = reviewRepository.saveAll(review);
-		itemService.updateItemRatingAndWords(itemId, ratedReviews.getTopPos(), ratedReviews.getTopNeg());
+		itemService.updateItemRatingAndWords(itemId, topWords.getTopPos(), topWords.getTopNeg());
 		return res;
 	}
 	
@@ -307,6 +324,9 @@ public class ReviewService {
 			res =  reviewRepository.findChartForAccountByWeek(id);
 		}
 
+		//calc average of all reviews counts so that the chart starts from the middle
+		int avg = (int)res.stream().map(Chart::getCount).mapToInt(a -> a).average().orElse(0);
+
 		Chart empty = new Chart() {
 			@Override
 			public double getRating() {
@@ -315,7 +335,7 @@ public class ReviewService {
 
 			@Override
 			public int getCount() {
-				return -1;
+				return avg;
 			}
 
 			@Override
@@ -366,6 +386,39 @@ public class ReviewService {
 		} else {
 			res =  reviewRepository.findChartForItemByWeek(id);
 		}
+
+		//calc average of all reviews counts so that the chart starts from the middle
+		int avg = (int)res.stream().map(Chart::getCount).mapToInt(a -> a).average().orElse(0);
+
+		Chart empty = new Chart() {
+			@Override
+			public double getRating() {
+				return -1;
+			}
+
+			@Override
+			public int getCount() {
+				return avg;
+			}
+
+			@Override
+			public String getTime() {
+				return null;
+			}
+
+			@Override
+			public String getTimeYear() {
+				return null;
+			}
+		};
+
+		Collections.reverse(res);
+		while (!Arrays.asList(0, 3, 5, 7, 9).contains(res.size())) {
+			res.remove(0);
+		}
+
+		res.add(0, empty);
+		res.add(res.size(), empty);
 		return res;
 	}
 }

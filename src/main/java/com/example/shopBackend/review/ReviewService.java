@@ -241,7 +241,7 @@ public class ReviewService {
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 		
-		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating")) || sort.equals("none")) {
+		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating") || sort.equals("none"))) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}

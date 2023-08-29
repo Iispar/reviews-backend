@@ -74,10 +74,10 @@ public class ReviewController {
 	}
 
 	/**
-	 * API GET call to /api/review/get/search/title?title=(input)&itemId=(input)&sort=(input)&sortDir=(input)&page=(input)
-	 * will return the reviews that match the inputted title search. Sorted as determined with sort and sortDir.
-	 * @param title
-	 * 	      Title that was searched.
+	 * API GET call to /api/review/get/search?search=(input)&itemId=(input)&sort=(input)&sortDir=(input)&page=(input)
+	 * will return the reviews that match the inputted search. Sorted as determined with sort and sortDir.
+	 * @param search
+	 * 	      Words that was searched.
 	 * @param id
 	 * 		  the id of the item the reviews correspond to.
 	 * @param sort
@@ -88,41 +88,15 @@ public class ReviewController {
 	 * 		  The page you want results of.
 	 * @return reviews that match the title and id of search
 	 */
-	@GetMapping("/get/search/title")
+	@GetMapping("/get/search")
 	public List<Review> getReviewsWithTitleForItem(
-			@RequestParam("title") String title,
+			@RequestParam("search") String search,
 			@RequestParam("itemId") int id,
 			@RequestParam("sort") String sort,
 			@RequestParam("sortDir") String sortDir,
 			@RequestParam("page") int page){
 		
-		return reviewService.getReviewsWithTitleForItem(title, id, page, sort, sortDir);
-	}
-
-	/**
-	 * API GET call to /api/review/get/search/body?title=(input)&itemId=(input)&sort=(input)&sortDir=(input)&page=(input)
-	 * will return the reviews that match the inputted title search. Sorted as determined with sort and sortDir.
-	 * @param body
-	 * 	      Body that was searched.
-	 * @param id
-	 * 		  the id of the item the reviews correspond to.
-	 * @param sort
-	 * 		  The sort used for search
-	 * @param sortDir
-	 * 		  The direction of the sort
-	 * @param page
-	 * 		  The page you want results of.
-	 * @return reviews that match the body and id of search
-	 */
-	@GetMapping("/get/search/body")
-	public List<Review> getReviewsWithBodyForItem(
-			@RequestParam("body") String body,
-			@RequestParam("itemId") int id,
-			@RequestParam("sort") String sort,
-			@RequestParam("sortDir") String sortDir,
-			@RequestParam("page") int page){
-
-		return reviewService.getReviewsWithBodyForItem(body, id, page, sort, sortDir);
+		return reviewService.getReviewsWithSearchForItem(search, id, page, sort, sortDir);
 	}
 	
 	/**

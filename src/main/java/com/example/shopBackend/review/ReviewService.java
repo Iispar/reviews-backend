@@ -199,18 +199,19 @@ public class ReviewService {
 					"No items exists with id " + id);
 		}
 		
-		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
+		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
 			throw new BadRequestException(
 					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
 		}
 		
-		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
+		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating") || sort.equals("none"))) {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
 		
 		Pageable pageRequest;
-		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 4);
+		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
 		
 		
@@ -218,9 +219,9 @@ public class ReviewService {
 	}
 	
 	/**
-	 * Finds all reviews for item with title from the database and returns them.
-	 * @param title
-	 * 		  The searched title.
+	 * Finds all reviews for item with title or body from the database and returns them.
+	 * @param search
+	 * 		  The searched words.
 	 * @param id
 	 * 		  The id of the item 
 	 * @param sort
@@ -229,7 +230,7 @@ public class ReviewService {
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
-	public List<Review> getReviewsWithTitleForItem(String title, int id, int page, String sort, String sortDir) {
+	public List<Review> getReviewsWithSearchForItem(String search, int id, int page, String sort, String sortDir) {
 		if(itemRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No items exists with id " + id);
@@ -252,48 +253,9 @@ public class ReviewService {
 		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
 
 		// formats title for sql.
-		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
+		String formattedTitle = String.format("%%%s%%", search).replaceAll("[ ,_]", "%");
 		
-		return reviewRepository.findAllByTitleForItem(formattedTitle, id, pageRequest);
-	}
-
-	/**
-	 * Finds all reviews for item with body from the database and returns them.
-	 * @param body
-	 * 		  The searched body.
-	 * @param id
-	 * 		  The id of the item
-	 * @param sort
-	 * 		  The sort used for search
-	 * @param page
-	 * 		  The page you want to receive
-	 * @return reviews that match query.
-	 */
-	public List<Review> getReviewsWithBodyForItem(String body, int id, int page, String sort, String sortDir) {
-		if(itemRepository.findById(id).isEmpty()) {
-			throw new BadRequestException(
-					"No items exists with id " + id);
-		}
-
-		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
-			throw new BadRequestException(
-					"sort direction " + sortDir + " is not supported. Has to be either asc or desc.");
-		}
-
-		if (!(sort.equals("review_date") || sort.equals("review_dislikes") || sort.equals("review_likes") || sort.equals("review_rating"))) {
-			throw new BadRequestException(
-					"sort " + sort + " is not a valid value for a sort in the entity.");
-		}
-
-		// creates pageRequest.
-		Pageable pageRequest;
-		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
-
-		// formats body for sql.
-		String formattedBody = String.format("%%%s%%", body).replaceAll("[ ,_]", "%");
-
-		return reviewRepository.findAllByBodyForItem(formattedBody, id, pageRequest);
+		return reviewRepository.findAllBySearchForItem(formattedTitle, id, pageRequest);
 	}
 	
 	/**

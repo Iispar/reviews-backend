@@ -40,30 +40,17 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Int
 	List<Review> findAllItemId(int id, Pageable pageable);
 	
 	/**
-	 * Query to find all reviews with searched title for an item.
-	 * @param title
-	 * 		  The searched title.
+	 * Query to find all reviews with searched title or body for an item.
+	 * @param search
+	 * 		  The searched words.
 	 * @param id
 	 * 	 	  The item id that is searched with.
 	 * @param pageable
 	 * 		  The pageable object that selects page and sort.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT * FROM reviews r WHERE r.review_title LIKE ?1 AND r.review_item = ?2", nativeQuery = true)
-	List<Review> findAllByTitleForItem(String title, int id, Pageable pageable);
-
-	/**
-	 * Query to find all reviews with searched body for an item.
-	 * @param body
-	 * 		  The searched body.
-	 * @param id
-	 * 	 	  The item id that is searched with.
-	 * @param pageable
-	 * 		  The pageable object that selects page and sort.
-	 * @return the items that matched the query
-	 */
-	@Query(value = "SELECT * FROM reviews r WHERE r.review_body LIKE ?1 AND r.review_item = ?2", nativeQuery = true)
-	List<Review> findAllByBodyForItem(String body, int id, Pageable pageable);
+	@Query(value = "SELECT * FROM reviews r WHERE r.review_item = ?2 AND (r.review_title LIKE ?1 OR r.review_body LIKE ?1)", nativeQuery = true)
+	List<Review> findAllBySearchForItem(String search, int id, Pageable pageable);
 	
 	/**
 	 * Query first all the items that match the Accounts id and then get their reviews.

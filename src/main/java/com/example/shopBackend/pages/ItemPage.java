@@ -12,34 +12,34 @@ import java.util.List;
 public class ItemPage {
 
     private String title;
-    private int reviews;
+    private int reviewsCount;
     private int positiveReviews;
     private int negativeReviews;
     private double rating;
 
-    private List<Review> latestReviews;
+    private List<Review> reviews;
     private List<Chart> chart;
     private List<String> topPos;
     private List<String> topNeg;
 
-    public ItemPage(String title, int reviews, int positiveReviews, int negativeReviews, double rating, List<Review> latestReviews, List<Chart> chart, List<String> topPos, List<String> topNeg) {
+    public ItemPage(String title, int reviewsCount, int positiveReviews, int negativeReviews, double rating, List<Review> reviews, List<Chart> chart, List<String> topPos, List<String> topNeg) {
         this.title = title;
-        this.reviews = reviews;
+        this.reviewsCount = reviewsCount;
         this.positiveReviews = positiveReviews;
         this.negativeReviews = negativeReviews;
         this.rating = rating;
-        this.latestReviews = latestReviews;
+        this.reviews = reviews;
         this.chart = chart;
         this.topPos = topPos;
         this.topNeg = topNeg;
     }
 
-    public List<Review> getLatestReviews() {
-        return latestReviews;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setLatestReviews(List<Review> latestReviews) {
-        this.latestReviews = latestReviews;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public String getTitle() {
@@ -50,12 +50,12 @@ public class ItemPage {
         this.title = title;
     }
 
-    public int getReviews() {
-        return reviews;
+    public int getReviewsCount() {
+        return reviewsCount;
     }
 
-    public void setReviews(int reviews) {
-        this.reviews = reviews;
+    public void setReviews(int reviewsCount) {
+        this.reviewsCount = reviewsCount;
     }
 
     public int getPositiveReviews() {

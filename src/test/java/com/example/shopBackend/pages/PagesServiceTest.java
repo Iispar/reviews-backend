@@ -112,7 +112,7 @@ class PagesServiceTest {
 
     @Test
     void getItemPageForItemWorks() {
-        Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
+        Pageable reviewPageReq = PageRequest.of(0, 4);
 
         given(itemRepository.findById(any())).willReturn(Optional.of(new Item(1, "test", new Account(), 4.2F, new Category(), new Words(1, List.of("1"), List.of("1")))));
         given(reviewRepository.findAllItemId(anyInt(), any())).willReturn(List.of(new Review()));
@@ -123,7 +123,7 @@ class PagesServiceTest {
         testPagesService.getItemPageForItem(1);
 
         verify(reviewRepository).findAllItemId(1, reviewPageReq);
-        verify(reviewRepository).findChartForItemByWeek(1);
+        verify(reviewRepository).findChartForItemByMonth(1);
         verify(reviewRepository).findReviewCountForItem(1);
         verify(reviewRepository).findPosReviewCountForItem(1);
         verify(reviewRepository).findNegReviewCountForItem(1);

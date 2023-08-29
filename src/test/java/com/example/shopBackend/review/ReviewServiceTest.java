@@ -200,146 +200,75 @@ class ReviewServiceTest {
 		
 		verify(reviewRepository, never()).findAllItemId(1, pageRequest);
 	}
-	
+
 	@Test
-	void getReviewsWithBodyForItemWorksWithAsc() {
+	void getReviewsWithSearchForItemWorksWithAsc() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
-		testReviewService.getReviewsWithBodyForItem("test_title", 0, 1,"review_date", "asc");
-		
-		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").ascending());
-
-		verify(reviewRepository).findAllByBodyForItem("%test%title%", 0, pageRequest);
-	}
-
-	@Test
-	void getReviewsWithBodyForItemWorksWithDesc() {
-		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-
-		testReviewService.getReviewsWithBodyForItem("test_title", 0, 1,"review_date", "desc");
-
-		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").descending());
-
-		verify(reviewRepository).findAllByBodyForItem("%test%title%", 0, pageRequest);
-	}
-	
-	@Test
-	void getReviewsWithBodyForItemThrowsErrorWithNegativePage() {
-		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		
-		assertThatThrownBy(() -> testReviewService.getReviewsWithBodyForItem("test_title", 0, -1, "review_date", "asc"))
-			.isInstanceOf(java.lang.IllegalArgumentException.class)
-			.hasMessageContaining("Page index must not be less than zero");
-	}
-	
-	@Test
-	void getReviewsWithBodyForItemThrowsErrorWithNotMatchingAccountId() {
-		given(itemRepository.findById(any())).willReturn(Optional.empty());
-		
-		assertThatThrownBy(() ->  testReviewService.getReviewsWithBodyForItem("test_title", 1, 0, "review_date", "asc"))
-			.isInstanceOf(BadRequestException.class)
-			.hasMessageContaining("No items exists with id 1");
-		
-		Pageable pageRequest = PageRequest.of(0, 4);
-		
-		verify(reviewRepository, never()).findAllByBodyForItem("%test%title%", 1, pageRequest);
-	}
-	
-	@Test
-	void getReviewsWithBodyForItemThrowsErrorWithBadSort() {
-		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		
-		assertThatThrownBy(() -> testReviewService.getReviewsWithBodyForItem("test_title", 1, 0, "review_name", "asc"))
-			.isInstanceOf(BadRequestException.class)
-			.hasMessageContaining("sort review_name is not a valid value for a sort in the entity.");
-		
-		Pageable pageRequest = PageRequest.of(0, 4);
-		
-		verify(reviewRepository, never()).findAllByBodyForItem("%test%title%", 1, pageRequest);
-	}
-	
-	@Test
-	void getReviewsWithBodyForItemThrowsErrorWithBadSortDir() {
-		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-		
-		assertThatThrownBy(() -> testReviewService.getReviewsWithBodyForItem("test_title", 1, 0, "review_name", "ascending"))
-			.isInstanceOf(BadRequestException.class)
-			.hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
-		
-		Pageable pageRequest = PageRequest.of(0, 4);
-		
-		verify(reviewRepository, never()).findAllByBodyForItem("%test%title%", 1, pageRequest);
-	}
-
-
-	@Test
-	void getReviewsWithTitleForItemWorksWithAsc() {
-		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
-
-		testReviewService.getReviewsWithTitleForItem("test_title", 0, 1,"review_date", "asc");
+		testReviewService.getReviewsWithSearchForItem("test_title", 0, 1,"review_date", "asc");
 
 		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").ascending());
 
-		verify(reviewRepository).findAllByTitleForItem("%test%title%", 0, pageRequest);
+		verify(reviewRepository).findAllBySearchForItem("%test%title%", 0, pageRequest);
 	}
 
 	@Test
-	void getReviewsWithTitleForItemWorksWithDesc() {
+	void getReviewsWithSearchForItemWorksWithDesc() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
-		testReviewService.getReviewsWithTitleForItem("test_title", 0, 1,"review_date", "desc");
+		testReviewService.getReviewsWithSearchForItem("test_title", 0, 1,"review_date", "desc");
 
 		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").descending());
 
-		verify(reviewRepository).findAllByTitleForItem("%test%title%", 0, pageRequest);
+		verify(reviewRepository).findAllBySearchForItem("%test%title%", 0, pageRequest);
 	}
 
 	@Test
-	void getReviewsWithTitleForItemThrowsErrorWithNegativePage() {
+	void getReviewsWithSearchForItemThrowsErrorWithNegativePage() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
-		assertThatThrownBy(() -> testReviewService.getReviewsWithTitleForItem("test_title", 0, -1, "review_date", "asc"))
+		assertThatThrownBy(() -> testReviewService.getReviewsWithSearchForItem("test_title", 0, -1, "review_date", "asc"))
 				.isInstanceOf(java.lang.IllegalArgumentException.class)
 				.hasMessageContaining("Page index must not be less than zero");
 	}
 
 	@Test
-	void getReviewsWithTitleForItemThrowsErrorWithNotMatchingAccountId() {
+	void getReviewsWithSearchForItemThrowsErrorWithNotMatchingAccountId() {
 		given(itemRepository.findById(any())).willReturn(Optional.empty());
 
-		assertThatThrownBy(() ->  testReviewService.getReviewsWithTitleForItem("test_title", 1, 0, "review_date", "asc"))
+		assertThatThrownBy(() ->  testReviewService.getReviewsWithSearchForItem("test_title", 1, 0, "review_date", "asc"))
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("No items exists with id 1");
 
 		Pageable pageRequest = PageRequest.of(0, 4);
 
-		verify(reviewRepository, never()).findAllByTitleForItem("%test%title%", 1, pageRequest);
+		verify(reviewRepository, never()).findAllBySearchForItem("%test%title%", 1, pageRequest);
 	}
 
 	@Test
-	void getReviewsWithTitleForItemThrowsErrorWithBadSort() {
+	void getReviewsWithSearchForItemThrowsErrorWithBadSort() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
-		assertThatThrownBy(() -> testReviewService.getReviewsWithTitleForItem("test_title", 1, 0, "review_name", "asc"))
+		assertThatThrownBy(() -> testReviewService.getReviewsWithSearchForItem("test_title", 1, 0, "review_name", "asc"))
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("sort review_name is not a valid value for a sort in the entity.");
 
 		Pageable pageRequest = PageRequest.of(0, 4);
 
-		verify(reviewRepository, never()).findAllByTitleForItem("%test%title%", 1, pageRequest);
+		verify(reviewRepository, never()).findAllBySearchForItem("%test%title%", 1, pageRequest);
 	}
 
 	@Test
-	void getReviewsWithTitleForItemThrowsErrorWithBadSortDir() {
+	void getReviewsWithSearchForItemThrowsErrorWithBadSortDir() {
 		given(itemRepository.findById(any())).willReturn(Optional.of(new Item()));
 
-		assertThatThrownBy(() -> testReviewService.getReviewsWithTitleForItem("test_title", 1, 0, "review_name", "ascending"))
+		assertThatThrownBy(() -> testReviewService.getReviewsWithSearchForItem("test_title", 1, 0, "review_name", "ascending"))
 				.isInstanceOf(BadRequestException.class)
 				.hasMessageContaining("sort direction ascending is not supported. Has to be either asc or desc.");
 
 		Pageable pageRequest = PageRequest.of(0, 4);
 
-		verify(reviewRepository, never()).findAllByTitleForItem("%test%title%", 1, pageRequest);
+		verify(reviewRepository, never()).findAllBySearchForItem("%test%title%", 1, pageRequest);
 	}
 	
 	@Test

@@ -193,7 +193,7 @@ class ReviewIntegrationTest {
     }
 
     @Test
-    void getReviewsForTitleSearch() {
+    void getReviewsForSearch() {
         Account account = new Account(
                 1,
                 "test",
@@ -203,34 +203,7 @@ class ReviewIntegrationTest {
                 new Role()
         );
         String token = jwtService.newToken(account);
-        webClient.get().uri("/api/review/get/search/title?title=tit&itemId=1&page=0&sort=review_date&sortDir=asc")
-                .headers(http -> http.setBearerAuth(token))
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$[0].title").isEqualTo("title")
-                .jsonPath("$[0].body").isEqualTo("body")
-                .jsonPath("$[0].date").isEqualTo("2022-02-02")
-                .jsonPath("$[0].rating").isEqualTo(4)
-                .jsonPath("$[0].likes").isEqualTo(2)
-                .jsonPath("$[0].dislikes").isEqualTo(2)
-                .jsonPath("$[0].account.id").isEqualTo(1)
-                .jsonPath("$[0].item.id").isEqualTo(1);
-
-    }
-
-    @Test
-    void getReviewsForBodySearch() {
-        Account account = new Account(
-                1,
-                "test",
-                "initSeller",
-                "initSeller pass",
-                "email",
-                new Role()
-        );
-        String token = jwtService.newToken(account);
-        webClient.get().uri("/api/review/get/search/body?body=bo&itemId=1&page=0&sort=review_date&sortDir=asc")
+        webClient.get().uri("/api/review/get/search?search=tit&itemId=1&page=0&sort=review_date&sortDir=asc")
                 .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()

@@ -416,7 +416,7 @@ class ReviewControllerTest {
     }
 
     @Test
-    void getReviewsWithTitleForItemWorks() throws Exception {
+    void getReviewsWithSearchForItemWorks() throws Exception {
         Item item = new Item(
                 1,
                 "test title",
@@ -446,10 +446,10 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsWithTitleForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsWithSearchForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
 
 
-        mockMvc.perform(get("/api/review/get/search/title?title=ti&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0))
+        mockMvc.perform(get("/api/review/get/search?search=ti&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(review.getTitle()))
                 .andExpect(jsonPath("$[0].body").value(review.getBody()))
@@ -462,7 +462,7 @@ class ReviewControllerTest {
     }
 
     @Test
-    void getReviewsWithTitleForItemThrowsWithNoParams() throws Exception {
+    void getReviewsWithSearchForItemThrowsWithNoParams() throws Exception {
         Item item = new Item(
                 1,
                 "test title",
@@ -492,95 +492,10 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsWithTitleForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsWithSearchForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
 
 
-        mockMvc.perform(get("/api/review/get/search/title", "test", 4, "review_date", "asc", 0))
+        mockMvc.perform(get("/api/review/get/search", "test", 4, "review_date", "asc", 0))
                 .andExpect(status().isBadRequest());
     }
-
-    @Test
-    void getReviewsWithBodyForItemWorks() throws Exception {
-        Item item = new Item(
-                1,
-                "test title",
-                new Account(),
-                1,
-                new Category(),
-                new Words()
-        );
-
-        Account account = new Account(
-                1,
-                "name",
-                "username",
-                "pass",
-                "email",
-                new Role()
-        );
-
-        Review review = new Review(
-                new Date(3),
-                "body",
-                "title",
-                5,
-                3,
-                account,
-                3,
-                item
-        );
-
-        given(reviewService.getReviewsWithBodyForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
-
-
-        mockMvc.perform(get("/api/review/get/search/body?body=bo&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value(review.getTitle()))
-                .andExpect(jsonPath("$[0].body").value(review.getBody()))
-                .andExpect(jsonPath("$[0].date").value("1970-01-01"))
-                .andExpect(jsonPath("$[0].rating").value(review.getRating()))
-                .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
-                .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
-                .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
-    }
-
-    @Test
-    void getReviewsWithBodyForItemThrowsWithNoParams() throws Exception {
-        Item item = new Item(
-                1,
-                "test title",
-                new Account(),
-                1,
-                new Category(),
-                new Words()
-        );
-
-        Account account = new Account(
-                1,
-                "name",
-                "username",
-                "pass",
-                "email",
-                new Role()
-        );
-
-        Review review = new Review(
-                new Date(3),
-                "body",
-                "title",
-                5,
-                3,
-                account,
-                3,
-                item
-        );
-
-        given(reviewService.getReviewsWithBodyForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
-
-
-        mockMvc.perform(get("/api/review/get/search/body", "test", 4, "review_date", "asc", 0))
-                .andExpect(status().isBadRequest());
-    }
-
 }

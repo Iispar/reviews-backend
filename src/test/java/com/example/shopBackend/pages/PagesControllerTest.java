@@ -164,12 +164,12 @@ class PagesControllerTest {
 
         mockMvc.perform(get("/api/pages/get/item?itemId=1", 1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.latestReviews[0].title").value(itempage.getLatestReviews().get(0).getTitle()))
+                .andExpect(jsonPath("$.reviews[0].title").value(itempage.getReviews().get(0).getTitle()))
                 .andExpect(jsonPath("$.chart[0].count").value(itempage.getChart().get(0).getCount()))
                 .andExpect(jsonPath("$.topPos[0]").value(itempage.getTopPos().get(0)))
                 .andExpect(jsonPath("$.title").value(itempage.getTitle()))
                 .andExpect(jsonPath("$.topNeg[0]").value(itempage.getTopNeg().get(0)))
-                .andExpect(jsonPath("$.reviews").value(itempage.getReviews()))
+                .andExpect(jsonPath("$.reviewsCount").value(itempage.getReviewsCount()))
                 .andExpect(jsonPath("$.rating").value(itempage.getRating()));
     }
 

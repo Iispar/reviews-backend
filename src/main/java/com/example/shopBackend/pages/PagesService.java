@@ -136,7 +136,7 @@ public class PagesService {
      */
     public ItemPage getItemPageForItem(int itemId) {
 
-        Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
+        Pageable reviewPageReq = PageRequest.of(0, 4);
 
         Item item = itemRepository.findById(itemId).orElse(null);
 
@@ -155,7 +155,7 @@ public class PagesService {
 
         List<Review> latestReviews = reviewRepository.findAllItemId(itemId, reviewPageReq);
 
-        List<Chart> chart = reviewRepository.findChartForItemByWeek(itemId);
+        List<Chart> chart = reviewRepository.findChartForItemByMonth(itemId);
         Collections.reverse(chart);
         //calc average of all reviews counts so that the chart starts from the middle
         int avg = (int)chart.stream().map(Chart::getCount).mapToInt(a -> a).average().orElse(0);

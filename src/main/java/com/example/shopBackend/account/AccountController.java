@@ -19,6 +19,18 @@ public class AccountController {
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
 	}
+
+	/**
+	 * API GET call to /api/account/get?accountId=(input)
+	 * will return account that matched the id
+	 * @param accountId
+	 * 	      The account to be added to the database
+	 * @return Account that matches
+	 */
+	@GetMapping("/get")
+	public Account get(@RequestParam int accountId) {
+		return accountService.getAccount(accountId);
+	}
 	
 	/**
 	 * API POST call to /api/account/add with content in the body that describes the added account

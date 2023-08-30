@@ -64,6 +64,23 @@ class AccountServiceTest {
     private AccountService testAccountService;
 
     @Test
+    void getAccountWorks() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
+        testAccountService.getAccount(1);
+
+        verify(accountRepository).findById(1);
+
+    }
+
+    @Test
+    void getAccountThrowsWithNoAccount() {
+        assertThatThrownBy(() ->  testAccountService.getAccount(1))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("no accounts with id: 1");
+
+    }
+
+    @Test
     void saveAllAccounts() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
         given(accountRepository.findByUsername(any())).willReturn(Optional.empty());

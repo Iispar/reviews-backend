@@ -29,6 +29,35 @@ class AccountControllerTest {
     AccountService accountService;
 
     @Test
+    void getAccountWorks() throws Exception {
+        Account account = new Account(
+                1,
+                "name",
+                "username",
+                "pass",
+                "email",
+                new Role(
+                        1,
+                        "role"
+                )
+        );
+        given(accountService.getAccount(anyInt())).willReturn(account);
+
+        mockMvc.perform(get("/api/account/get?accountId=1", 1))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(account.getName()))
+                .andExpect(jsonPath("$.email").value(account.getEmail()))
+                .andExpect(jsonPath("$.password").value("pass"))
+                .andExpect(jsonPath("$.username").value(account.getUsername()));
+    }
+
+    @Test
+    void getAccountThrowsWithNoParams() throws Exception {
+        mockMvc.perform(get("/api/account/get"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void addAccountWorks() throws Exception {
          Account account = new Account(
                 1,

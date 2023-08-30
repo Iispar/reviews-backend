@@ -47,6 +47,20 @@ public class AccountService {
 		this.authenticationManager = authenticationManager;
 	}
 
+
+	/**
+	 * Queries account that matches the account id and returns it
+	 * @param accountId
+	 * 		  Id of account we are searching for.
+	 * @return matched account
+	 */
+	public Account getAccount(int accountId) {
+		Account account = accountRepository.findById(accountId).orElseThrow(() ->
+				new BadRequestException("no accounts with id: " + accountId));
+		account.setPassword(null);
+		return account;
+	}
+
 	/**
 	 * Saves a new account to the database.
 	 *

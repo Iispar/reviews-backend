@@ -28,6 +28,27 @@ class AccountIntegrationTest {
     public AccountRepository accountRepository;
 
     @Test
+    void getAccountWorks() {
+        Account account = new Account(
+                1,
+                "test",
+                "initSeller",
+                "initSeller pass",
+                "email",
+                new Role()
+        );
+        String token = jwtService.newToken(account);
+        webClient.get().uri("/api/account/get?accountId=1")
+                .headers(http -> http.setBearerAuth(token))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.name").isEqualTo("initSeller name")
+                .jsonPath("$.username").isEqualTo("initSeller")
+                .jsonPath("$.password").isEqualTo(null)
+                .jsonPath("$.email").isEqualTo("initSeller email");
+    }
+    @Test
     void addAccountWorks() {
         int items = accountRepository.findAll().size();
         webClient.post().uri("/api/account/add")

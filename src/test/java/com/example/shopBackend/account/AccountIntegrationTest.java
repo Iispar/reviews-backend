@@ -144,11 +144,6 @@ class AccountIntegrationTest {
                 )
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.name").isEqualTo("newName")
-                .jsonPath("$.username").isEqualTo("newUser")
-                .jsonPath("$.password").isEqualTo("newPass1!")
-                .jsonPath("$.email").isEqualTo("newEmail")
-                .jsonPath("$.role.id").isEqualTo(1);
+                .expectBody().toString().equals("true");
     }
 }

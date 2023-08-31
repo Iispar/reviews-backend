@@ -139,7 +139,7 @@ class AccountControllerTest {
                 )
         );
 
-        given(accountService.updateAccount(anyInt(), any())).willReturn(account);
+        given(accountService.updateAccount(anyInt(), any())).willReturn(true);
 
         mockMvc.perform(put("/api/account/update?accountId=1", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -155,13 +155,7 @@ class AccountControllerTest {
                         }
                         """))
 
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(account.getId()))
-                .andExpect(jsonPath("$.name").value(account.getName()))
-                .andExpect(jsonPath("$.username").value(account.getUsername()))
-                .andExpect(jsonPath("$.password").value(account.getPassword()))
-                .andExpect(jsonPath("$.email").value(account.getEmail()))
-                .andExpect(jsonPath("$.role.name").value(account.getRole().getName()));
+                .andExpect(status().isOk());
     }
     @Test
     void updateAccountThrowsWithNoParams() throws Exception {

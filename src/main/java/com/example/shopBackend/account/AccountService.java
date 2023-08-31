@@ -126,7 +126,7 @@ public class AccountService {
 	 * 		  The account to be updated to the database.
 	 * @return updated account
 	 */
-	public Account updateAccount(int accountId, Account account) {
+	public boolean updateAccount(int accountId, Account account) {
 		Account foundAccount = accountRepository.findById(accountId).orElseThrow(() ->
 				new BadRequestException(
 						"No accounts exists with id: " + accountId)
@@ -138,7 +138,7 @@ public class AccountService {
 					"role with id: " + roleId + " does not exist");
 		}
 
-		if (!account.getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w@$!%*#?&]{8,}")) {
+		if (!account.getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w@$!%*#?&]{8,}") && !account.getPassword().equals("none")) {
 			throw new BadRequestException(
 					"password doesn't include an uppercase letter, number or special character os is min length 8");
 		}
@@ -155,10 +155,11 @@ public class AccountService {
 
 		foundAccount.setEmail(account.getEmail());
 		foundAccount.setName(account.getName());
-		foundAccount.setPassword(account.getPassword());
+		if (!account.getPassword().equals("none")) foundAccount.setPassword(passwordEncoder.encode(account.getPassword()));
 		foundAccount.setUsername(account.getUsername());
 
-		return accountRepository.save(foundAccount);
+		accountRepository.save(foundAccount);
+		return true;
 	}
 
 	/**

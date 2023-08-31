@@ -32,7 +32,7 @@ public class ApplicationConfig {
     public UserDetailsService userDetailService ()  {
         return username -> accountRepository.findByUsername(username).orElseThrow(
                 () -> new BadRequestException(
-                        "user not found with username"
+                        "user not found with username: " + username
         ));
     }
 

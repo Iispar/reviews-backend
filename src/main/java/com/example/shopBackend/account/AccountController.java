@@ -66,7 +66,7 @@ public class AccountController {
 	 * @return updated account
 	 */
 	@PutMapping("/update")
-	public Account update(
+	public boolean update(
 			@RequestParam int accountId,
 			@RequestBody Account account) {
 		return accountService.updateAccount(accountId, account);

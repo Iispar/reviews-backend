@@ -74,6 +74,7 @@ public class Account implements UserDetails {
 		this.name = name;
 	}
 
+	@Override
 	public String getUsername() {
 		return username;
 	}

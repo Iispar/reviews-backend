@@ -3,6 +3,8 @@ package com.example.shopBackend.account;
 import com.example.shopBackend.security.AuthRequest;
 import com.example.shopBackend.security.AuthRes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -77,9 +79,15 @@ public class AccountController {
 	 * will delete the account with the corresponding id.
 	 * @return True if successful. Error otherwise
 	 */
+	@PreAuthorize("#id == authentication.principal.id")
 	@DeleteMapping("/del")
 	public boolean deleteAccount(@RequestParam("accountId") int id) {
-
 		return Boolean.TRUE.equals(accountService.deleteAccount(id));
+	}
+
+	@PostMapping("/check")
+	public boolean check() {
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		return true;
 	}
 }

@@ -2,6 +2,7 @@ package com.example.shopBackend.review;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class ReviewController {
 	 *        The review to be added to the database
 	 * @return True if successful. Error otherwise
 	 */
+	@PreAuthorize("@authorization.addReviewsAreOwn(authentication, #review)")
 	@PostMapping("/add")
 	public List<Review> add(@RequestBody List<Review> review) {
 		return reviewService.saveAllReviews(review);
@@ -44,6 +46,7 @@ public class ReviewController {
 	 * 		  The page you want reviews from
 	 * @return selected reviews for account in date ascending order.
 	 */
+	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get/account")
 	public List<Review> getReviewsForAccount(
 			@RequestParam("accountId") int id,
@@ -64,6 +67,7 @@ public class ReviewController {
 	 * 		  The page you want results of.
 	 * @return selected reviews for item
 	 */
+	@PreAuthorize("@authorization.isOwnItem(authentication, #id)")
 	@GetMapping("/get/item")
 	public List<Review> getReviewsForItem(
 			@RequestParam("itemId") int id,
@@ -88,6 +92,7 @@ public class ReviewController {
 	 * 		  The page you want results of.
 	 * @return reviews that match the title and id of search
 	 */
+	@PreAuthorize("@authorization.isOwnItem(authentication, #id)")
 	@GetMapping("/get/search")
 	public List<Review> getReviewsWithTitleForItem(
 			@RequestParam("search") String search,
@@ -108,6 +113,7 @@ public class ReviewController {
 	 * 		  Either month or week, the selection for grouping of results.
 	 * @return chart for Account.
 	 */
+	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get/chart/account")
 	public List<Chart> getChartForAccount(
 			@RequestParam("accountId") int id,
@@ -124,6 +130,7 @@ public class ReviewController {
 	 * 		  Either month or week, the selection for grouping of results.
 	 * @return chart for item
 	 */
+	@PreAuthorize("@authorization.isOwnItem(authentication, #id)")
 	@GetMapping("/get/chart/item")
 	public List<Chart> getChartForItem(
 			@RequestParam("itemId") int id,
@@ -138,6 +145,7 @@ public class ReviewController {
 	 * 	      id of the review you wish to delete.
 	 * @return true id successful, false Otherwise.
 	 */
+	@PreAuthorize("@authorization.isOwnReview(authentication, #id)")
 	@DeleteMapping("/del")
 	public boolean deleteReview(@RequestParam("reviewId") int id) {
 		return Boolean.TRUE.equals(reviewService.deleteReview(id));

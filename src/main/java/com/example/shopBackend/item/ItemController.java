@@ -2,6 +2,7 @@ package com.example.shopBackend.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class ItemController {
 	 * 		  The item to be added to the database
 	 * @return saved items
 	 */
+	@PreAuthorize("@authorization.addItemsAreOwn(authentication, #item)")
 	@PostMapping("/add")
 	public List<Item> add(@RequestBody List<Item> item) {
 		return itemService.saveAllItems(item);
@@ -43,6 +45,7 @@ public class ItemController {
 	 * 	      the page we want for the items
 	 * @return requested items
 	 */
+	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get")
 	public List<ItemWithReviews> getItemsForAccount(
 			@RequestParam("sort") String sort,
@@ -67,6 +70,7 @@ public class ItemController {
 	 * 		  The direction of the sort
 	 * @return items that match title and search
 	 */
+	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get/search")
 	public List<ItemWithReviews> getItemsForAccountWithTitle(
 			@RequestParam("title") String title,
@@ -92,6 +96,7 @@ public class ItemController {
 	 * 		  The id of the item we want to delete
 	 * @return True if successful. Error otherwise
 	 */
+	@PreAuthorize("@authorization.isOwnItem(authentication, #id)")
 	@DeleteMapping("/del")
 	public boolean deleteItem(@RequestParam("itemId") int id) {
 		return Boolean.TRUE.equals(itemService.deleteItem(id));
@@ -106,6 +111,7 @@ public class ItemController {
 	 * 		  The item that has updated values.
 	 * @return Updated item
 	 */
+	@PreAuthorize("@authorization.isOwnItem(authentication, #id)")
 	@PutMapping("/update")
 	public Item updateItem(
 			@RequestParam("itemId") int id,

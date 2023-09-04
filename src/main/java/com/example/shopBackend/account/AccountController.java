@@ -4,7 +4,6 @@ import com.example.shopBackend.security.AuthRequest;
 import com.example.shopBackend.security.AuthRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,6 +28,7 @@ public class AccountController {
 	 * 	      The account to be added to the database
 	 * @return Account that matches
 	 */
+	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get")
 	public Account get(@RequestParam int accountId) {
 		return accountService.getAccount(accountId);
@@ -67,6 +67,7 @@ public class AccountController {
 	 * 	      The accountId of the account to be updated
 	 * @return updated account
 	 */
+	@PreAuthorize("#id == authentication.principal.id")
 	@PutMapping("/update")
 	public boolean update(
 			@RequestParam int accountId,
@@ -83,11 +84,5 @@ public class AccountController {
 	@DeleteMapping("/del")
 	public boolean deleteAccount(@RequestParam("accountId") int id) {
 		return Boolean.TRUE.equals(accountService.deleteAccount(id));
-	}
-
-	@PostMapping("/check")
-	public boolean check() {
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		return true;
 	}
 }

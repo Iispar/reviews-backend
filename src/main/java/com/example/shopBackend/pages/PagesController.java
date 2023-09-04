@@ -1,6 +1,7 @@
 package com.example.shopBackend.pages;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ public class PagesController {
      *        The id we want the home page data for
      * @return homepage data for Account.
      */
+    @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/get/home")
     public Homepage getHomePageForAccount(
         @RequestParam("accountId") int id) {
@@ -42,6 +44,7 @@ public class PagesController {
      *        The id we want the home page data for
      * @return ItemPage data for item.
      */
+    @PreAuthorize("@authorization.isOwnItem(authentication, #id)")
     @GetMapping("/get/item")
     public ItemPage getItemPageForItem(
             @RequestParam("itemId") int id) {

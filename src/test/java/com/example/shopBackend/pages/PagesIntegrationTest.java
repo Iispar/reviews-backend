@@ -23,7 +23,7 @@ class PagesIntegrationTest {
     @Test
     void getHomePageWorks() {
         Account account = new Account(
-                2,
+                1,
                 "test",
                 "initSeller",
                 "initSeller pass",
@@ -31,14 +31,14 @@ class PagesIntegrationTest {
                 new Role()
         );
         String token = jwtService.newToken(account);
-        webClient.get().uri("/api/pages/get/home?accountId=2")
+        webClient.get().uri("/api/pages/get/home?accountId=1")
                 .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.latestReviews[0].id").isEqualTo(2)
-                .jsonPath("$.topItems[0].id").isEqualTo(2)
-                .jsonPath("$.chart[0].count").isEqualTo(3)
+                .jsonPath("$.latestReviews[0].id").isEqualTo(1)
+                .jsonPath("$.topItems[0].id").isEqualTo(1)
+                .jsonPath("$.chart[0].count").isEqualTo(1)
                 .jsonPath("$.ratingsAvg").isEqualTo(4)
                 .jsonPath("$.itemsCount").isEqualTo(1);
     }
@@ -46,7 +46,7 @@ class PagesIntegrationTest {
     @Test
     void getItemPageWorks() {
         Account account = new Account(
-                2,
+                1,
                 "test",
                 "initSeller",
                 "initSeller pass",
@@ -54,19 +54,19 @@ class PagesIntegrationTest {
                 new Role()
         );
         String token = jwtService.newToken(account);
-        webClient.get().uri("/api/pages/get/item?itemId=2")
+        webClient.get().uri("/api/pages/get/item?itemId=1")
                 .headers(http -> http.setBearerAuth(token))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.reviews[0].id").isEqualTo(2)
-                .jsonPath("$.chart[0].count").isEqualTo(3)
+                .jsonPath("$.reviews[0].id").isEqualTo(1)
+                .jsonPath("$.chart[0].count").isEqualTo(1)
                 .jsonPath("$.topNeg").isEqualTo(null)
                 .jsonPath("$.topPos").isEqualTo(null)
-                .jsonPath("$.reviewsCount").isEqualTo(3)
+                .jsonPath("$.reviewsCount").isEqualTo(1)
                 .jsonPath("$.rating").isEqualTo(4)
-                .jsonPath("$.positiveReviews").isEqualTo(3)
+                .jsonPath("$.positiveReviews").isEqualTo(1)
                 .jsonPath("$.negativeReviews").isEqualTo(0)
-                .jsonPath("$.title").isEqualTo("initItem title 2");
+                .jsonPath("$.title").isEqualTo("initItem title");
     }
 }

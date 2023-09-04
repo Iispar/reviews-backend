@@ -24,14 +24,14 @@ public class AccountController {
 	/**
 	 * API GET call to /api/account/get?accountId=(input)
 	 * will return account that matched the id
-	 * @param accountId
-	 * 	      The account to be added to the database
+	 * @param id
+	 * 	      The id of the account be gotten from the database
 	 * @return Account that matches
 	 */
 	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get")
-	public Account get(@RequestParam int accountId) {
-		return accountService.getAccount(accountId);
+	public Account get(@RequestParam("accountId") int id) {
+		return accountService.getAccount(id);
 	}
 	
 	/**
@@ -63,16 +63,16 @@ public class AccountController {
 	 * will update it to the database.
 	 * @param account
 	 * 	      The account to be updated to the database
-	 * @param accountId
-	 * 	      The accountId of the account to be updated
+	 * @param id
+	 * 	      The id of the account to be updated
 	 * @return updated account
 	 */
 	@PreAuthorize("#id == authentication.principal.id")
 	@PutMapping("/update")
 	public boolean update(
-			@RequestParam int accountId,
+			@RequestParam("accountId") int id,
 			@RequestBody Account account) {
-		return accountService.updateAccount(accountId, account);
+		return accountService.updateAccount(id, account);
 	}
 
 	/**

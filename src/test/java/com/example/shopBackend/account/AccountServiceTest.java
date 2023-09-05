@@ -282,7 +282,7 @@ class AccountServiceTest {
 
         assertThatThrownBy(() -> testAccountService.login(request))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("no users with username: test");
+                .hasMessageContaining("username not found");
 
         verify(accountRepository).findByUsername("test");
     }

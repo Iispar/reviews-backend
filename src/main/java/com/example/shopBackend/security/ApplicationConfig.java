@@ -1,7 +1,7 @@
 package com.example.shopBackend.security;
 
 import com.example.shopBackend.account.AccountRepository;
-import exception.BadRequestException;
+import exception.ForbiddenException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,8 +31,8 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailService ()  {
         return username -> accountRepository.findByUsername(username).orElseThrow(
-                () -> new BadRequestException(
-                        "user not found with username: " + username
+                () -> new ForbiddenException(
+                        "Access Denied"
         ));
     }
 

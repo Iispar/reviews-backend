@@ -117,7 +117,7 @@ public class AccountService {
 		);
 
 		Account account = accountRepository.findByUsername(request.getUsername()).orElseThrow(() ->
-				new BadRequestException("no users with username: " + request.getUsername()));
+				new BadRequestException("username not found"));
 		String jwtToken = jwtService.newToken(account);
 
 		return new AuthRes(jwtToken, account.getId());

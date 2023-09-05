@@ -77,6 +77,12 @@ public class AccountService {
 						"role with id: " + roleId + " does not exist");
 			}
 
+			if(!account.getUsername().matches("^(?=[a-zA-Z0-9._]{2,20}$)(?!.*[_.]{2})[^_.].*[^_.]$")) {
+				throw new BadRequestException(
+						"username includes one of the following. special character, space or is not between 2-20 characters"
+				);
+			}
+
 			if (!account.getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w@$!%*#?&]{8,}")) {
 				throw new BadRequestException(
 						"password doesn't include an uppercase letter, number or special character os is min length 8");
@@ -136,6 +142,12 @@ public class AccountService {
 		if (roleRepository.findById(roleId).isEmpty()) {
 			throw new BadRequestException(
 					"role with id: " + roleId + " does not exist");
+		}
+
+		if(!account.getUsername().matches("^(?=[a-zA-Z0-9._]{2,20}$)(?!.*[_.]{2})[^_.].*[^_.]$")) {
+			throw new BadRequestException(
+					"username includes one of the following. special character, space or is not between 2-20 characters"
+			);
 		}
 
 		if (!account.getPassword().matches("^(?=.*\\w)(?=.*\\d)(?=.*[@$!%*#?&])[\\w@$!%*#?&]{8,}") && !account.getPassword().equals("none")) {

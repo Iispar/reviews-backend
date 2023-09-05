@@ -97,7 +97,7 @@ public class PagesService {
 
         // if has any empty ratings create new object with zero count
         // a bit clumsy atm but TODO: optimize this.
-        if (barChart.size() != 5) {
+        if (barChart.size() != 5 && !barChart.isEmpty()) {
             int initValue = 0;
             for (int i = 1; i <= 5; i += 1) {
                 if (barChart.get(initValue).getRating() != i) {

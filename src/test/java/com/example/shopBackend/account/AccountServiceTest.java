@@ -144,6 +144,48 @@ class AccountServiceTest {
     }
 
     @Test
+    void saveAllAccountsThrowsWithUsernameSpaceCharacter() {
+        given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
+
+        Role role = new Role(1, "test category");
+        Account account = new Account(
+                1,
+                "test name",
+                "user name",
+                "password",
+                "example@gmail.com",
+                role
+        );
+
+        assertThatThrownBy(() ->  testAccountService.saveAccount(account))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("username includes one of the following. special character, space or is not between 2-20 characters");
+
+        verify(accountRepository, never()).save(account);
+    }
+
+    @Test
+    void saveAllAccountsThrowsWithUsernameSpecialCharacter() {
+        given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
+
+        Role role = new Role(1, "test category");
+        Account account = new Account(
+                1,
+                "testname",
+                "username!",
+                "password",
+                "example@gmail.com",
+                role
+        );
+
+        assertThatThrownBy(() ->  testAccountService.saveAccount(account))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("username includes one of the following. special character, space or is not between 2-20 characters");
+
+        verify(accountRepository, never()).save(account);
+    }
+
+    @Test
     void saveAllAccountsThrowsWithTooShortPassword() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
 
@@ -257,7 +299,7 @@ class AccountServiceTest {
         Account updateAccount = new Account(
                 1,
                 "test2 name",
-                "username 2",
+                "username",
                 "passWord321!",
                 "example2@gmail.com",
                 role
@@ -329,7 +371,7 @@ class AccountServiceTest {
         Account updateAccount = new Account(
                 1,
                 "test2 name",
-                "username 2",
+                "username2",
                 "passWord321!",
                 "example2@gmail.com",
                 role
@@ -355,7 +397,7 @@ class AccountServiceTest {
         Account updateAccount = new Account(
                 1,
                 "test2 name",
-                "username 2",
+                "username2",
                 "passWord321!",
                 "example2@gmail.com",
                 role
@@ -380,8 +422,8 @@ class AccountServiceTest {
         Account updateAccount = new Account(
                 1,
                 "test2 name",
-                "username 2",
-                "pass!",
+                "username2",
+                "psas!",
                 "example2@gmail.com",
                 role
         );
@@ -396,10 +438,8 @@ class AccountServiceTest {
     }
 
     @Test
-    void updateAccountWorksWithSameEmailAndUsername() {
+    void updateAccountThrowsWithUsernameSpace() {
         given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
-        given(accountRepository.findByUsername(any())).willReturn(Optional.of(new Account()));
-        given(accountRepository.findByEmail(any())).willReturn(Optional.of(new Account()));
 
         Account account = new Account(1, "test name", "test username", "testPass", "testEmail", new Role());
         Role role = new Role(1, "test category");
@@ -407,7 +447,34 @@ class AccountServiceTest {
         Account updateAccount = new Account(
                 1,
                 "test2 name",
-                "test username",
+                "username 2",
+                "pass!",
+                "example2@gmail.com",
+                role
+        );
+
+        given(accountRepository.findById(any())).willReturn(Optional.of(account));
+        int AccountId = updateAccount.getId();
+        assertThatThrownBy(() -> testAccountService.updateAccount(AccountId, updateAccount))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("username includes one of the following. special character, space or is not between 2-20 characters");
+
+        verify(accountRepository, never()).save(updateAccount);
+    }
+
+    @Test
+    void updateAccountWorksWithSameEmailAndUsername() {
+        given(roleRepository.findById(any())).willReturn(Optional.of(new Role()));
+        given(accountRepository.findByUsername(any())).willReturn(Optional.of(new Account()));
+        given(accountRepository.findByEmail(any())).willReturn(Optional.of(new Account()));
+
+        Account account = new Account(1, "test name", "testusername2", "testPass", "testEmail", new Role());
+        Role role = new Role(1, "test category");
+
+        Account updateAccount = new Account(
+                1,
+                "test2 name",
+                "testusername2",
                 "passWord321!",
                 "testEmail",
                 role

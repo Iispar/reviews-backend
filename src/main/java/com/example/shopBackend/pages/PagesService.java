@@ -94,16 +94,14 @@ public class PagesService {
 
 
         List<BarChart> barChart = reviewRepository.findRatingDistributionWithAccountId(accountId);
-        // sort barChart list
-        Collections.sort(barChart);
 
         // if has any empty ratings create new object with zero count
         // a bit clumsy atm but TODO: optimize this.
         if (barChart.size() != 5) {
-            int curr = 1;
-            for (int i = 0; i < barChart.size(); i += 1) {
-                if (barChart.get(i).getRating() != curr) {
-                    int finalCurr = curr;
+            int initValue = 0;
+            for (int i = 1; i <= 5; i += 1) {
+                if (barChart.get(initValue).getRating() != i) {
+                    int finalCurr = i;
                     barChart.add(new BarChart() {
                         @Override
                         public int getRating() {
@@ -115,13 +113,14 @@ public class PagesService {
                             return 0;
                         }
                     });
-                }
-                else {
-                    curr++;
+                } else {
+                    initValue++;
                 }
             }
         }
 
+        // sort barChart list
+        Collections.sort(barChart);
 
         float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
 

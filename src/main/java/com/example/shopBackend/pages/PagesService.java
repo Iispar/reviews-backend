@@ -45,6 +45,7 @@ public class PagesService {
         Account account = accountRepository.findById(accountId).orElseThrow(() ->
                 new BadRequestException("no Accounts with id: " + accountId + " exists")
         );
+        account.setPassword(null);
 
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 5, Sort.by("item_rating").descending());

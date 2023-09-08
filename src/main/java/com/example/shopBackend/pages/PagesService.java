@@ -47,7 +47,7 @@ public class PagesService {
         );
 
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").descending());
+        Pageable itemPageReq = PageRequest.of(0, 5, Sort.by("item_rating").descending());
 
         int reviewCount = reviewRepository.findCountWithAccountId(accountId);
         int itemCount = itemRepository.findItemCountForAccountId(accountId);
@@ -122,7 +122,7 @@ public class PagesService {
         // sort barChart list
         Collections.sort(barChart);
 
-        float ratingAvg = itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F);
+        float ratingAvg = (float) Math.round(itemRepository.findItemAvgRatingForAccountId(accountId).orElse(0F) * 10) / 10;
 
         return new Homepage(account.getName(), latestReviews, topItems, ratingAvg, itemCount, reviewCount, barChart, chart);
     }

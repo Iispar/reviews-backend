@@ -26,7 +26,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	 * 		  The pageable object that selects page and sorts.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT * FROM items i WHERE i.item_account = ?1", nativeQuery = true)
+	@Query(value = "SELECT i.item_id AS item_id, item_rating AS item_rating, i.item_title AS item_title, i.item_account AS item_account, i.item_category AS item_category, i.item_words AS item_words FROM items i WHERE i.item_account = ?1", nativeQuery = true)
 	List<Item> findAllAccountId(int id, Pageable pageable);
 
 	/**

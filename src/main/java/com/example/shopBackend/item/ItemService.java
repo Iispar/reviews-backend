@@ -112,9 +112,9 @@ public class ItemService {
 
 		// creates pageRequest
 		PageRequest pageRequest;
-		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 6);
-		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 6, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 6, Sort.by(sort).descending());
+		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 5);
+		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 5, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 5, Sort.by(sort).descending());
 
 		return itemRepository.findAllForAccountWithReviewCount(id, pageRequest);
 	}
@@ -150,9 +150,9 @@ public class ItemService {
 
 		// creates pageRequest
 		PageRequest pageRequest;
-		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 6);
-		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 6, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 6, Sort.by(sort).descending());
+		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 5);
+		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 5, Sort.by(sort).ascending());
+		else pageRequest = PageRequest.of(page, 5, Sort.by(sort).descending());
 
 		// formats title for sql.
 		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");

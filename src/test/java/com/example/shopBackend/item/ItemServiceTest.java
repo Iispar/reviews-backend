@@ -71,7 +71,7 @@ class ItemServiceTest {
     void getItemsForAccountWorksWithAsc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").ascending());
+        Pageable pageRequest = PageRequest.of(0, 5, Sort.by("rating").ascending());
         testItemService.getItemsForAccount(1, 0, "rating", "asc");
 
         verify(itemRepository).findAllForAccountWithReviewCount(1, pageRequest);
@@ -81,7 +81,7 @@ class ItemServiceTest {
     void getItemsForAccountWorksWithDesc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").descending());
+        Pageable pageRequest = PageRequest.of(0, 5, Sort.by("rating").descending());
         testItemService.getItemsForAccount(1, 0, "rating", "desc");
 
         verify(itemRepository).findAllForAccountWithReviewCount(1, pageRequest);
@@ -95,7 +95,7 @@ class ItemServiceTest {
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("No Accounts exists with id 1");
 
-        Pageable pageRequest = PageRequest.of(0, 6);
+        Pageable pageRequest = PageRequest.of(0, 5);
 
         verify(itemRepository, never()).findAllForAccountWithReviewCount(1, pageRequest);
     }
@@ -1054,7 +1054,7 @@ class ItemServiceTest {
     void getItemsForAccountWithTitleWorksWithAsc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").ascending());
+        Pageable pageRequest = PageRequest.of(0, 5, Sort.by("rating").ascending());
         testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "rating", "asc");
 
         verify(itemRepository).findAllForAccountWithReviewCountWithTitle("%title%", 1, pageRequest);
@@ -1064,7 +1064,7 @@ class ItemServiceTest {
     void getItemsForAccountWithTitleWorksWithDesc() {
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
 
-        Pageable pageRequest = PageRequest.of(0, 6, Sort.by("rating").descending());
+        Pageable pageRequest = PageRequest.of(0, 5, Sort.by("rating").descending());
         testItemService.getItemsForAccountWithTitleAndSorts("title", 1, 0, "rating", "desc");
 
         verify(itemRepository).findAllForAccountWithReviewCountWithTitle("%title%", 1, pageRequest);
@@ -1078,7 +1078,7 @@ class ItemServiceTest {
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("No Accounts exists with id 1");
 
-        Pageable pageRequest = PageRequest.of(0, 6);
+        Pageable pageRequest = PageRequest.of(0, 5);
 
         verify(itemRepository, never()).findAllForAccountWithReviewCount(1, pageRequest);
     }

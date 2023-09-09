@@ -55,7 +55,7 @@ class PagesServiceTest {
     @Test
     void getHomepageForAccountWorks() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").descending());
+        Pageable itemPageReq = PageRequest.of(0, 5, Sort.by("item_rating").descending());
 
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
         given(reviewRepository.findCountWithAccountId(anyInt())).willReturn(2);
@@ -75,7 +75,7 @@ class PagesServiceTest {
     @Test
     void getHomepageForAccountWorksWithNoReviews() {
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
-        Pageable itemPageReq = PageRequest.of(0, 4, Sort.by("item_rating").descending());
+        Pageable itemPageReq = PageRequest.of(0, 5, Sort.by("item_rating").descending());
 
         given(accountRepository.findById(any())).willReturn(Optional.of(new Account()));
         given(reviewRepository.findCountWithAccountId(anyInt())).willReturn(0);
@@ -99,7 +99,7 @@ class PagesServiceTest {
 
     @Test
     void getHomepageForAccountThrowsWithBadId() {
-        Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
+        Pageable reviewPageReq = PageRequest.of(0, 5, Sort.by("review_date").ascending());
 
         given(accountRepository.findById(any())).willReturn(Optional.empty());
 

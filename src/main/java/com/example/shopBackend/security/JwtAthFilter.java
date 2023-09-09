@@ -15,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static java.lang.Boolean.TRUE;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
@@ -47,7 +46,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
             @Nonnull HttpServletResponse response,
             @Nonnull FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader(AUTHORIZATION);
-        final String username;
+        String username = null;
         final String jwtToken;
 
         // if no authorization continue with the filterChain
@@ -56,14 +55,21 @@ public class JwtAthFilter extends OncePerRequestFilter {
             return;
         }
 
+
         jwtToken = authHeader.substring(7); // remove the "Bearer " from the header
-        username = jwtService.getUsername(jwtToken); // username from token
+
+        try {
+            username = jwtService.getUsername(jwtToken); // username from token
+        } catch (Exception e) {
+            response.sendError(401, e.getMessage());
+            return;
+        }
 
         // if no username or user isn't logged in yet
         if (username == null || SecurityContextHolder.getContext().getAuthentication() == null) {
            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
            // if token has correct username and isn't expired
-           if (TRUE.equals(jwtService.checkToken(jwtToken, userDetails))) {
+           if (Boolean.TRUE.equals(jwtService.checkToken(jwtToken, userDetails))) {
                // creates token and sets details and authentication to context.
                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

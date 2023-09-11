@@ -58,7 +58,7 @@ public class PagesService {
         List<Chart> chart = reviewRepository.findChartForAccountByMonth(accountId);
 
         // reverse the order
-        Collections.reverse(chart);
+        Collections.sort(chart);
         //calc average of all reviews counts so that the chart starts from the middle
         int avg = (int)chart.stream().map(Chart::getCount).mapToInt(a -> a).average().orElse(0);
 
@@ -88,7 +88,6 @@ public class PagesService {
         while (!Arrays.asList(0, 3, 5, 7).contains(chart.size())) {
             chart.remove(0);
         }
-
         // add one empty one to the end and start to display it correctly.
         chart.add(0, empty);
         chart.add(chart.size(), empty);
@@ -156,7 +155,7 @@ public class PagesService {
         List<Review> latestReviews = reviewRepository.findAllItemId(itemId, reviewPageReq);
 
         List<Chart> chart = reviewRepository.findChartForItemByMonth(itemId);
-        Collections.reverse(chart);
+        Collections.sort(chart);
         //calc average of all reviews counts so that the chart starts from the middle
         int avg = (int)chart.stream().map(Chart::getCount).mapToInt(a -> a).average().orElse(0);
 

@@ -89,14 +89,16 @@ public class ReviewService {
 				reviewRepository.findAllItemId(itemId, all)
 						.stream()
 						.map(a -> new SingleRatedReview(a.getBody(), a.getRating()))
-						.collect(Collectors.toList());;
-		ratedReviews.getReviews().stream().map(reviews::add);
+						.collect(Collectors.toList());
+
+		reviews.addAll(ratedReviews.getReviews());
 
 		try {
 			topWords = reviewUtil.topWordsForReviews(reviews);
 		} catch (Exception e) {
 			throw new CalculationException("error: " + e.getMessage() + ". While getting top words");
 		}
+
 
 		// check for errors with reviews
 		for (int i = 0; i < review.size(); i += 1) {
@@ -311,8 +313,8 @@ public class ReviewService {
 			}
 		};
 
-		Collections.reverse(res);
-		while (!Arrays.asList(0, 3, 5, 7, 9).contains(res.size())) {
+		Collections.sort(res);
+		while (!Arrays.asList(0, 3, 5, 7).contains(res.size())) {
 			res.remove(0);
 		}
 
@@ -374,8 +376,8 @@ public class ReviewService {
 			}
 		};
 
-		Collections.reverse(res);
-		while (!Arrays.asList(0, 3, 5, 7, 9).contains(res.size())) {
+		Collections.sort(res);
+		while (!Arrays.asList(0, 3, 5, 7).contains(res.size())) {
 			res.remove(0);
 		}
 

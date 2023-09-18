@@ -1,5 +1,6 @@
 package com.example.shopBackend.item;
 
+import com.example.shopBackend.response.ListRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,7 +48,7 @@ public class ItemController {
 	 */
 	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get")
-	public List<ItemWithReviews> getItemsForAccount(
+	public ListRes getItemsForAccount(
 			@RequestParam("sort") String sort,
 			@RequestParam("sortDir") String sortDir,
 			@RequestParam("accountId") int id,
@@ -72,7 +73,7 @@ public class ItemController {
 	 */
 	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get/search")
-	public List<ItemWithReviews> getItemsForAccountWithTitle(
+	public ListRes getItemsForAccountWithTitle(
 			@RequestParam("title") String title,
 			@RequestParam("accountId") int id,
 			@RequestParam("sort") String sort,

@@ -2,6 +2,7 @@ package com.example.shopBackend.item;
 
 import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.category.CategoryRepository;
+import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.review.ReviewService;
@@ -93,7 +94,7 @@ public class ItemService {
 	 * 		  The direction of the sort, none if no sort.
 	 * @return reviews that match query.
 	 */
-	public List<ItemWithReviews> getItemsForAccount(int id, int page, String sort, String sortDir) {
+	public ListRes getItemsForAccount(int id, int page, String sort, String sortDir) {
 
 		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
 			throw new BadRequestException(
@@ -112,11 +113,24 @@ public class ItemService {
 
 		// creates pageRequest
 		PageRequest pageRequest;
-		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 5);
-		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 5, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 5, Sort.by(sort).descending());
+		PageRequest nextPageRequest;
+		if (sortDir.equals("none")) {
+			pageRequest = PageRequest.of(page, 5);
+			nextPageRequest = PageRequest.of(page + 1, 5);
+		}
+		else if (sortDir.equals("asc")) {
+			pageRequest = PageRequest.of(page, 5, Sort.by(sort).ascending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).ascending());
+		}
+		else {
+			pageRequest = PageRequest.of(page, 5, Sort.by(sort).descending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).descending());
+		}
 
-		return itemRepository.findAllForAccountWithReviewCount(id, pageRequest);
+		boolean nextPage = true;
+		if (itemRepository.findAllForAccountWithReviewCount(id, nextPageRequest).isEmpty()) nextPage = false;
+
+		return new ListRes(itemRepository.findAllForAccountWithReviewCount(id, pageRequest), nextPage);
 	}
 
 	/**
@@ -131,7 +145,7 @@ public class ItemService {
 	 * 		  The direction of the sort, none if no sort.
 	 * @return reviews that match query.
 	 */
-	public List<ItemWithReviews> getItemsForAccountWithTitleAndSorts(String title, int id, int page, String sort, String sortDir) {
+	public ListRes getItemsForAccountWithTitleAndSorts(String title, int id, int page, String sort, String sortDir) {
 
 		if (!(sortDir.equals("asc") || sortDir.equals("desc") || sortDir.equals("none"))) {
 			throw new BadRequestException(
@@ -150,14 +164,27 @@ public class ItemService {
 
 		// creates pageRequest
 		PageRequest pageRequest;
-		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 5);
-		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 5, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 5, Sort.by(sort).descending());
+		PageRequest nextPageRequest;
+		if (sortDir.equals("none")) {
+			pageRequest = PageRequest.of(page, 5);
+			nextPageRequest = PageRequest.of(page + 1, 5);
+		}
+		else if (sortDir.equals("asc")) {
+			pageRequest = PageRequest.of(page, 5, Sort.by(sort).ascending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).ascending());
+		}
+		else {
+			pageRequest = PageRequest.of(page, 5, Sort.by(sort).descending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).descending());
+		}
 
 		// formats title for sql.
 		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
 
-		return itemRepository.findAllForAccountWithReviewCountWithTitle(formattedTitle, id, pageRequest);
+		boolean nextPage = true;
+		if (itemRepository.findAllForAccountWithReviewCount(id, nextPageRequest).isEmpty()) nextPage = false;
+
+		return new ListRes(itemRepository.findAllForAccountWithReviewCountWithTitle(formattedTitle, id, pageRequest), nextPage);
 	}
 	
 	/**

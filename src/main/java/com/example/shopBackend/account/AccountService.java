@@ -5,7 +5,7 @@ import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.role.RoleRepository;
 import com.example.shopBackend.security.AuthRequest;
-import com.example.shopBackend.security.AuthRes;
+import com.example.shopBackend.response.AuthRes;
 import com.example.shopBackend.security.JwtService;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;

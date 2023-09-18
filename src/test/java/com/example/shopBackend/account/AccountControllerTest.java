@@ -2,7 +2,7 @@ package com.example.shopBackend.account;
 
 
 import com.example.shopBackend.role.Role;
-import com.example.shopBackend.security.AuthRes;
+import com.example.shopBackend.response.AuthRes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

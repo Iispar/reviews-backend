@@ -1,4 +1,4 @@
-package com.example.shopBackend.security;
+package com.example.shopBackend.response;
 
 import lombok.Data;
 

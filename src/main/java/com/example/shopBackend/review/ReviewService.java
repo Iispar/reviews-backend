@@ -3,6 +3,7 @@ package com.example.shopBackend.review;
 import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
+import com.example.shopBackend.response.ListRes;
 import exception.BadRequestException;
 import exception.CalculationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,7 +196,7 @@ public class ReviewService {
 	 * 		  The page you want to receive
 	 * @return reviews for item
 	 */
-	public List<Review> getReviewsForItem(int id, int page, String sort, String sortDir) {
+	public ListRes getReviewsForItem(int id, int page, String sort, String sortDir) {
 		if(itemRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No items exists with id " + id);
@@ -210,14 +211,26 @@ public class ReviewService {
 			throw new BadRequestException(
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
+
+		PageRequest pageRequest;
+		PageRequest nextPageRequest;
+		if (sortDir.equals("none")) {
+			pageRequest = PageRequest.of(page, 4);
+			nextPageRequest = PageRequest.of(page + 1, 5);
+		}
+		else if (sortDir.equals("asc")) {
+			pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).ascending());
+		}
+		else {
+			pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).descending());
+		}
+
+		boolean nextPage = true;
+		if (reviewRepository.findAllItemId(id, nextPageRequest).isEmpty()) nextPage = false;
 		
-		Pageable pageRequest;
-		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 4);
-		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
-		
-		
-		return reviewRepository.findAllItemId(id, pageRequest);
+		return new ListRes(reviewRepository.findAllItemId(id, pageRequest), nextPage);
 	}
 	
 	/**
@@ -232,7 +245,7 @@ public class ReviewService {
 	 * 		  The page you want to receive
 	 * @return reviews that match query.
 	 */
-	public List<Review> getReviewsWithSearchForItem(String search, int id, int page, String sort, String sortDir) {
+	public ListRes getReviewsWithSearchForItem(String search, int id, int page, String sort, String sortDir) {
 		if(itemRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No items exists with id " + id);
@@ -249,15 +262,28 @@ public class ReviewService {
 		}
 
 		// creates pageRequest
-		Pageable pageRequest;
-		if (sortDir.equals("none")) pageRequest = PageRequest.of(page, 4);
-		else if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+		PageRequest pageRequest;
+		PageRequest nextPageRequest;
+		if (sortDir.equals("none")) {
+			pageRequest = PageRequest.of(page, 4);
+			nextPageRequest = PageRequest.of(page + 1, 5);
+		}
+		else if (sortDir.equals("asc")) {
+			pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).ascending());
+		}
+		else {
+			pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).descending());
+		}
 
 		// formats title for sql.
 		String formattedTitle = String.format("%%%s%%", search).replaceAll("[ ,_]", "%");
+
+		boolean nextPage = true;
+		if (reviewRepository.findAllBySearchForItem(formattedTitle, id, nextPageRequest).isEmpty()) nextPage = false;
 		
-		return reviewRepository.findAllBySearchForItem(formattedTitle, id, pageRequest);
+		return new ListRes(reviewRepository.findAllBySearchForItem(formattedTitle, id, pageRequest), nextPage);
 	}
 	
 	/**

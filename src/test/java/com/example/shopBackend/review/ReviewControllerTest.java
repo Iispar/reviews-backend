@@ -3,6 +3,7 @@ package com.example.shopBackend.review;
 import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
+import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.security.Authorization;
 import com.example.shopBackend.words.Words;
@@ -286,20 +287,21 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsForItem(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsForItem(anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(review), true));
         given(authorization.isOwnItem(any(), anyInt())).willReturn(true);
 
         mockMvc.perform(get("/api/review/get/item?itemId=1&page=0&sort=review_date&sortDir=desc", 1, 0).with(csrf())
                 .with(user(account)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value(review.getTitle()))
-                .andExpect(jsonPath("$[0].body").value(review.getBody()))
-                .andExpect(jsonPath("$[0].date").value("1970-01-01"))
-                .andExpect(jsonPath("$[0].rating").value(review.getRating()))
-                .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
-                .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
-                .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
+                .andExpect(jsonPath("$.nextPage").value(true))
+                .andExpect(jsonPath("$.responseList[0].title").value(review.getTitle()))
+                .andExpect(jsonPath("$.responseList[0].body").value(review.getBody()))
+                .andExpect(jsonPath("$.responseList[0].date").value("1970-01-01"))
+                .andExpect(jsonPath("$.responseList[0].rating").value(review.getRating()))
+                .andExpect(jsonPath("$.responseList[0].likes").value(review.getLikes()))
+                .andExpect(jsonPath("$.responseList[0].dislikes").value(review.getDislikes()))
+                .andExpect(jsonPath("$.responseList[0].account.id").value(review.getAccount().getId()))
+                .andExpect(jsonPath("$.responseList[0].item.id").value(review.getItem().getId()));
     }
 
     @Test
@@ -334,7 +336,7 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsForItem(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsForItem(anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(review), true));
         mockMvc.perform(get("/api/review/get/item").with(csrf())
                 .with(user(account)))
                 .andExpect(status().isBadRequest());
@@ -658,21 +660,22 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsWithSearchForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsWithSearchForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(review), true));
         given(authorization.isOwnItem(any(), anyInt())).willReturn(true);
 
 
         mockMvc.perform(get("/api/review/get/search?search=ti&itemId=4&sort=review_date&sortDir=asc&page=0", "test", 4, "review_date", "asc", 0).with(csrf())
                 .with(user(account)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value(review.getTitle()))
-                .andExpect(jsonPath("$[0].body").value(review.getBody()))
-                .andExpect(jsonPath("$[0].date").value("1970-01-01"))
-                .andExpect(jsonPath("$[0].rating").value(review.getRating()))
-                .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
-                .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
-                .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
+                .andExpect(jsonPath("$.nextPage").value(true))
+                .andExpect(jsonPath("$.responseList[0].title").value(review.getTitle()))
+                .andExpect(jsonPath("$.responseList[0].body").value(review.getBody()))
+                .andExpect(jsonPath("$.responseList[0].date").value("1970-01-01"))
+                .andExpect(jsonPath("$.responseList[0].rating").value(review.getRating()))
+                .andExpect(jsonPath("$.responseList[0].likes").value(review.getLikes()))
+                .andExpect(jsonPath("$.responseList[0].dislikes").value(review.getDislikes()))
+                .andExpect(jsonPath("$.responseList[0].account.id").value(review.getAccount().getId()))
+                .andExpect(jsonPath("$.responseList[0].item.id").value(review.getItem().getId()));
     }
 
     @Test
@@ -706,7 +709,7 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsWithSearchForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsWithSearchForItem(any(), anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(review), true));
 
 
         mockMvc.perform(get("/api/review/get/search", "test", 4, "review_date", "asc", 0).with(csrf())

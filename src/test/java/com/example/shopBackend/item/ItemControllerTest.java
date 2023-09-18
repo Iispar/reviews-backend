@@ -2,6 +2,7 @@ package com.example.shopBackend.item;
 
 import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
+import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.security.Authorization;
 import com.example.shopBackend.words.Words;
@@ -167,13 +168,14 @@ class ItemControllerTest {
             }
         };
 
-        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(item), true));
 
         mockMvc.perform(get("/api/item/get?accountId=1&page=0&sort=none&sortDir=none", 1, 0).with(csrf())
                 .with(user(account)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value(item.getTitle()))
-                .andExpect(jsonPath("$[0].rating").value(item.getRating()));
+                .andExpect(jsonPath("$.nextPage").value(true))
+                .andExpect(jsonPath("$.responseList[0].title").value(item.getTitle()))
+                .andExpect(jsonPath("$.responseList[0].rating").value(item.getRating()));
     }
 
     @Test
@@ -208,7 +210,7 @@ class ItemControllerTest {
             }
         };
 
-        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(item), true));
         mockMvc.perform(get("/api/item/get").with(csrf())
                 .with(user(account)))
                 .andExpect(status().isBadRequest());
@@ -261,13 +263,14 @@ class ItemControllerTest {
             }
         };
 
-        given(itemService.getItemsForAccountWithTitleAndSorts(any(), anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+        given(itemService.getItemsForAccountWithTitleAndSorts(any(), anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(item), true));
 
         mockMvc.perform(get("/api/item/get/search?title=ti&accountId=1&page=0&sort=none&sortDir=none", 1, 0).with(csrf())
                 .with(user(account)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value(item.getTitle()))
-                .andExpect(jsonPath("$[0].rating").value(item.getRating()));
+                .andExpect(jsonPath("$.nextPage").value(true))
+                .andExpect(jsonPath("$.responseList[0].title").value(item.getTitle()))
+                .andExpect(jsonPath("$.responseList[0].rating").value(item.getRating()));
     }
 
     @Test
@@ -304,7 +307,7 @@ class ItemControllerTest {
             }
         };
 
-        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(item));
+        given(itemService.getItemsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(item), true));
         mockMvc.perform(get("/api/item/get/search").with(csrf())
                 .with(user(account)))
                 .andExpect(status().isBadRequest());

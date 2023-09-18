@@ -1,5 +1,6 @@
 package com.example.shopBackend.review;
 
+import com.example.shopBackend.response.ListRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,7 +70,7 @@ public class ReviewController {
 	 */
 	@PreAuthorize("@authorization.isOwnItem(authentication, #id)")
 	@GetMapping("/get/item")
-	public List<Review> getReviewsForItem(
+	public ListRes getReviewsForItem(
 			@RequestParam("itemId") int id,
 			@RequestParam("page") int page,
 			@RequestParam("sort") String sort,
@@ -94,7 +95,7 @@ public class ReviewController {
 	 */
 	@PreAuthorize("@authorization.isOwnItem(authentication, #id)")
 	@GetMapping("/get/search")
-	public List<Review> getReviewsWithTitleForItem(
+	public ListRes getReviewsWithTitleForItem(
 			@RequestParam("search") String search,
 			@RequestParam("itemId") int id,
 			@RequestParam("sort") String sort,

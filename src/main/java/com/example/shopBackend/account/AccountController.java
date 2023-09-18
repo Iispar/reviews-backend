@@ -1,7 +1,7 @@
 package com.example.shopBackend.account;
 
 import com.example.shopBackend.security.AuthRequest;
-import com.example.shopBackend.security.AuthRes;
+import com.example.shopBackend.response.AuthRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

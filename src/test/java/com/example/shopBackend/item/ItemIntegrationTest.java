@@ -42,8 +42,9 @@ class ItemIntegrationTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$[0].title").isEqualTo("initItem title")
-                .jsonPath("$[0].rating").isEqualTo(4);
+                .jsonPath("$.nextPage").isEqualTo(false)
+                .jsonPath("$.responseList[0].title").isEqualTo("initItem title")
+                .jsonPath("$.responseList[0].rating").isEqualTo(4);
 
     }
 
@@ -63,8 +64,9 @@ class ItemIntegrationTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$[0].title").isEqualTo("initItem title")
-                .jsonPath("$[0].rating").isEqualTo(4);
+                .jsonPath("$.nextPage").isEqualTo(false)
+                .jsonPath("$.responseList[0].title").isEqualTo("initItem title")
+                .jsonPath("$.responseList[0].rating").isEqualTo(4);
 
     }
 

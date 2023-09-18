@@ -1,7 +1,7 @@
 package com.example.shopBackend.pages;
 
+import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.review.Chart;
-import com.example.shopBackend.review.Review;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ public class ItemPage {
     private int negativeReviews;
     private double rating;
 
-    private List<Review> reviews;
+    private ListRes reviews;
     private List<Chart> chart;
     private List<String> topPos;
     private List<String> topNeg;
 
-    public ItemPage(String title, int reviewsCount, int positiveReviews, int negativeReviews, double rating, List<Review> reviews, List<Chart> chart, List<String> topPos, List<String> topNeg) {
+    public ItemPage(String title, int reviewsCount, int positiveReviews, int negativeReviews, double rating, ListRes reviews, List<Chart> chart, List<String> topPos, List<String> topNeg) {
         this.title = title;
         this.reviewsCount = reviewsCount;
         this.positiveReviews = positiveReviews;
@@ -34,11 +34,11 @@ public class ItemPage {
         this.topNeg = topNeg;
     }
 
-    public List<Review> getReviews() {
+    public ListRes getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(ListRes reviews) {
         this.reviews = reviews;
     }
 

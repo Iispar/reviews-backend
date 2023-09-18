@@ -3,6 +3,7 @@ package com.example.shopBackend.pages;
 import com.example.shopBackend.account.Account;
 import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
+import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.review.BarChart;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
@@ -79,18 +80,19 @@ class PagesControllerTest {
                 return 1;
             }
         };
+        String title="title";
         Homepage homepage = new Homepage(
                 "test",
-                List.of(new Review(
+                new ListRes(List.of(new Review(
                         new Date(9),
                         "body",
-                        "title",
+                        title,
                         5,
                         5,
                         new Account(),
                         4,
                         new Item()
-                )),
+                )), true),
                 List.of(new Item(
                         1,
                         "title",
@@ -112,7 +114,7 @@ class PagesControllerTest {
         mockMvc.perform(get("/api/pages/get/home?accountId=1", 1).with(csrf())
                 .with(user(account)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.latestReviews[0].title").value(homepage.getLatestReviews().get(0).getTitle()))
+                .andExpect(jsonPath("$.latestReviews.responseList[0].title").value(title))
                 .andExpect(jsonPath("$.ratingsAvg").value(homepage.getRatingsAvg()))
                 .andExpect(jsonPath("$.itemsCount").value(homepage.getItemsCount()))
                 .andExpect(jsonPath("$.reviewsCount").value(homepage.getReviewsCount()))
@@ -164,22 +166,23 @@ class PagesControllerTest {
             }
         };
 
+        String title = "title";
         ItemPage itempage = new ItemPage(
                 "title",
                 4,
                 2,
                 2,
                 4,
-                List.of(new Review(
+                new ListRes(List.of(new Review(
                         new Date(9),
                         "body",
-                        "title",
+                        title,
                         5,
                         5,
                         new Account(),
                         4,
                         new Item()
-                )),
+                )), true),
                 List.of(chart),
                 List.of("pos"),
                 List.of("neg")
@@ -192,7 +195,7 @@ class PagesControllerTest {
         mockMvc.perform(get("/api/pages/get/item?itemId=1", 1).with(csrf())
                 .with(user(account)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reviews[0].title").value(itempage.getReviews().get(0).getTitle()))
+                .andExpect(jsonPath("$.reviews.responseList[0].title").value(title))
                 .andExpect(jsonPath("$.chart[0].count").value(itempage.getChart().get(0).getCount()))
                 .andExpect(jsonPath("$.topPos[0]").value(itempage.getTopPos().get(0)))
                 .andExpect(jsonPath("$.title").value(itempage.getTitle()))

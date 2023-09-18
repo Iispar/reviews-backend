@@ -4,9 +4,9 @@ import com.example.shopBackend.account.Account;
 import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.review.BarChart;
 import com.example.shopBackend.review.Chart;
-import com.example.shopBackend.review.Review;
 import com.example.shopBackend.review.ReviewRepository;
 import com.example.shopBackend.words.Words;
 import exception.BadRequestException;
@@ -48,12 +48,16 @@ public class PagesService {
         account.setPassword(null);
 
         Pageable reviewPageReq = PageRequest.of(0, 4, Sort.by("review_date").ascending());
+        Pageable nextPageReq = PageRequest.of(1, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 5, Sort.by("item_rating").descending());
+
+        Boolean nextPage = true;
+        if (reviewRepository.findAllAccountId(accountId, nextPageReq).isEmpty()) nextPage = false;
 
         int reviewCount = reviewRepository.findCountWithAccountId(accountId);
         int itemCount = itemRepository.findItemCountForAccountId(accountId);
 
-        List<Review> latestReviews = reviewRepository.findAllAccountId(accountId, reviewPageReq);
+        ListRes latestReviews = new ListRes(reviewRepository.findAllAccountId(accountId, reviewPageReq), nextPage);
         List<Item> topItems = itemRepository.findAllAccountId(accountId, itemPageReq);
         List<Chart> chart = reviewRepository.findChartForAccountByMonth(accountId);
 
@@ -136,6 +140,7 @@ public class PagesService {
     public ItemPage getItemPageForItem(int itemId) {
 
         Pageable reviewPageReq = PageRequest.of(0, 4);
+        Pageable nextPageReq = PageRequest.of(1, 4);
 
         Item item = itemRepository.findById(itemId).orElse(null);
 
@@ -149,10 +154,14 @@ public class PagesService {
         double rating = item.getRating();
 
         int reviews = reviewRepository.findReviewCountForItem(item.getId());
+
         int positiveReviews = reviewRepository.findPosReviewCountForItem(item.getId());
         int negativeReviews = reviewRepository.findNegReviewCountForItem(item.getId());
 
-        List<Review> latestReviews = reviewRepository.findAllItemId(itemId, reviewPageReq);
+        Boolean nextPage = true;
+        if (reviewRepository.findAllItemId(itemId, nextPageReq).isEmpty()) nextPage = false;
+
+        ListRes latestReviews = new ListRes(reviewRepository.findAllItemId(itemId, reviewPageReq), nextPage);
 
         List<Chart> chart = reviewRepository.findChartForItemByMonth(itemId);
         Collections.sort(chart);

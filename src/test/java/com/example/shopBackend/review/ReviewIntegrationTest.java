@@ -154,14 +154,14 @@ class ReviewIntegrationTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$[0].title").isEqualTo("title")
-                .jsonPath("$[0].body").isEqualTo("body")
-                .jsonPath("$[0].date").isEqualTo("2022-02-02")
-                .jsonPath("$[0].rating").isEqualTo(4)
-                .jsonPath("$[0].likes").isEqualTo(2)
-                .jsonPath("$[0].dislikes").isEqualTo(2)
-                .jsonPath("$[0].account.id").isEqualTo(1)
-                .jsonPath("$[0].item.id").isEqualTo(1);
+                .jsonPath("$.responseList[0].title").isEqualTo("title")
+                .jsonPath("$.responseList[0].body").isEqualTo("body")
+                .jsonPath("$.responseList[0].date").isEqualTo("2022-02-02")
+                .jsonPath("$.responseList[0].rating").isEqualTo(4)
+                .jsonPath("$.responseList[0].likes").isEqualTo(2)
+                .jsonPath("$.responseList[0].dislikes").isEqualTo(2)
+                .jsonPath("$.responseList[0].account.id").isEqualTo(1)
+                .jsonPath("$.responseList[0].item.id").isEqualTo(1);
 
     }
 

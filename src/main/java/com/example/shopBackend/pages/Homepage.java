@@ -1,9 +1,9 @@
 package com.example.shopBackend.pages;
 
 import com.example.shopBackend.item.Item;
+import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.review.BarChart;
 import com.example.shopBackend.review.Chart;
-import com.example.shopBackend.review.Review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 public class Homepage {
 
     private String accountName;
-    private List<Review> latestReviews = new ArrayList<>();
+    private ListRes latestReviews;
     private List<Item> topItems = new ArrayList<>();
 
     private float ratingsAvg;
@@ -26,7 +26,7 @@ public class Homepage {
 
     private List<Chart> chart;
 
-    public Homepage(String accountName, List<Review> latestReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<BarChart> barChart, List<Chart> chart) {
+    public Homepage(String accountName, ListRes latestReviews, List<Item> topItems, float ratingsAvg, int itemsCount, int reviewsCount, List<BarChart> barChart, List<Chart> chart) {
         this.accountName = accountName;
         this.latestReviews = latestReviews;
         this.topItems = topItems;
@@ -55,11 +55,11 @@ public class Homepage {
         this.accountName = accountName;
     }
 
-    public List<Review> getLatestReviews() {
+    public ListRes getLatestReviews() {
         return latestReviews;
     }
 
-    public void setLatestReviews(List<Review> latestReviews) {
+    public void setLatestReviews(ListRes latestReviews) {
         this.latestReviews = latestReviews;
     }
 

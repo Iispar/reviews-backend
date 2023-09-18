@@ -165,8 +165,7 @@ public class ReviewService {
 	 * 		  The page you want to receive
 	 * @return reviews with corresponding id
 	 */
-	public List<Review> getReviewsForAccount(int id, int page, String sort, String sortDir) {
-		Pageable pageRequest;
+	public ListRes getReviewsForAccount(int id, int page, String sort, String sortDir) {
 
 		if (!(sortDir.equals("asc") || sortDir.equals("desc"))) {
 			throw new BadRequestException(
@@ -178,14 +177,25 @@ public class ReviewService {
 					"sort " + sort + " is not a valid value for a sort in the entity.");
 		}
 
-		if (sortDir.equals("asc")) pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
-		else pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+		Pageable pageRequest;
+		PageRequest nextPageRequest;
+		if (sortDir.equals("asc")) {
+			pageRequest = PageRequest.of(page, 4, Sort.by(sort).ascending());
+			nextPageRequest = PageRequest.of(page + 1, 4, Sort.by(sort).ascending());
+		}
+		else {
+			pageRequest = PageRequest.of(page, 4, Sort.by(sort).descending());
+			nextPageRequest = PageRequest.of(page + 1, 4, Sort.by(sort).descending());
+		}
+
+		boolean nextPage = true;
+		if (reviewRepository.findAllAccountId(id, nextPageRequest).isEmpty()) nextPage = false;
 
 		if(accountRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
 					"No Accounts exists with id " + id);
 		}
-		return reviewRepository.findAllAccountId(id, pageRequest);
+		return new ListRes(reviewRepository.findAllAccountId(id, pageRequest),nextPage);
 	}
 	
 	/**

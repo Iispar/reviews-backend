@@ -187,19 +187,20 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(review), true));
 
         mockMvc.perform(get("/api/review/get/account?accountId=1&page=0", 1, 0).with(csrf())
                 .with(user(account)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value(review.getTitle()))
-                .andExpect(jsonPath("$[0].body").value(review.getBody()))
-                .andExpect(jsonPath("$[0].date").value("1970-01-01"))
-                .andExpect(jsonPath("$[0].rating").value(review.getRating()))
-                .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
-                .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
-                .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
+                .andExpect(jsonPath("$.nextPage").value(true))
+                .andExpect(jsonPath("$.responseList[0].title").value(review.getTitle()))
+                .andExpect(jsonPath("$.responseList[0].body").value(review.getBody()))
+                .andExpect(jsonPath("$.responseList[0].date").value("1970-01-01"))
+                .andExpect(jsonPath("$.responseList[0].rating").value(review.getRating()))
+                .andExpect(jsonPath("$.responseList[0].likes").value(review.getLikes()))
+                .andExpect(jsonPath("$.responseList[0].dislikes").value(review.getDislikes()))
+                .andExpect(jsonPath("$.responseList[0].account.id").value(review.getAccount().getId()))
+                .andExpect(jsonPath("$.responseList[0].item.id").value(review.getItem().getId()));
     }
 
     @Test
@@ -233,7 +234,7 @@ class ReviewControllerTest {
                 item
         );
 
-        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(List.of(review));
+        given(reviewService.getReviewsForAccount(anyInt(), anyInt(), any(), any())).willReturn(new ListRes(List.of(review), true));
         mockMvc.perform(get("/api/review/get/account").with(csrf())
                 .with(user(account)))
                 .andExpect(status().isBadRequest());

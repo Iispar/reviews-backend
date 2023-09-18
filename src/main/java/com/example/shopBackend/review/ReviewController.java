@@ -49,7 +49,7 @@ public class ReviewController {
 	 */
 	@PreAuthorize("#id == authentication.principal.id")
 	@GetMapping("/get/account")
-	public List<Review> getReviewsForAccount(
+	public ListRes getReviewsForAccount(
 			@RequestParam("accountId") int id,
 			@RequestParam("page") int page) {
 		return reviewService.getReviewsForAccount(id, page, "review_date", "asc");

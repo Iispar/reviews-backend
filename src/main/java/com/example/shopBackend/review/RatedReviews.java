@@ -13,7 +13,7 @@ public class RatedReviews {
         this.reviews = reviews;
     }
 
-    public RatedReviews() {};
+    public RatedReviews() {}
 
     public List<SingleRatedReview> getReviews() {
         return reviews;

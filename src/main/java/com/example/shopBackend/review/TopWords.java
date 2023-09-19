@@ -15,21 +15,13 @@ public class TopWords {
         this.topNeg = topNeg;
     }
 
-    public TopWords() {};
+    public TopWords() {}
 
     public List<String> getTopPos() {
         return topPos;
     }
 
-    public void setTopPos(List<String> topPos) {
-        this.topPos = topPos;
-    }
-
     public List<String> getTopNeg() {
         return topNeg;
-    }
-
-    public void setTopNeg(List<String> topNeg) {
-        this.topNeg = topNeg;
     }
 }

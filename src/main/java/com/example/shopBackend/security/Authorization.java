@@ -64,7 +64,11 @@ public class Authorization {
     public boolean addItemsAreOwn(Authentication authentication, List<Item> items) {
         Account account = (Account) authentication.getPrincipal();
         boolean res = true;
-        for (Item item : items) if (item.getAccount().getId() != account.getId()) res = false;
+        for (Item item : items)
+            if (item.getAccount().getId() != account.getId()) {
+                res = false;
+                break;
+            }
 
         return res;
     }
@@ -80,7 +84,11 @@ public class Authorization {
     public boolean addReviewsAreOwn(Authentication authentication, List<Review> reviews) {
         Account account = (Account) authentication.getPrincipal();
         boolean res = true;
-        for (Review review : reviews) if (review.getAccount().getId() != account.getId()) res = false;
+        for (Review review : reviews)
+            if (review.getAccount().getId() != account.getId()) {
+                res = false;
+                break;
+            }
 
         return res;
     }

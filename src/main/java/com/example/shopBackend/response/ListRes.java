@@ -13,20 +13,4 @@ public class ListRes {
         this.responseList = responseList;
         this.nextPage = nextPage;
     }
-
-    public List<?> getResponseList() {
-        return responseList;
-    }
-
-    public void setResponseList(List<?> responseList) {
-        this.responseList = responseList;
-    }
-
-    public boolean getNextPage() {
-        return nextPage;
-    }
-
-    public void setNextPage(boolean nextPage) {
-        this.nextPage = nextPage;
-    }
 }

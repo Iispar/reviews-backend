@@ -144,8 +144,6 @@ class ItemControllerTest {
                 "email",
                 new Role()
         );
-        Category category = new Category("category");
-        Words words = new Words(1, List.of("1"), List.of("1"));
         ItemWithReviews item = new ItemWithReviews() {
             @Override
             public double getId() {
@@ -283,8 +281,6 @@ class ItemControllerTest {
                 "email",
                 new Role()
         );
-        Category category = new Category("category");
-        Words words = new Words(1, List.of("1"), List.of("1"));
         ItemWithReviews item = new ItemWithReviews() {
             @Override
             public double getId() {
@@ -323,8 +319,6 @@ class ItemControllerTest {
                 "email",
                 new Role()
         );
-        Category category = new Category("category");
-        Words words = new Words(1, List.of("1"), List.of("1"));
 
         mockMvc.perform(get("/api/item/get/search?title=ti&accountId=2&page=0&sort=none&sortDir=none", 2, 0).with(csrf())
                         .with(user(account)))

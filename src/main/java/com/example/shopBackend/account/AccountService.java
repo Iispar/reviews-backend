@@ -51,7 +51,7 @@ public class AccountService {
 	/**
 	 * Queries account that matches the account id and returns it
 	 * @param accountId
-	 * 		  Id of account we are searching for.
+	 * 		  id of account we are searching for.
 	 * @return matched account
 	 */
 	public Account getAccount(int accountId) {

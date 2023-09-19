@@ -188,8 +188,7 @@ public class ReviewService {
 			nextPageRequest = PageRequest.of(page + 1, 4, Sort.by(sort).descending());
 		}
 
-		boolean nextPage = true;
-		if (reviewRepository.findAllAccountId(id, nextPageRequest).isEmpty()) nextPage = false;
+		boolean nextPage = !reviewRepository.findAllAccountId(id, nextPageRequest).isEmpty();
 
 		if(accountRepository.findById(id).isEmpty()) {
 			throw new BadRequestException(
@@ -237,9 +236,8 @@ public class ReviewService {
 			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).descending());
 		}
 
-		boolean nextPage = true;
-		if (reviewRepository.findAllItemId(id, nextPageRequest).isEmpty()) nextPage = false;
-		
+		boolean nextPage = !reviewRepository.findAllItemId(id, nextPageRequest).isEmpty();
+
 		return new ListRes(reviewRepository.findAllItemId(id, pageRequest), nextPage);
 	}
 	
@@ -290,9 +288,8 @@ public class ReviewService {
 		// formats title for sql.
 		String formattedTitle = String.format("%%%s%%", search).replaceAll("[ ,_]", "%");
 
-		boolean nextPage = true;
-		if (reviewRepository.findAllBySearchForItem(formattedTitle, id, nextPageRequest).isEmpty()) nextPage = false;
-		
+		boolean nextPage = !reviewRepository.findAllBySearchForItem(formattedTitle, id, nextPageRequest).isEmpty();
+
 		return new ListRes(reviewRepository.findAllBySearchForItem(formattedTitle, id, pageRequest), nextPage);
 	}
 	

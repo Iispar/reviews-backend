@@ -51,8 +51,7 @@ public class PagesService {
         Pageable nextPageReq = PageRequest.of(1, 4, Sort.by("review_date").ascending());
         Pageable itemPageReq = PageRequest.of(0, 5, Sort.by("item_rating").descending());
 
-        Boolean nextPage = true;
-        if (reviewRepository.findAllAccountId(accountId, nextPageReq).isEmpty()) nextPage = false;
+        boolean nextPage = !reviewRepository.findAllAccountId(accountId, nextPageReq).isEmpty();
 
         int reviewCount = reviewRepository.findCountWithAccountId(accountId);
         int itemCount = itemRepository.findItemCountForAccountId(accountId);
@@ -158,8 +157,7 @@ public class PagesService {
         int positiveReviews = reviewRepository.findPosReviewCountForItem(item.getId());
         int negativeReviews = reviewRepository.findNegReviewCountForItem(item.getId());
 
-        Boolean nextPage = true;
-        if (reviewRepository.findAllItemId(itemId, nextPageReq).isEmpty()) nextPage = false;
+        boolean nextPage = !reviewRepository.findAllItemId(itemId, nextPageReq).isEmpty();
 
         ListRes latestReviews = new ListRes(reviewRepository.findAllItemId(itemId, reviewPageReq), nextPage);
 

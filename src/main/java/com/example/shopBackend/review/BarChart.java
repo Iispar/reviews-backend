@@ -13,12 +13,6 @@ public interface BarChart extends Comparable<BarChart> {
 
     @Override
     default int compareTo(BarChart o) {
-        if (this.getRating() > o.getRating()) {
-            return 1;
-        }
-        else if (this.getRating() < o.getRating()) {
-            return -1;
-        }
-        else return 0;
+        return Integer.compare(this.getRating(), o.getRating());
     }
 }

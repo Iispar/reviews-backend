@@ -435,7 +435,7 @@ class ReviewRepositoryTest {
 
 		List<String> foundEntity = testReviewRepository.findAllBodysWithItemId(item.getId());
 		List<String> foundNoneEntity = testReviewRepository.findAllBodysWithItemId(item.getId() + 2);
-		assertTrue(string.equals(foundEntity.get(1)));
+		assertEquals(string, foundEntity.get(1));
 		assertEquals(4, foundEntity.size());
 		assertEquals(0, foundNoneEntity.size());
 	}
@@ -566,8 +566,6 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review);
 		testReviewRepository.save(review2);
 
-		Pageable pageRequest = PageRequest.of(0, 4);
-
 		int foundEntity = testReviewRepository.findReviewCountForItem(item.getId());
 		int foundNoneIdentity = testReviewRepository.findReviewCountForItem(item.getId() + 2);
 		assertEquals(3, foundEntity);
@@ -603,8 +601,6 @@ class ReviewRepositoryTest {
 		testReviewRepository.save(review);
 		testReviewRepository.save(review2);
 
-		Pageable pageRequest = PageRequest.of(0, 4);
-
 		int foundEntity = testReviewRepository.findPosReviewCountForItem(item.getId());
 		int foundNoneIdentity = testReviewRepository.findPosReviewCountForItem(item.getId() + 2);
 		assertEquals(2, foundEntity);
@@ -639,8 +635,6 @@ class ReviewRepositoryTest {
 
 		testReviewRepository.save(review);
 		testReviewRepository.save(review2);
-
-		Pageable pageRequest = PageRequest.of(0, 4);
 
 		int foundEntity = testReviewRepository.findNegReviewCountForItem(item.getId());
 		int foundNoneIdentity = testReviewRepository.findNegReviewCountForItem(item.getId() + 2);

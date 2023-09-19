@@ -127,8 +127,7 @@ public class ItemService {
 			nextPageRequest = PageRequest.of(page + 1, 5, Sort.by(sort).descending());
 		}
 
-		boolean nextPage = true;
-		if (itemRepository.findAllForAccountWithReviewCount(id, nextPageRequest).isEmpty()) nextPage = false;
+		boolean nextPage = !itemRepository.findAllForAccountWithReviewCount(id, nextPageRequest).isEmpty();
 
 		return new ListRes(itemRepository.findAllForAccountWithReviewCount(id, pageRequest), nextPage);
 	}
@@ -181,8 +180,7 @@ public class ItemService {
 		// formats title for sql.
 		String formattedTitle = String.format("%%%s%%", title).replaceAll("[ ,_]", "%");
 
-		boolean nextPage = true;
-		if (itemRepository.findAllForAccountWithReviewCount(id, nextPageRequest).isEmpty()) nextPage = false;
+		boolean nextPage = !itemRepository.findAllForAccountWithReviewCount(id, nextPageRequest).isEmpty();
 
 		return new ListRes(itemRepository.findAllForAccountWithReviewCountWithTitle(formattedTitle, id, pageRequest), nextPage);
 	}
@@ -284,7 +282,6 @@ public class ItemService {
 		}
 
 		if (posWords.size() > 10 || posWords.isEmpty()) {
-			System.out.println(posWords);
 			throw new BadRequestException(
 					"pos words invalid. Has to have 1 to 10 items."
 			);

@@ -34,7 +34,7 @@ public class ReviewController {
 	 */
 	@PreAuthorize("@authorization.addReviewsAreOwn(authentication, #review)")
 	@PostMapping("/add")
-	public List<Review> add(@RequestBody List<Review> review) {
+	public List<ReturnableReview> add(@RequestBody List<Review> review) {
 		return reviewService.saveAllReviews(review);
 	}
 	

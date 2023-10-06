@@ -1,15 +1,14 @@
 package com.example.shopBackend.pages;
 
 import com.example.shopBackend.account.Account;
-import com.example.shopBackend.category.Category;
 import com.example.shopBackend.item.Item;
+import com.example.shopBackend.item.ReturnableItem;
 import com.example.shopBackend.response.ListRes;
 import com.example.shopBackend.review.BarChart;
 import com.example.shopBackend.review.Chart;
 import com.example.shopBackend.review.Review;
 import com.example.shopBackend.role.Role;
 import com.example.shopBackend.security.Authorization;
-import com.example.shopBackend.words.Words;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -93,13 +92,12 @@ class PagesControllerTest {
                         4,
                         new Item()
                 )), true),
-                List.of(new Item(
+                List.of(new ReturnableItem(
                         1,
                         "title",
-                        new Account(),
+                        1,
                         2F,
-                        new Category(),
-                        new Words()
+                        2
                 )),
                 2.3F,
                 2,

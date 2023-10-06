@@ -4,10 +4,10 @@ import com.example.shopBackend.account.Account;
 import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.Item;
 import com.example.shopBackend.item.ItemRepository;
+import com.example.shopBackend.item.ReturnableItem;
 import com.example.shopBackend.response.ListRes;
-import com.example.shopBackend.review.BarChart;
-import com.example.shopBackend.review.Chart;
-import com.example.shopBackend.review.ReviewRepository;
+import com.example.shopBackend.review.*;
+import com.example.shopBackend.security.Converters;
 import com.example.shopBackend.words.Words;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Services for page calls.
@@ -56,8 +57,13 @@ public class PagesService {
         int reviewCount = reviewRepository.findCountWithAccountId(accountId);
         int itemCount = itemRepository.findItemCountForAccountId(accountId);
 
-        ListRes latestReviews = new ListRes(reviewRepository.findAllAccountId(accountId, reviewPageReq), nextPage);
-        List<Item> topItems = itemRepository.findAllAccountId(accountId, itemPageReq);
+        List<ReturnableReview> reviews = reviewRepository.findAllAccountId(accountId, reviewPageReq)
+                .stream().map(Converters::convertToReturnableReview).collect(Collectors.toList());
+        ListRes latestReviews = new ListRes(reviews, nextPage);
+
+
+        List<ReturnableItem> topItems = itemRepository.findAllAccountId(accountId, itemPageReq)
+                .stream().map(Converters::convertToReturnableItem).collect(Collectors.toList());;
         List<Chart> chart = reviewRepository.findChartForAccountByMonth(accountId);
 
         // reverse the order
@@ -159,7 +165,10 @@ public class PagesService {
 
         boolean nextPage = !reviewRepository.findAllItemId(itemId, nextPageReq).isEmpty();
 
-        ListRes latestReviews = new ListRes(reviewRepository.findAllItemId(itemId, reviewPageReq), nextPage);
+        List<ReturnableReview> reviewsList = reviewRepository.findAllItemId(itemId, reviewPageReq)
+                .stream().map(Converters::convertToReturnableReview).collect(Collectors.toList());
+
+        ListRes latestReviews = new ListRes(reviewsList, nextPage);
 
         List<Chart> chart = reviewRepository.findChartForItemByMonth(itemId);
         Collections.sort(chart);

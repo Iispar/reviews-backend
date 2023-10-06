@@ -207,7 +207,7 @@ class ReviewServiceTest {
 
 		testReviewService.getReviewsWithSearchForItem("test_title", 0, 1,"review_date", "asc");
 
-		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").ascending());
+		Pageable pageRequest = PageRequest.of(2, 5, Sort.by("review_date").ascending());
 
 		verify(reviewRepository).findAllBySearchForItem("%test%title%", 0, pageRequest);
 	}
@@ -218,7 +218,7 @@ class ReviewServiceTest {
 
 		testReviewService.getReviewsWithSearchForItem("test_title", 0, 1,"review_date", "desc");
 
-		Pageable pageRequest = PageRequest.of(1, 4, Sort.by("review_date").descending());
+		Pageable pageRequest = PageRequest.of(2, 5, Sort.by("review_date").descending());
 
 		verify(reviewRepository).findAllBySearchForItem("%test%title%", 0, pageRequest);
 	}

@@ -61,15 +61,15 @@ class ReviewControllerTest {
                 new Role()
         );
 
-        Review review = new Review(
+        ReturnableReview review = new ReturnableReview(
                 new Date(3),
                 "body",
                 "title",
                 5,
                 3,
-                account,
+                1,
                 3,
-                item
+                1
         );
 
         given(reviewService.saveAllReviews(any())).willReturn(List.of(review));
@@ -102,8 +102,8 @@ class ReviewControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(review.getRating()))
                 .andExpect(jsonPath("$[0].likes").value(review.getLikes()))
                 .andExpect(jsonPath("$[0].dislikes").value(review.getDislikes()))
-                .andExpect(jsonPath("$[0].account.id").value(review.getAccount().getId()))
-                .andExpect(jsonPath("$[0].item.id").value(review.getItem().getId()));
+                .andExpect(jsonPath("$[0].accountId").value(review.getAccountId()))
+                .andExpect(jsonPath("$[0].itemId").value(review.getItemId()));
     }
 
     @Test

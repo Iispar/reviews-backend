@@ -23,6 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -115,7 +116,7 @@ class PagesServiceTest {
         Pageable reviewPageReq = PageRequest.of(0, 4);
 
         given(itemRepository.findById(any())).willReturn(Optional.of(new Item(1, "test", new Account(), 4.2F, new Category(), new Words(1, List.of("1"), List.of("1")))));
-        given(reviewRepository.findAllItemId(anyInt(), any())).willReturn(List.of(new Review()));
+        given(reviewRepository.findAllItemId(anyInt(), any())).willReturn(List.of(new Review(new Date(200), "test", "title", 2, 2, new Account(), 2, new Item())));
         given(reviewRepository.findReviewCountForItem(anyInt())).willReturn(2);
         given(reviewRepository.findPosReviewCountForItem(anyInt())).willReturn(2);
         given(reviewRepository.findNegReviewCountForItem(anyInt())).willReturn(2);

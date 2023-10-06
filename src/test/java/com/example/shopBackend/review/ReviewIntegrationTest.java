@@ -132,8 +132,8 @@ class ReviewIntegrationTest {
                 .jsonPath("$[0].rating").isEqualTo(1)
                 .jsonPath("$[0].likes").isEqualTo(0)
                 .jsonPath("$[0].dislikes").isEqualTo(0)
-                .jsonPath("$[0].account.id").isEqualTo(1)
-                .jsonPath("$[0].item.id").isEqualTo(1);
+                .jsonPath("$[0].accountId").isEqualTo(1)
+                .jsonPath("$[0].itemId").isEqualTo(1);
 
         assertEquals(reviewRepository.findAll().size(), reviews + 1);
     }
@@ -160,8 +160,8 @@ class ReviewIntegrationTest {
                 .jsonPath("$.responseList[0].rating").isEqualTo(4)
                 .jsonPath("$.responseList[0].likes").isEqualTo(2)
                 .jsonPath("$.responseList[0].dislikes").isEqualTo(2)
-                .jsonPath("$.responseList[0].account.id").isEqualTo(1)
-                .jsonPath("$.responseList[0].item.id").isEqualTo(1);
+                .jsonPath("$.responseList[0].accountId").isEqualTo(1)
+                .jsonPath("$.responseList[0].itemId").isEqualTo(1);
 
     }
 
@@ -188,8 +188,8 @@ class ReviewIntegrationTest {
                 .jsonPath("$.responseList[0].rating").isEqualTo(4)
                 .jsonPath("$.responseList[0].likes").isEqualTo(2)
                 .jsonPath("$.responseList[0].dislikes").isEqualTo(2)
-                .jsonPath("$.responseList[0].account.id").isEqualTo(1)
-                .jsonPath("$.responseList[0].item.id").isEqualTo(1);
+                .jsonPath("$.responseList[0].accountId").isEqualTo(1)
+                .jsonPath("$.responseList[0].itemId").isEqualTo(1);
 
     }
 
@@ -216,8 +216,8 @@ class ReviewIntegrationTest {
                 .jsonPath("$.responseList[0].rating").isEqualTo(4)
                 .jsonPath("$.responseList[0].likes").isEqualTo(2)
                 .jsonPath("$.responseList[0].dislikes").isEqualTo(2)
-                .jsonPath("$.responseList[0].account.id").isEqualTo(1)
-                .jsonPath("$.responseList[0].item.id").isEqualTo(1);
+                .jsonPath("$.responseList[0].accountId").isEqualTo(1)
+                .jsonPath("$.responseList[0].itemId").isEqualTo(1);
 
     }
 

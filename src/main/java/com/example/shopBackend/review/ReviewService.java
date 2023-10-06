@@ -4,6 +4,7 @@ import com.example.shopBackend.account.AccountRepository;
 import com.example.shopBackend.item.ItemRepository;
 import com.example.shopBackend.item.ItemService;
 import com.example.shopBackend.response.ListRes;
+import com.example.shopBackend.security.Converters;
 import exception.BadRequestException;
 import exception.CalculationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class ReviewService {
 	 * 		  The review to be added to the database.
 	 * @return saved reviews.
 	 */
-	public List<Review> saveAllReviews(List<Review> review) {
+	public List<ReturnableReview> saveAllReviews(List<Review> review) {
 
 		if (review.isEmpty()) {
 			throw new BadRequestException(
@@ -136,7 +137,8 @@ public class ReviewService {
 		}
 
 		// save reviews and update item
-		List<Review> res = reviewRepository.saveAll(review);
+		List<ReturnableReview> res = reviewRepository.saveAll(review)
+				.stream().map(Converters::convertToReturnableReview).collect(Collectors.toList());
 		itemService.updateItemRatingAndWords(itemId, topWords.getTopPos(), topWords.getTopNeg());
 		return res;
 	}
@@ -194,7 +196,10 @@ public class ReviewService {
 			throw new BadRequestException(
 					"No Accounts exists with id " + id);
 		}
-		return new ListRes(reviewRepository.findAllAccountId(id, pageRequest),nextPage);
+
+		List<ReturnableReview> reviews = reviewRepository.findAllAccountId(id, pageRequest)
+				.stream().map(Converters::convertToReturnableReview).collect(Collectors.toList());
+		return new ListRes(reviews, nextPage);
 	}
 	
 	/**
@@ -238,7 +243,9 @@ public class ReviewService {
 
 		boolean nextPage = !reviewRepository.findAllItemId(id, nextPageRequest).isEmpty();
 
-		return new ListRes(reviewRepository.findAllItemId(id, pageRequest), nextPage);
+		List<ReturnableReview> reviews = reviewRepository.findAllItemId(id, pageRequest)
+				.stream().map(Converters::convertToReturnableReview).collect(Collectors.toList());
+		return new ListRes(reviews, nextPage);
 	}
 	
 	/**
@@ -290,7 +297,9 @@ public class ReviewService {
 
 		boolean nextPage = !reviewRepository.findAllBySearchForItem(formattedTitle, id, nextPageRequest).isEmpty();
 
-		return new ListRes(reviewRepository.findAllBySearchForItem(formattedTitle, id, pageRequest), nextPage);
+		List<ReturnableReview> reviews = reviewRepository.findAllBySearchForItem(formattedTitle, id, pageRequest)
+				.stream().map(Converters::convertToReturnableReview).collect(Collectors.toList());
+		return new ListRes(reviews, nextPage);
 	}
 	
 	/**

@@ -97,7 +97,7 @@ class PagesControllerTest {
                         "title",
                         1,
                         2F,
-                        2
+                        "Sports"
                 )),
                 2.3F,
                 2,

@@ -10,14 +10,14 @@ public class ReturnableItem {
 
     private float rating;
 
-    private int categoryId;
+    private String categoryName;
 
-    public ReturnableItem(int id, String title, int accountId, float rating, int categoryId) {
+    public ReturnableItem(int id, String title, int accountId, float rating, String categoryName) {
         this.id = id;
         this.title = title;
         this.accountId = accountId;
         this.rating = rating;
-        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
     public ReturnableItem() {};
@@ -54,11 +54,11 @@ public class ReturnableItem {
         this.rating = rating;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryId) {
+        this.categoryName = categoryName;
     }
 }

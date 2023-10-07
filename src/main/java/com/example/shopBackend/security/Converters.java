@@ -26,7 +26,7 @@ public class Converters {
         returnableItem.setTitle(input.getTitle());
         returnableItem.setAccountId(input.getAccount().getId());
         returnableItem.setRating(input.getRating());
-        returnableItem.setCategoryId(input.getCategory().getId());
+        returnableItem.setCategoryName(input.getCategory().getName());
         return returnableItem;
     }
 }

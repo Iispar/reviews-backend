@@ -5,7 +5,6 @@ import java.sql.Date;
 public class ReturnableReview {
 
     private int id;
-
     private Date date;
     private String body;
     private String title;
@@ -15,7 +14,8 @@ public class ReturnableReview {
     private int accountId;
     private int itemId;
 
-    public ReturnableReview(Date date, String body, String title, Integer likes, int dislikes, int accountId, int rating, int itemId) {
+    public ReturnableReview(int id, Date date, String body, String title, Integer likes, int dislikes, int accountId, int rating, int itemId) {
+        this.id = id;
         this.date = date;
         this.body = body;
         this.title = title;

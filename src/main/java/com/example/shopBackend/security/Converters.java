@@ -8,6 +8,7 @@ import com.example.shopBackend.review.Review;
 public class Converters {
     public static ReturnableReview convertToReturnableReview(Review input) {
         ReturnableReview returnableReview = new ReturnableReview();
+        returnableReview.setId(input.getId());
         returnableReview.setDate(input.getDate());
         returnableReview.setBody(input.getBody());
         returnableReview.setTitle(input.getTitle());

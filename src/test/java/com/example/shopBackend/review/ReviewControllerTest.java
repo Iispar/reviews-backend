@@ -62,6 +62,7 @@ class ReviewControllerTest {
         );
 
         ReturnableReview review = new ReturnableReview(
+                1,
                 new Date(3),
                 "body",
                 "title",

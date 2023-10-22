@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.shopBackend.item.ItemRepositoryTest" time="1.735" tests="5" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/test-classes:/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/classes:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.1.1/spring-boot-starter-data-jpa-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.1.1/spring-boot-starter-aop-3.1.1.jar:/Users/iiro/.m2/repository/org/aspectj/aspectjweaver/1.9.19/aspectjweaver-1.9.19.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.1.1/spring-boot-starter-jdbc-3.1.1.jar:/Users/iiro/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-jdbc/6.0.10/spring-jdbc-6.0.10.jar:/Users/iiro/.m2/repository/org/hibernate/orm/hibernate-core/6.2.5.Final/hibernate-core-6.2.5.Final.jar:/Users/iiro/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/iiro/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/iiro/.m2/repository/org/jboss/logging/jboss-logging/3.5.1.Final/jboss-logging-3.5.1.Final.jar:/Users/iiro/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/iiro/.m2/repository/io/smallrye/jandex/3.0.5/jandex-3.0.5.jar:/Users/iiro/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/Users/iiro/.m2/repository/net/bytebuddy/byte-buddy/1.14.5/byte-buddy-1.14.5.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.3/jaxb-runtime-4.0.3.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.3/jaxb-core-4.0.3.jar:/Users/iiro/.m2/repository/org/eclipse/angus/angus-activation/2.0.1/angus-activation-2.0.1.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/txw2/4.0.3/txw2-4.0.3.jar:/Users/iiro/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/iiro/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/iiro/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar:/Users/iiro/.m2/repository/org/springframework/data/spring-data-jpa/3.1.1/spring-data-jpa-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/data/spring-data-commons/3.1.1/spring-data-commons-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-orm/6.0.10/spring-orm-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-context/6.0.10/spring-context-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-tx/6.0.10/spring-tx-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-beans/6.0.10/spring-beans-6.0.10.jar:/Users/iiro/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/iiro/.m2/repository/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar:/Users/iiro/.m2/repository/org/springframework/spring-aspects/6.0.10/spring-aspects-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.1.1/spring-boot-starter-web-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter/3.1.1/spring-boot-starter-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot/3.1.1/spring-boot-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.1.1/spring-boot-autoconfigure-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.1.1/spring-boot-starter-logging-3.1.1.jar:/Users/iiro/.m2/repository/ch/qos/logback/logback-classic/1.4.8/logback-classic-1.4.8.jar:/Users/iiro/.m2/repository/ch/qos/logback/logback-core/1.4.8/logback-core-1.4.8.jar:/Users/iiro/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.20.0/log4j-to-slf4j-2.20.0.jar:/Users/iiro/.m2/repository/org/apache/logging/log4j/log4j-api/2.20.0/log4j-api-2.20.0.jar:/Users/iiro/.m2/repository/org/slf4j/jul-to-slf4j/2.0.7/jul-to-slf4j-2.0.7.jar:/Users/iiro/.m2/repository/org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.1.1/spring-boot-starter-json-3.1.1.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.2/jackson-datatype-jdk8-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.2/jackson-datatype-jsr310-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.2/jackson-module-parameter-names-2.15.2.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.1.1/spring-boot-starter-tomcat-3.1.1.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.10/tomcat-embed-core-10.1.10.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.10/tomcat-embed-el-10.1.10.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.10/tomcat-embed-websocket-10.1.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-web/6.0.10/spring-web-6.0.10.jar:/Users/iiro/.m2/repository/io/micrometer/micrometer-observation/1.11.1/micrometer-observation-1.11.1.jar:/Users/iiro/.m2/repository/io/micrometer/micrometer-commons/1.11.1/micrometer-commons-1.11.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-webmvc/6.0.10/spring-webmvc-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-expression/6.0.10/spring-expression-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-webflux/3.1.1/spring-boot-starter-webflux-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-reactor-netty/3.1.1/spring-boot-starter-reactor-netty-3.1.1.jar:/Users/iiro/.m2/repository/io/projectreactor/netty/reactor-netty-http/1.1.8/reactor-netty-http-1.1.8.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-http/4.1.94.Final/netty-codec-http-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-common/4.1.94.Final/netty-common-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-buffer/4.1.94.Final/netty-buffer-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport/4.1.94.Final/netty-transport-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec/4.1.94.Final/netty-codec-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-handler/4.1.94.Final/netty-handler-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-http2/4.1.94.Final/netty-codec-http2-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns/4.1.94.Final/netty-resolver-dns-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver/4.1.94.Final/netty-resolver-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-dns/4.1.94.Final/netty-codec-dns-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns-native-macos/4.1.94.Final/netty-resolver-dns-native-macos-4.1.94.Final-osx-x86_64.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns-classes-macos/4.1.94.Final/netty-resolver-dns-classes-macos-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-native-epoll/4.1.94.Final/netty-transport-native-epoll-4.1.94.Final-linux-x86_64.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-native-unix-common/4.1.94.Final/netty-transport-native-unix-common-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-classes-epoll/4.1.94.Final/netty-transport-classes-epoll-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/projectreactor/netty/reactor-netty-core/1.1.8/reactor-netty-core-1.1.8.jar:/Users/iiro/.m2/repository/io/netty/netty-handler-proxy/4.1.94.Final/netty-handler-proxy-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-socks/4.1.94.Final/netty-codec-socks-4.1.94.Final.jar:/Users/iiro/.m2/repository/org/springframework/spring-webflux/6.0.10/spring-webflux-6.0.10.jar:/Users/iiro/.m2/repository/io/projectreactor/reactor-core/3.5.7/reactor-core-3.5.7.jar:/Users/iiro/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/iiro/.m2/repository/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.1.1/spring-boot-starter-test-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-test/3.1.1/spring-boot-test-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.1.1/spring-boot-test-autoconfigure-3.1.1.jar:/Users/iiro/.m2/repository/com/jayway/jsonpath/json-path/2.8.0/json-path-2.8.0.jar:/Users/iiro/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.0/jakarta.xml.bind-api-4.0.0.jar:/Users/iiro/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.2/jakarta.activation-api-2.1.2.jar:/Users/iiro/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/Users/iiro/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.3/junit-jupiter-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/Users/iiro/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/iiro/.m2/repository/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar:/Users/iiro/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar:/Users/iiro/.m2/repository/org/mockito/mockito-core/5.3.1/mockito-core-5.3.1.jar:/Users/iiro/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.5/byte-buddy-agent-1.14.5.jar:/Users/iiro/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/iiro/.m2/repository/org/mockito/mockito-junit-jupiter/5.3.1/mockito-junit-jupiter-5.3.1.jar:/Users/iiro/.m2/repository/org/skyscreamer/jsonassert/1.5.1/jsonassert-1.5.1.jar:/Users/iiro/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/iiro/.m2/repository/org/springframework/spring-core/6.0.10/spring-core-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-jcl/6.0.10/spring-jcl-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-test/6.0.10/spring-test-6.0.10.jar:/Users/iiro/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/iiro/.m2/repository/com/h2database/h2/2.1.214/h2-2.1.214.jar:/Users/iiro/.m2/repository/net/minidev/json-smart/2.4.11/json-smart-2.4.11.jar:/Users/iiro/.m2/repository/net/minidev/accessors-smart/2.4.11/accessors-smart-2.4.11.jar:/Users/iiro/.m2/repository/org/ow2/asm/asm/9.3/asm-9.3.jar:/Users/iiro/.m2/repository/com/squareup/okhttp3/okhttp/4.10.0/okhttp-4.10.0.jar:/Users/iiro/.m2/repository/com/squareup/okio/okio-jvm/3.0.0/okio-jvm-3.0.0.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.22/kotlin-stdlib-common-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.22/kotlin-stdlib-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:/Users/iiro/.m2/repository/com/squareup/okhttp3/mockwebserver/4.10.0/mockwebserver-4.10.0.jar:/Users/iiro/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/iiro/.m2/repository/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.22/kotlin-stdlib-jdk8-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.22/kotlin-stdlib-jdk7-1.8.22.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.1.1/spring-boot-starter-security-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-aop/6.0.10/spring-aop-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-config/6.1.1/spring-security-config-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-web/6.1.1/spring-security-web-6.1.1.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-api/0.11.5/jjwt-api-0.11.5.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-impl/0.11.5/jjwt-impl-0.11.5.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.11.5/jjwt-jackson-0.11.5.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.2/jackson-annotations-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.2/jackson-core-2.15.2.jar:/Users/iiro/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-test/6.1.1/spring-security-test-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-core/6.1.1/spring-security-core-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-crypto/6.1.1/spring-security-crypto-6.1.1.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="user.timezone" value="Europe/Helsinki"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="FI"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/17.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire/surefirebooter-20231022164641552_3.jar /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire 2023-10-22T16-46-41_479-jvmRun1 surefire-20231022164641552_1tmp surefire_0-20231022164641552_2tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/test-classes:/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/classes:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.1.1/spring-boot-starter-data-jpa-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.1.1/spring-boot-starter-aop-3.1.1.jar:/Users/iiro/.m2/repository/org/aspectj/aspectjweaver/1.9.19/aspectjweaver-1.9.19.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.1.1/spring-boot-starter-jdbc-3.1.1.jar:/Users/iiro/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-jdbc/6.0.10/spring-jdbc-6.0.10.jar:/Users/iiro/.m2/repository/org/hibernate/orm/hibernate-core/6.2.5.Final/hibernate-core-6.2.5.Final.jar:/Users/iiro/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/iiro/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/iiro/.m2/repository/org/jboss/logging/jboss-logging/3.5.1.Final/jboss-logging-3.5.1.Final.jar:/Users/iiro/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/iiro/.m2/repository/io/smallrye/jandex/3.0.5/jandex-3.0.5.jar:/Users/iiro/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/Users/iiro/.m2/repository/net/bytebuddy/byte-buddy/1.14.5/byte-buddy-1.14.5.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.3/jaxb-runtime-4.0.3.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.3/jaxb-core-4.0.3.jar:/Users/iiro/.m2/repository/org/eclipse/angus/angus-activation/2.0.1/angus-activation-2.0.1.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/txw2/4.0.3/txw2-4.0.3.jar:/Users/iiro/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/iiro/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/iiro/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar:/Users/iiro/.m2/repository/org/springframework/data/spring-data-jpa/3.1.1/spring-data-jpa-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/data/spring-data-commons/3.1.1/spring-data-commons-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-orm/6.0.10/spring-orm-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-context/6.0.10/spring-context-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-tx/6.0.10/spring-tx-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-beans/6.0.10/spring-beans-6.0.10.jar:/Users/iiro/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/iiro/.m2/repository/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar:/Users/iiro/.m2/repository/org/springframework/spring-aspects/6.0.10/spring-aspects-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.1.1/spring-boot-starter-web-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter/3.1.1/spring-boot-starter-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot/3.1.1/spring-boot-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.1.1/spring-boot-autoconfigure-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.1.1/spring-boot-starter-logging-3.1.1.jar:/Users/iiro/.m2/repository/ch/qos/logback/logback-classic/1.4.8/logback-classic-1.4.8.jar:/Users/iiro/.m2/repository/ch/qos/logback/logback-core/1.4.8/logback-core-1.4.8.jar:/Users/iiro/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.20.0/log4j-to-slf4j-2.20.0.jar:/Users/iiro/.m2/repository/org/apache/logging/log4j/log4j-api/2.20.0/log4j-api-2.20.0.jar:/Users/iiro/.m2/repository/org/slf4j/jul-to-slf4j/2.0.7/jul-to-slf4j-2.0.7.jar:/Users/iiro/.m2/repository/org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.1.1/spring-boot-starter-json-3.1.1.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.2/jackson-datatype-jdk8-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.2/jackson-datatype-jsr310-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.2/jackson-module-parameter-names-2.15.2.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.1.1/spring-boot-starter-tomcat-3.1.1.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.10/tomcat-embed-core-10.1.10.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.10/tomcat-embed-el-10.1.10.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.10/tomcat-embed-websocket-10.1.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-web/6.0.10/spring-web-6.0.10.jar:/Users/iiro/.m2/repository/io/micrometer/micrometer-observation/1.11.1/micrometer-observation-1.11.1.jar:/Users/iiro/.m2/repository/io/micrometer/micrometer-commons/1.11.1/micrometer-commons-1.11.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-webmvc/6.0.10/spring-webmvc-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-expression/6.0.10/spring-expression-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-webflux/3.1.1/spring-boot-starter-webflux-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-reactor-netty/3.1.1/spring-boot-starter-reactor-netty-3.1.1.jar:/Users/iiro/.m2/repository/io/projectreactor/netty/reactor-netty-http/1.1.8/reactor-netty-http-1.1.8.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-http/4.1.94.Final/netty-codec-http-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-common/4.1.94.Final/netty-common-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-buffer/4.1.94.Final/netty-buffer-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport/4.1.94.Final/netty-transport-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec/4.1.94.Final/netty-codec-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-handler/4.1.94.Final/netty-handler-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-http2/4.1.94.Final/netty-codec-http2-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns/4.1.94.Final/netty-resolver-dns-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver/4.1.94.Final/netty-resolver-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-dns/4.1.94.Final/netty-codec-dns-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns-native-macos/4.1.94.Final/netty-resolver-dns-native-macos-4.1.94.Final-osx-x86_64.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns-classes-macos/4.1.94.Final/netty-resolver-dns-classes-macos-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-native-epoll/4.1.94.Final/netty-transport-native-epoll-4.1.94.Final-linux-x86_64.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-native-unix-common/4.1.94.Final/netty-transport-native-unix-common-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-classes-epoll/4.1.94.Final/netty-transport-classes-epoll-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/projectreactor/netty/reactor-netty-core/1.1.8/reactor-netty-core-1.1.8.jar:/Users/iiro/.m2/repository/io/netty/netty-handler-proxy/4.1.94.Final/netty-handler-proxy-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-socks/4.1.94.Final/netty-codec-socks-4.1.94.Final.jar:/Users/iiro/.m2/repository/org/springframework/spring-webflux/6.0.10/spring-webflux-6.0.10.jar:/Users/iiro/.m2/repository/io/projectreactor/reactor-core/3.5.7/reactor-core-3.5.7.jar:/Users/iiro/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/iiro/.m2/repository/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.1.1/spring-boot-starter-test-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-test/3.1.1/spring-boot-test-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.1.1/spring-boot-test-autoconfigure-3.1.1.jar:/Users/iiro/.m2/repository/com/jayway/jsonpath/json-path/2.8.0/json-path-2.8.0.jar:/Users/iiro/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.0/jakarta.xml.bind-api-4.0.0.jar:/Users/iiro/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.2/jakarta.activation-api-2.1.2.jar:/Users/iiro/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/Users/iiro/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.3/junit-jupiter-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/Users/iiro/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/iiro/.m2/repository/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar:/Users/iiro/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar:/Users/iiro/.m2/repository/org/mockito/mockito-core/5.3.1/mockito-core-5.3.1.jar:/Users/iiro/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.5/byte-buddy-agent-1.14.5.jar:/Users/iiro/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/iiro/.m2/repository/org/mockito/mockito-junit-jupiter/5.3.1/mockito-junit-jupiter-5.3.1.jar:/Users/iiro/.m2/repository/org/skyscreamer/jsonassert/1.5.1/jsonassert-1.5.1.jar:/Users/iiro/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/iiro/.m2/repository/org/springframework/spring-core/6.0.10/spring-core-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-jcl/6.0.10/spring-jcl-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-test/6.0.10/spring-test-6.0.10.jar:/Users/iiro/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/iiro/.m2/repository/com/h2database/h2/2.1.214/h2-2.1.214.jar:/Users/iiro/.m2/repository/net/minidev/json-smart/2.4.11/json-smart-2.4.11.jar:/Users/iiro/.m2/repository/net/minidev/accessors-smart/2.4.11/accessors-smart-2.4.11.jar:/Users/iiro/.m2/repository/org/ow2/asm/asm/9.3/asm-9.3.jar:/Users/iiro/.m2/repository/com/squareup/okhttp3/okhttp/4.10.0/okhttp-4.10.0.jar:/Users/iiro/.m2/repository/com/squareup/okio/okio-jvm/3.0.0/okio-jvm-3.0.0.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.22/kotlin-stdlib-common-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.22/kotlin-stdlib-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:/Users/iiro/.m2/repository/com/squareup/okhttp3/mockwebserver/4.10.0/mockwebserver-4.10.0.jar:/Users/iiro/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/iiro/.m2/repository/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.22/kotlin-stdlib-jdk8-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.22/kotlin-stdlib-jdk7-1.8.22.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.1.1/spring-boot-starter-security-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-aop/6.0.10/spring-aop-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-config/6.1.1/spring-security-config-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-web/6.1.1/spring-security-web-6.1.1.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-api/0.11.5/jjwt-api-0.11.5.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-impl/0.11.5/jjwt-impl-0.11.5.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.11.5/jjwt-jackson-0.11.5.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.2/jackson-annotations-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.2/jackson-core-2.15.2.jar:/Users/iiro/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-test/6.1.1/spring-security-test-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-core/6.1.1/spring-security-core-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-crypto/6.1.1/spring-security-crypto-6.1.1.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/iiro"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2022-01-18"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk/17.0.2/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire/surefirebooter-20231022164641552_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="17.0.2+0"/>
+    <property name="user.name" value="iiro"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="13.4.1"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/iiro/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/xm/f__fpvcd74jg4d0ktvzdw5hr0000gn/T/"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="java.version" value="17.0.2"/>
+    <property name="user.dir" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="66271"/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/iiro/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="17.0.2+0"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="ItemFindItemCountForAccountIdWorks" classname="com.example.shopBackend.item.ItemRepositoryTest" time="0.142">
+    <system-out><![CDATA[
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.1)
+
+2023-10-22T16:46:44.713+03:00  INFO 66271 --- [           main] c.e.shopBackend.item.ItemRepositoryTest  : Starting ItemRepositoryTest using Java 17.0.2 with PID 66271 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
+2023-10-22T16:46:44.714+03:00  INFO 66271 --- [           main] c.e.shopBackend.item.ItemRepositoryTest  : The following 1 profile is active: "test"
+2023-10-22T16:46:44.895+03:00  INFO 66271 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-22T16:46:44.933+03:00  INFO 66271 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 6 JPA repository interfaces.
+2023-10-22T16:46:45.094+03:00  INFO 66271 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-22T16:46:45.135+03:00  INFO 66271 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.5.Final
+2023-10-22T16:46:45.136+03:00  INFO 66271 --- [           main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-10-22T16:46:45.208+03:00  INFO 66271 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-22T16:46:45.214+03:00  INFO 66271 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-22T16:46:45.223+03:00  INFO 66271 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-10-22T16:46:45.339+03:00  INFO 66271 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:ba5960d5-91c3-4f44-b50d-6defb31b00c3 user=SA
+2023-10-22T16:46:45.339+03:00  INFO 66271 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-10-22T16:46:45.359+03:00  WARN 66271 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-10-22T16:46:45.482+03:00  INFO 66271 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-22T16:46:45.817+03:00  INFO 66271 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+Hibernate: 
+    create table account_roles (
+        role_id integer not null auto_increment,
+        role_name varchar(255) not null,
+        primary key (role_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table accounts (
+        account_id integer not null auto_increment,
+        account_email varchar(255) not null,
+        account_name varchar(255) not null,
+        account_password varchar(255) not null,
+        account_username varchar(255) not null,
+        account_role integer not null,
+        primary key (account_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table item_categories (
+        category_id integer not null auto_increment,
+        category_name varchar(255) not null,
+        primary key (category_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table items (
+        item_id integer not null auto_increment,
+        item_rating float(23),
+        item_title varchar(255) not null,
+        item_account integer not null,
+        item_category integer not null,
+        item_words integer,
+        primary key (item_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table reviews (
+        review_id integer not null auto_increment,
+        review_body text not null,
+        review_date date not null,
+        review_dislikes integer not null,
+        review_likes integer not null,
+        review_rating integer,
+        review_title text not null,
+        review_account integer not null,
+        review_item integer not null,
+        primary key (review_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table words (
+        words_id integer not null auto_increment,
+        words_negative varbinary(255),
+        words_positive varbinary(255),
+        primary key (words_id)
+    ) engine=InnoDB
+Hibernate: 
+    alter table accounts 
+       drop index UK_mk7tpo481lfhcsngxkcf40nw2
+Hibernate: 
+    alter table accounts 
+       add constraint UK_mk7tpo481lfhcsngxkcf40nw2 unique (account_username)
+Hibernate: 
+    alter table items 
+       drop index UK_l2hh6d3b7gbyk1x3158hnrm8j
+Hibernate: 
+    alter table items 
+       add constraint UK_l2hh6d3b7gbyk1x3158hnrm8j unique (item_words)
+Hibernate: 
+    alter table accounts 
+       add constraint FKa5420c4ple63nlr3aq2ywrn0s 
+       foreign key (account_role) 
+       references account_roles (role_id)
+Hibernate: 
+    alter table items 
+       add constraint FKowc4sr11bcs0xodrwow85b43a 
+       foreign key (item_account) 
+       references accounts (account_id)
+Hibernate: 
+    alter table items 
+       add constraint FKr193jj9b62b8lkb7ertq0w36q 
+       foreign key (item_category) 
+       references item_categories (category_id)
+Hibernate: 
+    alter table items 
+       add constraint FKqct0hrjypd6x1f7ogii60bl9j 
+       foreign key (item_words) 
+       references words (words_id)
+Hibernate: 
+    alter table reviews 
+       add constraint FKsqysu6con2ua8dn83tfd4cttn 
+       foreign key (review_account) 
+       references accounts (account_id)
+Hibernate: 
+    alter table reviews 
+       add constraint FKuva164xbjqmhwwbel1m32joo 
+       foreign key (review_item) 
+       references items (item_id)
+2023-10-22T16:46:45.863+03:00  INFO 66271 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-22T16:46:46.059+03:00  INFO 66271 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-10-22T16:46:46.165+03:00  INFO 66271 --- [           main] c.e.shopBackend.item.ItemRepositoryTest  : Started ItemRepositoryTest in 1.51 seconds (process running for 4.519)
+Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        c1_0.category_id,
+        c1_0.category_name 
+    from
+        item_categories c1_0 
+    where
+        c1_0.category_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username,
+        i1_0.item_category,
+        c1_0.category_id,
+        c1_0.category_name,
+        i1_0.item_rating,
+        i1_0.item_title,
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        items i1_0 
+    join
+        accounts a1_0 
+            on a1_0.account_id=i1_0.item_account 
+    left join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    join
+        item_categories c1_0 
+            on c1_0.category_id=i1_0.item_category 
+    left join
+        words w1_0 
+            on w1_0.words_id=i1_0.item_words 
+    where
+        i1_0.item_id=?
+Hibernate: 
+    insert 
+    into
+        items
+        (item_account,item_category,item_rating,item_title,item_words) 
+    values
+        (?,?,?,?,?)
+Hibernate: 
+    SELECT
+        COUNT(*) 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ?
+Hibernate: 
+    SELECT
+        COUNT(*) 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        i1_0.item_category,
+        i1_0.item_rating,
+        i1_0.item_title,
+        i1_0.item_words 
+    from
+        items i1_0
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="ItemFindAllByAccountIdWorks" classname="com.example.shopBackend.item.ItemRepositoryTest" time="0.016">
+    <system-out><![CDATA[Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        c1_0.category_id,
+        c1_0.category_name 
+    from
+        item_categories c1_0 
+    where
+        c1_0.category_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username,
+        i1_0.item_category,
+        c1_0.category_id,
+        c1_0.category_name,
+        i1_0.item_rating,
+        i1_0.item_title,
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        items i1_0 
+    join
+        accounts a1_0 
+            on a1_0.account_id=i1_0.item_account 
+    left join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    join
+        item_categories c1_0 
+            on c1_0.category_id=i1_0.item_category 
+    left join
+        words w1_0 
+            on w1_0.words_id=i1_0.item_words 
+    where
+        i1_0.item_id=?
+Hibernate: 
+    insert 
+    into
+        items
+        (item_account,item_category,item_rating,item_title,item_words) 
+    values
+        (?,?,?,?,?)
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ? limit ?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ? limit ?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        i1_0.item_category,
+        i1_0.item_rating,
+        i1_0.item_title,
+        i1_0.item_words 
+    from
+        items i1_0
+Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="findAllForAccountWithTitleWorks" classname="com.example.shopBackend.item.ItemRepositoryTest" time="0.016">
+    <system-out><![CDATA[Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        c1_0.category_id,
+        c1_0.category_name 
+    from
+        item_categories c1_0 
+    where
+        c1_0.category_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username,
+        i1_0.item_category,
+        c1_0.category_id,
+        c1_0.category_name,
+        i1_0.item_rating,
+        i1_0.item_title,
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        items i1_0 
+    join
+        accounts a1_0 
+            on a1_0.account_id=i1_0.item_account 
+    left join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    join
+        item_categories c1_0 
+            on c1_0.category_id=i1_0.item_category 
+    left join
+        words w1_0 
+            on w1_0.words_id=i1_0.item_words 
+    where
+        i1_0.item_id=?
+Hibernate: 
+    insert 
+    into
+        items
+        (item_account,item_category,item_rating,item_title,item_words) 
+    values
+        (?,?,?,?,?)
+Hibernate: 
+    SELECT
+        i.item_id AS id,
+        i.item_title AS title,
+        i.item_rating as rating,
+        COUNT(r.review_id) AS reviews 
+    FROM
+        items i 
+    LEFT JOIN
+        reviews r 
+            ON r.review_item = i.item_id 
+    WHERE
+        i.item_title LIKE ? 
+        AND i.item_account = ? 
+    GROUP BY
+        i.item_id limit ?
+Hibernate: 
+    SELECT
+        i.item_id AS id,
+        i.item_title AS title,
+        i.item_rating as rating,
+        COUNT(r.review_id) AS reviews 
+    FROM
+        items i 
+    LEFT JOIN
+        reviews r 
+            ON r.review_item = i.item_id 
+    WHERE
+        i.item_title LIKE ? 
+        AND i.item_account = ? 
+    GROUP BY
+        i.item_id limit ?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        i1_0.item_category,
+        i1_0.item_rating,
+        i1_0.item_title,
+        i1_0.item_words 
+    from
+        items i1_0
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="findAllForAccountWithReviewCountWorks" classname="com.example.shopBackend.item.ItemRepositoryTest" time="0.014">
+    <system-out><![CDATA[Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        c1_0.category_id,
+        c1_0.category_name 
+    from
+        item_categories c1_0 
+    where
+        c1_0.category_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username,
+        i1_0.item_category,
+        c1_0.category_id,
+        c1_0.category_name,
+        i1_0.item_rating,
+        i1_0.item_title,
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        items i1_0 
+    join
+        accounts a1_0 
+            on a1_0.account_id=i1_0.item_account 
+    left join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    join
+        item_categories c1_0 
+            on c1_0.category_id=i1_0.item_category 
+    left join
+        words w1_0 
+            on w1_0.words_id=i1_0.item_words 
+    where
+        i1_0.item_id=?
+Hibernate: 
+    insert 
+    into
+        items
+        (item_account,item_category,item_rating,item_title,item_words) 
+    values
+        (?,?,?,?,?)
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ? limit ?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ? limit ?
+com.example.shopBackend.item.Item@6eec564c
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        i1_0.item_category,
+        i1_0.item_rating,
+        i1_0.item_title,
+        i1_0.item_words 
+    from
+        items i1_0
+Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="ItemFindAvgRatingForAccountWorks" classname="com.example.shopBackend.item.ItemRepositoryTest" time="0.017">
+    <system-out><![CDATA[Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        c1_0.category_id,
+        c1_0.category_name 
+    from
+        item_categories c1_0 
+    where
+        c1_0.category_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    insert 
+    into
+        items
+        (item_account,item_category,item_rating,item_title,item_words) 
+    values
+        (?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        items
+        (item_account,item_category,item_rating,item_title,item_words) 
+    values
+        (?,?,?,?,?)
+Hibernate: 
+    SELECT
+        AVG(item_rating) 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ?
+Hibernate: 
+    SELECT
+        AVG(item_rating) 
+    FROM
+        items i 
+    WHERE
+        i.item_account = ?
+Hibernate: 
+    select
+        i1_0.item_id,
+        i1_0.item_account,
+        i1_0.item_category,
+        i1_0.item_rating,
+        i1_0.item_title,
+        i1_0.item_words 
+    from
+        items i1_0
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+Hibernate: 
+    select
+        a1_0.account_id,
+        a1_0.account_email,
+        a1_0.account_name,
+        a1_0.account_password,
+        a1_0.account_role,
+        r1_0.role_id,
+        r1_0.role_name,
+        a1_0.account_username 
+    from
+        accounts a1_0 
+    join
+        account_roles r1_0 
+            on r1_0.role_id=a1_0.account_role 
+    where
+        a1_0.account_id=?
+Hibernate: 
+    select
+        w1_0.words_id,
+        w1_0.words_negative,
+        w1_0.words_positive 
+    from
+        words w1_0 
+    where
+        w1_0.words_id=?
+]]></system-out>
+  </testcase>
+</testsuite>

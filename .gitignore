@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+!target/reviewsbackend-0.0.1-SNAPSHOT.jar
 
 ### STS ###
 .apt_generated
@@ -34,4 +35,6 @@ build/
 
 
 ./reviews-backend.pem
+reviews-backend.pem
+/reviews-backend.pem
 src/main/resources/application.properties

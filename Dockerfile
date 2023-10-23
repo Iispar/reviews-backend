@@ -14,7 +14,7 @@ ADD ${KEY} key.pem
 
 RUN echo "#!/bin/sh" > /entrypoint.sh && \
     echo "chmod 400 /key.pem" >> /entrypoint.sh && \
-    echo "ssh -oStrictHostKeyChecking=no -i key.pem -fN ec2-user@ec2-16-170-214-72.eu-north-1.compute.amazonaws.com -L 3000:reviews-database.cekkpqboucwz.eu-north-1.rds.amazonaws.com:3306 &" >> /entrypoint.sh && \
+    echo "ssh -oStrictHostKeyChecking=no -o ServerAliveInterval=300 -i key.pem -fN ec2-user@ec2-16-170-214-72.eu-north-1.compute.amazonaws.com -L 3000:reviews-database.cekkpqboucwz.eu-north-1.rds.amazonaws.com:3306 &" >> /entrypoint.sh && \
     echo "java -jar /app.jar" >> /entrypoint.sh
 
 

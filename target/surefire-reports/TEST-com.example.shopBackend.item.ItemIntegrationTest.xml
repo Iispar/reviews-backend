@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.shopBackend.item.ItemIntegrationTest" time="14.137" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.shopBackend.item.ItemIntegrationTest" time="14.843" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FI"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/17.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire/surefirebooter-20231022235408755_3.jar /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire 2023-10-22T23-54-08_685-jvmRun1 surefire-20231022235408755_1tmp surefire_0-20231022235408755_2tmp"/>
+    <property name="sun.java.command" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire/surefirebooter-20231023212036911_3.jar /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire 2023-10-23T21-20-36_845-jvmRun1 surefire-20231023212036911_1tmp surefire_0-20231023212036911_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/test-classes:/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/classes:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.1.1/spring-boot-starter-data-jpa-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.1.1/spring-boot-starter-aop-3.1.1.jar:/Users/iiro/.m2/repository/org/aspectj/aspectjweaver/1.9.19/aspectjweaver-1.9.19.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.1.1/spring-boot-starter-jdbc-3.1.1.jar:/Users/iiro/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-jdbc/6.0.10/spring-jdbc-6.0.10.jar:/Users/iiro/.m2/repository/org/hibernate/orm/hibernate-core/6.2.5.Final/hibernate-core-6.2.5.Final.jar:/Users/iiro/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/iiro/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/iiro/.m2/repository/org/jboss/logging/jboss-logging/3.5.1.Final/jboss-logging-3.5.1.Final.jar:/Users/iiro/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/iiro/.m2/repository/io/smallrye/jandex/3.0.5/jandex-3.0.5.jar:/Users/iiro/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/Users/iiro/.m2/repository/net/bytebuddy/byte-buddy/1.14.5/byte-buddy-1.14.5.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.3/jaxb-runtime-4.0.3.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.3/jaxb-core-4.0.3.jar:/Users/iiro/.m2/repository/org/eclipse/angus/angus-activation/2.0.1/angus-activation-2.0.1.jar:/Users/iiro/.m2/repository/org/glassfish/jaxb/txw2/4.0.3/txw2-4.0.3.jar:/Users/iiro/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/iiro/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/iiro/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar:/Users/iiro/.m2/repository/org/springframework/data/spring-data-jpa/3.1.1/spring-data-jpa-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/data/spring-data-commons/3.1.1/spring-data-commons-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-orm/6.0.10/spring-orm-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-context/6.0.10/spring-context-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-tx/6.0.10/spring-tx-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-beans/6.0.10/spring-beans-6.0.10.jar:/Users/iiro/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/iiro/.m2/repository/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar:/Users/iiro/.m2/repository/org/springframework/spring-aspects/6.0.10/spring-aspects-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.1.1/spring-boot-starter-web-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter/3.1.1/spring-boot-starter-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot/3.1.1/spring-boot-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.1.1/spring-boot-autoconfigure-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.1.1/spring-boot-starter-logging-3.1.1.jar:/Users/iiro/.m2/repository/ch/qos/logback/logback-classic/1.4.8/logback-classic-1.4.8.jar:/Users/iiro/.m2/repository/ch/qos/logback/logback-core/1.4.8/logback-core-1.4.8.jar:/Users/iiro/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.20.0/log4j-to-slf4j-2.20.0.jar:/Users/iiro/.m2/repository/org/apache/logging/log4j/log4j-api/2.20.0/log4j-api-2.20.0.jar:/Users/iiro/.m2/repository/org/slf4j/jul-to-slf4j/2.0.7/jul-to-slf4j-2.0.7.jar:/Users/iiro/.m2/repository/org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.1.1/spring-boot-starter-json-3.1.1.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.2/jackson-datatype-jdk8-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.2/jackson-datatype-jsr310-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.2/jackson-module-parameter-names-2.15.2.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.1.1/spring-boot-starter-tomcat-3.1.1.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.10/tomcat-embed-core-10.1.10.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.10/tomcat-embed-el-10.1.10.jar:/Users/iiro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.10/tomcat-embed-websocket-10.1.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-web/6.0.10/spring-web-6.0.10.jar:/Users/iiro/.m2/repository/io/micrometer/micrometer-observation/1.11.1/micrometer-observation-1.11.1.jar:/Users/iiro/.m2/repository/io/micrometer/micrometer-commons/1.11.1/micrometer-commons-1.11.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-webmvc/6.0.10/spring-webmvc-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-expression/6.0.10/spring-expression-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-webflux/3.1.1/spring-boot-starter-webflux-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-reactor-netty/3.1.1/spring-boot-starter-reactor-netty-3.1.1.jar:/Users/iiro/.m2/repository/io/projectreactor/netty/reactor-netty-http/1.1.8/reactor-netty-http-1.1.8.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-http/4.1.94.Final/netty-codec-http-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-common/4.1.94.Final/netty-common-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-buffer/4.1.94.Final/netty-buffer-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport/4.1.94.Final/netty-transport-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec/4.1.94.Final/netty-codec-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-handler/4.1.94.Final/netty-handler-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-http2/4.1.94.Final/netty-codec-http2-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns/4.1.94.Final/netty-resolver-dns-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver/4.1.94.Final/netty-resolver-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-dns/4.1.94.Final/netty-codec-dns-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns-native-macos/4.1.94.Final/netty-resolver-dns-native-macos-4.1.94.Final-osx-x86_64.jar:/Users/iiro/.m2/repository/io/netty/netty-resolver-dns-classes-macos/4.1.94.Final/netty-resolver-dns-classes-macos-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-native-epoll/4.1.94.Final/netty-transport-native-epoll-4.1.94.Final-linux-x86_64.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-native-unix-common/4.1.94.Final/netty-transport-native-unix-common-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-transport-classes-epoll/4.1.94.Final/netty-transport-classes-epoll-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/projectreactor/netty/reactor-netty-core/1.1.8/reactor-netty-core-1.1.8.jar:/Users/iiro/.m2/repository/io/netty/netty-handler-proxy/4.1.94.Final/netty-handler-proxy-4.1.94.Final.jar:/Users/iiro/.m2/repository/io/netty/netty-codec-socks/4.1.94.Final/netty-codec-socks-4.1.94.Final.jar:/Users/iiro/.m2/repository/org/springframework/spring-webflux/6.0.10/spring-webflux-6.0.10.jar:/Users/iiro/.m2/repository/io/projectreactor/reactor-core/3.5.7/reactor-core-3.5.7.jar:/Users/iiro/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/iiro/.m2/repository/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.1.1/spring-boot-starter-test-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-test/3.1.1/spring-boot-test-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.1.1/spring-boot-test-autoconfigure-3.1.1.jar:/Users/iiro/.m2/repository/com/jayway/jsonpath/json-path/2.8.0/json-path-2.8.0.jar:/Users/iiro/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.0/jakarta.xml.bind-api-4.0.0.jar:/Users/iiro/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.2/jakarta.activation-api-2.1.2.jar:/Users/iiro/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/Users/iiro/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.3/junit-jupiter-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/Users/iiro/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/iiro/.m2/repository/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar:/Users/iiro/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/Users/iiro/.m2/repository/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar:/Users/iiro/.m2/repository/org/mockito/mockito-core/5.3.1/mockito-core-5.3.1.jar:/Users/iiro/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.5/byte-buddy-agent-1.14.5.jar:/Users/iiro/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/iiro/.m2/repository/org/mockito/mockito-junit-jupiter/5.3.1/mockito-junit-jupiter-5.3.1.jar:/Users/iiro/.m2/repository/org/skyscreamer/jsonassert/1.5.1/jsonassert-1.5.1.jar:/Users/iiro/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/iiro/.m2/repository/org/springframework/spring-core/6.0.10/spring-core-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-jcl/6.0.10/spring-jcl-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/spring-test/6.0.10/spring-test-6.0.10.jar:/Users/iiro/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/iiro/.m2/repository/com/h2database/h2/2.1.214/h2-2.1.214.jar:/Users/iiro/.m2/repository/net/minidev/json-smart/2.4.11/json-smart-2.4.11.jar:/Users/iiro/.m2/repository/net/minidev/accessors-smart/2.4.11/accessors-smart-2.4.11.jar:/Users/iiro/.m2/repository/org/ow2/asm/asm/9.3/asm-9.3.jar:/Users/iiro/.m2/repository/com/squareup/okhttp3/okhttp/4.10.0/okhttp-4.10.0.jar:/Users/iiro/.m2/repository/com/squareup/okio/okio-jvm/3.0.0/okio-jvm-3.0.0.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.22/kotlin-stdlib-common-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.22/kotlin-stdlib-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:/Users/iiro/.m2/repository/com/squareup/okhttp3/mockwebserver/4.10.0/mockwebserver-4.10.0.jar:/Users/iiro/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/iiro/.m2/repository/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.22/kotlin-stdlib-jdk8-1.8.22.jar:/Users/iiro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.22/kotlin-stdlib-jdk7-1.8.22.jar:/Users/iiro/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.1.1/spring-boot-starter-security-3.1.1.jar:/Users/iiro/.m2/repository/org/springframework/spring-aop/6.0.10/spring-aop-6.0.10.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-config/6.1.1/spring-security-config-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-web/6.1.1/spring-security-web-6.1.1.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-api/0.11.5/jjwt-api-0.11.5.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-impl/0.11.5/jjwt-impl-0.11.5.jar:/Users/iiro/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.11.5/jjwt-jackson-0.11.5.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.2/jackson-annotations-2.15.2.jar:/Users/iiro/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.2/jackson-core-2.15.2.jar:/Users/iiro/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-test/6.1.1/spring-security-test-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-core/6.1.1/spring-security-core-6.1.1.jar:/Users/iiro/.m2/repository/org/springframework/security/spring-security-crypto/6.1.1/spring-security-crypto-6.1.1.jar:"/>
@@ -33,7 +33,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire/surefirebooter-20231022235408755_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend/target/surefire/surefirebooter-20231023212036911_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="17.0.2+0"/>
@@ -48,14 +48,14 @@
     <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
     <property name="java.io.tmpdir" value="/var/folders/xm/f__fpvcd74jg4d0ktvzdw5hr0000gn/T/"/>
     <property name="com.zaxxer.hikari.pool_number" value="6"/>
-    <property name="catalina.home" value="/private/var/folders/xm/f__fpvcd74jg4d0ktvzdw5hr0000gn/T/tomcat.0.2956646307176111635"/>
+    <property name="catalina.home" value="/private/var/folders/xm/f__fpvcd74jg4d0ktvzdw5hr0000gn/T/tomcat.0.4866512146392890711"/>
     <property name="java.version" value="17.0.2"/>
     <property name="user.dir" value="/Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend"/>
     <property name="os.arch" value="aarch64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="22715"/>
+    <property name="PID" value="33961"/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
-    <property name="catalina.base" value="/private/var/folders/xm/f__fpvcd74jg4d0ktvzdw5hr0000gn/T/tomcat.0.6365004947103210587"/>
+    <property name="catalina.base" value="/private/var/folders/xm/f__fpvcd74jg4d0ktvzdw5hr0000gn/T/tomcat.0.10988004728875987920"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/iiro/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
@@ -65,9 +65,9 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="getItemsWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.375">
-    <system-out><![CDATA[2023-10-22T23:54:13.401+03:00  INFO 22715 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.shopBackend.item.ItemIntegrationTest]: ItemIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2023-10-22T23:54:13.450+03:00  INFO 22715 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.shopBackend.ShopBackendApplication for test class com.example.shopBackend.item.ItemIntegrationTest
+  <testcase name="getItemsWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.448">
+    <system-out><![CDATA[2023-10-23T21:20:41.204+03:00  INFO 33961 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.shopBackend.item.ItemIntegrationTest]: ItemIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-10-23T21:20:41.216+03:00  INFO 33961 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.shopBackend.ShopBackendApplication for test class com.example.shopBackend.item.ItemIntegrationTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -77,24 +77,24 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.1)
 
-2023-10-22T23:54:13.464+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 22715 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
-2023-10-22T23:54:13.464+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
-2023-10-22T23:54:13.588+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-10-22T23:54:13.604+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 6 JPA repository interfaces.
-2023-10-22T23:54:13.811+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
-2023-10-22T23:54:13.817+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-10-22T23:54:13.817+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
-2023-10-22T23:54:13.871+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-10-22T23:54:13.872+03:00  INFO 22715 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 407 ms
-2023-10-22T23:54:13.905+03:00  INFO 22715 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-10-22T23:54:13.908+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:13.908+03:00  INFO 22715 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-10-22T23:54:13.908+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2023-10-22T23:54:13.910+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:5247cdab-95bb-4e05-a92f-e2ed9aae05f0 user=SA
-2023-10-22T23:54:13.910+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2023-10-22T23:54:13.910+03:00  WARN 22715 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
-2023-10-22T23:54:13.920+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:13.959+03:00  INFO 22715 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-23T21:20:41.232+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 33961 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
+2023-10-23T21:20:41.233+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
+2023-10-23T21:20:41.401+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-23T21:20:41.414+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 6 JPA repository interfaces.
+2023-10-23T21:20:41.594+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-10-23T21:20:41.599+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-23T21:20:41.599+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
+2023-10-23T21:20:41.646+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-23T21:20:41.646+03:00  INFO 33961 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 413 ms
+2023-10-23T21:20:41.681+03:00  INFO 33961 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-23T21:20:41.684+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:41.684+03:00  INFO 33961 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-23T21:20:41.684+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2023-10-23T21:20:41.686+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:e55dd260-b5e1-499b-bc6f-eb634f559627 user=SA
+2023-10-23T21:20:41.686+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2023-10-23T21:20:41.686+03:00  WARN 33961 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-10-23T21:20:41.696+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:41.732+03:00  INFO 33961 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 Hibernate: 
     create table account_roles (
         role_id integer not null auto_increment,
@@ -189,15 +189,15 @@ Hibernate:
        add constraint FKuva164xbjqmhwwbel1m32joo 
        foreign key (review_item) 
        references items (item_id)
-2023-10-22T23:54:13.967+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:14.111+03:00  WARN 22715 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-10-22T23:54:14.171+03:00  INFO 22715 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4e2860d3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@322b500a, org.springframework.security.web.context.SecurityContextHolderFilter@58bdcf40, org.springframework.security.web.header.HeaderWriterFilter@178cf671, org.springframework.web.filter.CorsFilter@52ac4878, org.springframework.web.filter.CorsFilter@4a28852d, org.springframework.security.web.authentication.logout.LogoutFilter@144d064a, com.example.shopBackend.security.JwtAthFilter@3bb04b53, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@28728558, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7c0b0090, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@478b5a43, org.springframework.security.web.session.SessionManagementFilter@2ace94ff, org.springframework.security.web.access.ExceptionTranslationFilter@16bc97b9, org.springframework.security.web.access.intercept.AuthorizationFilter@c8293cb]
-2023-10-22T23:54:14.371+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55201 (http) with context path ''
-2023-10-22T23:54:14.374+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.921 seconds (process running for 5.41)
-2023-10-22T23:54:14.506+03:00 ERROR 22715 --- [           main] i.n.r.d.DnsServerAddressStreamProviders  : Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
-2023-10-22T23:54:14.623+03:00  INFO 22715 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-10-22T23:54:14.623+03:00  INFO 22715 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-10-22T23:54:14.624+03:00  INFO 22715 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-10-23T21:20:41.740+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:41.921+03:00  WARN 33961 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-23T21:20:41.977+03:00  INFO 33961 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4e2860d3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@322b500a, org.springframework.security.web.context.SecurityContextHolderFilter@58bdcf40, org.springframework.security.web.header.HeaderWriterFilter@178cf671, org.springframework.web.filter.CorsFilter@52ac4878, org.springframework.web.filter.CorsFilter@4a28852d, org.springframework.security.web.authentication.logout.LogoutFilter@144d064a, com.example.shopBackend.security.JwtAthFilter@3bb04b53, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@28728558, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7c0b0090, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@478b5a43, org.springframework.security.web.session.SessionManagementFilter@2ace94ff, org.springframework.security.web.access.ExceptionTranslationFilter@16bc97b9, org.springframework.security.web.access.intercept.AuthorizationFilter@c8293cb]
+2023-10-23T21:20:42.212+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 49471 (http) with context path ''
+2023-10-23T21:20:42.215+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.996 seconds (process running for 5.247)
+2023-10-23T21:20:42.354+03:00 ERROR 33961 --- [           main] i.n.r.d.DnsServerAddressStreamProviders  : Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2023-10-23T21:20:42.468+03:00  INFO 33961 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-23T21:20:42.468+03:00  INFO 33961 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-23T21:20:42.469+03:00  INFO 33961 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 Hibernate: 
     SELECT
         * 
@@ -261,9 +261,9 @@ Hibernate:
         i.item_account = ? 
     GROUP BY
         i.item_id limit ?
-2023-10-22T23:54:14.697+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2023-10-22T23:54:14.697+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
-2023-10-22T23:54:14.698+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:42.592+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-23T21:20:42.593+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-10-23T21:20:42.598+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -273,7 +273,7 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:14.699+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:42.604+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -282,12 +282,12 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:16.782+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:16.784+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
-2023-10-22T23:54:16.787+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2023-10-23T21:20:44.694+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:44.701+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2023-10-23T21:20:44.704+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
 ]]></system-out>
   </testcase>
-  <testcase name="getItemsWithTitleWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.12">
+  <testcase name="getItemsWithTitleWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.123">
     <system-out><![CDATA[
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -297,24 +297,24 @@ Hibernate:
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.1)
 
-2023-10-22T23:54:16.806+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 22715 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
-2023-10-22T23:54:16.806+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
-2023-10-22T23:54:16.931+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-10-22T23:54:16.955+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 6 JPA repository interfaces.
-2023-10-22T23:54:17.000+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
-2023-10-22T23:54:17.001+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-10-22T23:54:17.001+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
-2023-10-22T23:54:17.017+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-10-22T23:54:17.018+03:00  INFO 22715 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 211 ms
-2023-10-22T23:54:17.039+03:00  INFO 22715 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-10-22T23:54:17.042+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:17.042+03:00  INFO 22715 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-10-22T23:54:17.042+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
-2023-10-22T23:54:17.044+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:2974c5ea-db03-4896-818b-91b2f5c6d286 user=SA
-2023-10-22T23:54:17.044+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
-2023-10-22T23:54:17.044+03:00  WARN 22715 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
-2023-10-22T23:54:17.063+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:17.099+03:00  INFO 22715 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-23T21:20:44.749+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 33961 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
+2023-10-23T21:20:44.750+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
+2023-10-23T21:20:44.876+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-23T21:20:44.911+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 6 JPA repository interfaces.
+2023-10-23T21:20:44.972+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-10-23T21:20:44.972+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-23T21:20:44.972+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
+2023-10-23T21:20:44.994+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-23T21:20:44.994+03:00  INFO 33961 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 243 ms
+2023-10-23T21:20:45.022+03:00  INFO 33961 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-23T21:20:45.026+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:45.026+03:00  INFO 33961 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-23T21:20:45.026+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2023-10-23T21:20:45.028+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:79d14522-93d1-4afb-a1b8-f395a11f71ea user=SA
+2023-10-23T21:20:45.028+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2023-10-23T21:20:45.029+03:00  WARN 33961 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-10-23T21:20:45.049+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:45.095+03:00  INFO 33961 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 Hibernate: 
     create table account_roles (
         role_id integer not null auto_increment,
@@ -409,14 +409,14 @@ Hibernate:
        add constraint FKuva164xbjqmhwwbel1m32joo 
        foreign key (review_item) 
        references items (item_id)
-2023-10-22T23:54:17.107+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:17.205+03:00  WARN 22715 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-10-22T23:54:17.245+03:00  INFO 22715 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@235f56ff, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7da48c4c, org.springframework.security.web.context.SecurityContextHolderFilter@2b728f15, org.springframework.security.web.header.HeaderWriterFilter@45ca96f3, org.springframework.web.filter.CorsFilter@768a4fe, org.springframework.web.filter.CorsFilter@2afdb2b1, org.springframework.security.web.authentication.logout.LogoutFilter@1938f3b3, com.example.shopBackend.security.JwtAthFilter@2604e76, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@71bc7d1e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@605000d4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@734cf1bf, org.springframework.security.web.session.SessionManagementFilter@4cb15553, org.springframework.security.web.access.ExceptionTranslationFilter@18084396, org.springframework.security.web.access.intercept.AuthorizationFilter@6bc8ce0c]
-2023-10-22T23:54:17.289+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55220 (http) with context path ''
-2023-10-22T23:54:17.291+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.501 seconds (process running for 8.326)
-2023-10-22T23:54:17.299+03:00  INFO 22715 --- [o-auto-2-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-10-22T23:54:17.299+03:00  INFO 22715 --- [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-10-22T23:54:17.300+03:00  INFO 22715 --- [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-10-23T21:20:45.104+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:45.247+03:00  WARN 33961 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-23T21:20:45.293+03:00  INFO 33961 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@235f56ff, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7da48c4c, org.springframework.security.web.context.SecurityContextHolderFilter@2b728f15, org.springframework.security.web.header.HeaderWriterFilter@45ca96f3, org.springframework.web.filter.CorsFilter@768a4fe, org.springframework.web.filter.CorsFilter@2afdb2b1, org.springframework.security.web.authentication.logout.LogoutFilter@1938f3b3, com.example.shopBackend.security.JwtAthFilter@2604e76, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@71bc7d1e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@605000d4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@734cf1bf, org.springframework.security.web.session.SessionManagementFilter@4cb15553, org.springframework.security.web.access.ExceptionTranslationFilter@18084396, org.springframework.security.web.access.intercept.AuthorizationFilter@6bc8ce0c]
+2023-10-23T21:20:45.346+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 49480 (http) with context path ''
+2023-10-23T21:20:45.348+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.641 seconds (process running for 8.38)
+2023-10-23T21:20:45.356+03:00  INFO 33961 --- [o-auto-2-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-23T21:20:45.356+03:00  INFO 33961 --- [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-23T21:20:45.357+03:00  INFO 33961 --- [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 Hibernate: 
     SELECT
         * 
@@ -481,9 +481,9 @@ Hibernate:
         AND i.item_account = ? 
     GROUP BY
         i.item_id limit ?
-2023-10-22T23:54:17.314+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2023-10-22T23:54:17.314+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
-2023-10-22T23:54:17.315+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-3 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:45.372+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-23T21:20:45.372+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-10-23T21:20:45.373+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-3 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -493,7 +493,7 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:17.315+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-3 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:45.373+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-3 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -502,12 +502,12 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:19.403+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:19.408+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
-2023-10-22T23:54:19.410+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2023-10-23T21:20:47.472+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:47.473+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2023-10-23T21:20:47.474+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
 ]]></system-out>
   </testcase>
-  <testcase name="addItemsWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.119">
+  <testcase name="addItemsWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.159">
     <system-out><![CDATA[
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -517,24 +517,24 @@ Hibernate:
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.1)
 
-2023-10-22T23:54:19.466+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 22715 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
-2023-10-22T23:54:19.466+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
-2023-10-22T23:54:19.635+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-10-22T23:54:19.670+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 6 JPA repository interfaces.
-2023-10-22T23:54:19.742+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
-2023-10-22T23:54:19.743+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-10-22T23:54:19.743+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
-2023-10-22T23:54:19.759+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-10-22T23:54:19.759+03:00  INFO 22715 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 292 ms
-2023-10-22T23:54:19.782+03:00  INFO 22715 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-10-22T23:54:19.786+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:19.786+03:00  INFO 22715 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-10-22T23:54:19.787+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
-2023-10-22T23:54:19.789+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection conn30: url=jdbc:h2:mem:1844772e-8c0f-44d3-bf52-38cc74a520fc user=SA
-2023-10-22T23:54:19.789+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
-2023-10-22T23:54:19.790+03:00  WARN 22715 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
-2023-10-22T23:54:19.801+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:19.837+03:00  INFO 22715 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-23T21:20:47.492+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 33961 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
+2023-10-23T21:20:47.492+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
+2023-10-23T21:20:47.607+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-23T21:20:47.636+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 6 JPA repository interfaces.
+2023-10-23T21:20:47.693+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-10-23T21:20:47.693+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-23T21:20:47.693+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
+2023-10-23T21:20:47.711+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-23T21:20:47.711+03:00  INFO 33961 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 218 ms
+2023-10-23T21:20:47.741+03:00  INFO 33961 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-23T21:20:47.744+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:47.744+03:00  INFO 33961 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-23T21:20:47.745+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2023-10-23T21:20:47.746+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection conn30: url=jdbc:h2:mem:a974ddfe-fc1d-4c19-aa11-5286310a08e7 user=SA
+2023-10-23T21:20:47.746+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2023-10-23T21:20:47.746+03:00  WARN 33961 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-10-23T21:20:47.762+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:47.790+03:00  INFO 33961 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 Hibernate: 
     create table account_roles (
         role_id integer not null auto_increment,
@@ -629,11 +629,11 @@ Hibernate:
        add constraint FKuva164xbjqmhwwbel1m32joo 
        foreign key (review_item) 
        references items (item_id)
-2023-10-22T23:54:19.848+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:20.042+03:00  WARN 22715 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-10-22T23:54:20.079+03:00  INFO 22715 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@74e3836a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@20df25f8, org.springframework.security.web.context.SecurityContextHolderFilter@7876ba81, org.springframework.security.web.header.HeaderWriterFilter@102e8217, org.springframework.web.filter.CorsFilter@7148320d, org.springframework.web.filter.CorsFilter@2587f18d, org.springframework.security.web.authentication.logout.LogoutFilter@21eeb0ce, com.example.shopBackend.security.JwtAthFilter@6586b4e3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@49c83038, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2d923d2c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4d17ce84, org.springframework.security.web.session.SessionManagementFilter@3a6f77a4, org.springframework.security.web.access.ExceptionTranslationFilter@669ae2bd, org.springframework.security.web.access.intercept.AuthorizationFilter@15682e7f]
-2023-10-22T23:54:20.114+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55244 (http) with context path ''
-2023-10-22T23:54:20.115+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.695 seconds (process running for 11.151)
+2023-10-23T21:20:47.799+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:47.989+03:00  WARN 33961 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-23T21:20:48.043+03:00  INFO 33961 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@15682e7f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@74e3836a, org.springframework.security.web.context.SecurityContextHolderFilter@3a6f77a4, org.springframework.security.web.header.HeaderWriterFilter@669ae2bd, org.springframework.web.filter.CorsFilter@20df25f8, org.springframework.web.filter.CorsFilter@7148320d, org.springframework.security.web.authentication.logout.LogoutFilter@6c81bd6d, com.example.shopBackend.security.JwtAthFilter@6586b4e3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7876ba81, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@49c83038, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2587f18d, org.springframework.security.web.session.SessionManagementFilter@102e8217, org.springframework.security.web.access.ExceptionTranslationFilter@40904969, org.springframework.security.web.access.intercept.AuthorizationFilter@29af0d3b]
+2023-10-23T21:20:48.080+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 49486 (http) with context path ''
+2023-10-23T21:20:48.082+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.605 seconds (process running for 11.113)
 Hibernate: 
     select
         i1_0.item_id,
@@ -704,9 +704,9 @@ Hibernate:
         words w1_0 
     where
         w1_0.words_id=?
-2023-10-22T23:54:20.134+03:00  INFO 22715 --- [o-auto-3-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-10-22T23:54:20.134+03:00  INFO 22715 --- [o-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-10-22T23:54:20.134+03:00  INFO 22715 --- [o-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2023-10-23T21:20:48.099+03:00  INFO 33961 --- [o-auto-3-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-23T21:20:48.099+03:00  INFO 33961 --- [o-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-23T21:20:48.099+03:00  INFO 33961 --- [o-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 Hibernate: 
     SELECT
         * 
@@ -840,9 +840,9 @@ Hibernate:
         words w1_0 
     where
         w1_0.words_id=?
-2023-10-22T23:54:20.159+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2023-10-22T23:54:20.159+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
-2023-10-22T23:54:20.161+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-4 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:48.125+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-23T21:20:48.125+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-10-23T21:20:48.126+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-4 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -852,7 +852,7 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:20.161+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-4 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:48.126+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-4 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -861,12 +861,12 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:22.229+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:22.233+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
-2023-10-22T23:54:22.235+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2023-10-23T21:20:50.210+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:50.229+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2023-10-23T21:20:50.234+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
 ]]></system-out>
   </testcase>
-  <testcase name="deleteItemWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.135">
+  <testcase name="deleteItemWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.159">
     <system-out><![CDATA[
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -876,24 +876,24 @@ Hibernate:
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.1)
 
-2023-10-22T23:54:22.286+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 22715 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
-2023-10-22T23:54:22.286+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
-2023-10-22T23:54:22.392+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-10-22T23:54:22.429+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36 ms. Found 6 JPA repository interfaces.
-2023-10-22T23:54:22.485+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
-2023-10-22T23:54:22.486+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-10-22T23:54:22.486+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
-2023-10-22T23:54:22.502+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-10-22T23:54:22.503+03:00  INFO 22715 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 215 ms
-2023-10-22T23:54:22.535+03:00  INFO 22715 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-10-22T23:54:22.553+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:22.553+03:00  INFO 22715 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-10-22T23:54:22.553+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
-2023-10-22T23:54:22.555+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection conn40: url=jdbc:h2:mem:bf009999-66fe-4f50-af7c-d0432546adf8 user=SA
-2023-10-22T23:54:22.555+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
-2023-10-22T23:54:22.556+03:00  WARN 22715 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
-2023-10-22T23:54:22.569+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:22.610+03:00  INFO 22715 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-23T21:20:50.320+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 33961 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
+2023-10-23T21:20:50.320+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
+2023-10-23T21:20:50.543+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-23T21:20:50.554+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 6 JPA repository interfaces.
+2023-10-23T21:20:50.604+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-10-23T21:20:50.605+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-23T21:20:50.605+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
+2023-10-23T21:20:50.639+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-23T21:20:50.639+03:00  INFO 33961 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 317 ms
+2023-10-23T21:20:50.656+03:00  INFO 33961 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-23T21:20:50.659+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:50.659+03:00  INFO 33961 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-23T21:20:50.660+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2023-10-23T21:20:50.661+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection conn40: url=jdbc:h2:mem:ff7b5b6d-982c-4573-863f-1ba97f98d7c9 user=SA
+2023-10-23T21:20:50.661+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2023-10-23T21:20:50.662+03:00  WARN 33961 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-10-23T21:20:50.674+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:50.721+03:00  INFO 33961 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 Hibernate: 
     create table account_roles (
         role_id integer not null auto_increment,
@@ -988,14 +988,14 @@ Hibernate:
        add constraint FKuva164xbjqmhwwbel1m32joo 
        foreign key (review_item) 
        references items (item_id)
-2023-10-22T23:54:22.620+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:22.706+03:00  WARN 22715 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-10-22T23:54:22.743+03:00  INFO 22715 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@60ae0977, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@33c440bb, org.springframework.security.web.context.SecurityContextHolderFilter@2943c93d, org.springframework.security.web.header.HeaderWriterFilter@43ab3f26, org.springframework.web.filter.CorsFilter@641c872d, org.springframework.web.filter.CorsFilter@630bd6c1, org.springframework.security.web.authentication.logout.LogoutFilter@351cc4b5, com.example.shopBackend.security.JwtAthFilter@60600939, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@18a59ef8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@26dc0c5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@737e8e66, org.springframework.security.web.session.SessionManagementFilter@22d45306, org.springframework.security.web.access.ExceptionTranslationFilter@57fcc568, org.springframework.security.web.access.intercept.AuthorizationFilter@6dfd4db2]
-2023-10-22T23:54:22.776+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55262 (http) with context path ''
-2023-10-22T23:54:22.778+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.535 seconds (process running for 13.813)
-2023-10-22T23:54:22.785+03:00  INFO 22715 --- [o-auto-4-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-10-22T23:54:22.785+03:00  INFO 22715 --- [o-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-10-22T23:54:22.785+03:00  INFO 22715 --- [o-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2023-10-23T21:20:50.730+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:51.042+03:00  WARN 33961 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-23T21:20:51.118+03:00  INFO 33961 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6dfd4db2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@60ae0977, org.springframework.security.web.context.SecurityContextHolderFilter@22d45306, org.springframework.security.web.header.HeaderWriterFilter@57fcc568, org.springframework.web.filter.CorsFilter@33c440bb, org.springframework.web.filter.CorsFilter@641c872d, org.springframework.security.web.authentication.logout.LogoutFilter@221ffed, com.example.shopBackend.security.JwtAthFilter@426ba1d5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2943c93d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@18a59ef8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@630bd6c1, org.springframework.security.web.session.SessionManagementFilter@43ab3f26, org.springframework.security.web.access.ExceptionTranslationFilter@534b0af3, org.springframework.security.web.access.intercept.AuthorizationFilter@17adeb0]
+2023-10-23T21:20:51.186+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 49496 (http) with context path ''
+2023-10-23T21:20:51.188+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.938 seconds (process running for 14.22)
+2023-10-23T21:20:51.213+03:00  INFO 33961 --- [o-auto-4-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-23T21:20:51.214+03:00  INFO 33961 --- [o-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-23T21:20:51.214+03:00  INFO 33961 --- [o-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 Hibernate: 
     SELECT
         * 
@@ -1205,9 +1205,9 @@ Hibernate:
         words w1_0 
     where
         w1_0.words_id=?
-2023-10-22T23:54:22.810+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2023-10-22T23:54:22.810+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
-2023-10-22T23:54:22.811+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-5 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:51.274+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-23T21:20:51.275+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-10-23T21:20:51.276+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-5 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -1217,7 +1217,7 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:22.811+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-5 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:51.276+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-5 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -1226,12 +1226,12 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:24.894+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:24.911+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
-2023-10-22T23:54:24.913+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2023-10-23T21:20:53.347+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:53.349+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2023-10-23T21:20:53.351+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
 ]]></system-out>
   </testcase>
-  <testcase name="updateItemWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.132">
+  <testcase name="updateItemWorks" classname="com.example.shopBackend.item.ItemIntegrationTest" time="2.112">
     <system-out><![CDATA[
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -1241,24 +1241,24 @@ Hibernate:
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.1)
 
-2023-10-22T23:54:24.941+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 22715 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
-2023-10-22T23:54:24.942+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
-2023-10-22T23:54:25.070+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-10-22T23:54:25.092+03:00  INFO 22715 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 6 JPA repository interfaces.
-2023-10-22T23:54:25.130+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
-2023-10-22T23:54:25.130+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-10-22T23:54:25.130+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
-2023-10-22T23:54:25.143+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-10-22T23:54:25.143+03:00  INFO 22715 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 200 ms
-2023-10-22T23:54:25.161+03:00  INFO 22715 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-10-22T23:54:25.164+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:25.164+03:00  INFO 22715 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-10-22T23:54:25.164+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
-2023-10-22T23:54:25.165+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection conn50: url=jdbc:h2:mem:90371edd-8563-4884-9b3f-c04e032553ed user=SA
-2023-10-22T23:54:25.165+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
-2023-10-22T23:54:25.166+03:00  WARN 22715 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
-2023-10-22T23:54:25.174+03:00  INFO 22715 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-22T23:54:25.202+03:00  INFO 22715 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-23T21:20:53.372+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Starting ItemIntegrationTest using Java 17.0.2 with PID 33961 (started by iiro in /Users/iiro/Documents/Ohjelmointi/reviews/reviews-backend/reviewsbackend)
+2023-10-23T21:20:53.372+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : The following 1 profile is active: "test"
+2023-10-23T21:20:53.488+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-23T21:20:53.507+03:00  INFO 33961 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 6 JPA repository interfaces.
+2023-10-23T21:20:53.558+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-10-23T21:20:53.559+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-23T21:20:53.559+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.10]
+2023-10-23T21:20:53.576+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-23T21:20:53.576+03:00  INFO 33961 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 203 ms
+2023-10-23T21:20:53.605+03:00  INFO 33961 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-23T21:20:53.608+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:53.609+03:00  INFO 33961 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-23T21:20:53.609+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2023-10-23T21:20:53.611+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection conn50: url=jdbc:h2:mem:100f6070-23cb-4532-a23a-1d098e80362f user=SA
+2023-10-23T21:20:53.611+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2023-10-23T21:20:53.612+03:00  WARN 33961 --- [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.1.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-10-23T21:20:53.623+03:00  INFO 33961 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-23T21:20:53.656+03:00  INFO 33961 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 Hibernate: 
     create table account_roles (
         role_id integer not null auto_increment,
@@ -1353,14 +1353,14 @@ Hibernate:
        add constraint FKuva164xbjqmhwwbel1m32joo 
        foreign key (review_item) 
        references items (item_id)
-2023-10-22T23:54:25.227+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:25.318+03:00  WARN 22715 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-10-22T23:54:25.359+03:00  INFO 22715 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@24b5863a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3cc6d144, org.springframework.security.web.context.SecurityContextHolderFilter@123b8431, org.springframework.security.web.header.HeaderWriterFilter@c9be844, org.springframework.web.filter.CorsFilter@13253ac7, org.springframework.web.filter.CorsFilter@503224b4, org.springframework.security.web.authentication.logout.LogoutFilter@51293850, com.example.shopBackend.security.JwtAthFilter@223cd181, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e89f305, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2d83ed58, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@583eecde, org.springframework.security.web.session.SessionManagementFilter@a471163, org.springframework.security.web.access.ExceptionTranslationFilter@4f847b48, org.springframework.security.web.access.intercept.AuthorizationFilter@525230df]
-2023-10-22T23:54:25.400+03:00  INFO 22715 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55281 (http) with context path ''
-2023-10-22T23:54:25.401+03:00  INFO 22715 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.479 seconds (process running for 16.437)
-2023-10-22T23:54:25.410+03:00  INFO 22715 --- [o-auto-5-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-10-22T23:54:25.410+03:00  INFO 22715 --- [o-auto-5-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-10-22T23:54:25.410+03:00  INFO 22715 --- [o-auto-5-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2023-10-23T21:20:53.708+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:53.840+03:00  WARN 33961 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-23T21:20:53.880+03:00  INFO 33961 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@525230df, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@24b5863a, org.springframework.security.web.context.SecurityContextHolderFilter@a471163, org.springframework.security.web.header.HeaderWriterFilter@4f847b48, org.springframework.web.filter.CorsFilter@3cc6d144, org.springframework.web.filter.CorsFilter@13253ac7, org.springframework.security.web.authentication.logout.LogoutFilter@1f7d3d82, com.example.shopBackend.security.JwtAthFilter@50b9399a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@123b8431, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7e89f305, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@503224b4, org.springframework.security.web.session.SessionManagementFilter@c9be844, org.springframework.security.web.access.ExceptionTranslationFilter@21e7206a, org.springframework.security.web.access.intercept.AuthorizationFilter@6009e8ab]
+2023-10-23T21:20:53.927+03:00  INFO 33961 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 49504 (http) with context path ''
+2023-10-23T21:20:53.928+03:00  INFO 33961 --- [           main] c.e.s.item.ItemIntegrationTest           : Started ItemIntegrationTest in 0.573 seconds (process running for 16.96)
+2023-10-23T21:20:53.938+03:00  INFO 33961 --- [o-auto-5-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-23T21:20:53.938+03:00  INFO 33961 --- [o-auto-5-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-23T21:20:53.938+03:00  INFO 33961 --- [o-auto-5-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 Hibernate: 
     SELECT
         * 
@@ -1423,9 +1423,9 @@ Hibernate:
         item_words=? 
     where
         item_id=?
-2023-10-22T23:54:25.435+03:00  INFO 22715 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2023-10-22T23:54:25.435+03:00  INFO 22715 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
-2023-10-22T23:54:25.436+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-6 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:53.959+03:00  INFO 33961 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-23T21:20:53.960+03:00  INFO 33961 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-10-23T21:20:53.960+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-6 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -1435,7 +1435,7 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:25.436+03:00  WARN 22715 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-6 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+2023-10-23T21:20:53.961+03:00  WARN 33961 --- [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-6 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
  java.base@17.0.2/jdk.internal.misc.Unsafe.park(Native Method)
  java.base@17.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
  java.base@17.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
@@ -1444,9 +1444,9 @@ Hibernate:
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
  java.base@17.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
  java.base@17.0.2/java.lang.Thread.run(Thread.java:833)
-2023-10-22T23:54:27.515+03:00  INFO 22715 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-10-22T23:54:27.531+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
-2023-10-22T23:54:27.533+03:00  INFO 22715 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2023-10-23T21:20:56.036+03:00  INFO 33961 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-23T21:20:56.039+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2023-10-23T21:20:56.042+03:00  INFO 33961 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
 ]]></system-out>
   </testcase>
 </testsuite>

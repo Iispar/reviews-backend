@@ -1,0 +1,5 @@
+com/example/shopBackend/review/ReviewRepositoryTest.class
+com/example/shopBackend/account/AccountControllerTest.class
+com/example/shopBackend/account/AccountRepositoryTest.class
+ShopBackendTests.class
+com/example/shopBackend/account/AccountIntegrationTest.class

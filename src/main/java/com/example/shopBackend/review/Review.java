@@ -21,7 +21,7 @@ public class Review {
 	@Column(name = "review_id", nullable = false, updatable = false, unique = true)
 	private int id;
 	
-	@Column(name = "review_date", nullable = false)
+	@Column(name = "review_date")
 	private Date date;
 
 	@Lob
@@ -31,9 +31,9 @@ public class Review {
 	@Lob
 	@Column(name = "review_title", nullable = false, columnDefinition = "text")
 	private String title;
-	@Column(name = "review_likes", nullable = false)
+	@Column(name = "review_likes")
 	private Integer likes;
-	@Column(name = "review_dislikes", nullable = false)
+	@Column(name = "review_dislikes")
 	private Integer dislikes;
 	@Column(name = "review_rating")
 	private int rating;

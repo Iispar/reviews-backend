@@ -37,7 +37,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	 * 		  The pageable object that selects page and sorts.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT i.item_id AS id, i.item_title AS title, i.item_rating as rating, COUNT(r.review_id) AS reviews FROM items i LEFT JOIN reviews r ON r.review_item = i.item_id WHERE i.item_account = ?1 GROUP BY i.item_id", nativeQuery = true)
+	@Query(value = "SELECT i.item_id AS id, i.item_title AS title, ROUND(i.item_rating) as rating, COUNT(r.review_id) AS reviews FROM items i LEFT JOIN reviews r ON r.review_item = i.item_id WHERE i.item_account = ?1 GROUP BY i.item_id", nativeQuery = true)
 	List<ItemWithReviews> findAllForAccountWithReviewCount(int id, Pageable pageable);
 
 	/**
@@ -48,7 +48,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Integer
 	 * 		  The pageable object that selects page and sorts.
 	 * @return the items that matched the query
 	 */
-	@Query(value = "SELECT i.item_id AS id, i.item_title AS title, i.item_rating as rating, COUNT(r.review_id) AS reviews FROM items i LEFT JOIN reviews r ON r.review_item = i.item_id WHERE i.item_title LIKE ?1 AND i.item_account = ?2 GROUP BY i.item_id", nativeQuery = true)
+	@Query(value = "SELECT i.item_id AS id, i.item_title AS title, ROUND(i.item_rating) as rating, COUNT(r.review_id) AS reviews FROM items i LEFT JOIN reviews r ON r.review_item = i.item_id WHERE i.item_title LIKE ?1 AND i.item_account = ?2 GROUP BY i.item_id", nativeQuery = true)
 	List<ItemWithReviews> findAllForAccountWithReviewCountWithTitle(String title, int id, Pageable pageable);
 
 	/**

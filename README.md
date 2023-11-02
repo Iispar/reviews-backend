@@ -10,13 +10,13 @@ Backend for the reviews application. Other repositories:
 
 **!! For a detailed look at the whole project and also this backend please refer to the document in the frontend that was created for the college course. !!**
 
-This project is the backend for the reviews application. Its purpose is to receive calls from the frontend and act accordingly to the calls and also communicate with the API and database.
+This project is the backend for the reviews application. Its purpose is to receive calls from the frontend, act according to the calls, and communicate with the API and database.
 It is a Spring Boot application written in Java with Maven. The database is a MySQL database that is hosted in AWS.
 The application takes all addition, update and deletion calls to entities from the frontend and also has a few unique get calls to receive whole pages cleaner. It applies all business logic and creates entities to be able
 to communicate them to the database.
 
 
-It has unit tests that cover 100% of the methods and also integration tests for all the API endpoints. Testing is done solely with JUnit and Spring MVC Test framework.
+It has unit tests that cover 100% of the methods and integration tests for all the API endpoints. Testing is done solely with JUnit and Spring MVC Test framework.
 <br />
 
 This is deployed on Render.com
@@ -24,10 +24,10 @@ This is deployed on Render.com
 ## Prerequisites 
 To run and test you will need Java and Maven installed.
 ## configuration
-This project has the application.properties file for the build hidden because it includes passwords and links and also the key pair for the ssh is hidden. If you don't have these please contact me at iiro.s.partanen@gmail.com.
+This project has the application.properties file for the build hidden because it includes passwords and links and also the key pair for the SSH is hidden. If you don't have these please contact me at iiro.s.partanen@gmail.com.
 
 
-When you have the file just add it to the main/resources where the application-test.properties are located you will also need to create a ssh pipe to the backend before running, this will be instructed in the file you received from me.
+When you have the file just add it to the main/resources where the application-test.properties are located you will also need to create an ssh pipe to the backend before running, this will be instructed in the file you received from me.
 Then you will be able to run the application as instructed.
 
 The tests **can** be run without these files.
@@ -42,7 +42,7 @@ localhost:8080
 To run in the command line you need to first run a SSH tunnel that is described in the application.properties file.
 
 
-As the target files are in the github you can also just run the .jar file from the root folder with ```java -jar target/reviewsbackend-0.0.1-SNAPSHOT.jar```
+As the target files are in the GitHub you can also just run the .jar file from the root folder with ```java -jar target/reviewsbackend-0.0.1-SNAPSHOT.jar```
 
 If you want to compile it yourself just run ```mvn install``` and then the previous command. If you want to run the application yourself run ```mvn clean install``` and ```mvn spring-boot:run``` and the application should start. If you want to run from the IDE run first the ```mvn clean install``` and then run the root class shopBackendApplication in your IDE
 

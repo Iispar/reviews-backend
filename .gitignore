@@ -5,6 +5,7 @@ HELP.md
 !**/target/reviewsbackend-0.0.1-SNAPSHOT.jar
 target/classes/application.properties
 
+
 ### STS ###
 .apt_generated
 .classpath

@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
  * The role entity in the backend
  */
 @Entity(name="Role")
-@Table(name="account_roles", schema="reviews_schema")
+@Table(name="account_roles", schema="reviews")
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,7 +13,7 @@ import java.sql.Date;
  */
 @SuppressWarnings("unused")
 @Entity(name="Review")
-@Table(name="reviews")
+@Table(name="reviews", schema="reviews_largelowby")
 public class Review {
 	
 	@Id

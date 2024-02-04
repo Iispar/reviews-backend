@@ -10,7 +10,7 @@ import java.util.List;
  *
  */
 @Entity(name="Words")
-@Table(name="words")
+@Table(name="words", schema="reviews_largelowby")
 public class Words {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

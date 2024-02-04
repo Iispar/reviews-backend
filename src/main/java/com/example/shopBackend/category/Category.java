@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
  *
  */
 @Entity(name="Category")
-@Table(name="item_categories")
+@Table(name="item_categories", schema="reviews_largelowby")
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

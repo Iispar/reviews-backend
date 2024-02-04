@@ -24,12 +24,9 @@ This is deployed on Render.com
 ## Prerequisites 
 To run and test you will need Java and Maven installed.
 ## configuration
-This project has the application.properties file for the build hidden because it includes passwords and links and also the key pair for the SSH is hidden. If you don't have these please contact me at iiro.s.partanen@gmail.com.
-
-
-When you have the file just add it to the main/resources where the application-test.properties are located you will also need to create an ssh pipe to the backend before running, this will be instructed in the file you received from me.
-Then you will be able to run the application as instructed.
-
+This project has the application.properties file for the build hidden because it includes passwords and links. If you don't have these please contact me at iiro.s.partanen@gmail.com. When you have the file just add it to the main/resources where the application-test.properties are located.
+<br />
+<br />
 The tests **can** be run without these files.
 ## Running
 ### Build 

@@ -14,7 +14,7 @@ import jakarta.persistence.*;
  */
 @SuppressWarnings("unused")
 @Entity(name="Item")
-@Table(name="items", schema="reviews_largelowby")
+@Table(name="items")
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

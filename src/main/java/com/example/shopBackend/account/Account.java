@@ -15,7 +15,7 @@ import java.util.Collections;
  */
 @SuppressWarnings("unused")
 @Entity(name="Account")
-@Table(name="accounts", schema="reviews")
+@Table(name="accounts")
 public class Account implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
